@@ -1,0 +1,60 @@
+import React from 'react';
+import {View, Text, Modal, StyleSheet, TouchableOpacity} from 'react-native';
+import NearbyList from './NearbyList';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+const NearbyListModal = props => {
+  const {open, setlistmode, currentlocation} = props;
+
+  return (
+    <Modal animationType="slide" transparent={false} visible={open}>
+      <View style={styles.header}>
+        <Text style={styles.headertext}>Select Your Parking</Text>
+      </View>
+      <NearbyList
+        carports={props.carports}
+        currentlocation={currentlocation}
+        setopen={setlistmode}
+      />
+      <TouchableOpacity
+        style={styles.listHeader}
+        onPress={() => setlistmode(false)}>
+        <Icon name={'satellite'} size={18} />
+        <Text style={styles.listTitle}> Map </Text>
+      </TouchableOpacity>
+    </Modal>
+  );
+};
+
+const styles = StyleSheet.create({
+  header: {
+    height: 56,
+    backgroundColor: '#11a4ff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headertext: {
+    fontWeight: '600',
+    color: '#fff',
+    fontFamily: 'Montserrat-SemiBold',
+    fontSize: 18,
+  },
+  container: {
+    justifyContent: 'flex-end',
+    backgroundColor: '#fff',
+  },
+  listHeader: {
+    height: 44,
+    backgroundColor: '#ffc630',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  listTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#000',
+  },
+});
+
+export default NearbyListModal;
