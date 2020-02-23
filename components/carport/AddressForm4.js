@@ -10,22 +10,21 @@ import {
 import {Input} from 'react-native-elements';
 
 const AddressForm4 = props => {
-  const {setstage, setfeatures, setparkinginstructions} = props;
+  const {setstage, setfeatures, setavailablespaces} = props;
   const [selected, setselected] = useState({
-    covered: false,
+    covered_space: false,
     ev_charging: false,
     valet: false,
     low_clearance: false,
     compact_only: false,
     no_reentry: false,
   });
-
-  const [description, setdescription] = useState(null);
+  const [spaces, setspaces] = useState('1');
 
   const items = [
     {
       label: 'Covered',
-      name: 'covered',
+      name: 'covered_space',
       color: '#11a4ff',
     },
     {
@@ -86,7 +85,7 @@ const AddressForm4 = props => {
 
   const handleNext = () => {
     setfeatures(selected);
-    setparkinginstructions(description);
+    setavailablespaces(spaces);
     setstage(5);
   };
 
@@ -98,15 +97,14 @@ const AddressForm4 = props => {
       <View style={styles.contentcontainer}>{itemslist}</View>
       <View style={styles.descontainer}>
         <Input
-          label={'Parking Instructions'}
-          multiline
-          placeholder={'- Add any special instructions'}
-          value={description}
+          label={'Available Spaces'}
+          value={spaces}
           onChangeText={text => {
-            if (text.length <= 280) {
-              setdescription(text);
+            if (!isNaN(text)) {
+              setspaces(text);
             }
           }}
+          keyboardType={'numeric'}
         />
       </View>
       <View style={styles.buttonrow}>
@@ -179,6 +177,7 @@ const styles = StyleSheet.create({
   },
   descontainer: {
     paddingTop: 36,
+    marginHorizontal: 48,
   },
   buttonrow: {
     flexDirection: 'row',

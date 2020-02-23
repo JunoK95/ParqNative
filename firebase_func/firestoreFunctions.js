@@ -144,6 +144,61 @@ export async function getGeocodeAddress(address){
   return result;
 }
 
+export async function initializeCarportWithParams(owner_id, address, available_spaces, features, type, parking_instructions, description) {
+  const {formatted_address, geometry, place_id} = address;
+  const currentTime = moment().unix();
+  const geoHash = encode(geometry.location.lat, geometry.location.lng);
+  const geofirepoint = await geofirexCreatePoint(geometry.location.lat, geometry.location.lng);
+  var docData = {
+    enabled: false,
+    verfied: false,
+    owner_id: owner_id,
+    date_created: currentTime,
+    date_updated: currentTime,
+    price_hr: 3.00,
+    price_day: 6.00,
+    available_spaces: available_spaces,
+    taken_spaces: 0,
+    parking_instructions: parking_instructions,
+    description: description,
+    type: type,
+    accomodations: {
+      large_vehicle: false,
+      ev_charging: false,
+      nearby_commute: false,
+      covered_space: false,
+      ...features,
+    },
+    schedule: {
+      start: '00:00',
+      end: '23:00',
+      allday: true,
+    },
+    location: {
+      address: formatted_address,
+      coordinates: geometry.location,
+      place_id: place_id,
+      geohash: geoHash,
+    },
+    geopointx: geofirepoint,
+    game_data: {
+      incubator_type: 'default',
+    },
+  };
+
+  var newCarportRef = db.collection('carports').doc();
+  var returnVal = await newCarportRef.set(docData)
+    .then(docRef => {
+      console.log('Document Written', docRef);
+      return true;
+    }).catch(err => console.error(err));
+
+  if (returnVal){
+    return newCarportRef.id;
+  }
+  return false;
+}
+
 export async function initializeNewCarport(address, owner_id){
   const { formatted_address, geometry, place_id } = address;
   const currentTime = moment().unix();
@@ -157,7 +212,7 @@ export async function initializeNewCarport(address, owner_id){
     owner_id: owner_id,
     date_created: currentTime,
     date_updated: currentTime,
-    price_hr: 2.50,
+    price_hr: 2.00,
     price_day: 6.00,
     available_spaces: 1,
     taken_spaces: 0,

@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
 import AddressForm from '../../components/carport/AddressForm';
 import AddressForm2 from '../../components/carport/AddressForm2';
 import AddressForm3 from '../../components/carport/AddressForm3';
 import AddressForm4 from '../../components/carport/AddressForm4';
+import AddressFormFinal from '../../components/carport/AddressFormFinal';
 import AddressForm5 from '../../components/carport/AddressForm5';
 
 const AddressSubmissionForm = () => {
@@ -12,7 +13,9 @@ const AddressSubmissionForm = () => {
   const [address, setaddress] = useState(null);
   const [type, settype] = useState(null);
   const [features, setfeatures] = useState(null);
+  const [availablespaces, setavailablespaces] = useState(null);
   const [parkinginstructions, setparkinginstructions] = useState(null);
+  const [description, setdescription] = useState(null);
 
   if (stage === 1) {
     return (
@@ -42,7 +45,7 @@ const AddressSubmissionForm = () => {
         <AddressForm4
           setstage={setstage}
           setfeatures={setfeatures}
-          setparkinginstructions={setparkinginstructions}
+          setavailablespaces={setavailablespaces}
         />
       </View>
     );
@@ -51,10 +54,22 @@ const AddressSubmissionForm = () => {
       <View style={styles.container}>
         <AddressForm5
           setstage={setstage}
+          setparkinginstructions={setparkinginstructions}
+          setdescription={setdescription}
+        />
+      </View>
+    );
+  } else if (stage === 6) {
+    return (
+      <View style={styles.container}>
+        <AddressFormFinal
+          setstage={setstage}
           address={address}
           type={type}
           features={features}
+          availablespaces={availablespaces}
           parkinginstructions={parkinginstructions}
+          description={description}
         />
       </View>
     );

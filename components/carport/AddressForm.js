@@ -1,12 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Input} from 'react-native-elements';
-import {
-  View,
-  ScrollView,
-  Text,
-  StyleSheet,
-  TouchableHighlight,
-} from 'react-native';
+import {ScrollView, Text, StyleSheet, TouchableHighlight} from 'react-native';
 import {getGeocodeAddress} from '../../firebase_func/firestoreFunctions';
 import {combineString} from '../../helpers/helper';
 
@@ -38,7 +32,7 @@ const AddressForm = props => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const {address, address2, city, us_state, zipcode} = inputs;
 
     const address_string = combineString([
@@ -48,9 +42,11 @@ const AddressForm = props => {
       us_state,
       zipcode,
     ]);
-    getGeocodeAddress(address_string).then(res => {
+    setdisabled(true);
+    await getGeocodeAddress(address_string).then(res => {
       console.log(res.data);
       setaddress(res.data.results[0]);
+      setdisabled(false);
       setstage(2);
     });
   };
@@ -93,6 +89,7 @@ const AddressForm = props => {
         onChangeText={text => handleTextChange('zipcode', text)}
         label={'Zipcode'}
         textContentType={'postalCode'}
+        keyboardType={'numeric'}
       />
       <TouchableHighlight
         disabled={disabled}

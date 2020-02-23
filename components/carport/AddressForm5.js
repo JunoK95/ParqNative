@@ -5,53 +5,51 @@ import {
   Text,
   StyleSheet,
   TouchableHighlight,
-  TouchableOpacity,
 } from 'react-native';
-import {Input, ListItem} from 'react-native-elements';
+import {Input} from 'react-native-elements';
 
 const AddressForm5 = props => {
-  const {setstage, address, type, features, parkinginstructions} = props;
-
-  const [description, setdescription] = useState(null);
+  const {setstage, setdescription, setparkinginstructions} = props;
+  const [parkinput, setparkinput] = useState('');
+  const [descinput, setdescinput] = useState('');
 
   const handleBack = () => {
     setstage(4);
   };
 
   const handleNext = () => {
-    setstage(5);
+    setparkinginstructions(parkinput);
+    setdescription(descinput);
+    setstage(6);
   };
 
   return (
     <ScrollView contentContainerStyle={styles.formcontainer}>
       <View style={styles.titlecontainer}>
-        <Text style={styles.titletext}>{'Review Submission'}</Text>
+        <Text style={styles.titletext}>{'Additional Information'}</Text>
       </View>
-      <View>
-        <ListItem
-          chevron
-          title={address.formatted_address}
-          subtitle={'address'}
-        />
-        <ListItem chevron title={type} subtitle={'location type'} />
-        <ListItem
-          chevron
-          title={
-            parkinginstructions === '' || parkinginstructions === null
-              ? '(no parking instructions)'
-              : parkinginstructions
-          }
-          subtitle={'parking instructions'}
-        />
-        <View style={{padding: 16}} />
+      <View style={styles.descontainer}>
         <Input
-          label={'Additional Descriptions'}
+          label={'Parking Instructions'}
           multiline
-          placeholder={'(optional)'}
-          value={description}
+          placeholder={'- Add any special instructions'}
+          value={parkinput}
           onChangeText={text => {
             if (text.length <= 280) {
-              setdescription(text);
+              setparkinput(text);
+            }
+          }}
+        />
+      </View>
+      <View style={styles.descontainer}>
+        <Input
+          label={'Additional Info'}
+          multiline
+          placeholder={'- Add any other useful info'}
+          value={descinput}
+          onChangeText={text => {
+            if (text.length <= 280) {
+              setdescinput(text);
             }
           }}
         />
@@ -66,8 +64,8 @@ const AddressForm5 = props => {
         <TouchableHighlight
           style={styles.button}
           underlayColor={'#ffc630'}
-          onPress={handleBack}>
-          <Text style={styles.buttonText}>Submit</Text>
+          onPress={handleNext}>
+          <Text style={styles.buttonText}>Next</Text>
         </TouchableHighlight>
       </View>
     </ScrollView>
@@ -125,7 +123,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   descontainer: {
-    paddingTop: 36,
+    paddingBottom: 36,
   },
   buttonrow: {
     flexDirection: 'row',
@@ -136,7 +134,7 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     paddingVertical: 8,
-    width: 130,
+    paddingHorizontal: 48,
     backgroundColor: '#11a4ff',
     borderColor: '#11a4ff',
     borderWidth: 2,
@@ -152,7 +150,7 @@ const styles = StyleSheet.create({
   nobutton: {
     alignItems: 'center',
     paddingVertical: 8,
-    width: 130,
+    paddingHorizontal: 48,
     backgroundColor: '#fff',
     borderColor: '#555',
     borderWidth: 2,
