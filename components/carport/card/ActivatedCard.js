@@ -1,50 +1,30 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
   StyleSheet,
+  TouchableHighlight,
   TouchableOpacity,
   Image,
-  TouchableHighlight,
 } from 'react-native';
-import {
-  convertToDollar,
-  distanceBetweenCoordinates,
-  splitStrByComma,
-} from '../../helpers/helper';
 import {withNavigation} from 'react-navigation';
-import storeLogo from '../../resources/images/112.png';
-import FeaturesList from '../carport/FeaturesList';
+import {splitStrByComma, convertToDollar} from '../../../helpers/helper';
+import storeLogo from '../../../resources/images/112.png';
+import FeaturesList from '../FeaturesList';
 
-const CarportCard = props => {
-  const {port, currentlocation, setopen} = props;
+const ActivatedCard = props => {
+  const {port} = props;
 
   const handleClick = () => {
-    if (setopen) {
-      setopen(false);
-    }
-    props.navigation.navigate('CarportInfo', {port});
+    props.navigation.navigate('CarportEdit', {port});
   };
 
-  const handleBook = () => {
-    if (setopen) {
-      setopen(false);
-    }
-    props.navigation.navigate('PayParking', {port});
+  const handleActivate = () => {
+    console.log('activate');
   };
 
   if (!port) {
     return null;
-  }
-
-  let distance;
-  if (currentlocation) {
-    distance = distanceBetweenCoordinates(
-      currentlocation.latitude,
-      currentlocation.longitude,
-      port.location.coordinates.lat,
-      port.location.coordinates.lng,
-    );
   }
 
   let scheduleTxt;
@@ -56,50 +36,46 @@ const CarportCard = props => {
 
   const splitAddress = splitStrByComma(port.location.address);
 
-  if (port) {
-    return (
-      <TouchableOpacity style={styles.container} onPress={handleClick}>
-        <View style={styles.cardheader}>
-          <View style={styles.left}>
-            <View style={styles.box}>
-              <Text style={styles.price}>
-                {'$' + convertToDollar(port.price_hr) + '/hr'}
-              </Text>
-              <Text numberOfLines={1} style={styles.address}>
-                {splitAddress[0]}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.right}>
-            <View style={styles.box}>
-              <Text style={styles.distance}>{distance + ' mi'}</Text>
-              <Text style={styles.distance}>{scheduleTxt}</Text>
-            </View>
+  return (
+    <TouchableOpacity style={styles.container} onPress={handleClick}>
+      <View style={styles.cardheader}>
+        <View style={styles.left}>
+          <View style={styles.box}>
+            <Text style={styles.price}>
+              {'$' + convertToDollar(port.price_hr) + '/hr'}
+            </Text>
+            <Text numberOfLines={1} style={styles.address}>
+              {splitAddress[0]}
+            </Text>
           </View>
         </View>
-        <View style={styles.contentcontainer}>
-          <View style={styles.leftcontent}>
-            <View style={styles.avatarcontainer}>
-              <Image style={styles.avatar} source={storeLogo} />
-            </View>
-          </View>
-          <View style={styles.centercontent} />
-          <View style={styles.rightcontent}>
-            <FeaturesList features={port.accomodations} type={port.type} />
+        <View style={styles.right}>
+          <View style={styles.box}>
+            <Text style={styles.distance}>{scheduleTxt}</Text>
           </View>
         </View>
-        <View style={styles.buttonrow}>
-          <TouchableHighlight
-            style={styles.button}
-            underlayColor={'#ffc630'}
-            onPress={handleBook}>
-            <Text style={styles.buttonText}>Book</Text>
-          </TouchableHighlight>
+      </View>
+      <View style={styles.contentcontainer}>
+        <View style={styles.leftcontent}>
+          <View style={styles.avatarcontainer}>
+            <Image style={styles.avatar} source={storeLogo} />
+          </View>
         </View>
-      </TouchableOpacity>
-    );
-  }
-  return null;
+        <View style={styles.centercontent} />
+        <View style={styles.rightcontent}>
+          <FeaturesList features={port.accomodations} type={port.type} />
+        </View>
+      </View>
+      <View style={styles.buttonrow}>
+        <TouchableHighlight
+          style={styles.button}
+          underlayColor={'#ffc630'}
+          onPress={() => console.log('stuff')}>
+          <Text style={styles.buttonText}>Deactivate</Text>
+        </TouchableHighlight>
+      </View>
+    </TouchableOpacity>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -224,7 +200,7 @@ const styles = StyleSheet.create({
   button: {
     width: 220,
     paddingVertical: 8,
-    backgroundColor: '#11a4ff',
+    backgroundColor: '#fff',
     borderColor: '#11a4ff',
     borderRadius: 20,
     borderWidth: 2,
@@ -232,9 +208,10 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: 'center',
     fontSize: 16,
-    color: '#fff',
+    color: '#11a4ff',
     fontWeight: 'bold',
     fontFamily: 'Montserrat',
   },
 });
-export default withNavigation(CarportCard);
+
+export default withNavigation(ActivatedCard);

@@ -14,7 +14,7 @@ const AddressForm4 = props => {
   const [selected, setselected] = useState({
     covered_space: false,
     ev_charging: false,
-    valet: false,
+    parallel: false,
     low_clearance: false,
     compact_only: false,
     no_reentry: false,
@@ -33,9 +33,9 @@ const AddressForm4 = props => {
       color: '#11a4ff',
     },
     {
-      label: 'Valet',
-      name: 'valet',
-      color: '#11a4ff',
+      label: 'Parallel',
+      name: 'parallel',
+      color: '#fa8072',
     },
     {
       label: 'Low Clearance',

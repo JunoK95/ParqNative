@@ -11,7 +11,7 @@ const HeaderPadding = props => {
       <View style={styles.center}>
         <Text style={styles.title}>{props.title}</Text>
       </View>
-      <View style={styles.right} />
+      <View style={styles.right}>{props.right}</View>
     </View>
   );
 };

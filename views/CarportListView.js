@@ -1,18 +1,20 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {View, ActivityIndicator} from 'react-native';
+import {
+  View,
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import {AuthContext} from '../context/AuthContext';
 import HeaderPadding from '../components/layout/HeaderPadding';
-import {
-  getOwnedCarports,
-  batchUpdateCarportData,
-} from '../firebase_func/firestoreFunctions';
-import {ListItem} from 'react-native-elements';
+import {getOwnedCarports} from '../firebase_func/firestoreFunctions';
+import {ListItem, Icon} from 'react-native-elements';
+import CarportCard2 from '../components/carport/CarportCard2';
 
 const CarportListView = props => {
   const context = useContext(AuthContext);
   const [carports, setports] = useState([]);
-
-  const [changed, setchanged] = useState(null);
   const [fetching, setfetch] = useState(true);
   const [loading, setload] = useState(false);
 
@@ -27,32 +29,40 @@ const CarportListView = props => {
   }, [user_id]);
 
   const carportCardList = carports.map((c, i) => {
-    return (
-      <ListItem
-        key={i}
-        title={c.id}
-        onPress={() => props.navigation.navigate('CarportEdit', {carport: c})}
-      />
-    );
+    return <CarportCard2 key={i} port={c.data} />;
   });
 
   return (
     <View>
-      <HeaderPadding to={'Home'} />
+      <HeaderPadding
+        to={'Home'}
+        right={
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('CarportRegister')}>
+            <Icon name={'add'} size={30} color={'#000'} />
+          </TouchableOpacity>
+        }
+      />
       {fetching ? (
         <ActivityIndicator />
       ) : (
-        <React.Fragment>
+        <ScrollView contentContainerStyle={styles.scrollcontainer}>
           {carportCardList}
           <ListItem
             title={'Register a property'}
             leftIcon={{name: 'add', color: '#000'}}
             onPress={() => props.navigation.navigate('CarportRegister')}
           />
-        </React.Fragment>
+        </ScrollView>
       )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  scrollcontainer: {
+    alignItems: 'center',
+  },
+});
 
 export default CarportListView;

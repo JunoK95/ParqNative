@@ -11,7 +11,7 @@ import {
 import {ListItem} from 'react-native-elements';
 import {initializeCarportWithParams} from '../../firebase_func/firestoreFunctions';
 import {AuthContext} from '../../context/AuthContext';
-import SuccessImg from '../../resources/images/45.png'
+import SuccessImg from '../../resources/images/45.png';
 
 const AddressFormFinal = props => {
   const context = useContext(AuthContext);
