@@ -1,5 +1,12 @@
 import React, {useState, useContext} from 'react';
-import {View, Text, StyleSheet, Image, TouchableHighlight} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableHighlight,
+  TextInput,
+} from 'react-native';
 import {convertToDollar, splitStrByComma} from '../../helpers/helper';
 import {withNavigation} from 'react-navigation';
 import storeLogo from '../../resources/images/112.png';
@@ -11,13 +18,14 @@ import {chargeWallet} from '../../firebase_func/walletFunctions';
 import moment from 'moment';
 import Axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FeaturesList from '../carport/FeaturesList';
 
 const CarportPayCard = props => {
   const context = useContext(AuthContext);
   const {port, setopen} = props;
   const [selectcard, setselectcard] = useState(null);
   const [vehicle, setvehicle] = useState(null);
-  const [hours, sethours] = useState(1);
+  const [hours, sethours] = useState('1');
 
   //For progress indication
   const [loading, setloading] = useState(false);
@@ -33,10 +41,11 @@ const CarportPayCard = props => {
   const totalAmount = amount + amountFee + amountTax;
   const dollarAmount = (totalAmount / 100).toFixed(2);
 
-  const finalizePay = (_port, _vehicle, _price) => {
+  const finalizePay = (_port, _vehicle, _price, _hours) => {
+    _hours = parseInt(_hours, 10);
     const startTime = moment().unix();
     const endTime = moment()
-      .add(hours, 'hours')
+      .add(_hours, 'hours')
       .unix();
     context.functions
       .reserveCarport(
@@ -47,7 +56,7 @@ const CarportPayCard = props => {
         _vehicle.id,
         _vehicle.data,
         _price,
-        hours,
+        _hours,
       )
       .then(res => {
         console.log('transaction complete', res);
@@ -76,7 +85,9 @@ const CarportPayCard = props => {
     setloading(true);
 
     //check availablity
-    const isAvailable = await checkCarportAvailablity(port);
+    const isAvailable = await checkCarportAvailablity(port).then(res => {
+      return res;
+    });
     if (!isAvailable) {
       seterror('This parking spot became unavailable');
       setloading(false);
@@ -109,7 +120,7 @@ const CarportPayCard = props => {
         ).then(res => {
           console.log('wallet charged =>  ', res);
           if (res) {
-            finalizePay(port, vehicle, dollarAmount);
+            finalizePay(port, vehicle, dollarAmount, hours);
           }
         });
       }
@@ -122,7 +133,7 @@ const CarportPayCard = props => {
         data: resData,
       })
         .then(res => {
-          finalizePay(port, vehicle, dollarAmount);
+          finalizePay(port, vehicle, dollarAmount, hours);
           console.log(res);
         })
         .catch(err => {
@@ -177,10 +188,19 @@ const CarportPayCard = props => {
           <View style={styles.left}>
             <Image style={styles.avatar} source={storeLogo} />
           </View>
+          <FeaturesList features={port.accomodations} />
         </View>
         <View style={{height: 12}} />
         <VehiclePicker setvehicle={setvehicle} />
         <PaymentPicker setselectcard={setselectcard} includeWallet />
+        <View style={styles.hourpicker}>
+          <Text>Hours</Text>
+          <TextInput
+            value={hours}
+            onChangeText={text => sethours(text)}
+            keyboardType={'numeric'}
+          />
+        </View>
         <TouchableHighlight
           disabled={!selectcard || !hours || loading}
           style={
@@ -267,6 +287,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontFamily: 'Montserrat',
+  },
+  hourpicker: {
+    width: 260,
   },
   left: {
     flex: 1,

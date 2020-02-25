@@ -287,6 +287,36 @@ export async function getOwnedCarports(owner_id){
   return ownedCarports;
 }
 
+export async function activateCarport(port_id) {
+  var returnVal =
+    await db.collection('carports')
+            .doc(port_id)
+            .update({enabled: true})
+            .then(() => {
+              return true;
+            }).catch(error => {
+              console.error(error);
+              return false;
+            });
+
+  return returnVal;
+}
+
+export async function deactivateCarport(port_id) {
+  var returnVal =
+    await db.collection('carports')
+            .doc(port_id)
+            .update({enabled: false})
+            .then(() => {
+              return true;
+            }).catch(error => {
+              console.error(error);
+              return false;
+            });
+
+  return returnVal;
+}
+
 export async function updateCarportData(port_id, data){
   console.log('@updateCarportData', data);
   const newdata = {

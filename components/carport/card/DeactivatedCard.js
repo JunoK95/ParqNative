@@ -12,9 +12,10 @@ import storeLogo from '../../../resources/images/112.png';
 import FeaturesList from '../FeaturesList';
 import {withNavigation} from 'react-navigation';
 import {Input} from 'react-native-elements';
+import {activateCarport} from '../../../firebase_func/firestoreFunctions';
 
 const DeactivatedCard = props => {
-  const {port} = props;
+  const {port, port_id} = props;
   const [active, setactive] = useState(false);
 
   const handleClick = () => {
@@ -23,6 +24,15 @@ const DeactivatedCard = props => {
 
   const handleActivate = () => {
     console.log('activate');
+  };
+
+  const handleSubmit = async () => {
+    if (port_id) {
+      const success = await activateCarport(port_id);
+      if (success) {
+        setactive(false);
+      }
+    }
   };
 
   if (!port) {
@@ -120,7 +130,7 @@ const DeactivatedCard = props => {
             <TouchableHighlight
               style={styles.buttonhalf}
               underlayColor={'#ffc630'}
-              onPress={() => setactive(false)}>
+              onPress={() => handleSubmit()}>
               <Text style={styles.buttonTextdisabled}>Submit</Text>
             </TouchableHighlight>
           </View>

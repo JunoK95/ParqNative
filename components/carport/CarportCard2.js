@@ -4,7 +4,7 @@ import DeactivatedCard from './card/DeactivatedCard';
 import ActivatedCard from './card/ActivatedCard';
 
 const CarportCard2 = props => {
-  const {port} = props;
+  const {port, port_id} = props;
 
   if (!port) {
     return null;
@@ -12,9 +12,9 @@ const CarportCard2 = props => {
 
   if (port) {
     if (port.enabled) {
-      return <ActivatedCard port={port} />;
+      return <ActivatedCard port={port} port_id={port_id} />;
     } else {
-      return <DeactivatedCard port={port} />;
+      return <DeactivatedCard port={port} port_id={port_id} />;
     }
   }
   return null;

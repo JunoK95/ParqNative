@@ -14,7 +14,7 @@ const VehicleListView = props => {
         key={i}
         title={v.data.name}
         vehicle_id={v.id}
-        leftIcon={{name: 'star-border', color: '#000'}}
+        leftIcon={{name: 'directions-car', color: '#000'}}
       />
     );
   });

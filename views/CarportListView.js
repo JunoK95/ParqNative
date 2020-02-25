@@ -29,7 +29,7 @@ const CarportListView = props => {
   }, [user_id]);
 
   const carportCardList = carports.map((c, i) => {
-    return <CarportCard2 key={i} port={c.data} />;
+    return <CarportCard2 key={i} port={c.data} port_id={c.id} />;
   });
 
   return (

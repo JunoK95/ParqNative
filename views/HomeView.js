@@ -4,6 +4,8 @@ import MapView, {Marker} from 'react-native-maps';
 import HomeOverlay from '../components/home/HomeOverlay';
 import {GeolocationContext} from '../context/GeolocationContext';
 import DrawerHeaderPadding from '../components/layout/DrawerHeaderPadding';
+import HomeBottomRow from '../components/home/HomeBottomRow';
+import HomeCurrentLocationButton from '../components/home/HomeCurrentLocationButton';
 
 export default class HomeView extends React.Component {
   render() {
@@ -34,10 +36,13 @@ export default class HomeView extends React.Component {
                   </MapView>
                 )}
                 <DrawerHeaderPadding />
-                <HomeOverlay
-                  navigation={this.props.navigation}
-                  location={(latitude, longitude)}
-                />
+                <HomeBottomRow />
+                <View style={styles.hoverbutton}>
+                  <HomeCurrentLocationButton
+                    location={(latitude, longitude)}
+                    navigation={this.props.navigation}
+                  />
+                </View>
               </View>
             </React.Fragment>
           );
@@ -53,8 +58,14 @@ const styles = StyleSheet.create({
     zIndex: 1,
     backgroundColor: '#fff',
   },
+  hoverbutton: {
+    position: 'absolute',
+    top: 48,
+    alignItems: 'center',
+    width: Dimensions.get('window').width,
+  },
   mapStyle: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height * 0.45,
+    height: Dimensions.get('window').height,
   },
 });

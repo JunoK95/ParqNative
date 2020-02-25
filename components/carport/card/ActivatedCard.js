@@ -11,16 +11,20 @@ import {withNavigation} from 'react-navigation';
 import {splitStrByComma, convertToDollar} from '../../../helpers/helper';
 import storeLogo from '../../../resources/images/112.png';
 import FeaturesList from '../FeaturesList';
+import {deactivateCarport} from '../../../firebase_func/firestoreFunctions';
 
 const ActivatedCard = props => {
-  const {port} = props;
+  const {port, port_id} = props;
 
   const handleClick = () => {
     props.navigation.navigate('CarportEdit', {port});
   };
 
-  const handleActivate = () => {
-    console.log('activate');
+  const handleDeactivate = async () => {
+    if (port_id) {
+      const success = await deactivateCarport(port_id);
+      console.log(port_id, ' deactivated ', success);
+    }
   };
 
   if (!port) {
@@ -70,7 +74,7 @@ const ActivatedCard = props => {
         <TouchableHighlight
           style={styles.button}
           underlayColor={'#ffc630'}
-          onPress={() => console.log('stuff')}>
+          onPress={() => handleDeactivate()}>
           <Text style={styles.buttonText}>Deactivate</Text>
         </TouchableHighlight>
       </View>
