@@ -40,9 +40,10 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   title: {
-    fontFamily: 'Montserrat-Medium',
+    fontFamily: 'Montserrat-SemiBold',
     textAlign: 'center',
     textAlignVertical: 'center',
+    marginTop: 4,
     fontSize: 17,
   },
   left: {

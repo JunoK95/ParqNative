@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlignVertical: 'center',
-    fontFamily: 'Montserrat Semi-Bold',
+    fontFamily: 'Montserrat-Medium',
     fontSize: 16,
   },
 });

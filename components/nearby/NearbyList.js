@@ -24,9 +24,18 @@ const NearbyList = props => {
     );
   } else {
     return (
-      <ListItem
-        title={'No Nearby Parking Available'}
-        leftIcon={{name: 'sentiment-dissatisfied', color: '#000'}}
+      <FlatList
+        contentContainerStyle={styles.listcontainer}
+        data={[]}
+        keyExtractor={item => item.id}
+        renderItem={({item}) => {
+          return (
+            <ListItem
+              title={'No Nearby Parking Available'}
+              leftIcon={{name: 'sentiment-dissatisfied', color: '#000'}}
+            />
+          );
+        }}
       />
     );
   }

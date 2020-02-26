@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
+import {View, StyleSheet, Dimensions, Image} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
-import HomeOverlay from '../components/home/HomeOverlay';
 import {GeolocationContext} from '../context/GeolocationContext';
 import DrawerHeaderPadding from '../components/layout/DrawerHeaderPadding';
 import HomeBottomRow from '../components/home/HomeBottomRow';
 import HomeCurrentLocationButton from '../components/home/HomeCurrentLocationButton';
+import mapicon from '../resources/images/parq_dino64x64.png';
 
 export default class HomeView extends React.Component {
   render() {
@@ -31,8 +31,9 @@ export default class HomeView extends React.Component {
                       coordinate={{
                         latitude: parseFloat(latitude),
                         longitude: parseFloat(longitude),
-                      }}
-                    />
+                      }}>
+                      <Image source={mapicon} />
+                    </Marker>
                   </MapView>
                 )}
                 <DrawerHeaderPadding />
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
   },
   hoverbutton: {
     position: 'absolute',
-    top: 48,
+    top: 36,
     alignItems: 'center',
     width: Dimensions.get('window').width,
   },

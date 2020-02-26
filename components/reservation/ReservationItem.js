@@ -4,47 +4,32 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   TouchableHighlight,
+  Image,
+  Platform,
+  Linking,
 } from 'react-native';
-import {
-  convertToDollar,
-  distanceBetweenCoordinates,
-  splitStrByComma,
-} from '../../helpers/helper';
-import {withNavigation} from 'react-navigation';
-import storeLogo from '../../resources/images/112.png';
 import FeaturesList from '../carport/FeaturesList';
+import {splitStrByComma, convertToDollar} from '../../helpers/helper';
+import storeLogo from '../../resources/images/112.png';
 
-const CarportCard = props => {
-  const {port, currentlocation, setopen} = props;
+const ReservationItem = props => {
+  const {port} = props;
 
   const handleClick = () => {
-    if (setopen) {
-      setopen(false);
-    }
-    props.navigation.navigate('CarportInfo', {port});
+    console.log('handleclick');
   };
 
-  const handleBook = () => {
-    if (setopen) {
-      setopen(false);
+  const openGps = (lat, lng) => {
+    var url = `google.navigation:q=${lat},${lng}`;
+    if (Platform === 'ios') {
+      url = `maps://app?saddr=100+101&daddr=${lat}+${lng}`;
     }
-    props.navigation.navigate('PayParking', {port});
+    Linking.openURL(url);
   };
 
   if (!port) {
     return null;
-  }
-
-  let distance;
-  if (currentlocation) {
-    distance = distanceBetweenCoordinates(
-      currentlocation.latitude,
-      currentlocation.longitude,
-      port.location.coordinates.lat,
-      port.location.coordinates.lng,
-    );
   }
 
   let scheduleTxt;
@@ -72,7 +57,6 @@ const CarportCard = props => {
           </View>
           <View style={styles.right}>
             <View style={styles.box}>
-              <Text style={styles.distance}>{distance + ' mi'}</Text>
               <Text style={styles.distance}>{scheduleTxt}</Text>
             </View>
           </View>
@@ -92,8 +76,13 @@ const CarportCard = props => {
           <TouchableHighlight
             style={styles.button}
             underlayColor={'#ffc630'}
-            onPress={handleBook}>
-            <Text style={styles.buttonText}>Book</Text>
+            onPress={() =>
+              openGps(
+                port.location.coordinates.lat,
+                port.location.coordinates.lng,
+              )
+            }>
+            <Text style={styles.buttonText}>Get Directions</Text>
           </TouchableHighlight>
         </View>
       </TouchableOpacity>
@@ -238,4 +227,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withNavigation(CarportCard);
+export default ReservationItem;

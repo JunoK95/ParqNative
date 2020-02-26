@@ -36,6 +36,7 @@ const CarportListView = props => {
     <View>
       <HeaderPadding
         to={'Home'}
+        title={'Your Spaces'}
         right={
           <TouchableOpacity
             onPress={() => props.navigation.navigate('CarportRegister')}>

@@ -1,9 +1,10 @@
 import React from 'react';
-import {StyleSheet, ScrollView, View} from 'react-native';
+import {StyleSheet, ScrollView, View, Text, Image} from 'react-native';
 import {withNavigation} from 'react-navigation';
 import {ListItem} from 'react-native-elements';
 import {useContext} from 'react';
 import {AuthContext} from '../../context/AuthContext';
+import logo from '../../resources/images/parq_dino64x64.png';
 
 function DrawerNav(props) {
   const context = useContext(AuthContext);
@@ -66,7 +67,13 @@ function DrawerNav(props) {
     <View style={styles.drawer}>
       <ScrollView style={styles.scroll}>
         <View style={styles.card}>
-          <ListItem
+          <View style={styles.textcol}>
+            <Image source={logo} />
+          </View>
+          <View style={styles.textcol}>
+            <Text style={styles.brandname}> PARQ</Text>
+          </View>
+          {/* <ListItem
             containerStyle={styles.profileContainer}
             titleStyle={styles.profileText}
             title={
@@ -77,7 +84,7 @@ function DrawerNav(props) {
             subtitle={'coins '}
             onPress={() => navigateTo('UserProfile')}
             leftIcon={{name: 'person-pin', color: '#000'}}
-          />
+          /> */}
         </View>
         {navLinks}
       </ScrollView>
@@ -106,10 +113,31 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   card: {
-    paddingTop: 24,
-    paddingBottom: 24,
+    paddingVertical: 36,
+    paddingLeft: 16,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
     backgroundColor: '#11a4ff',
     borderWidth: 0,
+  },
+  textcol: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  brandname: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 48,
+    textAlign: 'left',
+  },
+  subbrandname: {
+    color: '#111',
+    fontWeight: 'bold',
+    fontSize: 14,
+    paddingLeft: 10,
+    textAlign: 'left',
   },
   profileContainer: {
     backgroundColor: '#11a4ff',

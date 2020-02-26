@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     margin: 12,
     marginHorizontal: 32,
     borderRadius: 12,
-    borderWidth: 1,
+    elevation: 4,
   },
 });
 

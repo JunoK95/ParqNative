@@ -63,9 +63,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlignVertical: 'center',
     textAlign: 'center',
-    fontFamily: 'Montserrat Semi-Bold',
+    fontFamily: 'Montserrat-Medium',
     fontWeight: '600',
-    fontSize: 18,
+    fontSize: 16,
   },
 });
 

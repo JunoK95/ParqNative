@@ -1,7 +1,9 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import {View, ActivityIndicator} from 'react-native';
 import HeaderPadding from '../components/layout/HeaderPadding';
 import {AuthContext} from '../context/AuthContext';
+import ReservationList from '../components/reservation/ReservationList';
+import moment from 'moment';
 
 const ReservationListView = () => {
   const context = useContext(AuthContext);
@@ -15,12 +17,24 @@ const ReservationListView = () => {
     });
   }, [context]);
 
-  return (
-    <View>
-      <HeaderPadding to={'Home'} />
-      <Text>Reservation LIst View</Text>
-    </View>
-  );
+  if (!loading) {
+    const activeReservations = reservations.filter(res => {
+      return res.data.end > moment().unix();
+    });
+    return (
+      <View>
+        <HeaderPadding title={'Reservations'} to={'Home'} />
+        <ReservationList reservations={activeReservations} />
+      </View>
+    );
+  } else {
+    return (
+      <View>
+        <HeaderPadding title={'Reservations'} to={'Home'} />
+        <ActivityIndicator />
+      </View>
+    );
+  }
 };
 
 export default ReservationListView;
