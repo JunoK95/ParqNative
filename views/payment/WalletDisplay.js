@@ -4,20 +4,8 @@ import {ListItem} from 'react-native-elements';
 import AddBalanceMenu from './AddBalanceMenu';
 
 const WalletDisplay = props => {
-  const {user_id} = props;
+  const {user_id, wallet} = props;
   const [menuOpen, setmenu] = useState(false);
-  const [wallet, setwallet] = useState(null);
-
-  useEffect(() => {
-    async function fetchWallet() {
-      const data = await getWallet(user_id).then(res => {
-        return res;
-      });
-      setwallet(data);
-    }
-
-    fetchWallet();
-  }, [user_id]);
 
   let creditAmount = 0;
   if (wallet) {

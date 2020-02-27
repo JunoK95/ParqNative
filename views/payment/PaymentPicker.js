@@ -6,44 +6,34 @@ const PaymentPicker = props => {
   const [select, setselect] = useState(null);
   const [cards, setcards] = useState(null);
   const [wallet, setwallet] = useState(null);
-  const {setselectcard} = props;
+  const [fetch, setfetch] = useState(true);
+  const {setselectcard, includeWallet} = props;
   const context = useContext(AuthContext);
 
   useEffect(() => {
     async function fetchData() {
+      setfetch(true);
       if (!context.user_data.stripe_customer_id) {
         await context.functions.assignStripeId();
+        setfetch(false);
       } else {
         const payments = await context.functions
           .getAllPaymentMethods()
           .then(res => {
             return res;
           });
-        if (props.includeWallet) {
-          setselect(payments.wallet);
-          setselectcard(payments.wallet);
-          setwallet(payments.wallet);
-        }
+
         if (payments.cards.length > 0) {
           setcards(payments.cards);
           setselect(payments.cards[0]);
           setselectcard(payments.cards[0]);
           setwallet(payments.wallet);
-        } else {
-          setselect(payments.wallet);
-          setselectcard(payments.wallet);
-          setwallet(payments.wallet);
         }
+        setfetch(false);
       }
     }
-
     fetchData();
-  }, [
-    context.user_data,
-    context.functions,
-    setselectcard,
-    props.includeWallet,
-  ]);
+  }, [context.functions, context.user_data.stripe_customer_id, setselectcard]);
 
   let pickerItems;
   if (cards) {
@@ -54,30 +44,47 @@ const PaymentPicker = props => {
     });
   }
 
-  return (
-    <View>
-      <Text style={styles.pickerLabel}>Payment Method</Text>
-      {cards && wallet ? (
-        <Picker
-          style={styles.picker}
-          selectedValue={select}
-          onValueChange={(itemValue, itemIndex) => {
-            setselect(itemValue);
-            setselectcard(itemValue);
-          }}>
-          {props.includeWallet && (
-            <Picker.Item
-              label={'💰 ' + wallet.credit + ' coins'}
-              value={wallet}
-            />
-          )}
-          {pickerItems}
-        </Picker>
-      ) : (
+  if (!fetch) {
+    if (includeWallet) {
+      return (
+        <View>
+          <Text style={styles.pickerLabel}>Payment Method</Text>
+          <Picker
+            style={styles.picker}
+            selectedValue={select}
+            onValueChange={(itemValue, itemIndex) => {
+              setselect(itemValue);
+              setselectcard(itemValue);
+            }}>
+            <Picker.Item label={`${wallet.credit} coins`} value={wallet} />
+            {pickerItems}
+          </Picker>
+        </View>
+      );
+    } else if (!includeWallet) {
+      return (
+        <View>
+          <Text style={styles.pickerLabel}>Payment Method</Text>
+          <Picker
+            style={styles.picker}
+            selectedValue={select}
+            onValueChange={(itemValue, itemIndex) => {
+              setselect(itemValue);
+              setselectcard(itemValue);
+            }}>
+            {pickerItems}
+          </Picker>
+        </View>
+      );
+    }
+  } else {
+    return (
+      <View>
+        <Text style={styles.pickerLabel}>Payment Method</Text>
         <ActivityIndicator />
-      )}
-    </View>
-  );
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({

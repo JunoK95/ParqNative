@@ -120,3 +120,15 @@ export function calculateFees(amount) {
   amount = parseInt(amount, 10);
   return parseInt(amount * 0.0875 + (amount * 0.03 + 30), 10);
 }
+
+export function millisecondsToHours(ms) {
+  return Math.round((ms / 1000 / 60 / 60) * 100) / 100;
+}
+
+export function setTwoDigit(number) {
+  if (parseInt(number, 10) > 0) {
+    return ('0' + number).slice(-2);
+  } else {
+    return '00';
+  }
+}

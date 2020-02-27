@@ -1,21 +1,33 @@
-import React, {useContext, useState, useEffect} from 'react';
-import {View, ActivityIndicator} from 'react-native';
+import React, {useContext, useState, useEffect, useCallback} from 'react';
+import {View, ActivityIndicator, TouchableOpacity} from 'react-native';
 import HeaderPadding from '../components/layout/HeaderPadding';
 import {AuthContext} from '../context/AuthContext';
 import ReservationList from '../components/reservation/ReservationList';
+import {Icon} from 'react-native-elements';
 import moment from 'moment';
 
 const ReservationListView = () => {
   const context = useContext(AuthContext);
   const [loading, setloading] = useState(true);
   const [reservations, setreservations] = useState();
-  useEffect(() => {
+
+  const fetchData = useCallback(async () => {
     setloading(true);
     context.functions.reservationHistory().then(res => {
       setreservations(res);
       setloading(false);
     });
-  }, [context]);
+  }, [context.functions]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const refreshbutton = (
+    <TouchableOpacity onPress={() => fetchData()}>
+      <Icon name={'refresh'} size={30} />
+    </TouchableOpacity>
+  );
 
   if (!loading) {
     const activeReservations = reservations.filter(res => {
@@ -23,7 +35,11 @@ const ReservationListView = () => {
     });
     return (
       <View>
-        <HeaderPadding title={'Reservations'} to={'Home'} />
+        <HeaderPadding
+          title={'Reservations'}
+          to={'Home'}
+          right={refreshbutton}
+        />
         <ReservationList reservations={activeReservations} />
       </View>
     );

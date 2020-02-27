@@ -12,8 +12,9 @@ import {geofirexQueryPoints} from '../firebase_func/geofirexFunctions';
 import TransparentHeaderPadding from '../components/layout/TransparentHeaderPadding';
 import NearbyListModal from '../components/nearby/NearbyListModal';
 import CustomMapMarker from '../components/map/CustomMapMarker';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import CarportCard from '../components/map/CarportCard';
+import LoadingView from './LoadingView';
 
 const NearbyListView = props => {
   const {params} = props.navigation.state;
@@ -59,8 +60,8 @@ const NearbyListView = props => {
 
   if (fetching) {
     return (
-      // eslint-disable-next-line react-native/no-inline-styles
-      <View style={{flex: 1, justifyContent: 'center'}}>
+      <View style={styles.bg}>
+        <Text>Finding Nearby Parking...</Text>
         <ActivityIndicator />
       </View>
     );
@@ -97,10 +98,18 @@ const NearbyListView = props => {
           <CarportCard port={select} currentlocation={{latitude, longitude}} />
         </View>
         <TransparentHeaderPadding navigation={props.navigation} to={'Search'} />
+        <View style={styles.hoverbutton}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => fetchDataGeoX(3.2)}>
+            <Icon name={'search-plus'} size={18} />
+            <Text style={styles.text}> Expand Radius</Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity
           style={styles.listHeader}
           onPress={() => setlistmode(true)}>
-          <Icon name={'menu'} size={18} />
+          <Icon name={'bars'} size={18} />
           <Text style={styles.listTitle}> List </Text>
         </TouchableOpacity>
         <NearbyListModal
@@ -119,6 +128,12 @@ const styles = StyleSheet.create({
     flex: 1,
     zIndex: 1,
     backgroundColor: '#fff',
+  },
+  bg: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffc630',
   },
   overlay: {
     position: 'absolute',
@@ -147,8 +162,27 @@ const styles = StyleSheet.create({
   listTitle: {
     fontSize: 18,
     fontWeight: '600',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Medium',
     color: '#000',
+  },
+  hoverbutton: {
+    position: 'absolute',
+    top: 36,
+    alignItems: 'center',
+    width: Dimensions.get('window').width,
+  },
+  button: {
+    borderRadius: 20,
+    backgroundColor: '#11a4ff',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    flexDirection: 'row',
+    opacity: 0.8,
+  },
+  text: {
+    textAlignVertical: 'center',
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 16,
   },
 });
 

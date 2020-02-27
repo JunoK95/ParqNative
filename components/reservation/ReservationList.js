@@ -6,11 +6,15 @@ const ReservationList = props => {
   const {reservations} = props;
 
   let reservationList;
-  if (reservations) {
+  if (reservations.length > 0) {
     reservationList = reservations.map((r, i) => {
       const {data} = r;
-      return <ReservationItem key={i} port={data.carport_data} />;
+      return (
+        <ReservationItem key={i} port={data.carport_data} reservation={data} />
+      );
     });
+  } else {
+    reservationList = <Text>No current reservations</Text>;
   }
 
   console.log('reservation list', reservations);

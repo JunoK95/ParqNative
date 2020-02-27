@@ -72,6 +72,7 @@ function DrawerNav(props) {
           </View>
           <View style={styles.textcol}>
             <Text style={styles.brandname}> PARQ</Text>
+            <Text style={styles.subbrandname}> makes parking easy</Text>
           </View>
           {/* <ListItem
             containerStyle={styles.profileContainer}
@@ -134,10 +135,11 @@ const styles = StyleSheet.create({
   },
   subbrandname: {
     color: '#111',
-    fontWeight: 'bold',
-    fontSize: 14,
+    fontSize: 13,
     paddingLeft: 10,
     textAlign: 'left',
+    lineHeight: 14,
+    fontFamily: 'Montserrat-SemiBoldItalic',
   },
   profileContainer: {
     backgroundColor: '#11a4ff',

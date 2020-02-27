@@ -1,6 +1,7 @@
 import React, {useEffect, useContext} from 'react';
 import {View, ActivityIndicator, StyleSheet} from 'react-native';
 import {AuthContext} from '../../context/AuthContext';
+import LoadingView from '../LoadingView';
 
 const AuthStatus = props => {
   const context = useContext(AuthContext);
@@ -14,9 +15,7 @@ const AuthStatus = props => {
   }, [context, props.navigation]);
 
   return (
-    <View style={styles.bg}>
-      <ActivityIndicator />
-    </View>
+    <LoadingView />
   );
 };
 

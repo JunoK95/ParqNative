@@ -12,6 +12,7 @@ import AppNavigator from './AppNavigator';
 import AuthContextProvider, {AuthContext} from './context/AuthContext';
 import GeolocationContextProvider from './context/GeolocationContext';
 import {ActivityIndicator} from 'react-native';
+import LoadingView from './views/LoadingView';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         <AuthContext.Consumer>
           {authContext => {
             if (authContext.fetching) {
-              return <ActivityIndicator />;
+              return <LoadingView />;
             } else {
               return <AppNavigator />;
             }

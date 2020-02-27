@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -10,11 +10,26 @@ import {
   Linking,
 } from 'react-native';
 import FeaturesList from '../carport/FeaturesList';
-import {splitStrByComma, convertToDollar} from '../../helpers/helper';
+import {
+  splitStrByComma,
+  convertToDollar,
+  setTwoDigit,
+} from '../../helpers/helper';
 import storeLogo from '../../resources/images/112.png';
+import moment from 'moment';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const ReservationItem = props => {
-  const {port} = props;
+  const {port, reservation} = props;
+  const [currenttime, setcurrenttime] = useState(moment().unix());
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setcurrenttime(moment().unix());
+    }, 1000);
+
+    return () => clearInterval(intervalId); //This is important
+  }, []);
 
   const handleClick = () => {
     console.log('handleclick');
@@ -33,10 +48,14 @@ const ReservationItem = props => {
   }
 
   let scheduleTxt;
-  if (port.schedule.allday) {
-    scheduleTxt = '24hr';
+  if (reservation) {
+    const seconds = moment(reservation.end) - currenttime;
+    const durhours = moment.duration(seconds, 'seconds').hours();
+    const durmin = setTwoDigit(moment.duration(seconds, 'seconds').minutes());
+    const dursec = setTwoDigit(moment.duration(seconds, 'seconds').seconds());
+    scheduleTxt = ` ${durhours}:${durmin}:${dursec}`;
   } else {
-    scheduleTxt = `${port.schedule.start}-${port.schedule.end}`;
+    scheduleTxt = reservation.end;
   }
 
   const splitAddress = splitStrByComma(port.location.address);
@@ -56,9 +75,8 @@ const ReservationItem = props => {
             </View>
           </View>
           <View style={styles.right}>
-            <View style={styles.box}>
-              <Text style={styles.distance}>{scheduleTxt}</Text>
-            </View>
+            <Icon name={'clock'} style={styles.distance} />
+            <Text style={styles.distance}>{scheduleTxt}</Text>
           </View>
         </View>
         <View style={styles.contentcontainer}>
@@ -182,6 +200,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     fontWeight: 'bold',
     fontFamily: 'Montserrat',
+    textAlignVertical: 'center',
   },
   restriction: {
     flexDirection: 'row',

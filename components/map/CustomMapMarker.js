@@ -27,8 +27,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     justifyContent: 'center',
-    borderRadius: 4,
-    padding: 4,
+    borderRadius: 24,
+    paddingVertical: 4,
+    paddingHorizontal: 6,
   },
   selected: {
     backgroundColor: '#ffc630',
@@ -37,8 +38,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#11a4ff',
   },
   text: {
-    fontFamily: 'Montserrat',
-    fontWeight: '600',
+    textAlign: 'center',
+    fontFamily: 'Montserrat-SemiBold',
     color: '#fff',
   },
 });

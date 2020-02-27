@@ -23,14 +23,15 @@ export default class CardFormScreen extends PureComponent {
         smsAutofillDisabled: true,
         prefilledInformation: {
           billingAddress: {
-            name: 'Gunilla Haugeh',
-            line1: 'Canary Place',
-            line2: '3',
-            city: 'Macon',
-            state: 'Georgia',
-            country: 'US',
-            postalCode: '31217',
-            email: 'ghaugeh0@printfriendly.com',
+            ...this.props.billingAddress,
+            // name: 'Gunilla Haugeh',
+            // line1: 'Canary Place',
+            // line2: '3',
+            // city: 'Macon',
+            // state: 'Georgia',
+            // country: 'US',
+            // postalCode: '31217',
+            // email: 'ghaugeh0@printfriendly.com',
           },
         },
       });

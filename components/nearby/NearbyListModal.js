@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Modal, StyleSheet, TouchableOpacity} from 'react-native';
 import NearbyList from './NearbyList';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const NearbyListModal = props => {
   const {open, setlistmode, currentlocation} = props;
@@ -19,7 +19,7 @@ const NearbyListModal = props => {
       <TouchableOpacity
         style={styles.listHeader}
         onPress={() => setlistmode(false)}>
-        <Icon name={'satellite'} size={18} />
+        <Icon name={'map'} size={18} />
         <Text style={styles.listTitle}> Map </Text>
       </TouchableOpacity>
     </Modal>
@@ -54,6 +54,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     color: '#000',
+    fontFamily: 'Montserrat-Medium',
   },
 });
 
