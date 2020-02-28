@@ -125,7 +125,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat',
   },
   formcontainer: {
-    padding: 32,
     paddingBottom: 12,
   },
   inputcontainer: {

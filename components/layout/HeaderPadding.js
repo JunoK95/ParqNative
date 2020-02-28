@@ -9,7 +9,9 @@ const HeaderPadding = props => {
         <BackToButton to={props.to} />
       </View>
       <View style={styles.center}>
-        <Text style={styles.title}>{props.title}</Text>
+        <Text style={styles.title} numberOfLines={1}>
+          {props.title}
+        </Text>
       </View>
       <View style={styles.right}>{props.right}</View>
     </View>
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     marginTop: 4,
-    fontSize: 17,
+    fontSize: 16,
   },
   left: {
     flex: 1,

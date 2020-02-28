@@ -4,7 +4,7 @@ import {ListItem} from 'react-native-elements';
 import CardFormScreen from './CardFormScreen';
 
 const PaymentCardsList = props => {
-  const {cards, billing_address} = props;
+  const {cards, billing_address, stripe_id} = props;
   const [open, setopen] = useState(false);
 
   let cardList;
@@ -24,7 +24,7 @@ const PaymentCardsList = props => {
   return (
     <View>
       {cardList ? cardList : <ActivityIndicator />}
-      <CardFormScreen billing_address={billing_address} />
+      <CardFormScreen stripe_id={stripe_id} billing_address={billing_address} />
     </View>
   );
 };

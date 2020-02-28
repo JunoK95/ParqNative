@@ -3,6 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import stripe from 'tipsi-stripe';
 import testID from '../../components/tipsi/utils/testID';
 import {ListItem} from 'react-native-elements';
+import Axios from 'axios';
 
 stripe.setOptions({
   publishableKey: 'pk_test_2a0X0i2dhIxdgSaLw9HxWrOP00mE8JnGY9',
@@ -17,6 +18,7 @@ export default class CardFormScreen extends PureComponent {
 
   handleCardPayPress = async () => {
     try {
+      const {stripe_id} = this.props;
       this.setState({loading: true, token: null});
       const token = await stripe.paymentRequestWithCardForm({
         // Only iOS support this options
@@ -35,7 +37,18 @@ export default class CardFormScreen extends PureComponent {
           },
         },
       });
-
+      if (token && stripe_id) {
+        const newcard = await Axios({
+          method: 'POST',
+          url:
+            'https://us-central1-parq-dev.cloudfunctions.net/stripeCreateCard',
+          data: {
+            customer_id: stripe_id,
+            cardToken: token,
+          },
+        });
+        console.log('new card created => ', newcard);
+      }
       this.setState({loading: false, token});
     } catch (error) {
       this.setState({loading: false});

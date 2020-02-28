@@ -1,0 +1,65 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "carports",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "enabled",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "location.coordinates.lat",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "location.coordinates.lng",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "carports",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "location.coordinates.lng",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "enabled",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "reservations",
+      "queryScope": "COLLECTION_GROUP",
+      "fields": [
+        {
+          "fieldPath": "end",
+          "order": "DESCENDING"
+        },
+        {
+          "fieldPath": "user_id",
+          "arrayConfig": "CONTAINS"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "reservations",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "user_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "end",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

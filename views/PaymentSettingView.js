@@ -10,18 +10,18 @@ import {Icon} from 'react-native-elements';
 
 const PaymentSettingView = () => {
   const context = useContext(AuthContext);
-  const {billing_address} = context.user_data;
+  const {billing_address, stripe_customer_id} = context.user_data;
   const [fetch, setfetch] = useState(true);
   const [cards, setcards] = useState(null);
   const [wallet, setwallet] = useState(null);
 
   const fetchData = useCallback(async () => {
     setfetch(true);
-    if (!context.user_data.stripe_customer_id) {
+    if (!stripe_customer_id) {
       context.functions.assignStripeId();
     } else {
       await context.functions
-        .getStripePaymentMethods(context.user_data.stripe_customer_id)
+        .getStripePaymentMethods(stripe_customer_id)
         .then(res => {
           setcards(res);
         });
@@ -31,11 +31,7 @@ const PaymentSettingView = () => {
     });
     setwallet(newWallet);
     setfetch(false);
-  }, [
-    context.functions,
-    context.user_data.stripe_customer_id,
-    context.user_id,
-  ]);
+  }, [context.user_id, context.functions, stripe_customer_id]);
 
   useEffect(() => {
     setfetch(true);
@@ -61,7 +57,11 @@ const PaymentSettingView = () => {
     <View>
       <HeaderPadding to={'Home'} alt title={'Wallet'} right={refreshbutton} />
       {wallet && <WalletDisplay user_id={context.user_id} wallet={wallet} />}
-      <PaymentCardsList cards={cards} billing_address={billing_address} />
+      <PaymentCardsList
+        cards={cards}
+        stripe_id={stripe_customer_id}
+        billing_address={billing_address}
+      />
       {!billing_address || billing_address === {} ? (
         <ListItem
           title={'Add Billing Address'}

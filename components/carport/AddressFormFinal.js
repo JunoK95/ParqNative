@@ -148,7 +148,6 @@ const AddressFormFinal = props => {
 const styles = StyleSheet.create({
   formcontainer: {
     padding: 32,
-    paddingHorizontal: 24,
   },
   titlecontainer: {
     paddingBottom: 24,
