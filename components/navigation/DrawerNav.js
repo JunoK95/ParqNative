@@ -74,18 +74,6 @@ function DrawerNav(props) {
             <Text style={styles.brandname}> PARQ</Text>
             <Text style={styles.subbrandname}> makes parking easy</Text>
           </View>
-          {/* <ListItem
-            containerStyle={styles.profileContainer}
-            titleStyle={styles.profileText}
-            title={
-              context.user_data.display_name
-                ? context.user_data.display_name
-                : 'No Name'
-            }
-            subtitle={'coins '}
-            onPress={() => navigateTo('UserProfile')}
-            leftIcon={{name: 'person-pin', color: '#000'}}
-          /> */}
         </View>
         {navLinks}
       </ScrollView>

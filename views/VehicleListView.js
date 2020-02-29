@@ -7,17 +7,26 @@ import {ListItem} from 'react-native-elements';
 const VehicleListView = props => {
   const context = useContext(AuthContext);
   const {saved_vehicles} = context;
-  const vehicles = saved_vehicles.map((v, i) => {
-    console.log('vehicle', v);
-    return (
-      <ListItem
-        key={i}
-        title={v.data.name}
-        vehicle_id={v.id}
-        leftIcon={{name: 'directions-car', color: '#000'}}
-      />
-    );
-  });
+
+  if (!saved_vehicles) {
+    return null;
+  }
+
+  let vehicles = [];
+  if (saved_vehicles) {
+    vehicles = saved_vehicles.map((v, i) => {
+      console.log('vehicle', v);
+      return (
+        <ListItem
+          key={i}
+          title={v.data.name}
+          vehicle_id={v.id}
+          leftIcon={{name: 'directions-car', color: '#000'}}
+        />
+      );
+    });
+  }
+
   return (
     <View>
       <HeaderPadding to={'Home'} />

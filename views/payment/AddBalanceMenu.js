@@ -55,7 +55,7 @@ const AddBalanceMenu = props => {
   const menu = items.map((item, i) => {
     const dollarCost = convertToDollar(item.price / 100);
     return (
-      <Picker.item
+      <Picker.Item
         key={i}
         label={`($${dollarCost}) ${item.item_name}`}
         value={item}

@@ -9,14 +9,15 @@ const VehiclePicker = props => {
   const [select, setselect] = useState(null);
 
   useEffect(() => {
-    if (saved_vehicles.length > 0) {
-      setselect(saved_vehicles[0]);
-      setvehicle(saved_vehicles[0]);
+    if (saved_vehicles) {
+      if (saved_vehicles.length > 0) {
+        setselect(saved_vehicles[0]);
+        setvehicle(saved_vehicles[0]);
+      }
     }
   }, [saved_vehicles, setvehicle]);
 
   let pickerItems;
-  console.log(saved_vehicles[0]);
   if (saved_vehicles) {
     pickerItems = saved_vehicles.map((v, i) => {
       console.log(v.data.name);

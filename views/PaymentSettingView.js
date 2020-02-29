@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext, useCallback} from 'react';
-import {View, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {ScrollView, View, TouchableOpacity, ActivityIndicator} from 'react-native';
 import HeaderPadding from '../components/layout/HeaderPadding';
 import {AuthContext} from '../context/AuthContext';
 import PaymentCardsList from './payment/PaymentCardsList';
@@ -10,12 +10,13 @@ import {Icon} from 'react-native-elements';
 
 const PaymentSettingView = () => {
   const context = useContext(AuthContext);
-  const {billing_address, stripe_customer_id} = context.user_data;
+  const {user_data, user_id} = context;
   const [fetch, setfetch] = useState(true);
   const [cards, setcards] = useState(null);
   const [wallet, setwallet] = useState(null);
 
   const fetchData = useCallback(async () => {
+    const {billing_address, stripe_customer_id} = user_data;
     setfetch(true);
     if (!stripe_customer_id) {
       context.functions.assignStripeId();
@@ -26,17 +27,17 @@ const PaymentSettingView = () => {
           setcards(res);
         });
     }
-    const newWallet = await getWallet(context.user_id).then(res => {
+    const newWallet = await getWallet(user_id).then(res => {
       return res;
     });
     setwallet(newWallet);
     setfetch(false);
-  }, [context.user_id, context.functions, stripe_customer_id]);
+  }, [user_data, user_id, context.functions]);
 
   useEffect(() => {
     setfetch(true);
     fetchData();
-  }, [context.user_data, context.functions, fetchData]);
+  }, [fetchData]);
 
   const refreshbutton = (
     <TouchableOpacity onPress={() => fetchData()}>
@@ -52,9 +53,13 @@ const PaymentSettingView = () => {
       </View>
     );
   }
+  if (!user_data) {
+    return null;
+  }
 
+  const {billing_address, stripe_customer_id} = user_data;
   return (
-    <View>
+    <ScrollView>
       <HeaderPadding to={'Home'} alt title={'Wallet'} right={refreshbutton} />
       {wallet && <WalletDisplay user_id={context.user_id} wallet={wallet} />}
       <PaymentCardsList
@@ -75,7 +80,7 @@ const PaymentSettingView = () => {
           onPress={() => console.log('Billing Address')}
         />
       )}
-    </View>
+    </ScrollView>
   );
 };
 

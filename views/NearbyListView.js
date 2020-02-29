@@ -66,9 +66,10 @@ const NearbyListView = props => {
       </View>
     );
   } else {
-    const mapMarkers = state.carports.map(port => {
+    const mapMarkers = state.carports.map((port, i) => {
       return (
         <Marker
+          key={i}
           coordinate={{
             latitude: port.location.coordinates.lat,
             longitude: port.location.coordinates.lng,
