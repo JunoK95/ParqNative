@@ -1,5 +1,10 @@
 import React, {useEffect, useState, useContext, useCallback} from 'react';
-import {ScrollView, View, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {
+  ScrollView,
+  View,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import HeaderPadding from '../components/layout/HeaderPadding';
 import {AuthContext} from '../context/AuthContext';
 import PaymentCardsList from './payment/PaymentCardsList';
@@ -53,35 +58,36 @@ const PaymentSettingView = () => {
       </View>
     );
   }
+
   if (!user_data) {
     return null;
+  } else {
+    const {billing_address, stripe_customer_id} = user_data;
+    return (
+      <ScrollView>
+        <HeaderPadding to={'Home'} alt title={'Wallet'} right={refreshbutton} />
+        {wallet && <WalletDisplay user_id={context.user_id} wallet={wallet} />}
+        <PaymentCardsList
+          cards={cards}
+          stripe_id={stripe_customer_id}
+          billing_address={billing_address}
+        />
+        {!billing_address || billing_address === {} ? (
+          <ListItem
+            title={'Add Billing Address'}
+            leftIcon={{name: 'add', color: '#000'}}
+            onPress={() => console.log('Billing Address')}
+          />
+        ) : (
+          <ListItem
+            title={'Edit Billing Address'}
+            leftIcon={{name: 'add', color: '#000'}}
+            onPress={() => console.log('Billing Address')}
+          />
+        )}
+      </ScrollView>
+    );
   }
-
-  const {billing_address, stripe_customer_id} = user_data;
-  return (
-    <ScrollView>
-      <HeaderPadding to={'Home'} alt title={'Wallet'} right={refreshbutton} />
-      {wallet && <WalletDisplay user_id={context.user_id} wallet={wallet} />}
-      <PaymentCardsList
-        cards={cards}
-        stripe_id={stripe_customer_id}
-        billing_address={billing_address}
-      />
-      {!billing_address || billing_address === {} ? (
-        <ListItem
-          title={'Add Billing Address'}
-          leftIcon={{name: 'add', color: '#000'}}
-          onPress={() => console.log('Billing Address')}
-        />
-      ) : (
-        <ListItem
-          title={'Edit Billing Address'}
-          leftIcon={{name: 'add', color: '#000'}}
-          onPress={() => console.log('Billing Address')}
-        />
-      )}
-    </ScrollView>
-  );
 };
 
 export default PaymentSettingView;

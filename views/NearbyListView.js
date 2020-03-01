@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   View,
   Text,
@@ -6,15 +6,15 @@ import {
   ActivityIndicator,
   Dimensions,
   TouchableOpacity,
+  TouchableNativeFeedback,
 } from 'react-native';
-import MapView, {Marker, Callout} from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import {geofirexQueryPoints} from '../firebase_func/geofirexFunctions';
 import TransparentHeaderPadding from '../components/layout/TransparentHeaderPadding';
 import NearbyListModal from '../components/nearby/NearbyListModal';
 import CustomMapMarker from '../components/map/CustomMapMarker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import CarportCard from '../components/map/CarportCard';
-import LoadingView from './LoadingView';
 
 const NearbyListView = props => {
   const {params} = props.navigation.state;
@@ -32,36 +32,44 @@ const NearbyListView = props => {
   const [select, setselect] = useState(null);
   const [fetching, setfetching] = useState(true);
   const [key, setKey] = useState(Math.floor(Math.random() * 100));
+  const [radius, setradius] = useState(1.6);
 
-  async function fetchDataGeoX(distance) {
-    const center = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
-    console.log(center, distance);
-    await geofirexQueryPoints(center, distance, 'geopointx')
-      .then(res => {
-        console.log(res);
-        setstate({
-          ...state,
-          carports: res,
-        });
-        setfetching(false);
-        return res;
-      })
-      .catch(err => console.error(err));
-    return;
-  }
+  const fetchDataGeoX = useCallback(
+    async distance => {
+      console.log('fetching data');
+      const center = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
+      console.log(center, distance);
+      await geofirexQueryPoints(center, distance, 'geopointx')
+        .then(res => {
+          console.log(res);
+          setstate({
+            ...state,
+            carports: res,
+          });
+          setfetching(false);
+          return res;
+        })
+        .catch(err => console.error(err));
+
+      setradius(parseFloat(distance + 1));
+      return;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [latitude, longitude],
+  );
 
   useEffect(() => {
+    console.log('in Effect');
     setfetching(true);
     setselect(null);
     fetchDataGeoX(1.6);
     setKey(Math.floor(Math.random() * 100));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [latitude, longitude, params.location]);
+  }, [fetchDataGeoX, latitude, longitude]);
 
   if (fetching) {
     return (
       <View style={styles.bg}>
-        <Text>Finding Nearby Parking...</Text>
+        <Text style={styles.loadTitle}>Finding Nearby Parking...</Text>
         <ActivityIndicator />
       </View>
     );
@@ -101,18 +109,19 @@ const NearbyListView = props => {
         <TransparentHeaderPadding navigation={props.navigation} to={'Search'} />
         <View style={styles.hoverbutton}>
           <TouchableOpacity
-            style={styles.button}
-            onPress={() => fetchDataGeoX(3.2)}>
+            disabled={radius > 4.5}
+            style={radius > 4.5 ? styles.buttondisabled : styles.button}
+            onPress={() => fetchDataGeoX(radius)}>
             <Icon name={'search-plus'} size={18} />
             <Text style={styles.text}> Expand Radius</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={styles.listHeader}
-          onPress={() => setlistmode(true)}>
-          <Icon name={'bars'} size={18} />
-          <Text style={styles.listTitle}> List </Text>
-        </TouchableOpacity>
+        <TouchableNativeFeedback onPress={() => setlistmode(true)}>
+          <View style={styles.listHeader}>
+            <Icon name={'bars'} size={18} />
+            <Text style={styles.listTitle}> List </Text>
+          </View>
+        </TouchableNativeFeedback>
         <NearbyListModal
           setlistmode={setlistmode}
           carports={state.carports}
@@ -147,6 +156,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.0)',
     zIndex: 2,
   },
+  loadTitle: {
+    fontSize: 20,
+    paddingVertical: 32,
+    fontWeight: '600',
+    fontFamily: 'Montserrat-Medium',
+    color: '#000',
+  },
   mapStyle: {
     top: 0,
     width: Dimensions.get('window').width,
@@ -179,6 +195,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     flexDirection: 'row',
     opacity: 0.8,
+  },
+  buttondisabled: {
+    borderRadius: 20,
+    backgroundColor: '#ccc',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    flexDirection: 'row',
+    opacity: 0.3,
   },
   text: {
     textAlignVertical: 'center',

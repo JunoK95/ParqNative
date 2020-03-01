@@ -1,6 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet} from 'react-native';
-import {ListItem} from 'react-native-elements';
+import {FlatList, StyleSheet, Text, ScrollView, View} from 'react-native';
 import CarportCard from '../map/CarportCard';
 
 const NearbyList = props => {
@@ -24,19 +23,11 @@ const NearbyList = props => {
     );
   } else {
     return (
-      <FlatList
-        contentContainerStyle={styles.listcontainer}
-        data={[]}
-        keyExtractor={item => item.id}
-        renderItem={({item}) => {
-          return (
-            <ListItem
-              title={'No Nearby Parking Available'}
-              leftIcon={{name: 'sentiment-dissatisfied', color: '#000'}}
-            />
-          );
-        }}
-      />
+      <ScrollView contentContainerStyle={styles.listcontainer}>
+        <View style={styles.container}>
+          <Text style={styles.text}>No Nearby Parking</Text>
+        </View>
+      </ScrollView>
     );
   }
 };
@@ -46,6 +37,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     justifyContent: 'flex-start',
+  },
+  container: {
+    width: 340,
+    height: 48,
+    backgroundColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 24,
+    marginVertical: 12,
+    shadowColor: '#000',
+    shadowOffset: {width: 4, height: 4},
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  text: {
+    fontFamily: 'Montserrat-MediumItalic',
   },
 });
 

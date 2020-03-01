@@ -1,7 +1,13 @@
 import React, {useContext} from 'react';
 import {withNavigation} from 'react-navigation';
 import {ListItem} from 'react-native-elements';
-import {StyleSheet} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableNativeFeedback,
+  ScrollView,
+} from 'react-native';
 import {AuthContext} from '../../context/AuthContext';
 import {splitStrByComma} from '../../helpers/helper';
 
@@ -35,7 +41,18 @@ const SavedLocations = props => {
     });
   }
 
-  return <React.Fragment>{SavedLocationList}</React.Fragment>;
+  return (
+    <ScrollView>
+      {SavedLocationList}
+      {SavedLocationList.length === 0 && (
+        <TouchableNativeFeedback onPress={() => console.log('no saved loc')}>
+          <View style={styles.container}>
+            <Text style={styles.text}>No Saved Location</Text>
+          </View>
+        </TouchableNativeFeedback>
+      )}
+    </ScrollView>
+  );
 };
 
 const styles = StyleSheet.create({});

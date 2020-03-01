@@ -4,6 +4,13 @@ import {ListItem} from 'react-native-elements';
 import {AuthContext} from '../context/AuthContext';
 import {splitStrByComma} from '../helpers/helper';
 import HeaderPadding from '../components/layout/HeaderPadding';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableNativeFeedback,
+  ScrollView,
+} from 'react-native';
 
 const SavedLocationView = props => {
   const context = useContext(AuthContext);
@@ -35,11 +42,44 @@ const SavedLocationView = props => {
   }
 
   return (
-    <React.Fragment>
+    <ScrollView contentContainerStyle={styles.listcontainer}>
       <HeaderPadding to={'Search'} />
       {SavedLocationList}
-    </React.Fragment>
+      {SavedLocationList.length === 0 && (
+        <TouchableNativeFeedback
+          onPress={() => props.navigation.navigate('SavedLocationsAdd')}>
+          <View style={styles.container}>
+            <Text style={styles.text}>No Saved Location</Text>
+          </View>
+        </TouchableNativeFeedback>
+      )}
+    </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  listcontainer: {
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'flex-start',
+  },
+  container: {
+    width: 340,
+    height: 48,
+    backgroundColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 24,
+    marginVertical: 12,
+    shadowColor: '#000',
+    shadowOffset: {width: 4, height: 4},
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  text: {
+    fontFamily: 'Montserrat-MediumItalic',
+  },
+});
 
 export default withNavigation(SavedLocationView);

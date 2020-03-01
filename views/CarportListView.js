@@ -5,11 +5,13 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  Text,
+  TouchableHighlight,
 } from 'react-native';
 import {AuthContext} from '../context/AuthContext';
 import HeaderPadding from '../components/layout/HeaderPadding';
 import {getOwnedCarports} from '../firebase_func/firestoreFunctions';
-import {ListItem, Icon} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import CarportCard2 from '../components/carport/CarportCard2';
 
 const CarportListView = props => {
@@ -49,11 +51,12 @@ const CarportListView = props => {
       ) : (
         <ScrollView contentContainerStyle={styles.scrollcontainer}>
           {carportCardList}
-          <ListItem
-            title={'Register a property'}
-            leftIcon={{name: 'add', color: '#000'}}
+          <TouchableHighlight
             onPress={() => props.navigation.navigate('CarportRegister')}
-          />
+            style={styles.container}
+            underlayColor={'#c2e8ff'}>
+            <Text style={styles.text}>Add Listing</Text>
+          </TouchableHighlight>
         </ScrollView>
       )}
     </View>
@@ -63,6 +66,25 @@ const CarportListView = props => {
 const styles = StyleSheet.create({
   scrollcontainer: {
     alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'flex-start',
+  },
+  container: {
+    width: 340,
+    height: 48,
+    backgroundColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 24,
+    marginVertical: 12,
+    shadowColor: '#000',
+    shadowOffset: {width: 4, height: 4},
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  text: {
+    fontFamily: 'Montserrat-MediumItalic',
   },
 });
 

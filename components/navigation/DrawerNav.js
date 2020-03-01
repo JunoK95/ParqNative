@@ -60,9 +60,6 @@ function DrawerNav(props) {
     );
   });
 
-  if (!context.user_data) {
-    return <View style={styles.drawer} />;
-  }
   return (
     <View style={styles.drawer}>
       <ScrollView style={styles.scroll}>

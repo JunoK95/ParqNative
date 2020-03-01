@@ -4,7 +4,7 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  TouchableOpacity,
+  TouchableNativeFeedback,
 } from 'react-native';
 import {DrawerActions} from 'react-navigation-drawer';
 import {withNavigation} from 'react-navigation';
@@ -13,18 +13,20 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 const HomeBottomRow = props => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.item1}
+      <TouchableNativeFeedback
         onPress={() => props.navigation.dispatch(DrawerActions.openDrawer())}>
-        <Icon name={'bars'} size={20} color={'white'} />
-        <Text style={styles.menutext}> MENU</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.item2}
-        onPress={() => props.navigation.navigate('Search')}>
-        <Icon name={'compass'} size={20} color={'white'} />
-        <Text style={styles.menutext}> SEARCH</Text>
-      </TouchableOpacity>
+        <View style={styles.item1}>
+          <Icon name={'bars'} size={20} color={'white'} />
+          <Text style={styles.menutext}> MENU</Text>
+        </View>
+      </TouchableNativeFeedback>
+      <TouchableNativeFeedback
+        onPress={() => props.navigation.navigate('SearchNavigator')}>
+        <View style={styles.item2}>
+          <Icon name={'compass'} size={20} color={'white'} />
+          <Text style={styles.menutext}> SEARCH</Text>
+        </View>
+      </TouchableNativeFeedback>
     </View>
   );
 };

@@ -1,23 +1,16 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, ActivityIndicator} from 'react-native';
-import {ListItem} from 'react-native-elements';
 import CardFormScreen from './CardFormScreen';
+import CreditCardItem from './CreditCardItem';
+import {ListItem} from 'react-native-elements';
 
 const PaymentCardsList = props => {
   const {cards, billing_address, stripe_id} = props;
-  const [open, setopen] = useState(false);
 
   let cardList;
   if (cards) {
     cardList = cards.map((c, i) => {
-      return (
-        <ListItem
-          key={i}
-          title={c.last4}
-          onPress={() => console.log('card info', c)}
-          leftIcon={{name: 'credit-card', color: '#000'}}
-        />
-      );
+      return <CreditCardItem key={i} card={c} />;
     });
   }
 

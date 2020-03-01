@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 24,
     flexDirection: 'row',
+    elevation: 4,
     opacity: 0.8,
   },
   text: {

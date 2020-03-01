@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableNativeFeedback} from 'react-native';
 import stripe from 'tipsi-stripe';
 import testID from '../../components/tipsi/utils/testID';
-import {ListItem} from 'react-native-elements';
 import Axios from 'axios';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 stripe.setOptions({
   publishableKey: 'pk_test_2a0X0i2dhIxdgSaLw9HxWrOP00mE8JnGY9',
@@ -38,7 +38,6 @@ export default class CardFormScreen extends PureComponent {
         },
       });
       if (token && stripe_id) {
-
         const newcard = await Axios({
           method: 'POST',
           url:
@@ -61,11 +60,16 @@ export default class CardFormScreen extends PureComponent {
 
     return (
       <View style={styles.container}>
-        <ListItem
-          title={'Add Card'}
-          leftIcon={{name: 'add', color: '#000'}}
-          onPress={this.handleCardPayPress}
-        />
+        <TouchableNativeFeedback
+          background={TouchableNativeFeedback.Ripple('#ffecb9')}
+          onPress={this.handleCardPayPress}>
+          <View style={styles.item}>
+            <View style={styles.row}>
+              <Icon style={styles.itemicon} name={'plus-circle'} size={20} />
+              <Text style={styles.itemtext}>{'Add Payment Card'}</Text>
+            </View>
+          </View>
+        </TouchableNativeFeedback>
         <View style={styles.token} {...testID('cardFormToken')}>
           {token && (
             <Text style={styles.instruction}>Token: {token.tokenId}</Text>
@@ -89,5 +93,20 @@ const styles = StyleSheet.create({
   },
   token: {
     height: 20,
+  },
+  item: {
+    justifyContent: 'center',
+    paddingVertical: 16,
+    backgroundColor: '#fff',
+  },
+  itemtext: {
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 15,
+  },
+  itemicon: {
+    paddingHorizontal: 20,
+  },
+  row: {
+    flexDirection: 'row',
   },
 });

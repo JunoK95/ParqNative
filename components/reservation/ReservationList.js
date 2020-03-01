@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, Text, StyleSheet} from 'react-native';
+import {ScrollView, Text, StyleSheet, View} from 'react-native';
 import ReservationItem from './ReservationItem';
 
 const ReservationList = props => {
@@ -14,7 +14,11 @@ const ReservationList = props => {
       );
     });
   } else {
-    reservationList = <Text>No current reservations</Text>;
+    reservationList = (
+      <View style={styles.textcontainer}>
+        <Text style={styles.text}>No Current Reservations</Text>
+      </View>
+    );
   }
 
   console.log('reservation list', reservations);
@@ -28,6 +32,23 @@ const ReservationList = props => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+  },
+  textcontainer: {
+    width: 340,
+    height: 48,
+    backgroundColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 24,
+    marginVertical: 12,
+    shadowColor: '#000',
+    shadowOffset: {width: 4, height: 4},
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  text: {
+    fontFamily: 'Montserrat-MediumItalic',
   },
 });
 

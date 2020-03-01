@@ -13,6 +13,10 @@ const PaymentPicker = props => {
   useEffect(() => {
     async function fetchData() {
       setfetch(true);
+      if (!context.user_data) {
+        setfetch(false);
+        return;
+      }
       if (!context.user_data.stripe_customer_id) {
         await context.functions.assignStripeId();
         setfetch(false);
@@ -33,7 +37,12 @@ const PaymentPicker = props => {
       }
     }
     fetchData();
-  }, [context.functions, context.user_data.stripe_customer_id, setselectcard]);
+  }, [
+    context.functions,
+    context.user_data,
+    context.user_data.stripe_customer_id,
+    setselectcard,
+  ]);
 
   let pickerItems;
   if (cards) {

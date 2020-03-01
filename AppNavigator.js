@@ -20,11 +20,25 @@ import CarportEditView from './views/CarportEditView';
 import CarportInfoView from './views/carport/CarportInfoView';
 import PayParkingView from './views/PayParkingView';
 import CarportRegisterView from './views/carport/CarportRegisterView';
+import SavedLocationAddView from './views/SavedLocationAddView';
+
+const SearchNavigator = createStackNavigator(
+  {
+    Search: SearchView,
+    Nearby: NearbyListView,
+    SavedLocations: SavedLocationView,
+    SavedLocationsAdd: SavedLocationAddView,
+  },
+  {
+    headerMode: 'none',
+    initialRouteName: 'Search',
+  },
+);
 
 const AppNavigator = createDrawerNavigator(
   {
     Home: HomeView,
-    Search: SearchView,
+    SearchNavigator: SearchNavigator,
     Nearby: NearbyListView,
     Payment: PaymentSettingView,
     UserProfile: UserProfileView,
@@ -36,7 +50,6 @@ const AppNavigator = createDrawerNavigator(
     CarportRegister: CarportRegisterView,
     PayParking: PayParkingView,
     ReservationList: ReservationListView,
-    SavedLocations: SavedLocationView,
   },
   {
     initialRouteName: 'Home',
@@ -55,6 +68,7 @@ const AuthNavigator = createStackNavigator(
   {
     initialRouteName: 'Landing',
     headerMode: 'none',
+    unmountInactiveRoutes: true,
   },
 );
 

@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, Text, Modal, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Modal,
+  StyleSheet,
+  TouchableNativeFeedback,
+} from 'react-native';
 import NearbyList from './NearbyList';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -16,12 +22,12 @@ const NearbyListModal = props => {
         currentlocation={currentlocation}
         setopen={setlistmode}
       />
-      <TouchableOpacity
-        style={styles.listHeader}
-        onPress={() => setlistmode(false)}>
-        <Icon name={'map'} size={18} />
-        <Text style={styles.listTitle}> Map </Text>
-      </TouchableOpacity>
+      <TouchableNativeFeedback onPress={() => setlistmode(false)}>
+        <View style={styles.listHeader}>
+          <Icon name={'map'} size={18} />
+          <Text style={styles.listTitle}> Map </Text>
+        </View>
+      </TouchableNativeFeedback>
     </Modal>
   );
 };

@@ -1,8 +1,15 @@
 import React, {useContext} from 'react';
-import {View, Text} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableHighlight,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 import HeaderPadding from '../components/layout/HeaderPadding';
 import {AuthContext} from '../context/AuthContext';
-import {ListItem} from 'react-native-elements';
+import {ListItem, Icon} from 'react-native-elements';
 
 const VehicleListView = props => {
   const context = useContext(AuthContext);
@@ -29,19 +36,51 @@ const VehicleListView = props => {
 
   return (
     <View>
-      <HeaderPadding to={'Home'} />
-      {saved_vehicles.length > 0 ? (
-        vehicles
-      ) : (
-        <Text>No Vehicles Registered</Text>
-      )}
-      <ListItem
-        title={'Add Vehicle'}
-        leftIcon={{name: 'add', color: '#000'}}
-        onPress={() => props.navigation.navigate('VehicleReg')}
+      <HeaderPadding
+        to={'Home'}
+        right={
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('VehicleReg')}>
+            <Icon name={'add'} size={30} color={'#000'} />
+          </TouchableOpacity>
+        }
       />
+      <ScrollView contentContainerStyle={styles.scrollcontainer}>
+        {saved_vehicles.length > 0 && vehicles}
+        <TouchableHighlight
+          onPress={() => props.navigation.navigate('VehicleReg')}
+          style={styles.container}
+          underlayColor={'#c2e8ff'}>
+          <Text style={styles.text}>Add Vehicle</Text>
+        </TouchableHighlight>
+      </ScrollView>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  scrollcontainer: {
+    alignItems: 'center',
+    alignContent: 'center',
+    justifyContent: 'flex-start',
+  },
+  container: {
+    width: 340,
+    height: 48,
+    backgroundColor: '#ccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 24,
+    marginVertical: 12,
+    shadowColor: '#000',
+    shadowOffset: {width: 4, height: 4},
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  text: {
+    fontFamily: 'Montserrat-MediumItalic',
+  },
+});
 
 export default VehicleListView;
