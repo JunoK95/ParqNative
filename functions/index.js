@@ -95,6 +95,28 @@ exports.stripeCreateCard = functions.https.onRequest((request, response) => {
   });
 });
 
+exports.stripeCreateBank = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const {customer_id, bankToken} = request.body;
+    console.log('card token => ', bankToken);
+    stripe.customers.createSource(
+      customer_id,
+      {source: bankToken},
+      (err, bank) => {
+        // asynchronously called
+        if (err) {
+          console.error(err);
+          response.status(402).send(err);
+        }
+        if (bank) {
+          console.log('created source => ', bank);
+          response.status(200).send(bank);
+        }
+      },
+    );
+  });
+});
+
 exports.stripeCheckoutSession = functions.https.onRequest(
   (request, response) => {
     cors(request, response, () => {
@@ -146,6 +168,25 @@ exports.stripeListCards = functions.https.onRequest((request, response) => {
       } else {
         console.log(cards);
         response.status(200).send(cards);
+      }
+    });
+  });
+});
+
+exports.stripeListBanks = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const {customer_id} = request.body;
+    const options = {
+      object: 'bank_object',
+      limit: 10,
+    };
+    stripe.customers.listSources(customer_id, options, (err, banks) => {
+      if (err) {
+        console.error(err);
+        response.status(500).send(err);
+      } else {
+        console.log(banks);
+        response.status(200).send(banks);
       }
     });
   });

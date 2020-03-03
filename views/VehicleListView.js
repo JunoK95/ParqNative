@@ -6,10 +6,12 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  TouchableNativeFeedback,
 } from 'react-native';
 import HeaderPadding from '../components/layout/HeaderPadding';
 import {AuthContext} from '../context/AuthContext';
-import {ListItem, Icon} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 const VehicleListView = props => {
   const context = useContext(AuthContext);
@@ -24,12 +26,22 @@ const VehicleListView = props => {
     vehicles = saved_vehicles.map((v, i) => {
       console.log('vehicle', v);
       return (
-        <ListItem
+        <TouchableNativeFeedback
+          background={TouchableNativeFeedback.Ripple('#c2e8ff')}
           key={i}
-          title={v.data.name}
           vehicle_id={v.id}
-          leftIcon={{name: 'directions-car', color: '#000'}}
-        />
+          onPress={() => console.log(v)}>
+          <View style={styles.item}>
+            <View style={styles.row}>
+              <FontAwesome5Icon
+                style={styles.itemicon}
+                name={'car'}
+                size={20}
+              />
+              <Text style={styles.itemtext}>{v.data.name}</Text>
+            </View>
+          </View>
+        </TouchableNativeFeedback>
       );
     });
   }
@@ -47,12 +59,14 @@ const VehicleListView = props => {
       />
       <ScrollView contentContainerStyle={styles.scrollcontainer}>
         {saved_vehicles.length > 0 && vehicles}
-        <TouchableHighlight
-          onPress={() => props.navigation.navigate('VehicleReg')}
-          style={styles.container}
-          underlayColor={'#c2e8ff'}>
-          <Text style={styles.text}>Add Vehicle</Text>
-        </TouchableHighlight>
+        <View style={styles.centercontainer}>
+          <TouchableHighlight
+            onPress={() => props.navigation.navigate('VehicleReg')}
+            style={styles.container}
+            underlayColor={'#c2e8ff'}>
+            <Text style={styles.text}>Add Vehicle</Text>
+          </TouchableHighlight>
+        </View>
       </ScrollView>
     </View>
   );
@@ -60,9 +74,11 @@ const VehicleListView = props => {
 
 const styles = StyleSheet.create({
   scrollcontainer: {
-    alignItems: 'center',
-    alignContent: 'center',
     justifyContent: 'flex-start',
+  },
+  centercontainer: {
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   container: {
     width: 340,
@@ -80,6 +96,21 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'Montserrat-MediumItalic',
+  },
+  item: {
+    justifyContent: 'center',
+    paddingVertical: 16,
+    backgroundColor: '#fff',
+  },
+  itemtext: {
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 15,
+  },
+  itemicon: {
+    paddingHorizontal: 20,
+  },
+  row: {
+    flexDirection: 'row',
   },
 });
 

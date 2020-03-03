@@ -70,11 +70,11 @@ export default class CardFormScreen extends PureComponent {
             </View>
           </View>
         </TouchableNativeFeedback>
-        <View style={styles.token} {...testID('cardFormToken')}>
+        {/* <View style={styles.token} {...testID('cardFormToken')}>
           {token && (
             <Text style={styles.instruction}>Token: {token.tokenId}</Text>
           )}
-        </View>
+        </View> */}
       </View>
     );
   }

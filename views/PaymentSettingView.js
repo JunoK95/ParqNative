@@ -12,12 +12,14 @@ import WalletDisplay from './payment/WalletDisplay';
 import {ListItem} from 'react-native-elements';
 import {getWallet} from '../firebase_func/walletFunctions';
 import {Icon} from 'react-native-elements';
+import PaymentBanksList from './payment/PaymentBanksList';
 
 const PaymentSettingView = () => {
   const context = useContext(AuthContext);
   const {user_data, user_id} = context;
   const [fetch, setfetch] = useState(true);
   const [cards, setcards] = useState(null);
+  const [banks, setbanks] = useState(null);
   const [wallet, setwallet] = useState(null);
 
   const fetchData = useCallback(async () => {
@@ -31,6 +33,9 @@ const PaymentSettingView = () => {
         .then(res => {
           setcards(res);
         });
+      await context.functions.getStripeBanks(stripe_customer_id).then(res => {
+        setbanks(res);
+      });
     }
     const newWallet = await getWallet(user_id).then(res => {
       return res;
@@ -72,19 +77,7 @@ const PaymentSettingView = () => {
           stripe_id={stripe_customer_id}
           billing_address={billing_address}
         />
-        {!billing_address || billing_address === {} ? (
-          <ListItem
-            title={'Add Billing Address'}
-            leftIcon={{name: 'add', color: '#000'}}
-            onPress={() => console.log('Billing Address')}
-          />
-        ) : (
-          <ListItem
-            title={'Edit Billing Address'}
-            leftIcon={{name: 'add', color: '#000'}}
-            onPress={() => console.log('Billing Address')}
-          />
-        )}
+        <PaymentBanksList stripe_id={stripe_customer_id} banks={banks} />
       </ScrollView>
     );
   }

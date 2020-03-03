@@ -2,7 +2,6 @@ import React from 'react';
 import {View, ActivityIndicator} from 'react-native';
 import CardFormScreen from './CardFormScreen';
 import CreditCardItem from './CreditCardItem';
-import {ListItem} from 'react-native-elements';
 
 const PaymentCardsList = props => {
   const {cards, billing_address, stripe_id} = props;

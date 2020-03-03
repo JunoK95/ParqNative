@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {withNavigation} from 'react-navigation';
-import {ListItem} from 'react-native-elements';
+import {ListItem, Icon} from 'react-native-elements';
 import {AuthContext} from '../context/AuthContext';
 import {splitStrByComma} from '../helpers/helper';
 import HeaderPadding from '../components/layout/HeaderPadding';
@@ -9,6 +9,7 @@ import {
   View,
   Text,
   TouchableNativeFeedback,
+  TouchableOpacity,
   ScrollView,
 } from 'react-native';
 
@@ -30,20 +31,28 @@ const SavedLocationView = props => {
       const {title, lat, lng, place_id} = location.data;
       console.log(location.data);
       return (
-        <ListItem
+        <TouchableNativeFeedback
           key={place_id}
-          title={title}
-          subtitle={address[0]}
-          onPress={() => navigateToResults({latitude: lat, longitude: lng})}
-          leftIcon={{name: 'star-border', color: '#000'}}
-        />
+          onPress={() => navigateToResults({latitude: lat, longitude: lng})}>
+          <View style={styles.container}>
+            <Text style={styles.text}>{address[0]}</Text>
+          </View>
+        </TouchableNativeFeedback>
       );
     });
   }
 
   return (
     <ScrollView contentContainerStyle={styles.listcontainer}>
-      <HeaderPadding to={'Search'} />
+      <HeaderPadding
+        to={'Search'}
+        right={
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('SavedLocationsAdd')}>
+            <Icon name={'add'} size={30} color={'#000'} />
+          </TouchableOpacity>
+        }
+      />
       {SavedLocationList}
       {SavedLocationList.length === 0 && (
         <TouchableNativeFeedback
