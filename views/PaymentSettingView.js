@@ -9,7 +9,6 @@ import HeaderPadding from '../components/layout/HeaderPadding';
 import {AuthContext} from '../context/AuthContext';
 import PaymentCardsList from './payment/PaymentCardsList';
 import WalletDisplay from './payment/WalletDisplay';
-import {ListItem} from 'react-native-elements';
 import {getWallet} from '../firebase_func/walletFunctions';
 import {Icon} from 'react-native-elements';
 import PaymentBanksList from './payment/PaymentBanksList';

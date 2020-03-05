@@ -11,15 +11,14 @@ import {splitStrByComma, convertToDollar} from '../../../helpers/helper';
 import storeLogo from '../../../resources/images/112.png';
 import FeaturesList from '../FeaturesList';
 import {withNavigation} from 'react-navigation';
-import {Input} from 'react-native-elements';
 import {activateCarport} from '../../../firebase_func/firestoreFunctions';
 
 const DeactivatedCard = props => {
-  const {port, port_id} = props;
+  const {port, port_id, refreshData} = props;
   const [active, setactive] = useState(false);
 
   const handleClick = () => {
-    props.navigation.navigate('CarportEdit', {port});
+    props.navigation.navigate('CarportEdit', {port, port_id});
   };
 
   const handleActivate = () => {
@@ -31,6 +30,7 @@ const DeactivatedCard = props => {
       const success = await activateCarport(port_id);
       if (success) {
         setactive(false);
+        refreshData();
       }
     }
   };

@@ -33,12 +33,17 @@ const VehicleListView = props => {
           onPress={() => console.log(v)}>
           <View style={styles.item}>
             <View style={styles.row}>
-              <FontAwesome5Icon
-                style={styles.itemicon}
-                name={'car'}
-                size={20}
-              />
-              <Text style={styles.itemtext}>{v.data.name}</Text>
+              <View style={styles.col}>
+                <FontAwesome5Icon
+                  style={styles.itemicon}
+                  name={'car'}
+                  size={20}
+                />
+              </View>
+              <View style={styles.col}>
+                <Text style={styles.itemtext}>{v.data.name}</Text>
+                <Text style={styles.itemsubtext}>{v.data.license_plate}</Text>
+              </View>
             </View>
           </View>
         </TouchableNativeFeedback>
@@ -106,11 +111,20 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Medium',
     fontSize: 15,
   },
+  itemsubtext: {
+    fontFamily: 'Montserrat-Medium',
+    color: '#777',
+    fontSize: 13,
+  },
   itemicon: {
     paddingHorizontal: 20,
   },
   row: {
     flexDirection: 'row',
+  },
+  col: {
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
 });
 

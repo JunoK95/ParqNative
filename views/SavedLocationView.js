@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {withNavigation} from 'react-navigation';
-import {ListItem, Icon} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import {AuthContext} from '../context/AuthContext';
 import {splitStrByComma} from '../helpers/helper';
 import HeaderPadding from '../components/layout/HeaderPadding';

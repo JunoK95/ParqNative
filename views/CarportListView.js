@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useState, useEffect, useCallback} from 'react';
 import {
   View,
   ActivityIndicator,
@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {AuthContext} from '../context/AuthContext';
 import HeaderPadding from '../components/layout/HeaderPadding';
-import {getOwnedCarports} from '../firebase_func/firestoreFunctions';
+import {getOwnedCarports, getCurrentReservations} from '../firebase_func/firestoreFunctions';
 import {Icon} from 'react-native-elements';
 import CarportCard2 from '../components/carport/CarportCard2';
 
@@ -19,48 +19,100 @@ const CarportListView = props => {
   const [carports, setports] = useState([]);
   const [fetching, setfetch] = useState(true);
   const [loading, setload] = useState(false);
+  const {user_id, user_data} = context;
 
-  const {user_id} = context;
+  const fetchData = useCallback(async () => {
+    if (user_id) {
+      await getOwnedCarports(user_id).then(res => {
+        setports(res);
+        setfetch(false);
+      });
+    }
+  }, [user_id]);
 
   useEffect(() => {
     setfetch(true);
-    getOwnedCarports(user_id).then(res => {
-      setports(res);
-      setfetch(false);
-    });
-  }, [user_id]);
+    if (!user_id || !user_data) {
+      return;
+    }
+    if (user_data) {
+      if (user_data.stripe_account_id) {
+        console.log(user_data.stripe_account_id);
+      }
+    }
+    fetchData();
+  }, [fetchData, user_data, user_data.stripe_account_id, user_id]);
+
+  const handleRegistrationClick = () => {
+    setload(true);
+    console.log('click');
+    context.functions.assignStripeAccount();
+    setload(false);
+  };
 
   const carportCardList = carports.map((c, i) => {
-    return <CarportCard2 key={i} port={c.data} port_id={c.id} />;
+    return (
+      <CarportCard2
+        key={i}
+        port={c.data}
+        port_id={c.id}
+        refreshData={fetchData}
+      />
+    );
   });
 
-  return (
-    <View>
-      <HeaderPadding
-        to={'Home'}
-        title={'Your Spaces'}
-        right={
-          <TouchableOpacity
-            onPress={() => props.navigation.navigate('CarportRegister')}>
-            <Icon name={'add'} size={30} color={'#000'} />
-          </TouchableOpacity>
-        }
-      />
-      {fetching ? (
-        <ActivityIndicator />
-      ) : (
+  let stripe_account_id;
+  if (user_data) {
+    stripe_account_id = user_data.stripe_account_id;
+  }
+
+  if (!stripe_account_id) {
+    return (
+      <View>
+        <HeaderPadding to={'Home'} title={'Your Spaces'} />
         <ScrollView contentContainerStyle={styles.scrollcontainer}>
-          {carportCardList}
-          <TouchableHighlight
-            onPress={() => props.navigation.navigate('CarportRegister')}
-            style={styles.container}
-            underlayColor={'#c2e8ff'}>
-            <Text style={styles.text}>Add Listing</Text>
-          </TouchableHighlight>
+          {!loading ? (
+            <TouchableHighlight
+              onPress={() => handleRegistrationClick()}
+              style={styles.container}
+              underlayColor={'#c2e8ff'}>
+              <Text style={styles.text}>Register As A Host</Text>
+            </TouchableHighlight>
+          ) : (
+            <ActivityIndicator />
+          )}
         </ScrollView>
-      )}
-    </View>
-  );
+      </View>
+    );
+  } else {
+    return (
+      <View>
+        <HeaderPadding
+          to={'Home'}
+          title={'Your Spaces'}
+          right={
+            <TouchableOpacity
+              onPress={() => props.navigation.navigate('CarportRegister')}>
+              <Icon name={'add'} size={30} color={'#000'} />
+            </TouchableOpacity>
+          }
+        />
+        {fetching ? (
+          <ActivityIndicator />
+        ) : (
+          <ScrollView contentContainerStyle={styles.scrollcontainer}>
+            {carportCardList}
+            <TouchableHighlight
+              onPress={() => props.navigation.navigate('CarportRegister')}
+              style={styles.container}
+              underlayColor={'#c2e8ff'}>
+              <Text style={styles.text}>Add Listing</Text>
+            </TouchableHighlight>
+          </ScrollView>
+        )}
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({

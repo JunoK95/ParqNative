@@ -62,75 +62,73 @@ const VehicleRegistrationView = props => {
   };
 
   return (
-    <View style={styles.screen}>
+    <View>
       <HeaderPadding to={'VehicleList'} />
-      <View style={styles.screen}>
-        <ScrollView contentContainerStyle={styles.formcontainer}>
-          <Input
-            containerStyle={styles.textField}
-            name={'name'}
-            label={'Vehicle Name'}
-            placeholder={'e.g. My Favorite Car'}
-            value={inputs.name}
-            onChangeText={text => handleChange('name', text)}
-          />
-          <Input
-            containerStyle={styles.textField}
-            name={'license_plate'}
-            label={'License Plate'}
-            value={inputs.license_plate}
-            onChangeText={text => handleChange('license_plate', text)}
-          />
-          <Input
-            containerStyle={styles.textField}
-            name={'us_state'}
-            placeholder={'State'}
-            label={'State'}
-            value={inputs.us_state}
-            onChangeText={text => handleChange('us_state', text)}
-          />
-          <Input
-            containerStyle={styles.textField}
-            name={'make'}
-            placeholder={'e.g. Honda'}
-            label={'Make'}
-            value={inputs.make}
-            onChangeText={text => handleChange('make', text)}
-          />
-          <Input
-            containerStyle={styles.textField}
-            name={'model'}
-            placeholder={'e.g. Accord'}
-            label={'Model'}
-            value={inputs.model}
-            onChangeText={text => handleChange('model', text)}
-          />
-          <Input
-            containerStyle={styles.textField}
-            name={'year'}
-            placeholder={'Year'}
-            label={'Year'}
-            value={inputs.year}
-            keyboardType={'numeric'}
-            onChangeText={text => handleChange('year', text)}
-          />
-          <Input
-            containerStyle={styles.textField}
-            multiline
-            name={'description'}
-            placeholder={'(optional)'}
-            label={'additional info'}
-            value={inputs.description}
-            onChangeText={text => handleChange('description', text)}
-          />
-          <TouchableHighlight
-            style={styles.button}
-            underlayColor={'#ffc630'}
-            onPress={() => handleSubmit()}>
-            <Text style={styles.buttonText}>Register</Text>
-          </TouchableHighlight>
-        </ScrollView>
-      </View>
+      <ScrollView contentContainerStyle={styles.formcontainer}>
+        <Input
+          containerStyle={styles.textField}
+          name={'name'}
+          label={'Vehicle Name'}
+          placeholder={'e.g. My Favorite Car'}
+          value={inputs.name}
+          onChangeText={text => handleChange('name', text)}
+        />
+        <Input
+          containerStyle={styles.textField}
+          name={'license_plate'}
+          label={'License Plate'}
+          value={inputs.license_plate}
+          onChangeText={text => handleChange('license_plate', text)}
+        />
+        <Input
+          containerStyle={styles.textField}
+          name={'us_state'}
+          placeholder={'State'}
+          label={'State'}
+          value={inputs.us_state}
+          onChangeText={text => handleChange('us_state', text)}
+        />
+        <Input
+          containerStyle={styles.textField}
+          name={'make'}
+          placeholder={'e.g. Honda'}
+          label={'Make'}
+          value={inputs.make}
+          onChangeText={text => handleChange('make', text)}
+        />
+        <Input
+          containerStyle={styles.textField}
+          name={'model'}
+          placeholder={'e.g. Accord'}
+          label={'Model'}
+          value={inputs.model}
+          onChangeText={text => handleChange('model', text)}
+        />
+        <Input
+          containerStyle={styles.textField}
+          name={'year'}
+          placeholder={'Year'}
+          label={'Year'}
+          value={inputs.year}
+          keyboardType={'numeric'}
+          onChangeText={text => handleChange('year', text)}
+        />
+        <Input
+          containerStyle={styles.textField}
+          multiline
+          name={'description'}
+          placeholder={'(optional)'}
+          label={'additional info'}
+          value={inputs.description}
+          onChangeText={text => handleChange('description', text)}
+        />
+        <TouchableHighlight
+          style={styles.button}
+          underlayColor={'#ffc630'}
+          onPress={() => handleSubmit()}>
+          <Text style={styles.buttonText}>Register</Text>
+        </TouchableHighlight>
+      </ScrollView>
     </View>
   );
 };
@@ -162,6 +160,8 @@ const styles = StyleSheet.create({
   },
   formcontainer: {
     padding: 32,
+    paddingHorizontal: 56,
+    paddingBottom: 80,
   },
   textFieldContainer: {
     margin: 12,

@@ -1,11 +1,21 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {withNavigation} from 'react-navigation';
-import {TextInput, ScrollView, StyleSheet} from 'react-native';
+import {
+  TextInput,
+  ScrollView,
+  StyleSheet,
+  TouchableNativeFeedback,
+  View,
+  Text,
+} from 'react-native';
 import {GoogleAutoComplete} from 'react-native-google-autocomplete';
-import {ListItem} from 'react-native-elements';
 import Axios from 'axios';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import {addSaveLocation} from '../../firebase_func/firestoreFunctions';
+import {AuthContext} from '../../context/AuthContext';
 
 function AddSavedLocationForm(props) {
+  const context = useContext(AuthContext);
   const apiKey = 'AIzaSyDH_piMcJHJJQLW3WjyLTZo0ICSbHbNXZ0';
 
   const handlePress = element => {
@@ -16,16 +26,21 @@ function AddSavedLocationForm(props) {
       params: {
         key: apiKey,
         place_id: place_id,
-        fields: 'geometry',
+        fields: ['geometry', 'formatted_address'],
       },
-    }).then(res => {
+    }).then(async res => {
       const {lat, lng} = res.data.result.geometry.location;
-      props.navigation.navigate('Nearby', {
-        location: {
-          latitude: lat,
-          longitude: lng,
-        },
-      });
+      const {formatted_address} = res.data.result;
+      console.log(formatted_address, place_id, context.user_id, lat, lng);
+      await addSaveLocation(
+        context.user_id,
+        formatted_address,
+        formatted_address,
+        place_id,
+        lat,
+        lng,
+      );
+      props.navigation.navigate('SavedLocations');
     });
   };
 
@@ -46,12 +61,25 @@ function AddSavedLocationForm(props) {
           />
           <ScrollView>
             {locationResults.map((el, i) => (
-              <ListItem
+              <TouchableNativeFeedback
                 key={i}
-                title={el.description}
-                onPress={() => handlePress(el)}
-                leftIcon={{name: 'star', color: '#000'}}
-              />
+                background={TouchableNativeFeedback.Ripple('#ffecb9')}
+                onPress={() => handlePress(el)}>
+                <View style={styles.item}>
+                  <View style={styles.row}>
+                    <View style={styles.col}>
+                      <FontAwesome5Icon
+                        style={styles.itemicon}
+                        name={'star'}
+                        size={20}
+                      />
+                    </View>
+                    <View style={styles.col}>
+                      <Text style={styles.itemtext}>{el.description}</Text>
+                    </View>
+                  </View>
+                </View>
+              </TouchableNativeFeedback>
             ))}
           </ScrollView>
         </React.Fragment>
@@ -69,6 +97,26 @@ const styles = StyleSheet.create({
     marginHorizontal: 32,
     borderRadius: 12,
     elevation: 4,
+  },
+  item: {
+    justifyContent: 'center',
+    paddingVertical: 16,
+    backgroundColor: '#fff',
+  },
+  itemtext: {
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 15,
+    paddingRight: 72,
+  },
+  itemicon: {
+    paddingHorizontal: 20,
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  col: {
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
 });
 

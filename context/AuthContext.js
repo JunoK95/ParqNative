@@ -12,6 +12,7 @@ import {
   getUserReservationHistory,
   deleteVehicle,
   updateStripeId,
+  setStripeAccountId,
 } from '../firebase_func/firestoreFunctions';
 import {getWallet} from '../firebase_func/walletFunctions';
 import axios from 'axios';
@@ -300,6 +301,35 @@ function AuthContextProvider(props) {
     return;
   };
 
+  const assignStripeAccount = async () => {
+    const {email, display_name, stripe_account_id} = state.user_data;
+    if (!stripe_account_id) {
+      await axios({
+        method: 'POST',
+        url:
+          'https://us-central1-parq-dev.cloudfunctions.net/stripeCreateAccount',
+        data: {
+          email,
+          name: display_name,
+          user_id: state.user_id,
+        },
+      }).then(res => {
+        console.log('stripe account', res);
+        if (res.status === 200) {
+          setStripeAccountId(state.user_id, res.data.id);
+          setstate({
+            ...state,
+            user_data: {
+              ...state.user_data,
+              stripe_account_id: res.data.id,
+            },
+          });
+        }
+      });
+    }
+    return;
+  };
+
   const getStripePaymentMethods = async stripe_customer_id => {
     let stripeCards = [];
     stripeCards = await axios({
@@ -467,6 +497,7 @@ function AuthContextProvider(props) {
           reserveCarport: reserveCarport,
           reservationHistory: reservationHistory,
           assignStripeId: assignStripeId,
+          assignStripeAccount: assignStripeAccount,
           getStripePaymentMethods: getStripePaymentMethods,
           getStripeBanks: getStripeBanks,
           getContextWallet: getContextWallet,

@@ -1,11 +1,18 @@
 import React from 'react';
 import {withNavigation} from 'react-navigation';
-import {TextInput, ScrollView, StyleSheet} from 'react-native';
+import {
+  TextInput,
+  ScrollView,
+  StyleSheet,
+  TouchableNativeFeedback,
+  View,
+  Text,
+} from 'react-native';
 import {GoogleAutoComplete} from 'react-native-google-autocomplete';
-import {ListItem} from 'react-native-elements';
 import Axios from 'axios';
 import CurrentLocationButton from '../home/CurrentLocationButton';
 import SavedLocationButton from './SavedLocationButton';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 function LocationAutoComplete(props) {
   const apiKey = 'AIzaSyDH_piMcJHJJQLW3WjyLTZo0ICSbHbNXZ0';
@@ -50,12 +57,25 @@ function LocationAutoComplete(props) {
             <CurrentLocationButton />
             <SavedLocationButton />
             {locationResults.map((el, i) => (
-              <ListItem
+              <TouchableNativeFeedback
                 key={i}
-                title={el.description}
-                onPress={() => handlePress(el)}
-                leftIcon={{name: 'place', color: '#000'}}
-              />
+                background={TouchableNativeFeedback.Ripple('#ffecb9')}
+                onPress={() => handlePress(el)}>
+                <View style={styles.item}>
+                  <View style={styles.row}>
+                    <View style={styles.col}>
+                      <FontAwesome5Icon
+                        style={styles.itemicon}
+                        name={'map-marker-alt'}
+                        size={20}
+                      />
+                    </View>
+                    <View style={styles.col}>
+                      <Text style={styles.itemtext}>{el.description}</Text>
+                    </View>
+                  </View>
+                </View>
+              </TouchableNativeFeedback>
             ))}
           </ScrollView>
         </React.Fragment>
@@ -73,6 +93,26 @@ const styles = StyleSheet.create({
     marginHorizontal: 32,
     borderRadius: 12,
     elevation: 4,
+  },
+  item: {
+    justifyContent: 'center',
+    paddingVertical: 16,
+    backgroundColor: '#fff',
+  },
+  itemtext: {
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 15,
+    paddingRight: 72,
+  },
+  itemicon: {
+    paddingHorizontal: 20,
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  col: {
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
 });
 

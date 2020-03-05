@@ -6,6 +6,7 @@ const stripe = require('stripe')(functions.config().stripe.testkey);
 admin.initializeApp(functions.config().firebase);
 
 const db = admin.firestore();
+const webhookSig = functions.config().stripe.webhook.signing;
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -13,6 +14,34 @@ const db = admin.firestore();
 // exports.helloWorld = functions.https.onRequest((request, response) => {
 //  response.send("Hello from Firebase!");
 // });
+
+exports.stripeEvents = functions.https.onRequest((request, response) => {
+  let event;
+  let sig = request.headers['stripe-signature'];
+  try {
+    event = stripe.webhooks.constructEvent(request.rawBody, sig, webhookSig);
+    console.log('Webhook Event = ', event);
+  } catch (err) {
+    response.status(400).send(`Webhook Error: ${err.message}`);
+  }
+
+  switch (event.type) {
+    case 'charge.succeeded':
+      console.log('CHARGE SUCCEEDED => ', event);
+      break;
+    case 'customer.sources.created':
+      console.log('CUSTOMER SOURCES CREATED => ', event);
+      break;
+    case 'payment_method.attached':
+      console.log('PAYMENT METHOD ATTACHED => ', event);
+      break;
+    default:
+      break;
+  }
+
+  console.log('Stripe Event => ', event.type);
+  response.status(200).end();
+});
 
 exports.stripeCreateNewCustomer = functions.https.onRequest(
   (request, response) => {
@@ -40,6 +69,30 @@ exports.stripeCreateNewCustomer = functions.https.onRequest(
     });
   },
 );
+
+exports.stripeCreateAccount = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const {email} = request.body;
+    stripe.accounts.create(
+      {
+        country: 'US',
+        type: 'custom',
+        email: email,
+        requested_capabilities: ['card_payments', 'transfers'],
+      },
+      (err, account) => {
+        console.log(account);
+        console.error(err);
+        if (err) {
+          response.status(500).send(err);
+        } else {
+          response.status(200).send(account);
+        }
+        return;
+      },
+    );
+  });
+});
 
 //This operation is not recommended and requires SAQ D.  Use client tokenization instead (look into stripejs or stripe elements)
 exports.stripeCreateCardToken = functions.https.onRequest(

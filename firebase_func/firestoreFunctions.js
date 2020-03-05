@@ -129,6 +129,17 @@ export async function updateStripeId(user_id, stripe_customer_id) {
   });
 }
 
+export async function setStripeAccountId(user_id, stripe_account_id) {
+  await db.collection('users').doc(user_id)
+    .set({
+      stripe_account_id: stripe_account_id,
+      date_updated: moment().unix(),
+      }, { merge : true })
+    .then(res => {
+    console.log('updated stripe_account_id', res);
+  });
+}
+
 export async function getGeocodeAddress(address){
   var result = await axios({
     method: 'get',
@@ -404,6 +415,7 @@ export async function queryNearbyCoordinates(min_lat, max_lat, min_lng, max_lng)
 }
 
 export async function getCurrentReservations(carport){
+  console.log('Carport ID ', carport.id, 'current time ', moment().unix());
   const query = db.collection('carports').doc(carport.id)
     .collection('reservations')
     .where('end', '>', moment().unix());
@@ -416,6 +428,7 @@ export async function getCurrentReservations(carport){
     return resList;
   });
 
+  console.log('Reservations', reservations);
   return reservations;
 }
 

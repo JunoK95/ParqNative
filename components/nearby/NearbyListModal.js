@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -13,7 +13,11 @@ const NearbyListModal = props => {
   const {open, setlistmode, currentlocation} = props;
 
   return (
-    <Modal animationType="slide" transparent={false} visible={open}>
+    <Modal
+      animationType="slide"
+      transparent={false}
+      visible={open}
+      onRequestClose={() => setlistmode(false)}>
       <View style={styles.header}>
         <Text style={styles.headertext}>Select Your Parking</Text>
       </View>
