@@ -5,7 +5,7 @@ import {withNavigation} from 'react-navigation';
 
 const GoToSearch = props => {
   const redirectToSearch = () => {
-    props.navigation.navigate('SearchNavigator');
+    props.navigation.navigate('Search');
   };
 
   return (

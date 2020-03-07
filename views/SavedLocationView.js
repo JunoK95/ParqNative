@@ -31,13 +31,13 @@ const SavedLocationView = props => {
       const {title, lat, lng, place_id} = location.data;
       console.log(location.data);
       return (
-        <TouchableNativeFeedback
+        <TouchableOpacity
           key={place_id}
           onPress={() => navigateToResults({latitude: lat, longitude: lng})}>
           <View style={styles.container}>
             <Text style={styles.text}>{address[0]}</Text>
           </View>
-        </TouchableNativeFeedback>
+        </TouchableOpacity>
       );
     });
   }

@@ -78,7 +78,7 @@ const AddressSubmissionForm = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get('window').width - 64,
+    width: Dimensions.get('window').width - 48,
     backgroundColor: '#fff',
     alignItems: 'center',
     alignSelf: 'center',

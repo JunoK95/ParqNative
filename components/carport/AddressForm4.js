@@ -127,8 +127,8 @@ const AddressForm4 = props => {
 
 const styles = StyleSheet.create({
   formcontainer: {
-    padding: 32,
-    paddingHorizontal: 24,
+    paddingBottom: 12,
+    paddingVertical: 24,
   },
   titlecontainer: {
     paddingBottom: 24,
@@ -194,6 +194,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 20,
     margin: 8,
+  },
+  buttoncontainer: {
+    minWidth: 80,
+    marginHorizontal: 8,
   },
   buttonText: {
     fontSize: 16,

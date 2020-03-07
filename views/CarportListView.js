@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {AuthContext} from '../context/AuthContext';
 import HeaderPadding from '../components/layout/HeaderPadding';
-import {getOwnedCarports, getCurrentReservations} from '../firebase_func/firestoreFunctions';
+import {getOwnedCarports} from '../firebase_func/firestoreFunctions';
 import {Icon} from 'react-native-elements';
 import CarportCard2 from '../components/carport/CarportCard2';
 
@@ -28,7 +28,7 @@ const CarportListView = props => {
         setfetch(false);
       });
     }
-  }, [user_id]);
+  }, []);
 
   useEffect(() => {
     setfetch(true);
@@ -41,7 +41,7 @@ const CarportListView = props => {
       }
     }
     fetchData();
-  }, [fetchData, user_data, user_data.stripe_account_id, user_id]);
+  }, [fetchData, user_data, user_id]);
 
   const handleRegistrationClick = () => {
     setload(true);

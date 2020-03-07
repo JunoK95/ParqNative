@@ -1,0 +1,48 @@
+import React from 'react';
+import {StyleSheet, Text, View, TouchableNativeFeedback} from 'react-native';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+
+const CustomPickerItem = props => {
+  const {title, subtitle, icon, setselect, value, handlePress} = props;
+
+  return (
+    <TouchableNativeFeedback onPress={handlePress}>
+      <View style={styles.item}>
+        <View style={styles.itemleft}>
+          <FontAwesome5Icon name={icon} size={24} />
+        </View>
+        <View style={styles.itemright}>
+          <Text style={styles.itemtext}>{title}</Text>
+          {subtitle && <Text style={styles.itemsubtext}>{subtitle}</Text>}
+        </View>
+      </View>
+    </TouchableNativeFeedback>
+  );
+};
+
+export default CustomPickerItem;
+
+const styles = StyleSheet.create({
+  item: {
+    flexDirection: 'row',
+    paddingVertical: 16,
+  },
+  itemleft: {
+    paddingHorizontal: 20,
+    justifyContent: 'center',
+  },
+  itemright: {
+    justifyContent: 'center',
+  },
+  itemtext: {
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 15,
+    paddingRight: 72,
+  },
+  itemsubtext: {
+    fontFamily: 'Montserrat-Medium',
+    color: '#555',
+    fontSize: 13,
+    paddingRight: 72,
+  },
+});

@@ -28,11 +28,11 @@ const LoginView = props => {
         if (res.error) {
           seterror(res.error.message);
         } else {
+          setload(false);
           props.navigation.navigate('App');
         }
       });
     }
-    setload(false);
   };
 
   const handleFbSignIn = () => {

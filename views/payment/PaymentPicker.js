@@ -16,8 +16,7 @@ const PaymentPicker = props => {
       if (!context.user_data) {
         setfetch(false);
         return;
-      }
-      if (!context.user_data.stripe_customer_id) {
+      } else if (!context.user_data.stripe_customer_id) {
         await context.functions.assignStripeId();
         setfetch(false);
       } else {
@@ -32,6 +31,10 @@ const PaymentPicker = props => {
           setselect(payments.cards[0]);
           setselectcard(payments.cards[0]);
           setwallet(payments.wallet);
+        } else {
+          setwallet(payments.wallet);
+          setselect(payments.wallet);
+          setselectcard(payments.wallet);
         }
         setfetch(false);
       }
@@ -40,7 +43,6 @@ const PaymentPicker = props => {
   }, [
     context.functions,
     context.user_data,
-    context.user_data.stripe_customer_id,
     setselectcard,
   ]);
 

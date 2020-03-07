@@ -21,13 +21,13 @@ import CarportInfoView from './views/carport/CarportInfoView';
 import PayParkingView from './views/PayParkingView';
 import CarportRegisterView from './views/carport/CarportRegisterView';
 import SavedLocationAddView from './views/SavedLocationAddView';
-import CustomBankScreen from './views/payment/CustomBankScreen';
 import AddBankView from './views/payment/AddBankView';
 
 const SearchNavigator = createStackNavigator(
   {
     Search: SearchView,
     Nearby: NearbyListView,
+    PayParking: PayParkingView,
     SavedLocations: SavedLocationView,
     SavedLocationsAdd: SavedLocationAddView,
   },
@@ -61,7 +61,6 @@ const AppNavigator = createDrawerNavigator(
     CarportEdit: CarportEditView,
     CarportInfo: CarportInfoView,
     CarportRegister: CarportRegisterView,
-    PayParking: PayParkingView,
     ReservationList: ReservationListView,
   },
   {

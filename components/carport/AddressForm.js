@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
   },
   formcontainer: {
     paddingBottom: 12,
+    paddingVertical: 24,
   },
   inputcontainer: {
     minWidth: 260,

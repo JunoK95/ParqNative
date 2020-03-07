@@ -8,7 +8,7 @@ const PayParkingView = props => {
 
   return (
     <View>
-      <HeaderPadding to={'Nearby'} title={'Pay Parking'} />
+      <HeaderPadding to={'Search'} title={'Pay Parking'} />
       <View style={styles.container}>
         <CarportPayCard port={port} />
       </View>

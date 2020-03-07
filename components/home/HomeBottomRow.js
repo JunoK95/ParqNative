@@ -21,7 +21,7 @@ const HomeBottomRow = props => {
         </View>
       </TouchableNativeFeedback>
       <TouchableNativeFeedback
-        onPress={() => props.navigation.navigate('SearchNavigator')}>
+        onPress={() => props.navigation.navigate('Search')}>
         <View style={styles.item2}>
           <Icon name={'compass'} size={20} color={'white'} />
           <Text style={styles.menutext}> SEARCH</Text>

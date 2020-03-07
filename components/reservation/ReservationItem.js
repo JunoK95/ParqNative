@@ -18,6 +18,7 @@ import {
 import storeLogo from '../../resources/images/112.png';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 const ReservationItem = props => {
   const {port, reservation} = props;
@@ -100,7 +101,14 @@ const ReservationItem = props => {
                 port.location.coordinates.lng,
               )
             }>
-            <Text style={styles.buttonText}>Get Directions</Text>
+            <View style={styles.row}>
+              <FontAwesome5Icon
+                name={'map-marked-alt'}
+                size={16}
+                color={'white'}
+              />
+              <Text style={styles.buttonText}> Get Directions </Text>
+            </View>
           </TouchableHighlight>
         </View>
       </TouchableOpacity>
@@ -243,6 +251,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontFamily: 'Montserrat',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

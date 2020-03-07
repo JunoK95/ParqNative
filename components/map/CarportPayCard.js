@@ -10,8 +10,6 @@ import {
 import {convertToDollar, splitStrByComma} from '../../helpers/helper';
 import {withNavigation} from 'react-navigation';
 import storeLogo from '../../resources/images/112.png';
-import PaymentPicker from '../../views/payment/PaymentPicker';
-import VehiclePicker from '../vehicle/VehiclePicker';
 import {checkCarportAvailablity} from '../../firebase_func/firestoreFunctions';
 import {AuthContext} from '../../context/AuthContext';
 import {chargeWallet} from '../../firebase_func/walletFunctions';
@@ -19,13 +17,51 @@ import moment from 'moment';
 import Axios from 'axios';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FeaturesList from '../carport/FeaturesList';
+import NewVehiclePicker from '../vehicle/NewVehiclePicker';
+import NewPaymentPicker from '../../views/payment/NewPaymentPicker';
+import CustomPicker from '../picker/CustomPicker';
+
+const items = [
+  {
+    title: '1 hour',
+    value: 1,
+  },
+  {
+    title: '2 hours',
+    value: 2,
+  },
+  {
+    title: '3 hours',
+    value: 3,
+  },
+  {
+    title: '4 hours',
+    value: 4,
+  },
+  {
+    title: '5 hours',
+    value: 5,
+  },
+  {
+    title: '6 hours',
+    value: 6,
+  },
+  {
+    title: '7 hours',
+    value: 7,
+  },
+  {
+    title: '8 hours',
+    value: 8,
+  },
+];
 
 const CarportPayCard = props => {
   const context = useContext(AuthContext);
   const {port, setopen} = props;
   const [selectcard, setselectcard] = useState(null);
   const [vehicle, setvehicle] = useState(null);
-  const [hours, sethours] = useState('1');
+  const [hours, sethours] = useState(1);
 
   //For progress indication
   const [loading, setloading] = useState(false);
@@ -43,6 +79,10 @@ const CarportPayCard = props => {
 
   const finalizePay = (_port, _vehicle, _price, _hours) => {
     _hours = parseInt(_hours, 10);
+    if (_hours <= 0) {
+      seterror('Invalid number of hours');
+      return;
+    }
     const startTime = moment().unix();
     const endTime = moment()
       .add(_hours, 'hours')
@@ -125,7 +165,6 @@ const CarportPayCard = props => {
         });
       }
     } else if (object === 'card') {
-      seterror('Credit Card used');
       Axios({
         method: 'post',
         url:
@@ -161,6 +200,11 @@ const CarportPayCard = props => {
   if (port) {
     return (
       <View style={styles.container} onPress={handleClick}>
+        {error && (
+          <View style={styles.cardheader}>
+            <Text style={styles.error}>{error}</Text>
+          </View>
+        )}
         <View style={styles.cardheader}>
           <View style={styles.left}>
             <View style={styles.box}>
@@ -190,25 +234,30 @@ const CarportPayCard = props => {
           </View>
           <FeaturesList features={port.accomodations} />
         </View>
-        <View style={{height: 12}} />
-        <VehiclePicker setvehicle={setvehicle} />
-        <PaymentPicker setselectcard={setselectcard} includeWallet />
-        <View style={styles.hourpicker}>
-          <Text>Hours</Text>
-          <TextInput
-            value={hours}
-            onChangeText={text => sethours(text)}
-            keyboardType={'numeric'}
+        <View style={styles.selectsection}>
+          <CustomPicker
+            items={items}
+            initialitem={items[0]}
+            title={'Hours'}
+            setselected={item => {
+              sethours(item.value);
+            }}
+          />
+          <NewVehiclePicker title={'Select Vehicle'} setselected={setvehicle} />
+          <NewPaymentPicker
+            title={'Select Payment'}
+            setselected={setselectcard}
           />
         </View>
         <TouchableHighlight
-          disabled={!selectcard || !hours || loading}
+          disabled={!vehicle || !selectcard || !hours || loading}
           style={
-            !selectcard || !hours || loading
+            !vehicle || !selectcard || !hours || loading
               ? styles.buttondisabled
               : styles.button
           }
           underlayColor={'#ffc630'}
+          // onPress={() => console.log(hours, vehicle, selectcard)}>
           onPress={handlePay}>
           <Text style={styles.buttonText}>Pay</Text>
         </TouchableHighlight>
@@ -220,7 +269,8 @@ const CarportPayCard = props => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 340,
+    margin: 36,
+    paddingVertical: 8,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
@@ -246,6 +296,13 @@ const styles = StyleSheet.create({
     height: 48,
     marginLeft: 12,
   },
+  error: {
+    fontSize: 16,
+    color: '#dd0000',
+    textAlign: 'left',
+    fontWeight: 'bold',
+    fontFamily: 'Montserrat',
+  },
   address: {
     fontSize: 16,
     color: '#888',
@@ -266,6 +323,11 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     fontWeight: 'bold',
     fontFamily: 'Montserrat',
+  },
+  selectsection: {
+    alignItems: 'flex-start',
+    width: 300,
+    padding: 0,
   },
   button: {
     paddingHorizontal: 80,
