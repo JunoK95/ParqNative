@@ -302,7 +302,7 @@ function AuthContextProvider(props) {
   };
 
   const assignStripeAccount = async () => {
-    const {email, display_name, stripe_account_id} = state.user_data;
+    const {email, stripe_account_id} = state.user_data;
     if (!stripe_account_id) {
       await axios({
         method: 'POST',
@@ -310,7 +310,6 @@ function AuthContextProvider(props) {
           'https://us-central1-parq-dev.cloudfunctions.net/stripeCreateAccount',
         data: {
           email,
-          name: display_name,
           user_id: state.user_id,
         },
       }).then(res => {

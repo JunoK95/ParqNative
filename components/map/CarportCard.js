@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   TouchableHighlight,
+  Dimensions,
 } from 'react-native';
 import {
   convertToDollar,
@@ -104,7 +105,7 @@ const CarportCard = props => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 340,
+    width: Dimensions.get('window').width - 64,
     height: 200,
     backgroundColor: '#fff',
     alignItems: 'center',

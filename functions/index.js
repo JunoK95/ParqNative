@@ -43,6 +43,77 @@ exports.stripeEvents = functions.https.onRequest((request, response) => {
   response.status(200).end();
 });
 
+exports.stripeGetAccount = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const {account_id} = request.body;
+    if (account_id) {
+      stripe.accounts.retrieve(account_id, (err, account) => {
+        console.log(account);
+        if (err) {
+          response.status(500).send(err);
+        } else {
+          response.send(account);
+        }
+      });
+    } else {
+      response.status(400).send('Account Id Not Provided');
+    }
+  });
+});
+
+exports.stripeUpdateAccount = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const {account_id, updates} = request.body;
+    if (account_id) {
+      stripe.accounts.update(
+        account_id,
+        {
+          ...updates,
+          // tos_acceptance: {
+          //   date: Math.floor(Date.now() / 1000),
+          //   ip: request.connection.remoteAddress,
+          // },
+        },
+        (err, account) => {
+          console.log(account);
+          if (err) {
+            response.status(500).send(err);
+          } else {
+            response.send(account);
+          }
+        },
+      );
+    } else {
+      response.status(400).send('Account Id Not Provided');
+    }
+  });
+});
+
+exports.stripeCreateAccount = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const {email} = request.body;
+    stripe.accounts.create(
+      {
+        country: 'US',
+        type: 'custom',
+        business_type: 'individual',
+        email: email,
+        requested_capabilities: ['transfers'],
+      },
+      (err, account) => {
+        console.log(account);
+        console.error(err);
+        if (err) {
+          response.status(500).send(err);
+        } else {
+          response.status(200).send(account);
+        }
+        return;
+      },
+    );
+  });
+});
+
 exports.stripeCreateNewCustomer = functions.https.onRequest(
   (request, response) => {
     cors(request, response, () => {
@@ -69,30 +140,6 @@ exports.stripeCreateNewCustomer = functions.https.onRequest(
     });
   },
 );
-
-exports.stripeCreateAccount = functions.https.onRequest((request, response) => {
-  cors(request, response, () => {
-    const {email} = request.body;
-    stripe.accounts.create(
-      {
-        country: 'US',
-        type: 'custom',
-        email: email,
-        requested_capabilities: ['card_payments', 'transfers'],
-      },
-      (err, account) => {
-        console.log(account);
-        console.error(err);
-        if (err) {
-          response.status(500).send(err);
-        } else {
-          response.status(200).send(account);
-        }
-        return;
-      },
-    );
-  });
-});
 
 //This operation is not recommended and requires SAQ D.  Use client tokenization instead (look into stripejs or stripe elements)
 exports.stripeCreateCardToken = functions.https.onRequest(

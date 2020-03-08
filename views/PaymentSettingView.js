@@ -4,6 +4,8 @@ import {
   View,
   TouchableOpacity,
   ActivityIndicator,
+  StyleSheet,
+  Dimensions,
 } from 'react-native';
 import HeaderPadding from '../components/layout/HeaderPadding';
 import {AuthContext} from '../context/AuthContext';
@@ -76,10 +78,19 @@ const PaymentSettingView = () => {
           stripe_id={stripe_customer_id}
           billing_address={billing_address}
         />
+        <View style={styles.bankcard}>
+
+        </View>
         <PaymentBanksList stripe_id={stripe_customer_id} banks={banks} />
       </ScrollView>
     );
   }
 };
+
+const styles = StyleSheet.create({
+  bankcard: {
+    width: Dimensions.get('window').width - 48,
+  },
+})
 
 export default PaymentSettingView;

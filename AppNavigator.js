@@ -22,6 +22,7 @@ import PayParkingView from './views/PayParkingView';
 import CarportRegisterView from './views/carport/CarportRegisterView';
 import SavedLocationAddView from './views/SavedLocationAddView';
 import AddBankView from './views/payment/AddBankView';
+import StripeAccountVerification from './views/stripe_verification/StripeAccountVerification';
 
 const SearchNavigator = createStackNavigator(
   {
@@ -39,6 +40,7 @@ const SearchNavigator = createStackNavigator(
 
 const PaymentNavigator = createStackNavigator(
   {
+    StripeAccountVerification: StripeAccountVerification,
     PaymentSetting: PaymentSettingView,
     AddBank: AddBankView,
   },

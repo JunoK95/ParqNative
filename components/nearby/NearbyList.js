@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text, ScrollView, View} from 'react-native';
+import {FlatList, StyleSheet, Text, ScrollView, View, Dimensions} from 'react-native';
 import CarportCard from '../map/CarportCard';
 
 const NearbyList = props => {
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   container: {
-    width: 340,
+    width: Dimensions.get('window').width - 64,
     height: 48,
     backgroundColor: '#ccc',
     alignItems: 'center',

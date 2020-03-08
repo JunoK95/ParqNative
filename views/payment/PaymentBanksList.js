@@ -9,7 +9,7 @@ const PaymentBanksList = props => {
   return (
     <TouchableNativeFeedback
       background={TouchableNativeFeedback.Ripple('#ffecb9')}
-      onPress={() => props.navigation.navigate('AddBank')}>
+      onPress={() => props.navigation.navigate('StripeAccountVerification')}>
       <View style={styles.item}>
         <View style={styles.row}>
           <Icon style={styles.itemicon} name={'plus-circle'} size={20} />

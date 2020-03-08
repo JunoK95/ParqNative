@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Text,
   TouchableHighlight,
+  Dimensions,
 } from 'react-native';
 import {AuthContext} from '../context/AuthContext';
 import HeaderPadding from '../components/layout/HeaderPadding';
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   container: {
-    width: 340,
+    width: Dimensions.get('window').width - 48,
     height: 48,
     backgroundColor: '#ccc',
     alignItems: 'center',

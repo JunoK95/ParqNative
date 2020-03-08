@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   Image,
+  Dimensions,
 } from 'react-native';
 import {splitStrByComma, convertToDollar} from '../../../helpers/helper';
 import storeLogo from '../../../resources/images/112.png';
@@ -142,7 +143,7 @@ const DeactivatedCard = props => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 340,
+    width: Dimensions.get('window').width - 64,
     height: 200,
     backgroundColor: '#fff',
     alignItems: 'center',
