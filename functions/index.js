@@ -69,10 +69,6 @@ exports.stripeUpdateAccount = functions.https.onRequest((request, response) => {
         account_id,
         {
           ...updates,
-          // tos_acceptance: {
-          //   date: Math.floor(Date.now() / 1000),
-          //   ip: request.connection.remoteAddress,
-          // },
         },
         (err, account) => {
           console.log(account);
@@ -89,6 +85,36 @@ exports.stripeUpdateAccount = functions.https.onRequest((request, response) => {
   });
 });
 
+exports.stripeUpdateAccountWithTOS = functions.https.onRequest(
+  (request, response) => {
+    cors(request, response, () => {
+      const {account_id, updates} = request.body;
+      if (account_id) {
+        stripe.accounts.update(
+          account_id,
+          {
+            ...updates,
+            tos_acceptance: {
+              date: Math.floor(Date.now() / 1000),
+              ip: request.connection.remoteAddress,
+            },
+          },
+          (err, account) => {
+            console.log(account);
+            if (err) {
+              response.status(500).send(err);
+            } else {
+              response.send(account);
+            }
+          },
+        );
+      } else {
+        response.status(400).send('Account Id Not Provided');
+      }
+    });
+  },
+);
+
 exports.stripeCreateAccount = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const {email} = request.body;
@@ -97,6 +123,10 @@ exports.stripeCreateAccount = functions.https.onRequest((request, response) => {
         country: 'US',
         type: 'custom',
         business_type: 'individual',
+        business_profile: {
+          product_description:
+            'A platform that allows home and business owners to rent out their unused parking spaces.',
+        },
         email: email,
         requested_capabilities: ['transfers'],
       },
