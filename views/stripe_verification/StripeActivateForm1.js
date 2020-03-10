@@ -9,8 +9,11 @@ import {
 } from 'react-native';
 import {Input} from 'react-native-elements';
 import CustomDatePicker from '../../components/picker/CustomDatePicker';
+import Axios from 'axios';
 
-const StripeActivateForm1 = () => {
+const StripeActivateForm1 = props => {
+  const {account, setprogress, refresh, setrefresh} = props;
+  const [loading, setloading] = useState(false);
   const [dob, setdob] = useState(null);
   const [individual, setindividual] = useState({
     first_name: '',
@@ -26,6 +29,7 @@ const StripeActivateForm1 = () => {
   };
 
   const handleSubmit = () => {
+    setloading(true);
     let birthdate;
     if (dob.valueOf()) {
       // Valid date
@@ -37,6 +41,7 @@ const StripeActivateForm1 = () => {
       };
     } else {
       console.log('Invalid Date');
+      setloading(false);
       return;
     }
 
@@ -47,6 +52,18 @@ const StripeActivateForm1 = () => {
           dob: {...birthdate},
         },
       };
+      Axios({
+        method: 'POST',
+        url:
+          'https://us-central1-parq-dev.cloudfunctions.net/stripeUpdateAccountWithTOS',
+        data: {
+          account_id: account.id,
+          updates: newObject,
+        },
+      }).then(() => {
+        setprogress(0);
+        setrefresh(!refresh);
+      });
     }
   };
 
@@ -109,7 +126,8 @@ const StripeActivateForm1 = () => {
             individual.first_name === '' ||
             individual.last_name === '' ||
             individual.ssn_last_4.length !== 4 ||
-            !dob
+            !dob ||
+            loading
           }
           disabledStyle={styles.disabledButton}
           title={'Submit'}

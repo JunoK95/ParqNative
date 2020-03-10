@@ -1,15 +1,22 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import StripeActivate0 from './StripeActivate0';
+import {View, ActivityIndicator} from 'react-native';
 import HeaderPadding from '../../components/layout/HeaderPadding';
 import Axios from 'axios';
 import {AuthContext} from '../../context/AuthContext';
 import StripeActivateForm1 from './StripeActivateForm1';
+import StripeVerificationMenu from './StripeVerificationMenu';
+import StripeAddBankForm from './StripeAddBankForm';
+import {getWallet} from '../../firebase_func/walletFunctions';
+import {withNavigation} from 'react-navigation';
 
-const StripeAccountVerification = () => {
+const StripeAccountVerification = props => {
   const context = useContext(AuthContext);
+  const {navigation} = props;
+  const [refresh, setrefresh] = useState(false);
+  const [error, seterror] = useState(null);
   const [progress, setprogress] = useState(0);
   const [account, setaccount] = useState(null);
+  const [wallet, setwallet] = useState(null);
 
   useEffect(() => {
     const getAccountInfo = async () => {
@@ -37,23 +44,72 @@ const StripeAccountVerification = () => {
         accountData = await context.functions.assignStripeAccount();
       }
       console.log('Account Data => ', accountData);
+      const newWallet = await getWallet(context.user_id).then(res => {
+        return res;
+      });
+      setwallet(newWallet);
       setaccount(accountData);
     };
 
-    getAccountInfo();
-  }, [context.functions, context.user_data.stripe_account_id]);
+    const focusListener = navigation.addListener('willFocus', getAccountInfo());
 
-  if (account) {
-    console.log('Account Requirements => ', account.requirements);
-  }
+    return () => {
+      focusListener.remove();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    context.functions,
+    context.user_data.stripe_account_id,
+    context.user_id,
+    refresh,
+  ]);
 
   let content;
-  switch (progress) {
-    case 0:
-      content = <StripeActivateForm1 />;
-      break;
-    default:
-      break;
+  if (account) {
+    let requirements = [];
+    try {
+      requirements = account.requirements.eventually_due;
+    } catch (err) {
+      seterror(err);
+      return;
+    }
+    switch (progress) {
+      case 0:
+        content = (
+          <StripeVerificationMenu
+            wallet={wallet}
+            account={account}
+            setprogress={setprogress}
+          />
+        );
+        break;
+      case 1:
+        content = (
+          <StripeActivateForm1
+            account={account}
+            refresh={refresh}
+            setrefresh={setrefresh}
+            setprogress={setprogress}
+            context={context}
+          />
+        );
+        break;
+      case 2:
+        content = (
+          <StripeAddBankForm
+            account={account}
+            refresh={refresh}
+            setrefresh={setrefresh}
+            setprogress={setprogress}
+            context={context}
+          />
+        );
+        break;
+      default:
+        break;
+    }
+  } else {
+    content = <ActivityIndicator />;
   }
 
   return (
@@ -64,4 +120,4 @@ const StripeAccountVerification = () => {
   );
 };
 
-export default StripeAccountVerification;
+export default withNavigation(StripeAccountVerification);

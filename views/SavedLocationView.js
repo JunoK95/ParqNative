@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 const SavedLocationView = props => {
   const context = useContext(AuthContext);
@@ -31,19 +32,26 @@ const SavedLocationView = props => {
       const {title, lat, lng, place_id} = location.data;
       console.log(location.data);
       return (
-        <TouchableOpacity
+        <TouchableNativeFeedback
           key={place_id}
+          background={TouchableNativeFeedback.Ripple('#ffecb9')}
           onPress={() => navigateToResults({latitude: lat, longitude: lng})}>
-          <View style={styles.container}>
-            <Text style={styles.text}>{address[0]}</Text>
+          <View style={styles.item}>
+            <View style={styles.itemleft}>
+              <FontAwesome5Icon name={'star'} size={24} />
+            </View>
+            <View style={styles.itemright}>
+              <Text style={styles.itemtext}>{address[0]}</Text>
+              <Text style={styles.itemsubtext}>{address[1]}</Text>
+            </View>
           </View>
-        </TouchableOpacity>
+        </TouchableNativeFeedback>
       );
     });
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.listcontainer}>
+    <View>
       <HeaderPadding
         to={'Search'}
         right={
@@ -53,16 +61,24 @@ const SavedLocationView = props => {
           </TouchableOpacity>
         }
       />
-      {SavedLocationList}
-      {SavedLocationList.length === 0 && (
-        <TouchableNativeFeedback
-          onPress={() => props.navigation.navigate('SavedLocationsAdd')}>
-          <View style={styles.container}>
-            <Text style={styles.text}>No Saved Location</Text>
-          </View>
-        </TouchableNativeFeedback>
-      )}
-    </ScrollView>
+      <ScrollView>
+        {SavedLocationList}
+        {SavedLocationList.length === 0 && (
+          <TouchableNativeFeedback
+            background={TouchableNativeFeedback.Ripple('#ffecb9')}
+            onPress={() => props.navigation.navigate('SavedLocationsAdd')}>
+            <View style={styles.item}>
+              <View style={styles.itemleft}>
+                <FontAwesome5Icon name={'plus'} size={24} />
+              </View>
+              <View style={styles.itemright}>
+                <Text style={styles.itemtext}>{'No Saved Location'}</Text>
+              </View>
+            </View>
+          </TouchableNativeFeedback>
+        )}
+      </ScrollView>
+    </View>
   );
 };
 
@@ -88,6 +104,28 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'Montserrat-MediumItalic',
+  },
+  item: {
+    flexDirection: 'row',
+    paddingVertical: 16,
+  },
+  itemleft: {
+    paddingHorizontal: 20,
+    justifyContent: 'center',
+  },
+  itemright: {
+    justifyContent: 'center',
+  },
+  itemtext: {
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 15,
+    paddingRight: 72,
+  },
+  itemsubtext: {
+    fontFamily: 'Montserrat-Medium',
+    color: '#555',
+    fontSize: 13,
+    paddingRight: 72,
   },
 });
 

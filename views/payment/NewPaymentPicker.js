@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import {withNavigation} from 'react-navigation';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
@@ -55,7 +56,7 @@ const NewPaymentPicker = props => {
   }, [context.functions, context.user_data, setselect, setselected]);
 
   let pickerItems = [];
-  if (cards) {
+  if (!fetch && cards) {
     pickerItems = cards.map((c, i) => {
       return (
         <CustomPickerItem
@@ -71,6 +72,12 @@ const NewPaymentPicker = props => {
         />
       );
     });
+  } else if (fetch) {
+    pickerItems = (
+      <View style={styles.item}>
+        <ActivityIndicator />
+      </View>
+    );
   }
 
   let selectText = {

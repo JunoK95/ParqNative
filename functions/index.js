@@ -15,6 +15,27 @@ const webhookSig = functions.config().stripe.webhook.signing;
 //  response.send("Hello from Firebase!");
 // });
 
+exports.stripeAccountEvents = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    let event;
+    let sig = request.headers['stripe-signature'];
+    try {
+      event = stripe.webhooks.constructEvent(request.rawBody, sig, webhookSig);
+      console.log('Webhook Event = ', event);
+    } catch (err) {
+      response.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    //Handle Account Webhooks
+    switch (event.type) {
+      case 'account.updated':
+        break;
+      default:
+        break;
+    }
+  });
+});
+
 exports.stripeEvents = functions.https.onRequest((request, response) => {
   let event;
   let sig = request.headers['stripe-signature'];
@@ -338,6 +359,65 @@ exports.stripeElementPaymentIntent = functions.https.onRequest(
           } else {
             console.log(paymentIntent);
             response.status(200).send(paymentIntent);
+          }
+        },
+      );
+    });
+  },
+);
+
+exports.stripePayParkingCharge = functions.https.onRequest(
+  (request, response) => {
+    cors(request, response, async () => {
+      const {amount, description, token, port} = request.body;
+      let destination_stripe_account;
+      let destination_amount = parseInt(parseInt(amount, 10) * 0.8, 10);
+      try {
+        const portOwner = await db
+          .collection('users')
+          .doc(port.owner_id)
+          .get()
+          .then(doc => {
+            if (!doc.exists) {
+              console.log('No such document!');
+            } else {
+              return doc.data();
+            }
+          })
+          .catch(err => {
+            console.log('Error getting document', err);
+          });
+        console.log('port owner', portOwner);
+        destination_stripe_account = portOwner.stripe_account_id;
+      } catch (err) {
+        response.status(400).send(err);
+      }
+
+      console.log(
+        'Payment Token: ',
+        token,
+        'Destination Stripe Account: ',
+        destination_stripe_account,
+      );
+
+      stripe.charges.create(
+        {
+          amount: amount,
+          currency: 'usd',
+          description: description,
+          source: 'tok_visa', //replace with token when going live
+          transfer_data: {
+            destination: destination_stripe_account,
+            amount: destination_amount,
+          },
+        },
+        (err, charge) => {
+          if (err) {
+            console.error(err);
+            response.status(500).send(err);
+          } else {
+            console.log(charge);
+            response.status(200).send(charge);
           }
         },
       );

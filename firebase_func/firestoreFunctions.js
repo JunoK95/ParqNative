@@ -37,6 +37,8 @@ export async function initializeDefaultUser(id, initialData, newName) {
     credit: 0,
     object: 'wallet',
     user_id: id,
+    stripe_account_verified: false,
+    payout_balance: 0,
   };
 
   //Setup Default Data
@@ -127,6 +129,13 @@ export async function updateStripeId(user_id, stripe_customer_id) {
     .then(res => {
     console.log('updated stripe_customer_id name', res);
   });
+}
+
+export async function updateWallet(user_id, updates) {
+  await db.collection('wallets').doc(user_id)
+    .set({
+      stripe_account_verified: true,
+    }, {merge: true});
 }
 
 export async function setStripeAccountId(user_id, stripe_account_id) {

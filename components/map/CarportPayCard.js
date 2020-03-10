@@ -1,12 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableHighlight,
-  TextInput,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableHighlight} from 'react-native';
 import {convertToDollar, splitStrByComma} from '../../helpers/helper';
 import {withNavigation} from 'react-navigation';
 import storeLogo from '../../resources/images/112.png';
@@ -100,8 +93,8 @@ const CarportPayCard = props => {
       )
       .then(res => {
         console.log('transaction complete', res);
-        props.navigation.navigate('ReservationList');
         setloading(false);
+        props.navigation.navigate('ReservationList');
       })
       .catch(err => {
         setloading(false);
@@ -140,6 +133,7 @@ const CarportPayCard = props => {
     const resData = {
       token: selectcard.id,
       amount: amount + amountFee + amountTax,
+      port: port,
       description: `Test with vehicle ${vehicle.data.license_plate} and user ${
         context.user_id
       }`,
@@ -166,9 +160,9 @@ const CarportPayCard = props => {
       }
     } else if (object === 'card') {
       Axios({
-        method: 'post',
+        method: 'POST',
         url:
-          'https://us-central1-parq-dev.cloudfunctions.net/stripeElementCharge',
+          'https://us-central1-parq-dev.cloudfunctions.net/stripePayParkingCharge',
         data: resData,
       })
         .then(res => {
