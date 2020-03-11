@@ -12,14 +12,23 @@ const HomeCurrentLocationButton = props => {
     });
   };
 
-  return (
-    <TouchableOpacity
-      style={styles.button}
-      onPress={() => navigateTo({latitude, longitude})}>
-      <Icon name={'street-view'} size={18} />
-      <Text style={styles.text}> Search Nearby</Text>
-    </TouchableOpacity>
-  );
+  if (!latitude || !longitude) {
+    return (
+      <TouchableOpacity style={styles.buttondisabled} onPress={() => {}}>
+        <Icon name={'street-view'} size={18} />
+        <Text style={styles.text}> Search Nearby</Text>
+      </TouchableOpacity>
+    );
+  } else {
+    return (
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigateTo({latitude, longitude})}>
+        <Icon name={'street-view'} size={18} />
+        <Text style={styles.text}> Search Nearby</Text>
+      </TouchableOpacity>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
@@ -31,6 +40,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     elevation: 4,
     opacity: 0.8,
+  },
+  buttondisabled: {
+    borderRadius: 20,
+    backgroundColor: '#888',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    flexDirection: 'row',
+    elevation: 4,
+    opacity: 0.3,
   },
   text: {
     textAlignVertical: 'center',

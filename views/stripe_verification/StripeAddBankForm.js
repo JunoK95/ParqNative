@@ -37,12 +37,10 @@ const StripeAddBankForm = props => {
         Axios({
           method: 'POST',
           url:
-            'https://us-central1-parq-dev.cloudfunctions.net/stripeUpdateAccount',
+            'https://us-central1-parq-dev.cloudfunctions.net/stripeCreateExternalAccount',
           data: {
             account_id: account.id,
-            updates: {
-              external_account: bankToken,
-            },
+            bankToken: bankToken,
           },
         })
           .then(() => {

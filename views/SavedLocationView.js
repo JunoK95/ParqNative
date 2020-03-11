@@ -11,6 +11,7 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   container: {
-    width: 340,
+    width: Dimensions.get('window').width - 64,
     height: 48,
     backgroundColor: '#ccc',
     alignItems: 'center',

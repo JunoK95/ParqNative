@@ -21,7 +21,7 @@ const NewPaymentPicker = props => {
   const [fetch, setfetch] = useState(false);
   const [select, setselect] = useState(null);
   const [cards, setcards] = useState(null);
-  const [wallet, setwallet] = useState(null);
+  // const [wallet, setwallet] = useState(null);
   const [modalopen, setmodalopen] = useState(false);
 
   useEffect(() => {
@@ -43,12 +43,13 @@ const NewPaymentPicker = props => {
           setcards(payments.cards);
           setselect(payments.cards[0]);
           setselected(payments.cards[0]);
-          setwallet(payments.wallet);
-        } else {
-          setwallet(payments.wallet);
-          setselect(payments.wallet);
-          setselected(payments.wallet);
+          // setwallet(payments.wallet);
         }
+        // else {
+        //   setwallet(payments.wallet);
+        //   setselect(payments.wallet);
+        //   setselected(payments.wallet);
+        // }
         setfetch(false);
       }
     }
@@ -132,7 +133,7 @@ const NewPaymentPicker = props => {
                   </Text>
                 </View>
                 <ScrollView>
-                  {wallet && (
+                  {/* {wallet && (
                     <CustomPickerItem
                       title={wallet.credit + ' coins'}
                       subtitle={'1 coin = $0.01'}
@@ -144,7 +145,7 @@ const NewPaymentPicker = props => {
                         console.log(wallet);
                       }}
                     />
-                  )}
+                  )} */}
                   {pickerItems}
                   <CustomPickerItem
                     title={'Add Payment Card'}

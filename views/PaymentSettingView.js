@@ -39,12 +39,12 @@ const PaymentSettingView = () => {
         setbanks(res);
       });
     }
-    const newWallet = await getWallet(user_id).then(res => {
-      return res;
-    });
-    setwallet(newWallet);
+    // const newWallet = await getWallet(user_id).then(res => {
+    //   return res;
+    // });
+    // setwallet(newWallet);
     setfetch(false);
-  }, [user_data, user_id, context.functions]);
+  }, [user_data, context.functions]);
 
   useEffect(() => {
     setfetch(true);
@@ -73,7 +73,7 @@ const PaymentSettingView = () => {
     return (
       <ScrollView>
         <HeaderPadding to={'Home'} alt title={'Wallet'} right={refreshbutton} />
-        {wallet && <WalletDisplay user_id={context.user_id} wallet={wallet} />}
+        {/* {wallet && <WalletDisplay user_id={context.user_id} wallet={wallet} />} */}
         <PaymentCardsList
           cards={cards}
           stripe_id={stripe_customer_id}

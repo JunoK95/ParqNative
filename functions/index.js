@@ -7,7 +7,7 @@ admin.initializeApp(functions.config().firebase);
 
 const db = admin.firestore();
 const webhookSig = functions.config().stripe.webhook.signing;
-
+const webhookAccountSig = functions.config().stripe.webhook.account_signing;
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
@@ -20,7 +20,11 @@ exports.stripeAccountEvents = functions.https.onRequest((request, response) => {
     let event;
     let sig = request.headers['stripe-signature'];
     try {
-      event = stripe.webhooks.constructEvent(request.rawBody, sig, webhookSig);
+      event = stripe.webhooks.constructEvent(
+        request.rawBody,
+        sig,
+        webhookAccountSig,
+      );
       console.log('Webhook Event = ', event);
     } catch (err) {
       response.status(400).send(`Webhook Error: ${err.message}`);
@@ -29,8 +33,25 @@ exports.stripeAccountEvents = functions.https.onRequest((request, response) => {
     //Handle Account Webhooks
     switch (event.type) {
       case 'account.updated':
+        console.log('ACCOUNT UPDATED => ', event);
+        const {object} = event.data;
+        if (object.tos_acceptance) {
+          db.collection('wallets')
+            .doc(object.metadata.user_id)
+            .update({stripe_account_verified: true});
+        }
+        response.status(200).send(object);
+        break;
+      case 'account.external_account.created':
+        console.log('BANK ACCOUNT ADDED => ', event);
+        response.status(200).send(object);
+        break;
+      case 'account.external_account.deleted':
+        console.log('BANK ACCOUNT DELETED => ', event);
+        response.status(200).send(object);
         break;
       default:
+        response.status(200).send(event);
         break;
     }
   });
@@ -138,7 +159,7 @@ exports.stripeUpdateAccountWithTOS = functions.https.onRequest(
 
 exports.stripeCreateAccount = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
-    const {email} = request.body;
+    const {email, user_id} = request.body;
     stripe.accounts.create(
       {
         country: 'US',
@@ -150,6 +171,9 @@ exports.stripeCreateAccount = functions.https.onRequest((request, response) => {
         },
         email: email,
         requested_capabilities: ['transfers'],
+        metadata: {
+          user_id: user_id,
+        },
       },
       (err, account) => {
         console.log(account);
@@ -268,30 +292,26 @@ exports.stripeCreateBank = functions.https.onRequest((request, response) => {
   });
 });
 
-exports.stripeCheckoutSession = functions.https.onRequest(
+exports.stripeCreateExternalAccount = functions.https.onRequest(
   (request, response) => {
     cors(request, response, () => {
-      const {price} = request.body;
-      stripe.checkout.sessions.create(
+      const {account_id, bankToken} = request.body;
+      console.log('bank token => ', bankToken);
+      stripe.accounts.createExternalAccount(
+        account_id,
         {
-          success_url: 'https://parq.tech/payment/success',
-          cancel_url: 'https://parq.tech/payment/cancel',
-          payment_method_types: ['card'],
-          line_items: [
-            {
-              name: 'T-shirt',
-              description: 'Comfortable cotton t-shirt',
-              amount: 1500,
-              currency: 'usd',
-              quantity: 2,
-            },
-          ],
+          external_account: bankToken.tokenId,
         },
-        (err, session) => {
+        (err, bank) => {
           // asynchronously called
-          console.error(err);
-          console.log(session);
-          response.send(session);
+          if (err) {
+            console.error(err);
+            response.status(402).send(err);
+          }
+          if (bank) {
+            console.log('Created Bank External Account => ', bank);
+            response.status(200).send(bank);
+          }
         },
       );
     });

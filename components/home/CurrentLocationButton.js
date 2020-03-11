@@ -13,6 +13,9 @@ const CurrentLocationButton = props => {
     });
   };
 
+  if (!latitude || !longitude) {
+    return null;
+  }
   return (
     <TouchableNativeFeedback
       background={TouchableNativeFeedback.Ripple('#c2e8ff')}
