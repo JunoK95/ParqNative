@@ -1,5 +1,12 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text, ScrollView, View, Dimensions} from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  ScrollView,
+  View,
+  Dimensions,
+} from 'react-native';
 import CarportCard from '../map/CarportCard';
 
 const NearbyList = props => {

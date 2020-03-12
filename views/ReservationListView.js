@@ -31,7 +31,12 @@ const ReservationListView = () => {
 
   if (!loading) {
     const activeReservations = reservations.filter(res => {
-      return res.data.end > moment().unix();
+      return (
+        res.data.end >
+        moment()
+          .subtract(1, 'd')
+          .unix()
+      );
     });
     return (
       <View>

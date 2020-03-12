@@ -15,6 +15,7 @@ import NearbyListModal from '../components/nearby/NearbyListModal';
 import CustomMapMarker from '../components/map/CustomMapMarker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import CarportCard from '../components/map/CarportCard';
+import {checkCarportAvailablity} from '../firebase_func/firestoreFunctions';
 
 const NearbyListView = props => {
   const {params} = props.navigation.state;
@@ -29,6 +30,7 @@ const NearbyListView = props => {
       data: 'none',
     },
   });
+  const [carport2, setcarport2] = useState(null);
   const [select, setselect] = useState(null);
   const [fetching, setfetching] = useState(true);
   const [key, setKey] = useState(Math.floor(Math.random() * 100));
@@ -39,19 +41,34 @@ const NearbyListView = props => {
       console.log('fetching data');
       const center = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
       console.log(center, distance);
-      await geofirexQueryPoints(center, distance, 'geopointx')
+      const nearbyCarports = await geofirexQueryPoints(
+        center,
+        distance,
+        'geopointx',
+      )
         .then(res => {
           console.log(res);
           setstate({
             ...state,
             carports: res,
           });
-          setfetching(false);
           return res;
         })
         .catch(err => console.error(err));
 
+      let promises = nearbyCarports.map(async (port, i) => {
+        const isAvailable = await checkCarportAvailablity(port);
+        if (isAvailable) {
+          return {...port, isAvailable: true};
+        } else {
+          return {...port, isAvailable: false};
+        }
+      });
+      const availableCarports = await Promise.all(promises);
+      console.log('Available Carports => ', availableCarports);
+      setcarport2(availableCarports);
       setradius(parseFloat(distance + 1));
+      setfetching(false);
       return;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -74,18 +91,32 @@ const NearbyListView = props => {
       </View>
     );
   } else {
-    const mapMarkers = state.carports.map((port, i) => {
-      return (
-        <Marker
-          key={i}
-          coordinate={{
-            latitude: port.location.coordinates.lat,
-            longitude: port.location.coordinates.lng,
-          }}
-          onPress={() => setselect(port)}>
-          <CustomMapMarker selected={select} port={port} />
-        </Marker>
-      );
+    const mapMarkers = carport2.map((port, i) => {
+      if (port.isAvailable) {
+        return (
+          <Marker
+            key={i}
+            coordinate={{
+              latitude: port.location.coordinates.lat,
+              longitude: port.location.coordinates.lng,
+            }}
+            onPress={() => setselect(port)}>
+            <CustomMapMarker selected={select} port={port} />
+          </Marker>
+        );
+      } else {
+        return (
+          <Marker
+            key={i}
+            coordinate={{
+              latitude: port.location.coordinates.lat,
+              longitude: port.location.coordinates.lng,
+            }}
+            onPress={() => {}}>
+            <CustomMapMarker selected={select} port={port} unavailable />
+          </Marker>
+        );
+      }
     });
 
     return (
@@ -212,3 +243,5 @@ const styles = StyleSheet.create({
 });
 
 export default NearbyListView;
+
+//David Mois Director Commuter Services

@@ -3,13 +3,20 @@ import {View, Text, StyleSheet} from 'react-native';
 import {convertToDollar} from '../../helpers/helper';
 
 const CustomMapMarker = props => {
-  const {port, selected} = props;
+  const {port, selected, unavailable} = props;
   const dollarPrice = convertToDollar(port.price_hr);
   let isSelected = false;
   if (selected) {
     isSelected = port.id === selected.id;
   }
 
+  if (unavailable) {
+    return (
+      <View style={{...styles.container, ...styles.unavailable}}>
+        <Text style={styles.text}>{`$${dollarPrice}`}</Text>
+      </View>
+    );
+  }
   return (
     <View
       style={
@@ -36,6 +43,15 @@ const styles = StyleSheet.create({
   },
   unselected: {
     backgroundColor: '#11a4ff',
+  },
+  unavailable: {
+    backgroundColor: 'rgba(0,0,0,0.8)',
+    opacity: 0.5,
+  },
+  unavailabletext: {
+    textAlign: 'center',
+    fontFamily: 'Montserrat-SemiBold',
+    color: '#000',
   },
   text: {
     textAlign: 'center',

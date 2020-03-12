@@ -8,6 +8,7 @@ import {
   Image,
   Platform,
   Linking,
+  Dimensions,
 } from 'react-native';
 import FeaturesList from '../carport/FeaturesList';
 import {
@@ -50,7 +51,10 @@ const ReservationItem = props => {
 
   let scheduleTxt;
   if (reservation) {
-    const seconds = moment(reservation.end) - currenttime;
+    let seconds = moment(reservation.end) - currenttime;
+    if (seconds <= 0) {
+      seconds = 0;
+    }
     const durhours = moment.duration(seconds, 'seconds').hours();
     const durmin = setTwoDigit(moment.duration(seconds, 'seconds').minutes());
     const dursec = setTwoDigit(moment.duration(seconds, 'seconds').seconds());
@@ -76,8 +80,21 @@ const ReservationItem = props => {
             </View>
           </View>
           <View style={styles.right}>
-            <Icon name={'clock'} style={styles.distance} />
-            <Text style={styles.distance}>{scheduleTxt}</Text>
+            <Icon
+              name={'clock'}
+              style={styles.clockicon}
+              color={
+                moment(reservation.end) - currenttime <= 0 ? 'red' : '#888'
+              }
+            />
+            <Text
+              style={
+                moment(reservation.end) - currenttime <= 0
+                  ? styles.timeouttext
+                  : styles.distance
+              }>
+              {scheduleTxt}
+            </Text>
           </View>
         </View>
         <View style={styles.contentcontainer}>
@@ -119,7 +136,7 @@ const ReservationItem = props => {
 
 const styles = StyleSheet.create({
   container: {
-    width: 340,
+    width: Dimensions.get('window').width - 64,
     height: 200,
     backgroundColor: '#fff',
     alignItems: 'center',
@@ -202,9 +219,24 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'Montserrat',
   },
+  clockicon: {
+    fontSize: 16,
+    textAlign: 'right',
+    fontWeight: 'bold',
+    fontFamily: 'Montserrat',
+    textAlignVertical: 'center',
+  },
   distance: {
     fontSize: 16,
     color: '#888',
+    textAlign: 'right',
+    fontWeight: 'bold',
+    fontFamily: 'Montserrat',
+    textAlignVertical: 'center',
+  },
+  timeouttext: {
+    fontSize: 16,
+    color: 'red',
     textAlign: 'right',
     fontWeight: 'bold',
     fontFamily: 'Montserrat',
