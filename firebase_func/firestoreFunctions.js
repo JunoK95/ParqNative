@@ -183,6 +183,7 @@ export async function initializeCarportWithParams(owner_id, address, available_s
     description: description,
     type: type,
     accomodations: {
+      compact_only: false,
       large_vehicle: false,
       ev_charging: false,
       nearby_commute: false,
@@ -238,6 +239,7 @@ export async function initializeNewCarport(address, owner_id){
     taken_spaces: 0,
     description: '',
     accomodations: {
+      compact_only: false,
       large_vehicle: false,
       ev_charging: false,
       nearby_commute: false,
