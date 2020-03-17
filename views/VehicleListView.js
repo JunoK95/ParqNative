@@ -37,12 +37,16 @@ const VehicleListView = props => {
                 <FontAwesome5Icon
                   style={styles.itemicon}
                   name={'car'}
-                  size={20}
+                  size={26}
                 />
               </View>
               <View style={styles.col}>
-                <Text style={styles.itemtext}>{v.data.name}</Text>
-                <Text style={styles.itemsubtext}>{v.data.license_plate}</Text>
+                <Text style={styles.itemtext}>
+                  {v.data.name + ' - ' + v.data.license_plate}
+                </Text>
+                <Text style={styles.itemsubtext}>
+                  {v.data.make + ' ' + v.data.model}
+                </Text>
               </View>
             </View>
           </View>

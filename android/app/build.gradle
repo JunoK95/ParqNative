@@ -1,5 +1,4 @@
 apply plugin: "com.android.application"
-apply plugin: 'com.google.gms.google-services'
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 import com.android.build.OutputFile
@@ -132,7 +131,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.awesomeproject"
+        applicationId "com.parqnative"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -197,6 +196,7 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'com.google.android.gms:play-services-base:16.0.0'
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
     implementation "com.google.android.gms:play-services-location:16.0.0"
@@ -211,3 +211,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply plugin: 'com.google.gms.google-services'

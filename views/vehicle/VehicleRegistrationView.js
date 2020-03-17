@@ -110,6 +110,7 @@ const VehicleRegistrationView = props => {
           placeholder={'Year'}
           label={'Year'}
           value={inputs.year}
+          maxLength={4}
           keyboardType={'numeric'}
           onChangeText={text => handleChange('year', text)}
         />

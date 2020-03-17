@@ -1,23 +1,19 @@
-import React, {useEffect, useCallback, useState} from 'react';
+import React from 'react';
 import {
   View,
   ScrollView,
   Text,
+  StyleSheet,
   Dimensions,
   Image,
-  StyleSheet,
 } from 'react-native';
-import HeaderPadding from '../components/layout/HeaderPadding';
-import {ListItem} from 'react-native-elements';
-import {getCurrentReservations} from '../firebase_func/firestoreFunctions';
+import HeaderPadding from '../../components/layout/HeaderPadding';
+import storeLogo from '../../resources/images/112.png';
+import {splitStrByComma, convertToDollar} from '../../helpers/helper';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-import AccomodationCard from '../components/carport/carport_profile/AccomodationCard';
-import RestrictionCard from '../components/carport/carport_profile/RestrictionCard';
-import storeLogo from '../resources/images/112.png';
-import {splitStrByComma, convertToDollar} from '../helpers/helper';
-import ParkedVehiclesCard from '../components/carport/carport_profile/ParkedVehiclesCard';
-import {withNavigationFocus} from 'react-navigation';
-import PortInfoCard from '../components/carport/carport_profile/PortInfoCard';
+import AccomodationCard from '../../components/carport/carport_profile/AccomodationCard';
+import RestrictionCard from '../../components/carport/carport_profile/RestrictionCard';
+import PortInfoCard from '../../components/carport/carport_profile/PortInfoCard';
 
 const typeMenu = {
   driveway: {
@@ -38,11 +34,8 @@ const typeMenu = {
   },
 };
 
-const CarportEditView = props => {
-  const {port, port_id} = props.navigation.state.params;
-  const {isFocused} = props;
-  const [reservations, setreservations] = useState();
-
+const CarportInfoNoBookView = props => {
+  const {port, previousScreen} = props.navigation.state.params;
   const splitAddress = splitStrByComma(port.location.address);
   const dollarPrice = convertToDollar(port.price_hr);
 
@@ -51,29 +44,9 @@ const CarportEditView = props => {
     ptype = 'parkinglot';
   }
 
-  const fetchReservations = useCallback(async () => {
-    const res = await getCurrentReservations({data: port, id: port_id});
-    console.log(res);
-    setreservations(res);
-  }, [port, port_id]);
-
-  useEffect(() => {
-    if (!port || !port_id) {
-      return;
-    }
-    fetchReservations();
-  }, [fetchReservations, port, port_id, isFocused]);
-
-  let reserves = [];
-  if (reservations) {
-    for (var key of Object.keys(reservations)) {
-      reserves.push(reservations[key]);
-    }
-  }
-
   return (
     <ScrollView contentContainerStyle={styles.screen}>
-      <HeaderPadding to={'CarportList'} />
+      <HeaderPadding to={previousScreen ? previousScreen : 'ReservationList'} />
       <View style={styles.titlecontainer}>
         <View style={styles.itemcolumn}>
           <View style={styles.avatarcontainer}>
@@ -92,14 +65,6 @@ const CarportEditView = props => {
       <PortInfoCard port={port} />
       <AccomodationCard accomodations={port.accomodations} />
       <RestrictionCard accomodations={port.accomodations} />
-      <ParkedVehiclesCard reservations={reserves} />
-
-      {/* <ListItem title={port.location.address} subtitle={'address'} />
-      <ListItem title={port.available_spaces} subtitle={'spaces available'} />
-      <ListItem title={port.description} subtitle={'description'} />
-      <ListItem title={port.schedule.start} subtitle={'start time'} />
-      <ListItem title={port.schedule.end} subtitle={'end time'} />
-      <ListItem title={port.schedule.allday.toString()} subtitle={'24h'} /> */}
     </ScrollView>
   );
 };
@@ -107,6 +72,18 @@ const CarportEditView = props => {
 const styles = StyleSheet.create({
   screen: {
     alignItems: 'center',
+  },
+  container: {
+    width: Dimensions.get('window').width - 64,
+    backgroundColor: '#fff',
+    borderRadius: 24,
+    marginVertical: 12,
+    borderWidth: 2,
+    shadowColor: '#000',
+    shadowOffset: {width: 4, height: 4},
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   titlecontainer: {
     width: Dimensions.get('window').width - 64,
@@ -122,6 +99,18 @@ const styles = StyleSheet.create({
   rowitem: {
     paddingVertical: 12,
     flexDirection: 'row',
+  },
+  rowitemtitle2: {
+    textAlign: 'center',
+    fontFamily: 'Montserrat-SemiBold',
+    color: '#444',
+    fontSize: 15,
+  },
+  rowitemtext2: {
+    textAlign: 'center',
+    fontFamily: 'Montserrat-MediumItalic',
+    color: '#777',
+    fontSize: 15,
   },
   rowitemtitle: {
     textAlign: 'left',
@@ -158,6 +147,26 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     paddingLeft: 24,
   },
+  buttonrow: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    marginVertical: 12,
+  },
+  button: {
+    width: 220,
+    paddingVertical: 8,
+    backgroundColor: '#11a4ff',
+    borderColor: '#11a4ff',
+    borderRadius: 20,
+    borderWidth: 2,
+  },
+  buttonText: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: '#fff',
+    fontWeight: 'bold',
+    fontFamily: 'Montserrat',
+  },
 });
 
-export default withNavigationFocus(CarportEditView);
+export default CarportInfoNoBookView;

@@ -29,7 +29,8 @@ const CarportListView = props => {
         setfetch(false);
       });
     }
-  }, []);
+    setfetch(false);
+  }, [user_id]);
 
   useEffect(() => {
     setfetch(true);
@@ -44,10 +45,11 @@ const CarportListView = props => {
     fetchData();
   }, [fetchData, user_data, user_id]);
 
-  const handleRegistrationClick = () => {
+  const handleRegistrationClick = async () => {
     setload(true);
     console.log('click');
-    context.functions.assignStripeAccount();
+    await context.functions.assignStripeAccount();
+    props.navigation.navigate('StripeAccountVerification');
     setload(false);
   };
 

@@ -20,6 +20,7 @@ import storeLogo from '../../resources/images/112.png';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import {withNavigation} from 'react-navigation';
 
 const ReservationItem = props => {
   const {port, reservation} = props;
@@ -35,6 +36,10 @@ const ReservationItem = props => {
 
   const handleClick = () => {
     console.log('handleclick');
+    props.navigation.navigate('CarportInfoNoBook', {
+      port,
+      previousScreen: 'ReservationList',
+    });
   };
 
   const openGps = (lat, lng) => {
@@ -291,4 +296,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ReservationItem;
+export default withNavigation(ReservationItem);

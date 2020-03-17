@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:449904544159:android:29e6aaf23ae426425e95aa",
         "android_client_info": {
-          "package_name": "com.awesomeproject"
+          "package_name": "com.parqnative"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "449904544159-figjpvbbu683mtm6hmlbrbebaie7mq1q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.awesomeproject",
+            "package_name": "com.parqnative",
             "certificate_hash": "4d1dc09f31bfedef4436b57a422ddb5732fe9673"
           }
         },

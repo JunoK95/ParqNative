@@ -15,6 +15,10 @@ const RegisterView = props => {
     console.log('fuck prettier');
   };
 
+  const handleRedirect = () => {
+    props.navigation.navigate('Login');
+  };
+
   return (
     <View style={styles.bg}>
       {error ? <Text>{error}</Text> : null}
@@ -69,6 +73,11 @@ const RegisterView = props => {
         title={'Sign Up'}
         onPress={handleSubmit}
       />
+      <Button
+        containerStyle={styles.buttonContainer}
+        title={'Sign Up With Google'}
+        onPress={handleRedirect}
+      />
     </View>
   );
 };
@@ -100,7 +109,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   buttonContainer: {
-    margin: 12,
+    margin: 8,
     marginHorizontal: 48,
     alignContent: 'center',
     justifyContent: 'center',

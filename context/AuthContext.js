@@ -15,6 +15,7 @@ import {
   setStripeAccountId,
 } from '../firebase_func/firestoreFunctions';
 import {getWallet} from '../firebase_func/walletFunctions';
+import {GoogleSignin} from '@react-native-community/google-signin';
 import axios from 'axios';
 
 export const AuthContext = createContext();
@@ -205,6 +206,22 @@ function AuthContextProvider(props) {
     return result;
   };
 
+  const googleSignIn = async (id_token, access_token) => {
+    const credential = await firebase.auth.GoogleAuthProvider.credential(
+      id_token,
+      access_token,
+    );
+    console.log('CREDENTIAL => ', credential);
+    const firebaseUserCredential = await firebase
+      .auth()
+      .signInWithCredential(credential);
+    console.log(firebaseUserCredential);
+    if (firebaseUserCredential) {
+      return true;
+    }
+    return false;
+  };
+
   const signInSuccess = authResult => {
     console.log(authResult);
 
@@ -215,6 +232,12 @@ function AuthContextProvider(props) {
   };
 
   const signOutUser = async () => {
+    try {
+      await GoogleSignin.revokeAccess();
+      await GoogleSignin.signOut();
+    } catch (err) {
+      console.log(err);
+    }
     var result = await auth
       .signOut()
       .then(() => {
@@ -487,6 +510,7 @@ function AuthContextProvider(props) {
           registerUser: registerUser,
           signOutUser: signOutUser,
           signInUser: signInUser,
+          googleSignIn: googleSignIn,
           signInSuccess: signInSuccess,
           addContextSaveLocation: addContextSaveLocation,
           addContextVehicle: addContextVehicle,

@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Dimensions,
   Image,
+  TouchableHighlight,
 } from 'react-native';
 import HeaderPadding from '../../components/layout/HeaderPadding';
 import storeLogo from '../../resources/images/112.png';
@@ -13,6 +14,7 @@ import {splitStrByComma, convertToDollar} from '../../helpers/helper';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import AccomodationCard from '../../components/carport/carport_profile/AccomodationCard';
 import RestrictionCard from '../../components/carport/carport_profile/RestrictionCard';
+import PortInfoCard from '../../components/carport/carport_profile/PortInfoCard';
 
 const typeMenu = {
   driveway: {
@@ -43,9 +45,13 @@ const CarportInfoView = props => {
     ptype = 'parkinglot';
   }
 
+  const handleBook = () => {
+    props.navigation.navigate('PayParking', {port});
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.screen}>
-      <HeaderPadding to={'Nearby'} />
+      <HeaderPadding to={'Search'} />
       <View style={styles.titlecontainer}>
         <View style={styles.itemcolumn}>
           <View style={styles.avatarcontainer}>
@@ -61,36 +67,17 @@ const CarportInfoView = props => {
           </View>
         </View>
       </View>
-      <View style={styles.container}>
-        <View style={styles.row}>
-          <View style={styles.rowitem}>
-            <View style={styles.itemcolumn}>
-              <FontAwesome5Icon name={'coins'} size={26} />
-            </View>
-            <View style={styles.itemcolumn}>
-              <Text style={styles.rowitemtitle}>Price/hr</Text>
-              <Text style={styles.rowitemtext}>{'$ ' + dollarPrice}</Text>
-            </View>
-          </View>
-          <View style={styles.rowitem}>
-            <View style={styles.itemcolumn}>
-              <FontAwesome5Icon name={typeMenu[ptype].icon} size={30} />
-            </View>
-            <View style={styles.itemcolumn}>
-              <Text style={styles.rowitemtitle}>Type</Text>
-              <Text style={styles.rowitemtext}>{typeMenu[ptype].label}</Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.row}>
-          <View style={styles.itemcolumn}>
-            <Text style={styles.rowitemtitle2}>Parking Instructions</Text>
-            <Text style={styles.rowitemtext2}>{port.parking_instructions}</Text>
-          </View>
-        </View>
-      </View>
+      <PortInfoCard port={port} />
       <AccomodationCard accomodations={port.accomodations} />
       <RestrictionCard accomodations={port.accomodations} />
+      <View style={styles.buttonrow}>
+        <TouchableHighlight
+          style={styles.button}
+          underlayColor={'#ffc630'}
+          onPress={handleBook}>
+          <Text style={styles.buttonText}>Book</Text>
+        </TouchableHighlight>
+      </View>
       {/* <ListItem title={port.location.address} subtitle={'address'} />
       <ListItem title={port.available_spaces} subtitle={'spaces available'} />
       <ListItem title={port.description} subtitle={'description'} />
@@ -178,6 +165,26 @@ const styles = StyleSheet.create({
   addresscontainer: {
     justifyContent: 'flex-end',
     paddingLeft: 24,
+  },
+  buttonrow: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    marginVertical: 12,
+  },
+  button: {
+    width: 220,
+    paddingVertical: 8,
+    backgroundColor: '#11a4ff',
+    borderColor: '#11a4ff',
+    borderRadius: 20,
+    borderWidth: 2,
+  },
+  buttonText: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: '#fff',
+    fontWeight: 'bold',
+    fontFamily: 'Montserrat',
   },
 });
 
