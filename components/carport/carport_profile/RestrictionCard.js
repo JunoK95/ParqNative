@@ -51,12 +51,13 @@ const RestrictionCard = props => {
           </View>
           <View style={styles.itemcolumn}>
             <Text
+              numberOfLines={2}
               style={
                 accomodations.low_clearance
                   ? styles.rowitemtitle2
                   : styles.rowitemtitledisabled2
               }>
-              Low Clearance
+              Low Clear
             </Text>
           </View>
         </View>
@@ -119,18 +120,19 @@ const RestrictionCard = props => {
           <View style={styles.itemcolumn}>
             <FontAwesome5Icon
               name={'door-closed'}
-              size={26}
+              size={24}
               color={accomodations.no_reentry ? 'red' : '#777'}
             />
           </View>
           <View style={styles.itemcolumn}>
             <Text
+              numberOfLines={2}
               style={
                 accomodations.no_reentry
                   ? styles.rowitemtitle2
                   : styles.rowitemtitledisabled2
               }>
-              No Re-entry
+              No ReEntry
             </Text>
           </View>
         </View>

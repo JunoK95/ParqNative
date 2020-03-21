@@ -10,7 +10,7 @@ import NearbyList from './NearbyList';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const NearbyListModal = props => {
-  const {open, setlistmode, currentlocation} = props;
+  const {open, setlistmode, currentlocation, carports} = props;
 
   return (
     <Modal
@@ -22,7 +22,7 @@ const NearbyListModal = props => {
         <Text style={styles.headertext}>Select Your Parking</Text>
       </View>
       <NearbyList
-        carports={props.carports}
+        carports={carports}
         currentlocation={currentlocation}
         setopen={setlistmode}
       />

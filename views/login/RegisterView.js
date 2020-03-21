@@ -2,17 +2,39 @@ import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, TextInput} from 'react-native';
 import {Icon, Button} from 'react-native-elements';
 import {AuthContext} from '../../context/AuthContext';
+import {validateEmail, validatePassword} from '../../helpers/helper';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 const RegisterView = props => {
   const context = useContext(AuthContext);
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
+  const [password2, setpassword2] = useState('');
   const [display_name, setname] = useState('');
   const [error, seterror] = useState('');
 
   const handleSubmit = () => {
-    console.log('submit');
-    console.log('fuck prettier');
+    if (!validateEmail(email)) {
+      seterror('Invalid Email');
+      return;
+    }
+    if (!validatePassword(password, password2)) {
+      seterror('Invalid Password');
+      return;
+    }
+    if (display_name.length <= 0) {
+      seterror('Display Name Empty');
+      return;
+    }
+    context.functions.registerUser(email, password, display_name).then(res => {
+      if (res.error) {
+        console.log(res);
+        seterror(res.error.message);
+      } else {
+        seterror(null);
+        props.navigation.navigate('Login');
+      }
+    });
   };
 
   const handleRedirect = () => {
@@ -21,7 +43,11 @@ const RegisterView = props => {
 
   return (
     <View style={styles.bg}>
-      {error ? <Text>{error}</Text> : null}
+      {error ? (
+        <View style={styles.errorBox}>
+          <Text style={styles.errorText}>{error}</Text>
+        </View>
+      ) : null}
       <View style={styles.textFieldContainer}>
         <Icon iconStyle={styles.icon} name={'email'} size={30} />
         <TextInput
@@ -64,8 +90,8 @@ const RegisterView = props => {
           placeholder={'confirm password'}
           textContentType={'password'}
           secureTextEntry
-          value={password}
-          onChangeText={text => setpassword(text)}
+          value={password2}
+          onChangeText={text => setpassword2(text)}
         />
       </View>
       <Button
@@ -113,6 +139,22 @@ const styles = StyleSheet.create({
     marginHorizontal: 48,
     alignContent: 'center',
     justifyContent: 'center',
+  },
+  errorBox: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: '#f44336',
+    paddingHorizontal: 64,
+    marginHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 24,
+  },
+  errorText: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#fff',
+    fontWeight: 'bold',
+    fontFamily: 'Montserrat',
   },
 });
 

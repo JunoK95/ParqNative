@@ -11,11 +11,17 @@ import CarportCard from '../map/CarportCard';
 
 const NearbyList = props => {
   const {carports, currentlocation, setopen} = props;
-  if (carports.length > 0) {
+  const availableCarports = carports.filter(port => {
+    console.log(port);
+    return port.isAvailable;
+  });
+  console.log('AVAILABLE CARPORTS => ', availableCarports);
+
+  if (availableCarports.length > 0) {
     return (
       <FlatList
         contentContainerStyle={styles.listcontainer}
-        data={carports}
+        data={availableCarports}
         keyExtractor={item => item.id}
         renderItem={({item}) => {
           return (

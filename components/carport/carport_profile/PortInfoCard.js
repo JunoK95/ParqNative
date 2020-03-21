@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 24,
     marginVertical: 12,
-    paddingVertical: 8,
+    paddingVertical: 12,
     borderWidth: 2,
     shadowColor: '#000',
     shadowOffset: {width: 4, height: 4},
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   rowitem: {
-    paddingVertical: 12,
+    paddingBottom: 12,
     flexDirection: 'row',
   },
   rowitemtitle: {

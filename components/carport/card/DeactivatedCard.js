@@ -13,6 +13,7 @@ import storeLogo from '../../../resources/images/112.png';
 import FeaturesList from '../FeaturesList';
 import {withNavigation} from 'react-navigation';
 import {activateCarport} from '../../../firebase_func/firestoreFunctions';
+import SetPriceTimeCard from './SetPriceTimeCard';
 
 const DeactivatedCard = props => {
   const {port, port_id, refreshData} = props;
@@ -95,48 +96,12 @@ const DeactivatedCard = props => {
     );
   } else {
     return (
-      <TouchableOpacity style={styles.container} onPress={handleClick}>
-        <View style={styles.doublecontentcontainer}>
-          <View style={styles.item}>
-            <Text style={styles.itemtext}>
-              {'$' + convertToDollar(port.price_hr)}
-            </Text>
-            <TouchableHighlight
-              style={styles.itembutton}
-              underlayColor={'#ffc630'}
-              onPress={() => setactive(false)}>
-              <Text style={styles.itembuttontext}>Set Price</Text>
-            </TouchableHighlight>
-          </View>
-          <View style={styles.item}>
-            <Text style={styles.itemtext}>
-              {port.schedule.allday ? '24h' : 'other'}
-            </Text>
-            <TouchableHighlight
-              style={styles.itembutton}
-              underlayColor={'#ffc630'}
-              onPress={() => setactive(false)}>
-              <Text style={styles.itembuttontext}>Set Time</Text>
-            </TouchableHighlight>
-          </View>
-        </View>
-        <View style={styles.buttonrow}>
-          <View style={styles.row}>
-            <TouchableHighlight
-              style={styles.buttonhalf2}
-              underlayColor={'#ffc630'}
-              onPress={() => setactive(false)}>
-              <Text style={styles.buttonTextdisabled2}>Back</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-              style={styles.buttonhalf}
-              underlayColor={'#ffc630'}
-              onPress={() => handleSubmit()}>
-              <Text style={styles.buttonTextdisabled}>Submit</Text>
-            </TouchableHighlight>
-          </View>
-        </View>
-      </TouchableOpacity>
+      <SetPriceTimeCard
+        port={port}
+        port_id={port_id}
+        setactive={setactive}
+        refreshData={refreshData}
+      />
     );
   }
 };

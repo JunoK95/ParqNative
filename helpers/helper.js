@@ -148,3 +148,17 @@ export function getNested(theObject, path, separator) {
     return undefined;
   }
 }
+
+export function validateEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+export function validatePassword(pw1, pw2) {
+  if (pw1 !== pw2) {
+    return false;
+  }
+  if (pw1.length < 8) {
+    return false;
+  }
+  return true;
+}

@@ -155,7 +155,7 @@ const NearbyListView = props => {
         </TouchableNativeFeedback>
         <NearbyListModal
           setlistmode={setlistmode}
-          carports={state.carports}
+          carports={carport2}
           currentlocation={{latitude, longitude}}
           open={listmode}
         />

@@ -43,7 +43,7 @@ const CarportListView = props => {
       }
     }
     fetchData();
-  }, [fetchData, user_data, user_id]);
+  }, [fetchData]);
 
   const handleRegistrationClick = async () => {
     setload(true);
@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     justifyContent: 'flex-start',
+    paddingBottom: 64,
   },
   container: {
     width: Dimensions.get('window').width - 48,

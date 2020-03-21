@@ -17,10 +17,6 @@ const VehicleListView = props => {
   const context = useContext(AuthContext);
   const {saved_vehicles} = context;
 
-  if (!saved_vehicles) {
-    return null;
-  }
-
   let vehicles = [];
   if (saved_vehicles) {
     vehicles = saved_vehicles.map((v, i) => {
@@ -67,7 +63,7 @@ const VehicleListView = props => {
         }
       />
       <ScrollView contentContainerStyle={styles.scrollcontainer}>
-        {saved_vehicles.length > 0 && vehicles}
+        {saved_vehicles && vehicles}
         <View style={styles.centercontainer}>
           <TouchableHighlight
             onPress={() => props.navigation.navigate('VehicleReg')}

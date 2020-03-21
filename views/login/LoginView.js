@@ -28,14 +28,19 @@ const LoginView = props => {
   const handleSignIn = async () => {
     if (email === '') {
       seterror('Email Address Missing');
+      setload(false);
+      return;
     } else if (password === '') {
       seterror('Password Missing');
+      setload(false);
+      return;
     } else {
       console.log('signing in');
       setload(true);
       await context.functions.signInUser(email, password).then(res => {
         if (res.error) {
           seterror(res.error.message);
+          setload(false);
         } else {
           setload(false);
           props.navigation.navigate('App');
@@ -79,7 +84,11 @@ const LoginView = props => {
 
   return (
     <View style={styles.bg}>
-      {error ? <Text>{error}</Text> : null}
+      {error ? (
+        <View style={styles.errorBox}>
+          <Text style={styles.errorText}>{error}</Text>
+        </View>
+      ) : null}
       {load ? (
         <ActivityIndicator />
       ) : (
@@ -129,7 +138,7 @@ const LoginView = props => {
               onPress={() => _signIn()}
             />
           </View> */}
-          <View style={{marginHorizontal: 48, marginTop: 36,}}>
+          <View style={{marginHorizontal: 48, marginTop: 36}}>
             <SocialIcon
               type={'envelope'}
               title={'Sign in with Parq'}
@@ -216,6 +225,20 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'Roboto-Medium',
     fontSize: 14,
+  },
+  errorBox: {
+    backgroundColor: '#f44336',
+    paddingHorizontal: 64,
+    marginHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 24,
+  },
+  errorText: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#fff',
+    fontWeight: 'bold',
+    fontFamily: 'Montserrat',
   },
 });
 

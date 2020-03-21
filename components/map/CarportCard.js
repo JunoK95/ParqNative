@@ -16,6 +16,7 @@ import {
 import {withNavigation} from 'react-navigation';
 import storeLogo from '../../resources/images/112.png';
 import FeaturesList from '../carport/FeaturesList';
+import moment from 'moment';
 
 const CarportCard = props => {
   const {port, currentlocation, setopen} = props;
@@ -49,7 +50,13 @@ const CarportCard = props => {
   }
 
   let scheduleTxt;
-  if (port.schedule.allday) {
+  if (port.timer_end) {
+    if (moment().add(1, 'd') > moment(port.timer_end, 'X')) {
+      scheduleTxt = 'until ' + moment(port.timer_end, 'X').format('hh:mm A');
+    } else {
+      scheduleTxt = 'until ' + moment(port.timer_end, 'X').format('MMM DD');
+    }
+  } else if (port.schedule.allday) {
     scheduleTxt = '24hr';
   } else {
     scheduleTxt = `${port.schedule.start}-${port.schedule.end}`;
@@ -73,8 +80,8 @@ const CarportCard = props => {
           </View>
           <View style={styles.right}>
             <View style={styles.box}>
-              <Text style={styles.distance}>{distance + ' mi'}</Text>
               <Text style={styles.distance}>{scheduleTxt}</Text>
+              <Text style={styles.distance}>{distance + ' mi'}</Text>
             </View>
           </View>
         </View>

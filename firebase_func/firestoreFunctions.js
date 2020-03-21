@@ -309,11 +309,11 @@ export async function getOwnedCarports(owner_id){
   return ownedCarports;
 }
 
-export async function activateCarport(port_id) {
+export async function activateCarport(port_id, updates) {
   var returnVal =
     await db.collection('carports')
             .doc(port_id)
-            .update({enabled: true})
+            .update({...updates, enabled: true})
             .then(() => {
               return true;
             }).catch(error => {
@@ -477,6 +477,14 @@ export async function checkCarportAvailablity(carport) {
       return false;
     }
   }
+
+  if (carport.timer_end) {
+    if (moment().unix() >= carport.timer_end) {
+      console.log('Timer Ended');
+      return false;
+    }
+  }
+
   return true;
 }
 

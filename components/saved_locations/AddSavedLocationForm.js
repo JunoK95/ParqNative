@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {withNavigation} from 'react-navigation';
 import {
   TextInput,
@@ -7,6 +7,7 @@ import {
   TouchableNativeFeedback,
   View,
   Text,
+  ActivityIndicator,
 } from 'react-native';
 import {GoogleAutoComplete} from 'react-native-google-autocomplete';
 import Axios from 'axios';
@@ -16,10 +17,12 @@ import {AuthContext} from '../../context/AuthContext';
 
 function AddSavedLocationForm(props) {
   const context = useContext(AuthContext);
+  const [load, setload] = useState(false);
   const apiKey = 'AIzaSyDH_piMcJHJJQLW3WjyLTZo0ICSbHbNXZ0';
 
   const handlePress = element => {
     const {place_id} = element;
+    setload(true);
     Axios({
       method: 'GET',
       url: 'https://maps.googleapis.com/maps/api/place/details/json?',
@@ -40,10 +43,16 @@ function AddSavedLocationForm(props) {
         lat,
         lng,
       );
+      setload(false);
       props.navigation.navigate('SavedLocations');
     });
   };
 
+  if (load) {
+    return (
+      <ActivityIndicator />
+    )
+  }
   return (
     <GoogleAutoComplete
       apiKey={apiKey}
