@@ -32,6 +32,7 @@ const ReservationList = props => {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    paddingBottom: 64,
   },
   textcontainer: {
     width: 340,

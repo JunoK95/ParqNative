@@ -27,11 +27,14 @@ const FeaturesList = props => {
 
   let ptype = type;
   if (!ptype) {
-    ptype = 'driveway';
+    ptype = 'parkinglot';
   }
 
   return (
     <View style={disabled ? styles.rowcontainerdisabled : styles.rowcontainer}>
+      {/* <View style={styles.column}>
+        <Icon name={'exclamation-triangle'} color={'#ffc630'} size={20} />
+      </View> */}
       <View style={styles.column}>
         <Icon name={typeMenu[ptype].icon} size={44} color={'#444'} />
       </View>
@@ -66,6 +69,7 @@ const styles = StyleSheet.create({
     opacity: 0.3,
   },
   column: {
+    justifyContent: 'center',
     paddingHorizontal: 4,
   },
   item: {

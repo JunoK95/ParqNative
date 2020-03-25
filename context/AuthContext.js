@@ -50,6 +50,7 @@ function AuthContextProvider(props) {
         console.log('getting UserData', data);
         if (data.error) {
           //New User
+          console.log('Current User', auth.currentUser);
           initializeDefaultUser(user.uid, auth.currentUser).then(res => {
             setstate({
               ...state,
@@ -214,8 +215,17 @@ function AuthContextProvider(props) {
     console.log('CREDENTIAL => ', credential);
     const firebaseUserCredential = await firebase
       .auth()
-      .signInWithCredential(credential);
-    console.log(firebaseUserCredential);
+      .signInWithCredential(credential)
+      .then(async res => {
+        console.log('Google Signed In => ', res);
+        await initializeDefaultUser(
+          auth.currentUser.uid,
+          res.additionalUserInfo.profile,
+          res.additionalUserInfo.profile.name,
+        );
+        return res;
+      });
+    console.log('firebaseUserCredential', firebaseUserCredential);
     if (firebaseUserCredential) {
       return true;
     }
@@ -223,7 +233,7 @@ function AuthContextProvider(props) {
   };
 
   const signInSuccess = authResult => {
-    console.log(authResult);
+    console.log('authResult', authResult);
 
     setstate({
       user_id: authResult.user.uid,
@@ -247,7 +257,7 @@ function AuthContextProvider(props) {
           user_data: null,
         });
         console.log('sign out successful');
-        console.log(this.state);
+        console.log(state);
         return {success: true};
       })
       .catch(function(error) {

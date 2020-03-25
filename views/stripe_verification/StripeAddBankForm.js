@@ -104,8 +104,16 @@ const StripeAddBankForm = props => {
             loading
           }
           containerStyle={styles.button}
+          raised
           title={'Submit'}
           onPress={() => handleSubmit()}
+        />
+        <Button
+          containerStyle={styles.button}
+          title={'Back'}
+          type={'clear'}
+          raised
+          onPress={() => setprogress(0)}
         />
       </ScrollView>
     </View>
@@ -120,13 +128,13 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   inputcontainer: {
-    marginVertical: 8,
+    marginVertical: 16,
   },
   button: {
-    marginVertical: 18,
+    marginVertical: 8,
   },
   disabledbutton: {
-    marginVertical: 36,
+    marginVertical: 8,
   },
   errorText: {
     fontSize: 16,

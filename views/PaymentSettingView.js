@@ -25,7 +25,10 @@ const PaymentSettingView = () => {
   const [wallet, setwallet] = useState(null);
 
   const fetchData = useCallback(async () => {
-    const {billing_address, stripe_customer_id} = user_data;
+    if (!user_data) {
+      return;
+    }
+    const {stripe_customer_id} = user_data;
     setfetch(true);
     if (!stripe_customer_id) {
       context.functions.assignStripeId();
@@ -44,7 +47,7 @@ const PaymentSettingView = () => {
     // });
     // setwallet(newWallet);
     setfetch(false);
-  }, [user_data, context.functions]);
+  }, [context.functions]);
 
   useEffect(() => {
     setfetch(true);

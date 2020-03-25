@@ -53,6 +53,9 @@ const CustomPicker = props => {
             <Text style={styles.itemtext}>
               {select ? select.title : 'Select Hours'}
             </Text>
+            <Text style={styles.itemsubtext}>
+              {select.subtitle && select.subtitle}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>

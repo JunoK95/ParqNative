@@ -1,6 +1,10 @@
 import React, {useState, useContext} from 'react';
 import {View, Text, StyleSheet, Image, TouchableHighlight} from 'react-native';
-import {convertToDollar, splitStrByComma} from '../../helpers/helper';
+import {
+  convertToDollar,
+  splitStrByComma,
+  getPortMaxHours,
+} from '../../helpers/helper';
 import {withNavigation} from 'react-navigation';
 import storeLogo from '../../resources/images/112.png';
 import {checkCarportAvailablity} from '../../firebase_func/firestoreFunctions';
@@ -13,41 +17,6 @@ import FeaturesList from '../carport/FeaturesList';
 import NewVehiclePicker from '../vehicle/NewVehiclePicker';
 import NewPaymentPicker from '../../views/payment/NewPaymentPicker';
 import CustomPicker from '../picker/CustomPicker';
-
-const items = [
-  {
-    title: '1 hour',
-    value: 1,
-  },
-  {
-    title: '2 hours',
-    value: 2,
-  },
-  {
-    title: '3 hours',
-    value: 3,
-  },
-  {
-    title: '4 hours',
-    value: 4,
-  },
-  {
-    title: '5 hours',
-    value: 5,
-  },
-  {
-    title: '6 hours',
-    value: 6,
-  },
-  {
-    title: '7 hours',
-    value: 7,
-  },
-  {
-    title: '8 hours',
-    value: 8,
-  },
-];
 
 const CarportPayCard = props => {
   const context = useContext(AuthContext);
@@ -69,6 +38,25 @@ const CarportPayCard = props => {
   const amountTax = parseInt(amount * 0.085, 10);
   const totalAmount = amount + amountFee + amountTax;
   const dollarAmount = (totalAmount / 100).toFixed(2);
+
+  let maxHours = getPortMaxHours(port, 12);
+  let hourItems = [];
+
+  for (let i = 1; i <= maxHours; i++) {
+    const itemamount = parseInt(
+      parseFloat(port.price_hr) * parseInt(i, 10) * 100,
+      10,
+    );
+    const itemamountTax = parseInt(itemamount * 0.085, 10);
+    const itemDollarAmount = ((itemamount + itemamountTax) / 100).toFixed(2);
+    hourItems.push({
+      title: `${i} hours`,
+      subtitle: 'total = $' + itemDollarAmount,
+      value: i,
+    });
+  }
+
+  console.log('hourItems', hourItems);
 
   const finalizePay = (_port, _vehicle, _price, _hours) => {
     _hours = parseInt(_hours, 10);
@@ -132,12 +120,30 @@ const CarportPayCard = props => {
 
     const resData = {
       token: selectcard.id,
-      amount: amount + amountFee + amountTax,
+      amount: amount + amountTax,
       port: port,
       description: `Test with vehicle ${vehicle.data.license_plate} and user ${
         context.user_id
       }`,
-      metadata: port.id,
+      metadata: {
+        vehicle_license_plate: vehicle.data.license_plate,
+        vehicle_owner_id: vehicle.data.owner_id,
+        vehicle_us_state: vehicle.data.us_state,
+        vehicle_year: vehicle.data.year,
+        user_id: context.user_id,
+        user_customer_id: context.user_data.stripe_customer_id,
+        user_email: context.user_data.email,
+        port_id: port.id,
+        port_owner_id: port.owner_id,
+        location_address: port.location.address,
+        location_place_id: port.location.place_id,
+        location_geohash: port.location.geohash,
+        hours: hours,
+        price_hr: port.price_hr,
+        price_base: amount,
+        price_stripe_fee: amountFee,
+        price_tax: amountTax,
+      },
     };
 
     if (object === 'wallet') {
@@ -183,7 +189,13 @@ const CarportPayCard = props => {
   }
 
   let scheduleTxt;
-  if (port.schedule.allday) {
+  if (port.timer_end) {
+    if (moment().add(1, 'd') > moment(port.timer_end, 'X')) {
+      scheduleTxt = 'until ' + moment(port.timer_end, 'X').format('hh:mm A');
+    } else {
+      scheduleTxt = 'until ' + moment(port.timer_end, 'X').format('MMM DD');
+    }
+  } else if (port.schedule.allday) {
     scheduleTxt = '24hr';
   } else {
     scheduleTxt = `${port.schedule.start}-${port.schedule.end}`;
@@ -230,8 +242,8 @@ const CarportPayCard = props => {
         </View>
         <View style={styles.selectsection}>
           <CustomPicker
-            items={items}
-            initialitem={items[0]}
+            items={hourItems}
+            initialitem={hourItems[0]}
             title={'Hours'}
             setselected={item => {
               sethours(item.value);
@@ -251,7 +263,6 @@ const CarportPayCard = props => {
               : styles.button
           }
           underlayColor={'#ffc630'}
-          // onPress={() => console.log(hours, vehicle, selectcard)}>
           onPress={handlePay}>
           <Text style={styles.buttonText}>Pay</Text>
         </TouchableHighlight>

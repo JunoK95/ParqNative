@@ -77,6 +77,9 @@ exports.stripeEvents = functions.https.onRequest((request, response) => {
     case 'payment_method.attached':
       console.log('PAYMENT METHOD ATTACHED => ', event);
       break;
+    case 'charge.refund.updated':
+      console.log('CHARGE REFUNDED => ', event);
+      break;
     default:
       break;
   }
@@ -389,7 +392,7 @@ exports.stripeElementPaymentIntent = functions.https.onRequest(
 exports.stripePayParkingCharge = functions.https.onRequest(
   (request, response) => {
     cors(request, response, async () => {
-      const {amount, description, token, port} = request.body;
+      const {amount, description, token, port, metadata} = request.body;
       let destination_stripe_account;
       let destination_amount = parseInt(parseInt(amount, 10) * 0.8, 10);
       try {
@@ -425,6 +428,7 @@ exports.stripePayParkingCharge = functions.https.onRequest(
           amount: amount,
           currency: 'usd',
           description: description,
+          metadata: metadata,
           source: 'tok_visa', //replace with token when going live
           transfer_data: {
             destination: destination_stripe_account,

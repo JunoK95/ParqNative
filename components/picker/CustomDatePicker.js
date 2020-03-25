@@ -95,7 +95,7 @@ const CustomDatePicker = props => {
                     onDateChange={output => {
                       handleDateChange(output);
                     }}
-                    minuteInterval={dateType === 'datetime' && 15}
+                    minuteInterval={dateType === 'datetime' ? 15 : 15}
                     mode={dateType ? dateType : 'date'}
                   />
                 </ScrollView>

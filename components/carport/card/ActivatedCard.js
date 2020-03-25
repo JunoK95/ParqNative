@@ -13,6 +13,7 @@ import {splitStrByComma, convertToDollar} from '../../../helpers/helper';
 import storeLogo from '../../../resources/images/112.png';
 import FeaturesList from '../FeaturesList';
 import {deactivateCarport} from '../../../firebase_func/firestoreFunctions';
+import moment from 'moment';
 
 const ActivatedCard = props => {
   const {port, port_id, refreshData} = props;
@@ -36,7 +37,13 @@ const ActivatedCard = props => {
   }
 
   let scheduleTxt;
-  if (port.schedule.allday) {
+  if (port.timer_end) {
+    if (moment().add(1, 'd') > moment(port.timer_end, 'X')) {
+      scheduleTxt = 'until ' + moment(port.timer_end, 'X').format('hh:mm A');
+    } else {
+      scheduleTxt = 'until ' + moment(port.timer_end, 'X').format('MMM DD');
+    }
+  } else if (port.schedule.allday) {
     scheduleTxt = '24hr';
   } else {
     scheduleTxt = `${port.schedule.start}-${port.schedule.end}`;

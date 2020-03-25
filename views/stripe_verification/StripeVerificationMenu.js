@@ -2,11 +2,37 @@ import React from 'react';
 import {StyleSheet, Text, View, TouchableNativeFeedback} from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
+const requirementList = [
+  // 'external_account',
+  'individual.first_name',
+  'individual.last_name',
+  'tos_acceptance.date',
+  'tos_acceptance.ip',
+  'individual.dob.day',
+  'individual.dob.month',
+  'individual.dob.year',
+  'individual.ssn_last_4',
+];
+
 const StripeVerificationMenu = props => {
-  const {setprogress, wallet, account} = props;
+  const {setprogress, account} = props;
+  const {requirements, charges_enabled, payouts_enabled} = account;
+  console.log('REQUIREMENTS => ', requirements.eventually_due);
+  let identityVerified = true;
+  let externalAccount = true;
+
+  requirements.currently_due.forEach(element => {
+    if (element === 'external_account') {
+      externalAccount = false;
+    }
+    if (requirementList.includes(element)) {
+      identityVerified = false;
+    }
+  });
+
   return (
     <View>
-      {wallet.stripe_account_verified ? (
+      {identityVerified ? (
         <TouchableNativeFeedback
           background={TouchableNativeFeedback.Ripple('#ffecb9')}
           onPress={() => {}}>
@@ -49,7 +75,6 @@ const StripeVerificationMenu = props => {
           </View>
         </TouchableNativeFeedback>
       )}
-
       <TouchableNativeFeedback
         background={TouchableNativeFeedback.Ripple('#ffecb9')}
         onPress={() => setprogress(2)}>

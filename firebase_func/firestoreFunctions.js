@@ -49,7 +49,7 @@ export async function initializeDefaultUser(id, initialData, newName) {
     saved_locations: [],
     display_name: newDisplayName,
     email: initialData.email,
-    photo_url: initialData.photoURL,
+    photo_url: '',
     stripe_customer_id: stripe_id,
     contact: {
       email: initialData.email,
@@ -93,10 +93,10 @@ export async function getUserData(id) {
     }
   );
 
-  if (data.error){
-    console.error(data.error.message);
-    console.log('making new data with id: ', id);
-  }
+  // if (data.error){
+  //   console.error(data.error.message);
+  //   console.log('making new data with id: ', id);
+  // }
 
   return data;
 }

@@ -4,7 +4,6 @@ import {
   Text,
   View,
   Dimensions,
-  TouchableNativeFeedback,
   TouchableOpacity,
 } from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
@@ -13,20 +12,24 @@ const ParkedVehiclesCard = props => {
   const {reservations} = props;
 
   const reserveItems = reservations.map((r, i) => {
+    const {color, us_state, license_plate, make, model} = r.vehicle_data;
     return (
       <TouchableOpacity key={i}>
         <View style={styles.row}>
           <View style={styles.rowitem}>
             <View style={styles.itemcolumn}>
-              <FontAwesome5Icon name={'car'} size={30} />
+              <FontAwesome5Icon
+                name={'car'}
+                size={30}
+                style={color === 'white' && styles.iconOutline}
+                color={color ? color : 'black'}
+              />
             </View>
             <View style={styles.itemcolumn}>
-              <Text style={styles.rowitemtitle}>
-                {r.vehicle_data.license_plate}
+              <Text numberOfLines={1} style={styles.rowitemtitle}>
+                {license_plate + ' - ' + us_state}
               </Text>
-              <Text style={styles.rowitemtext}>
-                {r.vehicle_data.make + ' ' + r.vehicle_data.model}
-              </Text>
+              <Text style={styles.rowitemtext}>{make + ' ' + model}</Text>
             </View>
           </View>
         </View>
@@ -68,6 +71,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 4,
     elevation: 2,
+  },
+  iconOutline: {
+    textShadowColor: 'black',
+    textShadowRadius: 6,
+    backgroundColor: 'black',
   },
   row: {
     flexDirection: 'row',

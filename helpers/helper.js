@@ -162,3 +162,12 @@ export function validatePassword(pw1, pw2) {
   }
   return true;
 }
+
+export function getPortMaxHours(port, defaultHours) {
+  let maxHours = defaultHours;
+  if (port.timer_end) {
+    maxHours = moment(port.timer_end, 'X').diff(moment(), 'hours');
+    console.log('MAX HOURS => ', maxHours);
+  }
+  return maxHours;
+}
