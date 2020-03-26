@@ -60,7 +60,7 @@ export default AccomodationCard;
 
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get('window').width - 64,
+    width: Dimensions.get('window').width - 32,
     backgroundColor: '#fff',
     borderRadius: 24,
     marginVertical: 12,

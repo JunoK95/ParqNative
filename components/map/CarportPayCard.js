@@ -1,5 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {View, Text, StyleSheet, Image, TouchableHighlight} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableHighlight, Dimensions} from 'react-native';
 import {
   convertToDollar,
   splitStrByComma,
@@ -274,7 +274,7 @@ const CarportPayCard = props => {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 36,
+    width: Dimensions.get('window').width - 32,
     paddingVertical: 8,
     backgroundColor: '#fff',
     alignItems: 'center',

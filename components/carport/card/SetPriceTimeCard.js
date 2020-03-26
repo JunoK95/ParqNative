@@ -131,7 +131,7 @@ export default SetPriceTimeCard;
 
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get('window').width - 64,
+    width: Dimensions.get('window').width - 32,
     height: 200,
     backgroundColor: '#fff',
     alignItems: 'center',
