@@ -44,6 +44,11 @@ function DrawerNav(props) {
       icon: 'account-balance-wallet',
       to: 'Payment',
     },
+    {
+      title: 'Help',
+      icon: 'help-outline',
+      to: 'Help',
+    },
   ];
 
   const navLinks = navItems.map((item, i) => {

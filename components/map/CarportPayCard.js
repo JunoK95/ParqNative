@@ -1,5 +1,12 @@
 import React, {useState, useContext} from 'react';
-import {View, Text, StyleSheet, Image, TouchableHighlight, Dimensions} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableHighlight,
+  Dimensions,
+} from 'react-native';
 import {
   convertToDollar,
   splitStrByComma,
@@ -160,7 +167,7 @@ const CarportPayCard = props => {
         ).then(res => {
           console.log('wallet charged =>  ', res);
           if (res) {
-            finalizePay(port, vehicle, dollarAmount, hours);
+            finalizePay(port, vehicle, resData.amount, hours);
           }
         });
       }
@@ -172,7 +179,7 @@ const CarportPayCard = props => {
         data: resData,
       })
         .then(res => {
-          finalizePay(port, vehicle, dollarAmount, hours);
+          finalizePay(port, vehicle, resData.amount, hours);
           console.log(res);
         })
         .catch(err => {
@@ -180,6 +187,9 @@ const CarportPayCard = props => {
           seterror('Payment Failed');
           console.error(err);
         });
+    } else {
+      console.warn('Card Not Chosen');
+      return;
     }
   };
 

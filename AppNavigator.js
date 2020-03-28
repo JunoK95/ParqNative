@@ -24,6 +24,7 @@ import SavedLocationAddView from './views/SavedLocationAddView';
 import AddBankView from './views/payment/AddBankView';
 import StripeAccountVerification from './views/stripe_verification/StripeAccountVerification';
 import CarportInfoNoBookView from './views/carport/CarportInfoNoBookView';
+import HelpView from './views/HelpView';
 
 const SearchNavigator = createStackNavigator(
   {
@@ -66,6 +67,7 @@ const AppNavigator = createDrawerNavigator(
     CarportInfoNoBook: CarportInfoNoBookView,
     CarportRegister: CarportRegisterView,
     ReservationList: ReservationListView,
+    Help: HelpView,
   },
   {
     initialRouteName: 'Home',
