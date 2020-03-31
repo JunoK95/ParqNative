@@ -1,49 +1,51 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   Modal,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  ScrollView,
   Dimensions,
 } from 'react-native';
-import DatePicker from 'react-native-date-picker';
 import StartTimePicker from './schedule/StartTimePicker';
 import EndTimePicker from './schedule/EndTimePicker';
+import TimerPicker from './schedule/TimerPicker';
 
 const SchedulePicker = props => {
-  const {initialDate, setselected, openmodalbutton} = props;
-  const [date, setDate] = useState(initialDate);
+  const {setschedule, setendtime, openmodalbutton} = props;
   const [start, setstart] = useState(null);
   const [end, setend] = useState(null);
+  const [endTimer, setendTimer] = useState(null);
   const [opentimer, setopentimer] = useState(false);
   const [moved, setmoved] = useState(false);
   const [modalopen, setmodalopen] = useState(false);
 
-  const handleDateChange = output => {
-    setmoved(true);
-    setDate(output);
-  };
-
-  const handleSubmit = endtime => {
+  const handleScheduleSubmit = endtime => {
     setmoved(true);
     if (!start || !endtime) {
       return;
     }
-    setselected({
+    setschedule({
+      enabled: true,
       start: start,
       end: endtime,
     });
+    setendtime(null);
     console.log({start, endtime});
     setstart(null);
     setend(null);
     setmodalopen(false);
   };
 
-  const handleOpenTimer = () => {
-    setselected(null);
+  const handleTimerSubmit = endtime => {
+    setmoved(true);
+    setschedule({
+      enabled: false,
+    });
+    setendtime(endtime);
+    console.log(endtime);
+    setstart(null);
+    setend(null);
     setmodalopen(false);
   };
 
@@ -64,20 +66,31 @@ const SchedulePicker = props => {
             setmodalopen(false);
           }}>
           <View style={styles.bg}>
-            <TouchableWithoutFeedback onPress={() => {}}>
-              {!start ? (
-                <StartTimePicker
-                  setselected={setstart}
+            {!opentimer ? (
+              <TouchableWithoutFeedback onPress={() => {}}>
+                {!start ? (
+                  <StartTimePicker
+                    setselected={setstart}
+                    setopentimer={setopentimer}
+                    initialTime={new Date(new Date().setHours(0, 0, 0, 0))}
+                  />
+                ) : (
+                  <EndTimePicker
+                    setselected={endtime => handleScheduleSubmit(endtime)}
+                    initialTime={start}
+                    setstart={setstart}
+                  />
+                )}
+              </TouchableWithoutFeedback>
+            ) : (
+              <TouchableWithoutFeedback onPress={() => {}}>
+                <TimerPicker
+                  setselected={endtime => handleTimerSubmit(endtime)}
                   setopentimer={setopentimer}
+                  initialTime={new Date()}
                 />
-              ) : (
-                <EndTimePicker
-                  setselected={endtime => handleSubmit(endtime)}
-                  initialTime={start}
-                  setstart={setstart}
-                />
-              )}
-            </TouchableWithoutFeedback>
+              </TouchableWithoutFeedback>
+            )}
           </View>
         </TouchableWithoutFeedback>
       </Modal>

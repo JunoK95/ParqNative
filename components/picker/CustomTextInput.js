@@ -13,7 +13,7 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import {Picker} from 'react-native-wheel-pick';
 
 const CustomTextInput = props => {
-  const {title, initialitem, setselected, inputType} = props;
+  const {title, initialitem, setselected, inputType, icon} = props;
   const [select, setselect] = useState(initialitem);
   const [modalopen, setmodalopen] = useState(false);
   const [picker1, setpicker1] = useState(null);
@@ -105,6 +105,7 @@ const CustomTextInput = props => {
     const numberArray = [...Array(100).keys()].map(x => x + 1);
     pickerItem = (
       <View style={styles.centercontainer}>
+        {icon && <FontAwesome5Icon name={icon} size={20} />}
         <Picker
           style={styles.dollarpicker}
           selectedValue={select}

@@ -9,10 +9,10 @@ import {
 } from 'react-native';
 import {splitStrByComma, convertToDollar} from '../../../helpers/helper';
 import {activateCarport} from '../../../firebase_func/firestoreFunctions';
-import CustomDatePicker from '../../picker/CustomDatePicker';
 import CustomTextInput from '../../picker/CustomTextInput';
 import moment from 'moment';
 import SchedulePicker from '../../picker/SchedulePicker';
+import SetPriceTimeCardRowItem from './SetPriceTimeCardRowItem';
 
 const SetPriceTimeCard = props => {
   const {port, port_id, setactive, refreshData} = props;
@@ -58,50 +58,12 @@ const SetPriceTimeCard = props => {
               </View>
             </TouchableOpacity>
           </View>
-          {endtime ? (
-            <View style={styles.contentrow}>
-              <View style={styles.left}>
-                <Text style={styles.price} numberOfLines={1}>
-                  {moment(endtime).calendar()}
-                </Text>
-              </View>
-              <TouchableOpacity onPress={() => setendtime(null)}>
-                <View style={styles.right}>
-                  <Text style={styles.linktextred}>Cancel Timer</Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <View style={styles.contentrow}>
-              <View style={styles.left}>
-                <Text style={styles.price}>{'No Timer'}</Text>
-              </View>
-              <TouchableOpacity>
-                <View style={styles.right}>
-                  {/* <CustomDatePicker
-                    title={'Set Timer'}
-                    dateType={'datetime'}
-                    minimumDate={new Date()}
-                    // initialDate={new Date()}
-                    setselected={setendtime}
-                    openmodalbutton={
-                      <Text style={styles.linktext}>Change Timer</Text>
-                    }
-                  /> */}
-                  <SchedulePicker
-                    title={'Set Timer'}
-                    dateType={'datetime'}
-                    minimumDate={new Date()}
-                    // initialDate={new Date()}
-                    setselected={setschedule}
-                    openmodalbutton={
-                      <Text style={styles.linktext}>Set Schedule</Text>
-                    }
-                  />
-                </View>
-              </TouchableOpacity>
-            </View>
-          )}
+          <SetPriceTimeCardRowItem
+            endtime={endtime}
+            setendtime={setendtime}
+            schedule={schedule}
+            setschedule={setschedule}
+          />
           <View style={styles.contentrow}>
             <View style={styles.left}>
               <Text style={styles.price}>{spaces}</Text>
@@ -112,6 +74,7 @@ const SetPriceTimeCard = props => {
                   title={'Add Spaces'}
                   setselected={setspaces}
                   inputType={'number'}
+                  icon={'caret-right'}
                   initialitem={spaces}
                 />
               </View>
