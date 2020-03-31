@@ -61,7 +61,7 @@ export default class CardFormScreen extends PureComponent {
     return (
       <View style={styles.container}>
         <TouchableNativeFeedback
-          background={TouchableNativeFeedback.Ripple('#ffecb9')}
+          background={TouchableNativeFeedback.Ripple('#c2e8ff')}
           onPress={this.handleCardPayPress}>
           <View style={styles.item}>
             <View style={styles.row}>

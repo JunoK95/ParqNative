@@ -1,16 +1,18 @@
 import React from 'react';
-import {View, ActivityIndicator} from 'react-native';
+import {View, Text, ActivityIndicator} from 'react-native';
 import CardFormScreen from './CardFormScreen';
 import CreditCardItem from './CreditCardItem';
 
 const PaymentCardsList = props => {
   const {cards, billing_address, stripe_id} = props;
 
-  let cardList;
+  let cardList = [];
   if (cards) {
     cardList = cards.map((c, i) => {
       return <CreditCardItem key={i} card={c} />;
     });
+  } else {
+    cardList = <CreditCardItem />;
   }
 
   return (

@@ -17,7 +17,7 @@ const requirementList = [
 const StripeVerificationMenu = props => {
   const {setprogress, account} = props;
   const {requirements, charges_enabled, payouts_enabled} = account;
-  console.log('REQUIREMENTS => ', requirements.eventually_due);
+  console.log('REQUIREMENTS Currently Due => ', requirements.currently_due);
   let identityVerified = true;
   let externalAccount = true;
 

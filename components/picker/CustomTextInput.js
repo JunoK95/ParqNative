@@ -107,13 +107,13 @@ const CustomTextInput = props => {
       <View style={styles.centercontainer}>
         <Picker
           style={styles.dollarpicker}
-          selectedValue={picker2}
+          selectedValue={select}
           pickerData={numberArray}
           onValueChange={value => handleSelectChange(value)}
           itemSpace={30} // this only support in android
         />
       </View>
-    )
+    );
   }
 
   return (

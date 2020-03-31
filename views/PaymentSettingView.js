@@ -15,12 +15,14 @@ import WalletDisplay from './payment/WalletDisplay';
 import {getWallet} from '../firebase_func/walletFunctions';
 import {Icon} from 'react-native-elements';
 import PaymentBanksList from './payment/PaymentBanksList';
+import Axios from 'axios';
 
 const PaymentSettingView = () => {
   const context = useContext(AuthContext);
   const {user_data, user_id} = context;
   const [fetch, setfetch] = useState(true);
   const [cards, setcards] = useState(null);
+  const [account, setaccount] = useState(null);
   const [banks, setbanks] = useState(null);
   const [wallet, setwallet] = useState(null);
 
@@ -38,10 +40,32 @@ const PaymentSettingView = () => {
         .then(res => {
           setcards(res);
         });
-      await context.functions.getStripeBanks(stripe_customer_id).then(res => {
-        setbanks(res);
-      });
     }
+
+    let account_id;
+    try {
+      account_id = context.user_data.stripe_account_id;
+    } catch {
+      console.log('Could not retrieve stripe_account_id');
+    }
+
+    let accountData;
+    if (account_id) {
+      accountData = await Axios({
+        method: 'POST',
+        url: 'https://us-central1-parq-dev.cloudfunctions.net/stripeGetAccount',
+        data: {
+          account_id: account_id,
+        },
+      }).then(res => {
+        console.log(res.data);
+        return res.data;
+      });
+    } else {
+      accountData = await context.functions.assignStripeAccount();
+    }
+    console.log('Account Data => ', accountData);
+    setaccount(accountData);
     // const newWallet = await getWallet(user_id).then(res => {
     //   return res;
     // });
@@ -82,7 +106,8 @@ const PaymentSettingView = () => {
           stripe_id={stripe_customer_id}
           billing_address={billing_address}
         />
-        <PaymentBanksList />
+        <View style={styles.padding} />
+        <PaymentBanksList account={account} />
       </ScrollView>
     );
   }
@@ -99,6 +124,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  padding: {
+    padding: 8,
+  }
 });
 
 export default PaymentSettingView;

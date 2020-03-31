@@ -36,7 +36,22 @@ const CreditCardItem = props => {
       </TouchableNativeFeedback>
     );
   } else {
-    return null;
+    return (
+      <TouchableNativeFeedback
+        background={TouchableNativeFeedback.Ripple('#ffecb9')}
+        onPress={() => {}}>
+        <View style={styles.item}>
+          <View style={styles.rowdisabled}>
+            <View style={styles.col}>
+              <Icon style={styles.itemicon} name={'times-circle'} size={20} />
+            </View>
+            <View style={styles.col}>
+              <Text style={styles.itemtext}>{'No Payment Card Added'}</Text>
+            </View>
+          </View>
+        </View>
+      </TouchableNativeFeedback>
+    );
   }
 };
 
@@ -55,6 +70,10 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
+  },
+  rowdisabled: {
+    flexDirection: 'row',
+    opacity: 0.3,
   },
   trashicon: {
     position: 'absolute',

@@ -12,11 +12,13 @@ import {activateCarport} from '../../../firebase_func/firestoreFunctions';
 import CustomDatePicker from '../../picker/CustomDatePicker';
 import CustomTextInput from '../../picker/CustomTextInput';
 import moment from 'moment';
+import SchedulePicker from '../../picker/SchedulePicker';
 
 const SetPriceTimeCard = props => {
   const {port, port_id, setactive, refreshData} = props;
   const [price, setprice] = useState(port.price_hr);
   const [endtime, setendtime] = useState(null);
+  const [schedule, setschedule] = useState(null);
   const [spaces, setspaces] = useState(port.available_spaces);
 
   console.log('PORT DATA => ', port.available_spaces);
@@ -76,7 +78,7 @@ const SetPriceTimeCard = props => {
               </View>
               <TouchableOpacity>
                 <View style={styles.right}>
-                  <CustomDatePicker
+                  {/* <CustomDatePicker
                     title={'Set Timer'}
                     dateType={'datetime'}
                     minimumDate={new Date()}
@@ -84,6 +86,16 @@ const SetPriceTimeCard = props => {
                     setselected={setendtime}
                     openmodalbutton={
                       <Text style={styles.linktext}>Change Timer</Text>
+                    }
+                  /> */}
+                  <SchedulePicker
+                    title={'Set Timer'}
+                    dateType={'datetime'}
+                    minimumDate={new Date()}
+                    // initialDate={new Date()}
+                    setselected={setschedule}
+                    openmodalbutton={
+                      <Text style={styles.linktext}>Set Schedule</Text>
                     }
                   />
                 </View>
