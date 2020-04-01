@@ -313,7 +313,7 @@ export async function activateCarport(port_id, updates) {
   var returnVal =
     await db.collection('carports')
             .doc(port_id)
-            .update({...updates, enabled: true})
+            .set({...updates, enabled: true}, {merge: true})
             .then(() => {
               return true;
             }).catch(error => {
@@ -482,6 +482,16 @@ export async function checkCarportAvailablity(carport) {
     if (moment().unix() >= carport.timer_end) {
       console.log('Timer Ended');
       return false;
+    }
+  }
+
+  if (carport.schedule) {
+    if (carport.schedule.enabled) {
+      console.log('Checking Schedule');
+      if (!moment().isBetween(moment(carport.schedule.start, 'HH:mm'), moment(carport.schedule.end, 'HH:mm'))){
+        console.log('time not in between');
+        return false;
+      }
     }
   }
 

@@ -30,7 +30,7 @@ const CarportListView = props => {
       });
     }
     setfetch(false);
-  }, [user_id]);
+  }, []);
 
   useEffect(() => {
     setfetch(true);

@@ -10,6 +10,7 @@ import {
 import StartTimePicker from './schedule/StartTimePicker';
 import EndTimePicker from './schedule/EndTimePicker';
 import TimerPicker from './schedule/TimerPicker';
+import moment from 'moment';
 
 const SchedulePicker = props => {
   const {setschedule, setendtime, openmodalbutton} = props;
@@ -27,11 +28,15 @@ const SchedulePicker = props => {
     }
     setschedule({
       enabled: true,
-      start: start,
-      end: endtime,
+      start: moment(new Date(start)).format('HH:mm'),
+      end: moment(new Date(endtime)).format('HH:mm'),
     });
     setendtime(null);
-    console.log({start, endtime});
+    console.log({
+      enabled: true,
+      start: moment(new Date(start)).format('HH:mm'),
+      end: moment(new Date(endtime)).format('HH:mm'),
+    });
     setstart(null);
     setend(null);
     setmodalopen(false);

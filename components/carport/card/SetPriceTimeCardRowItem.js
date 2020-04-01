@@ -12,9 +12,9 @@ const SetPriceTimeCardRowItem = props => {
         <View style={styles.contentrow}>
           <View style={styles.left}>
             <Text style={styles.price} numberOfLines={1}>
-              {moment(schedule.start).format('hh:mm A') +
+              {moment(schedule.start, 'HH:mm').format('hh:mm A') +
                 ' - ' +
-                moment(schedule.end).format('hh:mm A')}
+                moment(schedule.end, 'HH:mm').format('hh:mm A')}
             </Text>
           </View>
           <TouchableOpacity onPress={() => setschedule(null)}>

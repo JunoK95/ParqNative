@@ -26,6 +26,7 @@ const SetPriceTimeCard = props => {
     if (port_id) {
       const updates = {
         timer_end: moment(endtime).unix(),
+        schedule: schedule,
         available_spaces: spaces,
         price_hr: price,
       };

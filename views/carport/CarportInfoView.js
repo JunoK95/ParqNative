@@ -78,12 +78,6 @@ const CarportInfoView = props => {
           <Text style={styles.buttonText}>Book</Text>
         </TouchableHighlight>
       </View>
-      {/* <ListItem title={port.location.address} subtitle={'address'} />
-      <ListItem title={port.available_spaces} subtitle={'spaces available'} />
-      <ListItem title={port.description} subtitle={'description'} />
-      <ListItem title={port.schedule.start} subtitle={'start time'} />
-      <ListItem title={port.schedule.end} subtitle={'end time'} />
-      <ListItem title={port.schedule.allday.toString()} subtitle={'24h'} /> */}
     </ScrollView>
   );
 };

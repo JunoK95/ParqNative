@@ -205,12 +205,15 @@ const CarportPayCard = props => {
     } else {
       scheduleTxt = 'until ' + moment(port.timer_end, 'X').format('MMM DD');
     }
-  } else if (port.schedule.allday) {
-    scheduleTxt = '24hr';
+  } else if (port.schedule) {
+    if (port.schedule.allday) {
+      scheduleTxt = '24hr';
+    } else {
+      scheduleTxt = `${moment(port.schedule.start, 'HH:mm').format('hh:mm a')}-${moment(port.schedule.end, 'HH:mm').format('hh:mm a')}`;
+    }
   } else {
-    scheduleTxt = `${port.schedule.start}-${port.schedule.end}`;
+    scheduleTxt = '24hr';
   }
-
   const splitAddress = splitStrByComma(port.location.address);
 
   if (port) {
