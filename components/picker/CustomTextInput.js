@@ -102,7 +102,7 @@ const CustomTextInput = props => {
       </View>
     );
   } else if (inputType === 'number') {
-    const numberArray = [...Array(100).keys()].map(x => x + 1);
+    const numberArray = [...Array(999).keys()].map(x => x + 1);
     pickerItem = (
       <View style={styles.centercontainer}>
         {icon && <FontAwesome5Icon name={icon} size={20} />}

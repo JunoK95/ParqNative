@@ -3,13 +3,18 @@ import {StyleSheet, Text, View, TouchableNativeFeedback} from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 const CustomPickerItem = props => {
-  const {title, subtitle, icon, setselect, value, handlePress} = props;
+  const {title, subtitle, icon, iconColor, handlePress} = props;
 
   return (
     <TouchableNativeFeedback onPress={handlePress}>
       <View style={styles.item}>
         <View style={styles.itemleft}>
-          <FontAwesome5Icon name={icon} size={24} />
+          <FontAwesome5Icon
+            name={icon}
+            size={24}
+            color={iconColor}
+            style={iconColor === 'white' && styles.textshadow}
+          />
         </View>
         <View style={styles.itemright}>
           <Text style={styles.itemtext}>{title}</Text>
@@ -44,5 +49,8 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: 13,
     paddingRight: 72,
+  },
+  textshadow: {
+    textShadowRadius: 8,
   },
 });

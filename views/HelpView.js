@@ -5,7 +5,7 @@ import HeaderPadding from '../components/layout/HeaderPadding';
 const HelpView = () => {
   return (
     <View>
-      <HeaderPadding to={'Home'} alt />
+      <HeaderPadding to={'Home'} title={'Help'} alt />
       <Text>HELP</Text>
     </View>
   );

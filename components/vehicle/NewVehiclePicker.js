@@ -40,6 +40,7 @@ const NewVehiclePicker = props => {
           title={v.data.name}
           subtitle={v.data.license_plate}
           icon={'car'}
+          iconColor={v.data.color}
           handlePress={() => {
             setvehicle(v);
             setselected(v);
@@ -56,7 +57,11 @@ const NewVehiclePicker = props => {
       <TouchableOpacity onPress={() => setmodalopen(true)}>
         <View style={styles.item}>
           <View style={styles.itemleft}>
-            <FontAwesome5Icon name={'car'} size={24} />
+            <FontAwesome5Icon
+              name={'car'}
+              size={24}
+              color={vehicle ? vehicle.data.color : 'black'}
+            />
           </View>
           <View style={styles.itemright}>
             <Text style={styles.itemtext}>

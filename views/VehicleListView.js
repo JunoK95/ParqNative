@@ -34,6 +34,7 @@ const VehicleListView = props => {
                   style={styles.itemicon}
                   name={'car'}
                   size={26}
+                  color={v.data.color}
                 />
               </View>
               <View style={styles.col}>

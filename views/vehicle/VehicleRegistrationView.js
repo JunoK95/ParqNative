@@ -8,11 +8,16 @@ import {
   Text,
 } from 'react-native';
 import HeaderPadding from '../../components/layout/HeaderPadding';
-import {Input} from 'react-native-elements';
+import {Input, Button} from 'react-native-elements';
 import {AuthContext} from '../../context/AuthContext';
+import CustomColorPicker from '../../components/picker/CustomColorPicker';
+import CustomPickerItem from '../../components/picker/CustomPickerItem';
+import { capitalizeFirstLetter } from '../../helpers/helper';
 
 const VehicleRegistrationView = props => {
   const context = useContext(AuthContext);
+  const [open, setopen] = useState(false);
+  const [color, setcolor] = useState(null);
   const [inputs, setinputs] = useState({
     name: '',
     license_plate: '',
@@ -114,14 +119,16 @@ const VehicleRegistrationView = props => {
           keyboardType={'numeric'}
           onChangeText={text => handleChange('year', text)}
         />
-        <Input
-          containerStyle={styles.textField}
-          multiline
-          name={'description'}
-          placeholder={'(optional)'}
-          label={'additional info'}
-          value={inputs.description}
-          onChangeText={text => handleChange('description', text)}
+        <CustomColorPicker
+          modalopen={open}
+          setmodalopen={setopen}
+          setselected={setcolor}
+        />
+        <CustomPickerItem
+          title={color ? capitalizeFirstLetter(color) : 'Select Vehicle Color'}
+          icon={'car'}
+          iconColor={color}
+          handlePress={() => setopen(true)}
         />
         <TouchableHighlight
           style={styles.button}

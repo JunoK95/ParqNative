@@ -12,6 +12,7 @@ const ParkedVehiclesCard = props => {
   const {reservations} = props;
 
   const reserveItems = reservations.map((r, i) => {
+    console.log(r.vehicle_data);
     const {color, us_state, license_plate, make, model} = r.vehicle_data;
     return (
       <TouchableOpacity key={i}>
@@ -44,13 +45,11 @@ const ParkedVehiclesCard = props => {
           <Text style={styles.rowitemtitle}>Currently Parked</Text>
         </View>
       </View>
-      <View style={styles.row}>
-        {reserveItems.length > 0 ? (
-          reserveItems
-        ) : (
-          <Text style={styles.rowitemtext2}>No Currently Parked Vehicles</Text>
-        )}
-      </View>
+      {reserveItems.length > 0 ? (
+        reserveItems
+      ) : (
+        <Text style={styles.rowitemtext2}>No Currently Parked Vehicles</Text>
+      )}
     </View>
   );
 };

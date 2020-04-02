@@ -72,8 +72,8 @@ function DrawerNav(props) {
           <View style={styles.textcol}>
             <Image source={logo} />
           </View>
-          <View style={styles.textcol}>
-            <Text style={styles.brandname}> PARQ</Text>
+          <View style={styles.textcol2}>
+            <Text style={styles.brandname}> parq</Text>
             <Text style={styles.subbrandname}> makes parking easy</Text>
           </View>
         </View>
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   card: {
-    paddingVertical: 36,
+    paddingVertical: 24,
     paddingLeft: 16,
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -117,9 +117,15 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
   },
+  textcol2: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    paddingBottom: 24,
+  },
   brandname: {
     color: '#fff',
-    fontWeight: 'bold',
+    fontFamily: 'Muli-Black',
     fontSize: 48,
     textAlign: 'left',
   },

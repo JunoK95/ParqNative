@@ -47,7 +47,9 @@ const ActivatedCard = props => {
     if (port.schedule.allday) {
       scheduleTxt = '24hr';
     } else {
-      scheduleTxt = `${moment(port.schedule.start, 'HH:mm').format('hh:mm a')}-${moment(port.schedule.end, 'HH:mm').format('hh:mm a')}`;
+      scheduleTxt = `${moment(port.schedule.start, 'HH:mm').format(
+        'hh:mma',
+      )} - ${moment(port.schedule.end, 'HH:mm').format('hh:mma')}`;
     }
   } else {
     scheduleTxt = '24hr';
