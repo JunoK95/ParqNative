@@ -25,6 +25,8 @@ import AddBankView from './views/payment/AddBankView';
 import StripeAccountVerification from './views/stripe_verification/StripeAccountVerification';
 import CarportInfoNoBookView from './views/carport/CarportInfoNoBookView';
 import HelpView from './views/HelpView';
+import FAQView from './views/help/FAQView';
+import TOSView from './views/help/TOSView';
 
 const SearchNavigator = createStackNavigator(
   {
@@ -52,6 +54,18 @@ const PaymentNavigator = createStackNavigator(
   },
 );
 
+const HelpNavigator = createStackNavigator(
+  {
+    HelpMenu: HelpView,
+    FAQ: FAQView,
+    TOS: TOSView,
+  },
+  {
+    headerMode: 'none',
+    initialRouteName: 'HelpMenu',
+  },
+);
+
 const AppNavigator = createDrawerNavigator(
   {
     Home: HomeView,
@@ -67,7 +81,7 @@ const AppNavigator = createDrawerNavigator(
     CarportInfoNoBook: CarportInfoNoBookView,
     CarportRegister: CarportRegisterView,
     ReservationList: ReservationListView,
-    Help: HelpView,
+    Help: HelpNavigator,
   },
   {
     initialRouteName: 'Home',

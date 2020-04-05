@@ -74,7 +74,7 @@ function DrawerNav(props) {
           </View>
           <View style={styles.textcol2}>
             <Text style={styles.brandname}> parq</Text>
-            <Text style={styles.subbrandname}> makes parking easy</Text>
+            <Text style={styles.subbrandname}> parking simplified</Text>
           </View>
         </View>
         {navLinks}
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     paddingBottom: 24,
+    paddingLeft: 12,
   },
   brandname: {
     color: '#fff',
