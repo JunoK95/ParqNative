@@ -23,7 +23,11 @@ const HelpView = props => {
         icon={'scroll'}
         handlePress={() => navigateTo('TOS')}
       />
-      <CustomListItem title={'Privacy Policy'} icon={'user-shield'} />
+      <CustomListItem
+        title={'Privacy Policy'}
+        icon={'user-shield'}
+        handlePress={() => navigateTo('Privacy')}
+      />
     </View>
   );
 };

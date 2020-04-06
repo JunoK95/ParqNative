@@ -74,7 +74,7 @@ function DrawerNav(props) {
           </View>
           <View style={styles.textcol2}>
             <Text style={styles.brandname}> parq</Text>
-            <Text style={styles.subbrandname}> parking simplified</Text>
+            <Text style={styles.subbrandname}> the parking app</Text>
           </View>
         </View>
         {navLinks}
@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
     color: '#111',
     fontSize: 13,
     paddingLeft: 10,
+    paddingTop: 4,
     textAlign: 'left',
     lineHeight: 14,
     fontFamily: 'Montserrat-SemiBoldItalic',

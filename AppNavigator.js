@@ -27,6 +27,7 @@ import CarportInfoNoBookView from './views/carport/CarportInfoNoBookView';
 import HelpView from './views/HelpView';
 import FAQView from './views/help/FAQView';
 import TOSView from './views/help/TOSView';
+import PrivacyView from './views/help/PrivacyView';
 
 const SearchNavigator = createStackNavigator(
   {
@@ -59,6 +60,7 @@ const HelpNavigator = createStackNavigator(
     HelpMenu: HelpView,
     FAQ: FAQView,
     TOS: TOSView,
+    Privacy: PrivacyView,
   },
   {
     headerMode: 'none',
