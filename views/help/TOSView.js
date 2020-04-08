@@ -2,12 +2,14 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import HeaderPadding from '../../components/layout/HeaderPadding';
 import ParagraphBlock from '../../components/layout/ParagraphBlock';
+import CarportRegistrationComplete from '../../components/carport/CarportRegistrationComplete';
 
 const TOSView = () => {
   return (
     <View>
       <HeaderPadding to={'HelpMenu'} title={'TOS'} alt />
-      <ParagraphBlock
+      <CarportRegistrationComplete />
+      {/* <ParagraphBlock
         title={'Parq Privacy Policy'}
         text={'Effective: February 14, 2020'}
         titleIcon={'angle-right'}
@@ -46,7 +48,7 @@ const TOSView = () => {
         title={'Parq Privacy Policy'}
         text={'text'}
         titleIcon={'angle-right'}
-      />
+      /> */}
     </View>
   );
 };

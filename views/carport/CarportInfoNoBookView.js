@@ -14,6 +14,7 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import AccomodationCard from '../../components/carport/carport_profile/AccomodationCard';
 import RestrictionCard from '../../components/carport/carport_profile/RestrictionCard';
 import PortInfoCard from '../../components/carport/carport_profile/PortInfoCard';
+import ContactInfoCard from '../../components/carport/carport_profile/ContactInfoCard';
 
 const typeMenu = {
   driveway: {
@@ -65,6 +66,7 @@ const CarportInfoNoBookView = props => {
       <PortInfoCard port={port} />
       <AccomodationCard accomodations={port.accomodations} />
       <RestrictionCard accomodations={port.accomodations} />
+      <ContactInfoCard port={port} />
     </ScrollView>
   );
 };

@@ -1,12 +1,22 @@
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useContext} from 'react';
+import {StyleSheet, View, Linking} from 'react-native';
 import HeaderPadding from '../components/layout/HeaderPadding';
 import CustomListItem from '../components/layout/CustomListItem';
 import {withNavigation} from 'react-navigation';
+import {AuthContext} from '../context/AuthContext';
 
 const HelpView = props => {
+  const context = useContext(AuthContext);
   const navigateTo = screen => {
     props.navigation.navigate(screen);
+  };
+
+  const contactPress = () => {
+    Linking.openURL(
+      `mailto:parq.tech@gmail.com?subject=Message from ${
+        context.user_data.email
+      }`,
+    );
   };
 
   return (
@@ -17,7 +27,11 @@ const HelpView = props => {
         icon={'question-circle'}
         handlePress={() => navigateTo('FAQ')}
       />
-      <CustomListItem title={'Contact Us'} icon={'envelope'} />
+      <CustomListItem
+        title={'Contact Us'}
+        icon={'envelope'}
+        handlePress={() => contactPress()}
+      />
       <CustomListItem
         title={'Terms of Service'}
         icon={'scroll'}

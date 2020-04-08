@@ -89,16 +89,123 @@ const PrivacyView = () => {
           titleIcon={'angle-right'}
         />
         <ParagraphBlock
-          title={'Listing'}
+          title={'Web Beacons'}
           text={
-            'A property which has been input into the Services and offered by a Host for a Guest to utilize.'
+            '“Web Beacons” (also known as clear gifs) are tiny graphics with a unique identifier that may be included on our Services for several purposes, including to deliver or communicate with cookies, to track and measure the performance of our Services, to monitor how many visitors view our Services, and to monitor the effectiveness of our advertising. Unlike cookies, which are stored on the User’s hard drive, web beacons are typically embedded invisibly on web pages (or in an email).'
           }
           titleIcon={'angle-right'}
         />
         <ParagraphBlock
-          title={'Listing'}
+          title={'Location Information'}
           text={
-            'A property which has been input into the Services and offered by a Host for a Guest to utilize.'
+            'When you use the Services, we may collect and store information about your location by converting your IP address into a geographic location, or by accessing your device’s GPS coordinates or course location if you enable location services on your device. We may use location information to improve and personalize our Services for you. You may opt to not allow us to use your device’s location, but doing so may prevent you from being able to use some or all of features provided by the Services.'
+          }
+          titleIcon={'angle-right'}
+        />
+        <ParagraphBlock
+          title={'Financial Information'}
+          text={
+            'Parq uses Stripe Technologies, Inc. (“Stripe”) to gather End User’s data from financial institutions. By using our service, you grant Parq and Stripe the right, power, and authority to act on your behalf to access and transmit your personal and financial information from the relevant financial institution. You agree to your personal and financial information being transferred, stored, and processed by Plaid in accordance with the Plaid Privacy Policy. As a Registered User of the Services, you may be also asked to enter billing information in the form of a Venmo account, Apple Pay account, credit or debit card, or other payment method (Payment Info) in order to transact with other Users. You may also be asked to connect your Venmo or bank account in order to receive payment for use of your parking space (Payout Info). You are not required to enter any financial information at any time but you will not have the ability to transact with other Users or collect funds owed to you until you have input the financial information requisite to the task you are attempting to perform. We will inform you when further financial information or other data points are required and request that you provide the data at that time. We do not store your credit/debit card info or bank account information on our servers. You consent to the transfer, collection and storage of all bank account information, credit/debit information, Payment Information and Payout Information to and by our payment processor partner, Braintree, for payment transaction purposes. Further information about measures taken by Braintree to keep your information safe and secure can be found via their website.'
+          }
+          titleIcon={'angle-right'}
+        />
+        <ParagraphBlock
+          title={'Vehicle Data'}
+          text={
+            'In order to reserve a parking space on your behalf and facilitate transactions between Guests and Hosts, we will request data regarding your vehicle, including make, model, color, year, and license plate number. Your license plate number will not be made publicly visible by us.'
+          }
+          titleIcon={'angle-right'}
+        />
+        <ParagraphBlock
+          title={'Listing Data'}
+          text={
+            'In order to become a Host, you will be required to create a Listing. In order to create and publish a Listing, you will be required input information specific to the Listing including but not limited to address, property type, business name, business type, property features, and hours of operation.'
+          }
+          titleIcon={'angle-right'}
+        />
+        <ParagraphBlock
+          title={'User Ratings'}
+          text={
+            'The Services provides a means for other Registered Users to rate your performance and behavior as a Host or Guest. We will aggregate and store this information.'
+          }
+          titleIcon={'angle-right'}
+        />
+        <ParagraphBlock
+          title={'How We Use PII'}
+          text={
+            'PII is used for the following purposes: (a) to provide and improve our Services, features and content; (b) to administer your account and your use of our Services; (c) to enable Users to enjoy and easily navigate the Site and Mobile Application; (d) to better understand your needs and interests; (e) to fulfill requests you may make; (f) to personalize your experience; (g) to provide or offer software updates and product announcements; and (h) to provide you with further information and offers from us or our partners, and to market, advertise, and inform you about products and services that we may deem relevant to you. These may include products and services offered directly by us or any entity with which we have formed a business relationship. This information and these communications may come to you in the form of email, mobile messaging, telephone contact, or direct mail depending upon the preferences which you indicate to us within your account.'
+          }
+          titleIcon={'angle-right'}
+        />
+        <ParagraphBlock
+          title={''}
+          text={
+            'If you decide at any time that you no longer wish to receive such communications, please follow the instructions provided in any of the communications or update your “User Settings” information. (See “Changing or Deleting Information,” below.) We use information we obtain by technical means (such as the automatic recording performed by our servers or through the use of cookies) for the above purposes, and in order to monitor and analyze use of the Services for behavioral information and for technical administration of the Services, as well as to increase the functionality and user-friendliness of the Services, to better tailor the Services to your needs, to generate and derive useful data and information concerning the interests, characteristic, website and Mobile App use behavior of our Users, and to verify that visitors to the Services meet the criteria required to process their requests. We have the capability to re-utilize your payment information after you have completed a transaction using the Services for items such as recurring reservations, cancellation fees, and penalty fees as covered in our Terms of Services and Cancellation Policy. These policies are in place to ensure that the Services perform adequately and maintain their value for all Users.'
+          }
+          titleIcon={'angle-right'}
+        />
+        <ParagraphBlock
+          title={'Information We Disclose With Your Consent or at Your Request'}
+          text={
+            'We will display portions of your PII in your profile page and elsewhere throughout the Services according to the preferences you set in your account. Any information you choose to provide should reflect how much you want all other Parq Users to know about you. We will share your PII with third-party sites or platforms, such as social networking sites, if you have requested that we do so.'
+          }
+          titleIcon={'angle-right'}
+        />
+        <ParagraphBlock
+          title={'Information Shared to Facilitate Transactions on Your Behalf'}
+          text={
+            'When you utilize the Services to request a parking reservation with a Host, or when you publish your Listing in order to begin accepting reservations, we will share specific data points and PII about you or your Listing with the specific Hosts that you have requested a reservation with or with any Guest who searches for available parking in the area of your Listing. Data shared with other Users may include but is not limited to past User ratings, Listing address, features, and hours, vehicle, make, model, year, and color. Your financial information will not be shared with or made visible to other Users. Your license plate number will not be made visible, but may be used as a blind verification tool. (Example: Host sees your car on his/her property and wants to verify that you are a Guest with an approved reservation. The Host may enter your plate number and the Services will compare their entry to your plate number and inform them whether it is a match or not.)'
+          }
+          titleIcon={'angle-right'}
+        />
+        <ParagraphBlock
+          title={'Information Shared with Services Providers and Analysts'}
+          text={
+            'We may engage third-party service providers to work with us to administer and provide the Services. These third-party service providers may have access to your PII only for the purpose of performing services on our behalf and are expressly obligated by agreement, statute and/or applicable regulations not to disclose or use your PII for any other purpose. We may share aggregated information and non-identifying information with third parties for purposes that include, but are not limited to, industry research and analysis, demographic profiling, and other similar purposes.'
+          }
+          titleIcon={'angle-right'}
+        />
+        <ParagraphBlock
+          title={
+            'Information Disclosed in Connection With Business Transactions'
+          }
+          text={
+            'Information that we collect from our Users, including PII, is considered to be a business asset. As a result, if we go out of business, enter bankruptcy, or are acquired as a result of a transaction such as a merger, acquisition, or asset sale, your PII may be disclosed or transferred to the third-party acquirer in connection with the transaction. In such an event we will take the steps we deem appropriate to ensure that your privacy rights remain protected.'
+          }
+          titleIcon={'angle-right'}
+        />
+        <ParagraphBlock
+          title={'Information Disclosed to Protect Us and Others'}
+          text={
+            'We cooperate with government and law enforcement officials or private parties to enforce and comply with the law. We may disclose any information about you to government or law enforcement officials, or private parties as we, at our sole discretion, believe necessary or appropriate to: (a) respond to claims, or legal process (including subpoenas); (b) protect our property, rights and safety, and the property, rights and safety of a third party or the public in general; and (c) stop any activity that we consider illegal, unethical, or legally actionable.'
+          }
+          titleIcon={'angle-right'}
+        />
+        <ParagraphBlock
+          title={'Changing or Deleting Your Information'}
+          text={
+            'All Registered Users may review, update, correct, or delete the PII provided in their registration or account profile by contacting us at parqtech@gmail.com or by changing their User profile information. If you completely delete all such information, then your account may become deactivated.'
+          }
+          titleIcon={'angle-right'}
+        />
+        <ParagraphBlock
+          title={'Security'}
+          text={
+            'We take reasonable administrative, physical, and electronic measures designed to protect the information that we collect from or about you (including your PII) from unauthorized access, use or disclosure. Please be aware, however, that no method of transmitting information over the Internet or storing information is completely secure. Accordingly, we cannot guarantee the absolute security of any information. By agreeing to our Terms of Services, you agree to indemnify and hold Parq and any affiliated entities harmless, in the event that your PII is accessed by an unauthorized party as a result of using the Services.'
+          }
+          titleIcon={'angle-right'}
+        />
+        <ParagraphBlock
+          title={'Our Policy Regarding Children'}
+          text={
+            'The Services are not directed to children under the age of 18. We do not knowingly collect personally identifiable information from children under the age of 18. If a parent or guardian becomes aware that his or her child has provided us with PII without their consent, he or she should contact us at parqtech@gmail.com. If we become aware that a child under 18 has provided us with PII, we will delete such information from our files.'
+          }
+          titleIcon={'angle-right'}
+        />
+        <ParagraphBlock
+          title={'Contacting Us'}
+          text={
+            'If you have any questions about this Privacy Policy, please contact us at parqtech@gmail.com.'
           }
           titleIcon={'angle-right'}
         />

@@ -218,11 +218,14 @@ function AuthContextProvider(props) {
       .signInWithCredential(credential)
       .then(async res => {
         console.log('Google Signed In => ', res);
-        await initializeDefaultUser(
-          auth.currentUser.uid,
-          res.additionalUserInfo.profile,
-          res.additionalUserInfo.profile.name,
-        );
+        const data = await getUserData(auth.currentUser.uid);
+        if (data.error) {
+          await initializeDefaultUser(
+            auth.currentUser.uid,
+            res.additionalUserInfo.profile,
+            res.additionalUserInfo.profile.name,
+          );
+        }
         return res;
       });
     console.log('firebaseUserCredential', firebaseUserCredential);

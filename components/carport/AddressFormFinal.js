@@ -11,7 +11,8 @@ import {
 import {ListItem} from 'react-native-elements';
 import {initializeCarportWithParams} from '../../firebase_func/firestoreFunctions';
 import {AuthContext} from '../../context/AuthContext';
-import SuccessImg from '../../resources/images/45.png';
+import CarportRegistrationComplete from './CarportRegistrationComplete';
+import {withNavigation} from 'react-navigation';
 
 const AddressFormFinal = props => {
   const context = useContext(AuthContext);
@@ -67,17 +68,7 @@ const AddressFormFinal = props => {
   } else if (loading === 'success') {
     return (
       <ScrollView contentContainerStyle={styles.formcontainer}>
-        <View style={styles.titlecontainer}>
-          <Text style={styles.titletext}>{'CONGRATULATIONS!'}</Text>
-        </View>
-        <View style={styles.contentcontainer}>
-          <Image source={SuccessImg} />
-        </View>
-        <View style={styles.contentcontainer}>
-          <Text style={styles.titletext}>
-            Click below to activate your parking spot and start making money!
-          </Text>
-        </View>
+        <CarportRegistrationComplete handlePress={() => {}} />
       </ScrollView>
     );
   }
@@ -241,4 +232,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddressFormFinal;
+export default withNavigation(AddressFormFinal);

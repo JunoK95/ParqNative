@@ -473,6 +473,25 @@ exports.stripeElementCharge = functions.https.onRequest((request, response) => {
   });
 });
 
+exports.getUserContactInfo = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const {user_id} = request.body;
+    try {
+      const userRef = db.collection('users').doc(user_id);
+      userRef.get().then(doc => {
+        if (!doc.exists) {
+          response.status(404);
+        } else {
+          const {phone, email} = doc.data();
+          response.status(200).send({phone, email});
+        }
+      });
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  });
+});
+
 exports.walletAddBalance = functions.firestore
   .document('purchases/{purchaseId}')
   .onCreate((snap, context) => {

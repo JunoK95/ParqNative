@@ -35,6 +35,7 @@ const CarportListView = props => {
   useEffect(() => {
     setfetch(true);
     if (!user_id || !user_data) {
+      setfetch(false);
       return;
     }
     if (user_data) {
