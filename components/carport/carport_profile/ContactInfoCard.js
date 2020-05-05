@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, Dimensions} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  ActivityIndicator,
+} from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Axios from 'axios';
 
@@ -7,7 +13,6 @@ const ContactInfoCard = props => {
   const {port} = props;
   const [email, setemail] = useState(null);
   const [phone, setphone] = useState(null);
-  const [fetching, setfetching] = useState(false);
 
   useEffect(() => {
     try {
@@ -42,7 +47,11 @@ const ContactInfoCard = props => {
           </View>
           <View style={styles.itemcolumn}>
             <Text style={styles.rowitemtitle}>E-Mail</Text>
-            <Text style={styles.rowitemtext}>{email ? email : ''}</Text>
+            {email ? (
+              <Text style={styles.rowitemtext}>{email}</Text>
+            ) : (
+              <ActivityIndicator />
+            )}
           </View>
         </View>
         <View style={styles.rowitem}>
@@ -51,7 +60,11 @@ const ContactInfoCard = props => {
           </View>
           <View style={styles.itemcolumn}>
             <Text style={styles.rowitemtitle}>Phone</Text>
-            <Text style={styles.rowitemtext}>{phone ? phone : ''}</Text>
+            {phone ? (
+              <Text style={styles.rowitemtext}>{phone}</Text>
+            ) : (
+              <ActivityIndicator />
+            )}
           </View>
         </View>
       </View>

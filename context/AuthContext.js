@@ -188,6 +188,7 @@ function AuthContextProvider(props) {
       .signInWithEmailAndPassword(email, pass)
       .then(res => {
         setstate({
+          ...state,
           user_id: res.user.uid,
           logged_in: true,
         });
@@ -237,8 +238,8 @@ function AuthContextProvider(props) {
 
   const signInSuccess = authResult => {
     console.log('authResult', authResult);
-
     setstate({
+      ...state,
       user_id: authResult.user.uid,
       logged_in: true,
     });
@@ -415,25 +416,8 @@ function AuthContextProvider(props) {
     return methods;
   };
 
-  const addContextVehicle = async (
-    name,
-    license_plate,
-    us_state,
-    make,
-    model,
-    year,
-    description,
-  ) => {
-    addVehicle(
-      state.user_id,
-      name,
-      license_plate,
-      us_state,
-      make,
-      model,
-      year,
-      description,
-    ).then(vehicles => {
+  const addContextVehicle = async updates => {
+    addVehicle(state.user_id, updates).then(vehicles => {
       const joinedVehicles = state.saved_vehicles.concat({
         id: vehicles.id,
         data: vehicles.data,

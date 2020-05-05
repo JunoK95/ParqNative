@@ -28,6 +28,7 @@ const PaymentSettingView = () => {
 
   const fetchData = useCallback(async () => {
     if (!user_data) {
+      console.log('User Data not found');
       return;
     }
     const {stripe_customer_id} = user_data;
@@ -71,7 +72,7 @@ const PaymentSettingView = () => {
     // });
     // setwallet(newWallet);
     setfetch(false);
-  }, [context.functions]);
+  }, []);
 
   useEffect(() => {
     setfetch(true);

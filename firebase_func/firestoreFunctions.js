@@ -10,7 +10,8 @@ import Config from 'react-native-config';
 const db = firebase.firestore();
 
 export async function initializeDefaultUser(id, initialData, newName) {
-  console.log(initialData);
+  console.log('initialData => ', initialData);
+  console.log('initialData Email => ', initialData.email);
   let newDisplayName = initialData.displayName;
   if (newName){
     newDisplayName = newName;
@@ -23,7 +24,6 @@ export async function initializeDefaultUser(id, initialData, newName) {
       url: 'https://us-central1-parq-dev.cloudfunctions.net/stripeCreateNewCustomer',
       data: {
         email: initialData.email,
-        name: newDisplayName,
         user_id: id,
       },
     }).then( res => {
@@ -135,6 +135,7 @@ export async function updateWallet(user_id, updates) {
   await db.collection('wallets').doc(user_id)
     .set({
       stripe_account_verified: true,
+      ...updates,
     }, {merge: true});
 }
 
@@ -660,20 +661,14 @@ export async function getVehicle(vehicle_id){
   return vehicleData;
 }
 
-export async function addVehicle(owner_id, name, license_plate, us_state, make, model, year, description){
+export async function addVehicle(owner_id, updates){
   var batch = db.batch();
 
   const newVehicleData = {
     owner_id,
-    name,
-    license_plate,
-    us_state,
-    make,
-    model,
-    year,
-    description,
     date_created: moment().unix(),
     date_updated: moment().unix(),
+    ...updates,
   };
 
   let vehicleDoc = db.collection('vehicles').doc();

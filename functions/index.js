@@ -163,6 +163,7 @@ exports.stripeUpdateAccountWithTOS = functions.https.onRequest(
 exports.stripeCreateAccount = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const {email, user_id} = request.body;
+    console.log('body', request.body);
     stripe.accounts.create(
       {
         country: 'US',

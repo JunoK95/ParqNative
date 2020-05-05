@@ -47,7 +47,7 @@ const CarportRegisterView = props => {
 
     getAccountInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [context.functions, context.user_id]);
+  }, []);
 
   return (
     <View style={styles.screen}>

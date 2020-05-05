@@ -14,6 +14,7 @@ import {
   Dimensions,
 } from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import SavedLocationsItem from '../components/saved_locations/SavedLocationsItem';
 
 const SavedLocationView = props => {
   const context = useContext(AuthContext);
@@ -33,20 +34,12 @@ const SavedLocationView = props => {
       const {title, lat, lng, place_id} = location.data;
       console.log(location.data);
       return (
-        <TouchableNativeFeedback
+        <SavedLocationsItem
           key={place_id}
-          background={TouchableNativeFeedback.Ripple('#ffecb9')}
-          onPress={() => navigateToResults({latitude: lat, longitude: lng})}>
-          <View style={styles.item}>
-            <View style={styles.itemleft}>
-              <FontAwesome5Icon name={'star'} size={24} />
-            </View>
-            <View style={styles.itemright}>
-              <Text style={styles.itemtext}>{address[0]}</Text>
-              <Text style={styles.itemsubtext}>{address[1]}</Text>
-            </View>
-          </View>
-        </TouchableNativeFeedback>
+          lat={lat}
+          lng={lng}
+          address={address}
+        />
       );
     });
   }
@@ -113,6 +106,9 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: 13,
     paddingRight: 72,
+  },
+  textshadow: {
+    textShadowRadius: 8,
   },
 });
 

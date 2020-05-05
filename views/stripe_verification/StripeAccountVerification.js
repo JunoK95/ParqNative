@@ -57,12 +57,7 @@ const StripeAccountVerification = props => {
       focusListener.remove();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    context.functions,
-    context.user_data.stripe_account_id,
-    context.user_id,
-    refresh,
-  ]);
+  }, [context.functions, refresh]);
 
   let content;
   if (account) {

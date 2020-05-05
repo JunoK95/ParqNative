@@ -12,7 +12,7 @@ import {Input, Button} from 'react-native-elements';
 import {AuthContext} from '../../context/AuthContext';
 import CustomColorPicker from '../../components/picker/CustomColorPicker';
 import CustomPickerItem from '../../components/picker/CustomPickerItem';
-import { capitalizeFirstLetter } from '../../helpers/helper';
+import {capitalizeFirstLetter} from '../../helpers/helper';
 
 const VehicleRegistrationView = props => {
   const context = useContext(AuthContext);
@@ -49,7 +49,7 @@ const VehicleRegistrationView = props => {
       return;
     } else if (context) {
       const {addContextVehicle} = context.functions;
-      addContextVehicle(
+      addContextVehicle({
         name,
         license_plate,
         us_state,
@@ -57,7 +57,8 @@ const VehicleRegistrationView = props => {
         model,
         year,
         description,
-      )
+        color,
+      })
         .then(res => {
           props.navigation.navigate('VehicleList');
           console.log('added Vehicle', res);

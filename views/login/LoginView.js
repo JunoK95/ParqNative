@@ -116,28 +116,6 @@ const LoginView = props => {
               onChangeText={text => setpassword(text)}
             />
           </View>
-          {/* <View style={styles.buttonRowContainer}>
-            <TouchableNativeFeedback onPress={handleSignIn}>
-              <View style={styles.buttonContainer}>
-                <View style={styles.buttonleft}>
-                  <Icon
-                    iconStyle={styles.icon2}
-                    name={'assignment-ind'}
-                    size={24}
-                  />
-                </View>
-                <View style={styles.buttonright}>
-                  <Text style={styles.buttonText}>Email Sign In</Text>
-                </View>
-              </View>
-            </TouchableNativeFeedback>
-          </View>
-          <View style={styles.buttonRowContainer}>
-            <GoogleSigninButton
-              style={styles.googleButtonContainer}
-              onPress={() => _signIn()}
-            />
-          </View> */}
           <View style={{marginHorizontal: 48, marginTop: 36}}>
             <SocialIcon
               type={'envelope'}

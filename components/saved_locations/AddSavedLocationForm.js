@@ -35,8 +35,7 @@ function AddSavedLocationForm(props) {
       const {lat, lng} = res.data.result.geometry.location;
       const {formatted_address} = res.data.result;
       console.log(formatted_address, place_id, context.user_id, lat, lng);
-      await addSaveLocation(
-        context.user_id,
+      await context.functions.addContextSaveLocation(
         formatted_address,
         formatted_address,
         place_id,
@@ -49,9 +48,7 @@ function AddSavedLocationForm(props) {
   };
 
   if (load) {
-    return (
-      <ActivityIndicator />
-    )
+    return <ActivityIndicator />;
   }
   return (
     <GoogleAutoComplete
