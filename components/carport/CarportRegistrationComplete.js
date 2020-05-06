@@ -7,9 +7,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import { withNavigation } from 'react-navigation';
 
 const CarportRegistrationComplete = props => {
-  const {handlePress} = props;
+  const handlePress = () => {
+    props.navigation.navigate('CarportList');
+  };
 
   return (
     <TouchableOpacity onPress={handlePress}>
@@ -27,7 +30,7 @@ const CarportRegistrationComplete = props => {
             Click to activate your parking spot and start making money!
           </Text>
         </View>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={handlePress}>
           <View style={styles.contentcontainer}>
             <FontAwesome5Icon name={'home'} size={48} color={'#11a4ff'} />
           </View>
@@ -37,7 +40,7 @@ const CarportRegistrationComplete = props => {
   );
 };
 
-export default CarportRegistrationComplete;
+export default withNavigation(CarportRegistrationComplete);
 
 const styles = StyleSheet.create({
   container: {

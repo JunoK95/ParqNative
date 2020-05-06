@@ -66,11 +66,7 @@ const AddressFormFinal = props => {
       </ScrollView>
     );
   } else if (loading === 'success') {
-    return (
-      <ScrollView contentContainerStyle={styles.formcontainer}>
-        <CarportRegistrationComplete handlePress={() => {}} />
-      </ScrollView>
-    );
+    return <CarportRegistrationComplete />;
   }
 
   return (

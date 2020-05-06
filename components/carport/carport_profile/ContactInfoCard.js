@@ -5,6 +5,8 @@ import {
   View,
   Dimensions,
   ActivityIndicator,
+  Linking,
+  TouchableOpacity,
 } from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Axios from 'axios';
@@ -48,7 +50,12 @@ const ContactInfoCard = props => {
           <View style={styles.itemcolumn}>
             <Text style={styles.rowitemtitle}>E-Mail</Text>
             {email ? (
-              <Text style={styles.rowitemtext}>{email}</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL(`mailto:${email}`);
+                }}>
+                <Text style={styles.rowitemtext}>{email}</Text>
+              </TouchableOpacity>
             ) : (
               <ActivityIndicator />
             )}
@@ -61,7 +68,12 @@ const ContactInfoCard = props => {
           <View style={styles.itemcolumn}>
             <Text style={styles.rowitemtitle}>Phone</Text>
             {phone ? (
-              <Text style={styles.rowitemtext}>{phone}</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  Linking.openURL(`tel:${phone}`);
+                }}>
+                <Text style={styles.rowitemtext}>{phone}</Text>
+              </TouchableOpacity>
             ) : (
               <ActivityIndicator />
             )}

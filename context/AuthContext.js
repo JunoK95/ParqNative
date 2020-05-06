@@ -35,7 +35,7 @@ function AuthContextProvider(props) {
     nearby_ports: [],
   });
 
-  async function onAuthChange(user) {
+  async function onAuthChange(user, credentials) {
     console.log('onAuthChange', user);
     if (user) {
       //Sign In
@@ -51,20 +51,20 @@ function AuthContextProvider(props) {
         if (data.error) {
           //New User
           console.log('Current User', auth.currentUser);
-          initializeDefaultUser(user.uid, auth.currentUser).then(res => {
-            setstate({
-              ...state,
-              user_id: user.uid,
-              logged_in: true,
-              user_data: res,
-              saved_locations: savedLocs,
-              saved_vehicles: savedVehicles,
-              payment_methods: [],
-              nearby_ports: [],
-            });
-            setfetching(false);
-            return true;
-          });
+          // initializeDefaultUser(user.uid, auth.currentUser).then(res => {
+          //   setstate({
+          //     ...state,
+          //     user_id: user.uid,
+          //     logged_in: true,
+          //     user_data: res,
+          //     saved_locations: savedLocs,
+          //     saved_vehicles: savedVehicles,
+          //     payment_methods: [],
+          //     nearby_ports: [],
+          //   });
+          //   setfetching(false);
+          //   return true;
+          // });
         } else {
           if (data.stripe_customer_id) {
             getStripePaymentMethods(data.stripe_customer_id).then(res => {
@@ -135,13 +135,34 @@ function AuthContextProvider(props) {
     var result = false;
     result = await auth
       .createUserWithEmailAndPassword(email, pass)
-      .then(res => {
+      .then(async res => {
         console.log('created user with email pass', res);
-        initializeDefaultUser(
+        const userData = await initializeDefaultUser(
           auth.currentUser.uid,
           auth.currentUser,
           display_name,
         );
+        let savedLocs = await getSavedLocations(auth.currentUser.uid).then(
+          locations => {
+            return locations;
+          },
+        );
+        let savedVehicles = await getSavedVehicles(auth.currentUser.uid).then(
+          vehicles => {
+            return vehicles;
+          },
+        );
+        setstate({
+          ...state,
+          user_id: auth.currentUser.uid,
+          logged_in: true,
+          user_data: userData,
+          saved_locations: savedLocs,
+          saved_vehicles: savedVehicles,
+          payment_methods: [],
+          nearby_ports: [],
+        });
+        setfetching(false);
         return res;
       })
       .catch(function(error) {
@@ -217,16 +238,40 @@ function AuthContextProvider(props) {
     const firebaseUserCredential = await firebase
       .auth()
       .signInWithCredential(credential)
-      .then(async res => {
+      .then(res => {
         console.log('Google Signed In => ', res);
-        const data = await getUserData(auth.currentUser.uid);
-        if (data.error) {
-          await initializeDefaultUser(
-            auth.currentUser.uid,
-            res.additionalUserInfo.profile,
-            res.additionalUserInfo.profile.name,
-          );
-        }
+        getUserData(auth.currentUser.uid).then(async data => {
+          if (data.error) {
+            const userData = await initializeDefaultUser(
+              auth.currentUser.uid,
+              res.additionalUserInfo.profile,
+              res.additionalUserInfo.profile.name,
+            );
+            let savedLocs = await getSavedLocations(auth.currentUser.uid).then(
+              locations => {
+                return locations;
+              },
+            );
+            let savedVehicles = await getSavedVehicles(
+              auth.currentUser.uid,
+              vehicles => {
+                return vehicles;
+              },
+            );
+            setstate({
+              ...state,
+              user_id: auth.currentUser.uid,
+              logged_in: true,
+              user_data: userData,
+              saved_locations: savedLocs,
+              saved_vehicles: savedVehicles,
+              payment_methods: [],
+              nearby_ports: [],
+            });
+            setfetching(false);
+            return true;
+          }
+        });
         return res;
       });
     console.log('firebaseUserCredential', firebaseUserCredential);

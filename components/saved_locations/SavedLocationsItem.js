@@ -1,8 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableNativeFeedback, Dimensions} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableNativeFeedback,
+  Dimensions,
+} from 'react-native';
 import {withNavigation} from 'react-navigation';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-import { AuthContext } from '../../context/AuthContext';
 
 const SavedLocationsItem = props => {
   const {lat, lng, address} = props;
@@ -21,9 +26,12 @@ const SavedLocationsItem = props => {
         <View style={styles.itemleft}>
           <FontAwesome5Icon name={'star'} size={24} />
         </View>
-        <View style={styles.itemright}>
+        <View style={styles.itemcenter}>
           <Text style={styles.itemtext}>{address[0]}</Text>
           <Text style={styles.itemsubtext}>{address[1]}</Text>
+        </View>
+        <View style={styles.itemright}>
+          <FontAwesome5Icon style={styles.floatright} name={'star'} size={24} />
         </View>
       </View>
     </TouchableNativeFeedback>
@@ -39,11 +47,17 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
   },
   itemleft: {
+    flex: 1,
     paddingHorizontal: 20,
+    justifyContent: 'flex-start',
+  },
+  itemcenter: {
+    flex: 5,
     justifyContent: 'center',
   },
   itemright: {
-    justifyContent: 'center',
+    flex: 1,
+    paddingRight: 20,
   },
   itemtext: {
     fontFamily: 'Montserrat-Medium',
@@ -57,6 +71,7 @@ const styles = StyleSheet.create({
     paddingRight: 72,
   },
   floatright: {
+    justifyContent: 'flex-end',
     textAlign: 'right',
-  }
+  },
 });

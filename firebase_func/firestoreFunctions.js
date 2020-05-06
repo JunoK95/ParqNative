@@ -59,7 +59,7 @@ export async function initializeDefaultUser(id, initialData, newName) {
   };
 
   let docData = db.collection('users').doc(id);
-  let returnVal = await docData.set(defaultUserData)
+  let returnVal = await docData.set(defaultUserData, {merge: true})
     .then(doc => {
       return doc;
     });

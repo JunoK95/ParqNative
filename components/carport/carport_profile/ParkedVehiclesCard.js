@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import moment from 'moment';
 
 const ParkedVehiclesCard = props => {
   const {reservations} = props;
@@ -31,6 +32,9 @@ const ParkedVehiclesCard = props => {
                 {license_plate + ' - ' + us_state}
               </Text>
               <Text style={styles.rowitemtext}>{make + ' ' + model}</Text>
+              <Text style={styles.rowitemtext}>
+                {moment(r.end, 'X').format('hh:mm A')}
+              </Text>
             </View>
           </View>
         </View>

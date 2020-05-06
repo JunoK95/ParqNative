@@ -10,7 +10,6 @@ import {
 import HeaderPadding from '../../components/layout/HeaderPadding';
 import storeLogo from '../../resources/images/112.png';
 import {splitStrByComma, convertToDollar} from '../../helpers/helper';
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import AccomodationCard from '../../components/carport/carport_profile/AccomodationCard';
 import RestrictionCard from '../../components/carport/carport_profile/RestrictionCard';
 import PortInfoCard from '../../components/carport/carport_profile/PortInfoCard';
@@ -63,10 +62,10 @@ const CarportInfoNoBookView = props => {
           </View>
         </View>
       </View>
+      <ContactInfoCard port={port} />
       <PortInfoCard port={port} />
       <AccomodationCard accomodations={port.accomodations} />
       <RestrictionCard accomodations={port.accomodations} />
-      <ContactInfoCard port={port} />
     </ScrollView>
   );
 };

@@ -89,10 +89,10 @@ const CarportEditView = props => {
           </View>
         </View>
       </View>
+      <ParkedVehiclesCard reservations={reserves} />
       <PortInfoCard port={port} />
       <AccomodationCard accomodations={port.accomodations} />
       <RestrictionCard accomodations={port.accomodations} />
-      <ParkedVehiclesCard reservations={reserves} />
     </ScrollView>
   );
 };
