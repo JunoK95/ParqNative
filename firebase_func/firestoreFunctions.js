@@ -111,13 +111,18 @@ export async function updateDisplayName(user_id, display_name) {
 }
 
 export async function updateUserData(user_id, data) {
-  await db.collection('users').doc(user_id).set({
+  const success = await db.collection('users').doc(user_id).set({
     date_updated: moment().unix(),
     ...data,
   }, { merge : true })
   .then(res => {
     console.log('updated user data', res);
+    return true;
+  }).catch(err => {
+    console.log(err);
+    return false;
   });
+  return success;
 }
 
 export async function updateStripeId(user_id, stripe_customer_id) {

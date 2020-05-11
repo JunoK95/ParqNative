@@ -31,7 +31,11 @@ const SavedLocationsItem = props => {
           <Text style={styles.itemsubtext}>{address[1]}</Text>
         </View>
         <View style={styles.itemright}>
-          <FontAwesome5Icon style={styles.floatright} name={'star'} size={24} />
+          {/* <FontAwesome5Icon
+            style={styles.floatright}
+            name={'trash'}
+            size={20}
+          /> */}
         </View>
       </View>
     </TouchableNativeFeedback>
@@ -52,7 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   itemcenter: {
-    flex: 5,
+    flex: 10,
     justifyContent: 'center',
   },
   itemright: {

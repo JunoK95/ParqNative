@@ -28,6 +28,7 @@ import HelpView from './views/HelpView';
 import FAQView from './views/help/FAQView';
 import TOSView from './views/help/TOSView';
 import PrivacyView from './views/help/PrivacyView';
+import GetPhoneView from './views/GetPhoneView';
 
 const SearchNavigator = createStackNavigator(
   {
@@ -112,6 +113,7 @@ export default createAppContainer(
       AuthStatus: AuthStatus,
       App: AppNavigator,
       Auth: AuthNavigator,
+      Phone: GetPhoneView,
     },
     {
       initialRouteName: 'AuthStatus',

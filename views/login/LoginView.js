@@ -63,6 +63,7 @@ const LoginView = props => {
         userInfo.idToken,
         userInfo.accessToken,
       );
+      console.log(loggedIn);
       if (loggedIn) {
         setload(false);
         props.navigation.navigate('App');

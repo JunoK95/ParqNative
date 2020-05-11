@@ -11,9 +11,11 @@ import HeaderPadding from '../../components/layout/HeaderPadding';
 import AddressSubmissionForm from './AddressSubmissionForm';
 import {AuthContext} from '../../context/AuthContext';
 import Axios from 'axios';
+import { withNavigationFocus } from 'react-navigation';
 
 const CarportRegisterView = props => {
   const context = useContext(AuthContext);
+  const {isFocused} = props;
   const [account, setaccount] = useState(null);
   useEffect(() => {
     const {navigation} = props;
@@ -47,7 +49,7 @@ const CarportRegisterView = props => {
 
     getAccountInfo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isFocused]);
 
   return (
     <View style={styles.screen}>
@@ -112,4 +114,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CarportRegisterView;
+export default withNavigationFocus(CarportRegisterView);

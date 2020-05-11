@@ -14,9 +14,11 @@ import HeaderPadding from '../components/layout/HeaderPadding';
 import {getOwnedCarports} from '../firebase_func/firestoreFunctions';
 import {Icon} from 'react-native-elements';
 import CarportCard2 from '../components/carport/CarportCard2';
+import {withNavigationFocus} from 'react-navigation';
 
 const CarportListView = props => {
   const context = useContext(AuthContext);
+  const {isFocused} = props;
   const [carports, setports] = useState([]);
   const [fetching, setfetch] = useState(true);
   const [loading, setload] = useState(false);
@@ -44,7 +46,7 @@ const CarportListView = props => {
       }
     }
     fetchData();
-  }, [fetchData]);
+  }, [isFocused]);
 
   const handleRegistrationClick = async () => {
     setload(true);
@@ -145,4 +147,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CarportListView;
+export default withNavigationFocus(CarportListView);

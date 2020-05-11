@@ -14,9 +14,7 @@ const AuthStatus = props => {
     }
   }, [context, props.navigation]);
 
-  return (
-    <LoadingView />
-  );
+  return <LoadingView />;
 };
 
 const styles = StyleSheet.create({

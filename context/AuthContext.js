@@ -13,6 +13,7 @@ import {
   deleteVehicle,
   updateStripeId,
   setStripeAccountId,
+  updateUserData,
 } from '../firebase_func/firestoreFunctions';
 import {getWallet} from '../firebase_func/walletFunctions';
 import {GoogleSignin} from '@react-native-community/google-signin';
@@ -51,20 +52,6 @@ function AuthContextProvider(props) {
         if (data.error) {
           //New User
           console.log('Current User', auth.currentUser);
-          // initializeDefaultUser(user.uid, auth.currentUser).then(res => {
-          //   setstate({
-          //     ...state,
-          //     user_id: user.uid,
-          //     logged_in: true,
-          //     user_data: res,
-          //     saved_locations: savedLocs,
-          //     saved_vehicles: savedVehicles,
-          //     payment_methods: [],
-          //     nearby_ports: [],
-          //   });
-          //   setfetching(false);
-          //   return true;
-          // });
         } else {
           if (data.stripe_customer_id) {
             getStripePaymentMethods(data.stripe_customer_id).then(res => {
@@ -421,10 +408,14 @@ function AuthContextProvider(props) {
       data: {
         customer_id: stripe_customer_id,
       },
-    }).then(res => {
-      console.log(res.data.data);
-      return res.data.data;
-    });
+    })
+      .then(res => {
+        console.log(res.data.data);
+        return res.data.data;
+      })
+      .catch(err => {
+        console.log('Error Getting Stripe Payment Methods => ', err);
+      });
     return stripeCards;
   };
 
@@ -542,6 +533,18 @@ function AuthContextProvider(props) {
     return history;
   };
 
+  const addContextPhone = async phone => {
+    const result = await updateUserData(state.user_id, {phone});
+    console.log('Phone Number Added ', result);
+    setstate({
+      ...state,
+      user_data: {
+        ...state.user_data,
+        phone,
+      },
+    });
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -556,6 +559,7 @@ function AuthContextProvider(props) {
           signInSuccess: signInSuccess,
           addContextSaveLocation: addContextSaveLocation,
           addContextVehicle: addContextVehicle,
+          addContextPhone: addContextPhone,
           deleteContextVehicle: deleteContextVehicle,
           editContextCarport: editContextCarport,
           enterSite: enterSite,
