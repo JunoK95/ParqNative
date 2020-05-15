@@ -11,7 +11,7 @@ import HeaderPadding from '../../components/layout/HeaderPadding';
 import AddressSubmissionForm from './AddressSubmissionForm';
 import {AuthContext} from '../../context/AuthContext';
 import Axios from 'axios';
-import { withNavigationFocus } from 'react-navigation';
+import {withNavigationFocus} from 'react-navigation';
 
 const CarportRegisterView = props => {
   const context = useContext(AuthContext);

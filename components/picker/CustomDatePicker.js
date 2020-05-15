@@ -19,6 +19,7 @@ const CustomDatePicker = props => {
     title,
     dateType,
     initialDate,
+    selected,
     setselected,
     openmodalbutton,
     mode,
@@ -62,7 +63,9 @@ const CustomDatePicker = props => {
             </View>
             <View style={styles.itemright}>
               <Text style={styles.itemtext}>
-                {moved ? moment(date).format('MMMM Do, YYYY') : 'Select Date'}
+                {selected
+                  ? moment(selected).format('MMMM Do, YYYY')
+                  : 'Select Date'}
               </Text>
               <Text style={styles.itemsubtext}>{'Date of Birth'}</Text>
             </View>

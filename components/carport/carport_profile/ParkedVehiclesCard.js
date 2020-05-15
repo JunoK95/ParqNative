@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import DuoIconListItem from '../../layout/DuoIconListItem';
 import moment from 'moment';
 
 const ParkedVehiclesCard = props => {
@@ -14,31 +15,38 @@ const ParkedVehiclesCard = props => {
 
   const reserveItems = reservations.map((r, i) => {
     console.log(r.vehicle_data);
+    const {end} = r;
     const {color, us_state, license_plate, make, model} = r.vehicle_data;
     return (
-      <TouchableOpacity key={i}>
-        <View style={styles.row}>
-          <View style={styles.rowitem}>
-            <View style={styles.itemcolumn}>
-              <FontAwesome5Icon
-                name={'car'}
-                size={30}
-                style={color === 'white' && styles.iconOutline}
-                color={color ? color : 'black'}
-              />
-            </View>
-            <View style={styles.itemcolumn}>
-              <Text numberOfLines={1} style={styles.rowitemtitle}>
-                {license_plate + ' - ' + us_state}
-              </Text>
-              <Text style={styles.rowitemtext}>{make + ' ' + model}</Text>
-              <Text style={styles.rowitemtext}>
-                {moment(r.end, 'X').format('hh:mm A')}
-              </Text>
-            </View>
-          </View>
-        </View>
-      </TouchableOpacity>
+      <DuoIconListItem
+        key={i}
+        leftIcon={'car'}
+        leftIconColor={color}
+        title={`${license_plate} - ${us_state}`}
+        subtitle={`${make} ${model}`}
+        rightText={moment(end, 'X').format('hh:mm A')}
+        rightContent={<Text>{moment(end, 'X').format('hh:mm A')}</Text>}
+      />
+      // <TouchableOpacity key={i}>
+      //   <View style={styles.row}>
+      //     <View style={styles.rowitem}>
+      //       <View style={styles.itemcolumn}>
+      //         <FontAwesome5Icon
+      //           name={'car'}
+      //           size={30}
+      //           style={color === 'white' && styles.iconOutline}
+      //           color={color ? color : 'black'}
+      //         />
+      //       </View>
+      //       <View style={styles.itemcolumn}>
+      //         <Text numberOfLines={1} style={styles.rowitemtitle}>
+      //           {license_plate + ' - ' + us_state}
+      //         </Text>
+      //         <Text style={styles.rowitemtext}>{make + ' ' + model}</Text>
+      //       </View>
+      //     </View>
+      //   </View>
+      // </TouchableOpacity>
     );
   });
 
@@ -50,7 +58,7 @@ const ParkedVehiclesCard = props => {
         </View>
       </View>
       {reserveItems.length > 0 ? (
-        reserveItems
+        <View style={styles.rowpadding}>{reserveItems}</View>
       ) : (
         <Text style={styles.rowitemtext2}>No Currently Parked Vehicles</Text>
       )}
@@ -133,5 +141,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-SemiBold',
     color: '#444',
     fontSize: 15,
+  },
+  rowpadding: {
+    paddingHorizontal: 32,
   },
 });

@@ -38,7 +38,9 @@ const GetPhoneView = () => {
   };
 
   const handleSubmit = () => {
-    context.functions.addContextPhone(phone);
+    if (phone.length === 14) {
+      context.functions.addContextPhone(phone);
+    }
   };
 
   return (

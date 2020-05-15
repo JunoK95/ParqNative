@@ -381,6 +381,10 @@ function AuthContextProvider(props) {
         data: {
           email,
           user_id: state.user_id,
+          metadata: {
+            user_id: state.user_id,
+            description: 'Assigning Stripe Account',
+          },
         },
       }).then(res => {
         console.log('stripe account', res);

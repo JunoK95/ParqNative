@@ -85,21 +85,35 @@ const ReservationItem = props => {
             </View>
           </View>
           <View style={styles.right}>
-            <Icon
-              name={'clock'}
-              style={styles.clockicon}
-              color={
-                moment(reservation.end) - currenttime <= 0 ? 'red' : '#888'
-              }
-            />
-            <Text
-              style={
-                moment(reservation.end) - currenttime <= 0
-                  ? styles.timeouttext
-                  : styles.distance
-              }>
-              {scheduleTxt}
-            </Text>
+            <View style={styles.box}>
+              <View style={styles.inforow}>
+                <Icon
+                  name={'clock'}
+                  style={styles.clockicon}
+                  color={
+                    moment(reservation.end) - currenttime <= 0 ? 'red' : '#888'
+                  }
+                />
+                <Text
+                  style={
+                    moment(reservation.end) - currenttime <= 0
+                      ? styles.timeouttext
+                      : styles.distance
+                  }>
+                  {scheduleTxt}
+                </Text>
+              </View>
+              <View style={styles.inforow}>
+                <TouchableOpacity onPress={handleClick}>
+                  <Icon
+                    style={styles.icon}
+                    color={'#11a4ff'}
+                    name={'info-circle'}
+                    size={20}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
           </View>
         </View>
         <View style={styles.contentcontainer}>
@@ -293,6 +307,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  inforow: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
   },
 });
 

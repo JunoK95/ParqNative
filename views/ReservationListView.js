@@ -5,9 +5,11 @@ import {AuthContext} from '../context/AuthContext';
 import ReservationList from '../components/reservation/ReservationList';
 import {Icon} from 'react-native-elements';
 import moment from 'moment';
+import {withNavigationFocus} from 'react-navigation';
 
-const ReservationListView = () => {
+const ReservationListView = props => {
   const context = useContext(AuthContext);
+  const {isFocused} = props;
   const [loading, setloading] = useState(true);
   const [reservations, setreservations] = useState();
 
@@ -21,7 +23,7 @@ const ReservationListView = () => {
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, [fetchData, isFocused]);
 
   const refreshbutton = (
     <TouchableOpacity onPress={() => fetchData()}>
@@ -58,4 +60,4 @@ const ReservationListView = () => {
   }
 };
 
-export default ReservationListView;
+export default withNavigationFocus(ReservationListView);

@@ -136,6 +136,7 @@ const StripeActivateForm1 = props => {
         dateType={'date'}
         title={'Date of Birth'}
         setselected={setdob}
+        selected={dob}
       />
       <View style={styles.textcontainer}>
         <Text style={styles.text}>
