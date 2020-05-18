@@ -1,18 +1,19 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableNativeFeedback} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import TouchableNativeReplacement from './TouchableNativeReplacement';
 
 const ParagraphBlock = props => {
   const {title, subtitle, text, collapsible, titleIcon} = props;
 
   if (collapsible) {
     return (
-      <TouchableNativeFeedback>
+      <TouchableNativeReplacement>
         <View style={styles.container}>
           <Text style={styles.title}>{title}</Text>
           {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
         </View>
-      </TouchableNativeFeedback>
+      </TouchableNativeReplacement>
     );
   } else {
     return (

@@ -1,6 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableNativeFeedback} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import TouchableNativeReplacement from '../../components/layout/TouchableNativeReplacement';
 
 const requirementList = [
   // 'external_account',
@@ -33,9 +34,7 @@ const StripeVerificationMenu = props => {
   return (
     <View>
       {identityVerified ? (
-        <TouchableNativeFeedback
-          background={TouchableNativeFeedback.Ripple('#ffecb9')}
-          onPress={() => {}}>
+        <TouchableNativeReplacement color={'secondary'} onPress={() => {}}>
           <View style={styles.item}>
             <View style={styles.row}>
               <FontAwesome5Icon
@@ -52,10 +51,10 @@ const StripeVerificationMenu = props => {
               />
             </View>
           </View>
-        </TouchableNativeFeedback>
+        </TouchableNativeReplacement>
       ) : (
-        <TouchableNativeFeedback
-          background={TouchableNativeFeedback.Ripple('#ffecb9')}
+        <TouchableNativeReplacement
+          color={'secondary'}
           onPress={() => setprogress(1)}>
           <View style={styles.item}>
             <View style={styles.row}>
@@ -73,10 +72,10 @@ const StripeVerificationMenu = props => {
               />
             </View>
           </View>
-        </TouchableNativeFeedback>
+        </TouchableNativeReplacement>
       )}
-      <TouchableNativeFeedback
-        background={TouchableNativeFeedback.Ripple('#ffecb9')}
+      <TouchableNativeReplacement
+        color={'secondary'}
         onPress={() => setprogress(2)}>
         <View style={styles.item}>
           <View style={styles.row}>
@@ -103,7 +102,7 @@ const StripeVerificationMenu = props => {
             )}
           </View>
         </View>
-      </TouchableNativeFeedback>
+      </TouchableNativeReplacement>
     </View>
   );
 };

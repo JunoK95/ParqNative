@@ -1,13 +1,6 @@
 import React from 'react';
 import {withNavigation} from 'react-navigation';
-import {
-  TextInput,
-  ScrollView,
-  StyleSheet,
-  TouchableNativeFeedback,
-  View,
-  Text,
-} from 'react-native';
+import {TextInput, ScrollView, StyleSheet, View, Text} from 'react-native';
 import {GoogleAutoComplete} from 'react-native-google-autocomplete';
 import Axios from 'axios';
 import CurrentLocationButton from '../home/CurrentLocationButton';

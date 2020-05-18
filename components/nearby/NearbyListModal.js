@@ -4,10 +4,10 @@ import {
   Text,
   Modal,
   StyleSheet,
-  TouchableNativeFeedback,
 } from 'react-native';
 import NearbyList from './NearbyList';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import TouchableNativeReplacement from '../layout/TouchableNativeReplacement';
 
 const NearbyListModal = props => {
   const {open, setlistmode, currentlocation, carports} = props;
@@ -26,12 +26,12 @@ const NearbyListModal = props => {
         currentlocation={currentlocation}
         setopen={setlistmode}
       />
-      <TouchableNativeFeedback onPress={() => setlistmode(false)}>
+      <TouchableNativeReplacement onPress={() => setlistmode(false)}>
         <View style={styles.listHeader}>
           <Icon name={'map'} size={18} />
           <Text style={styles.listTitle}> Map </Text>
         </View>
-      </TouchableNativeFeedback>
+      </TouchableNativeReplacement>
     </Modal>
   );
 };

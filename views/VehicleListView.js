@@ -6,12 +6,12 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-  TouchableNativeFeedback,
 } from 'react-native';
 import HeaderPadding from '../components/layout/HeaderPadding';
 import {AuthContext} from '../context/AuthContext';
 import {Icon} from 'react-native-elements';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import TouchableNativeReplacement from '../components/layout/TouchableNativeReplacement';
 
 const VehicleListView = props => {
   const context = useContext(AuthContext);
@@ -22,8 +22,8 @@ const VehicleListView = props => {
     vehicles = saved_vehicles.map((v, i) => {
       console.log('vehicle', v);
       return (
-        <TouchableNativeFeedback
-          background={TouchableNativeFeedback.Ripple('#c2e8ff')}
+        <TouchableNativeReplacement
+          color={'primary'}
           key={i}
           vehicle_id={v.id}
           onPress={() => console.log(v)}>
@@ -47,7 +47,7 @@ const VehicleListView = props => {
               </View>
             </View>
           </View>
-        </TouchableNativeFeedback>
+        </TouchableNativeReplacement>
       );
     });
   }

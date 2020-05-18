@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableNativeFeedback} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {withNavigation} from 'react-navigation';
+import TouchableNativeReplacement from '../../components/layout/TouchableNativeReplacement';
 
 const PaymentBanksList = props => {
   const {account} = props;
@@ -12,9 +13,9 @@ const PaymentBanksList = props => {
     banksList = account.external_accounts.data.map((item, i) => {
       const {bank_name, last4} = item;
       return (
-        <TouchableNativeFeedback
+        <TouchableNativeReplacement
           key={i}
-          background={TouchableNativeFeedback.Ripple('#ffecb9')}
+          color={'secondary'}
           onPress={() => {}}>
           <View style={styles.item}>
             <View style={styles.row}>
@@ -27,15 +28,13 @@ const PaymentBanksList = props => {
               </View>
             </View>
           </View>
-        </TouchableNativeFeedback>
+        </TouchableNativeReplacement>
       );
     });
 
     if (banksList.length <= 0) {
       banksList = (
-        <TouchableNativeFeedback
-          background={TouchableNativeFeedback.Ripple('#ffecb9')}
-          onPress={() => {}}>
+        <TouchableNativeReplacement color={'secondary'} onPress={() => {}}>
           <View style={styles.item}>
             <View style={styles.rowdisabled}>
               <View style={styles.col}>
@@ -46,7 +45,7 @@ const PaymentBanksList = props => {
               </View>
             </View>
           </View>
-        </TouchableNativeFeedback>
+        </TouchableNativeReplacement>
       );
     }
   }
@@ -54,8 +53,8 @@ const PaymentBanksList = props => {
   return (
     <React.Fragment>
       {banksList}
-      <TouchableNativeFeedback
-        background={TouchableNativeFeedback.Ripple('#c2e8ff')}
+      <TouchableNativeReplacement
+        color={'primary'}
         onPress={() => props.navigation.navigate('StripeAccountVerification')}>
         <View style={styles.item}>
           <View style={styles.row}>
@@ -63,7 +62,7 @@ const PaymentBanksList = props => {
             <Text style={styles.itemtext}>{'Add Bank Account'}</Text>
           </View>
         </View>
-      </TouchableNativeFeedback>
+      </TouchableNativeReplacement>
     </React.Fragment>
   );
 };

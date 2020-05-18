@@ -1,9 +1,10 @@
 import React, {PureComponent} from 'react';
-import {View, Text, StyleSheet, TouchableNativeFeedback} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import stripe from 'tipsi-stripe';
 import testID from '../../components/tipsi/utils/testID';
 import Axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import TouchableNativeReplacement from '../../components/layout/TouchableNativeReplacement';
 
 stripe.setOptions({
   publishableKey: 'pk_test_2a0X0i2dhIxdgSaLw9HxWrOP00mE8JnGY9',
@@ -60,8 +61,8 @@ export default class CardFormScreen extends PureComponent {
 
     return (
       <View style={styles.container}>
-        <TouchableNativeFeedback
-          background={TouchableNativeFeedback.Ripple('#c2e8ff')}
+        <TouchableNativeReplacement
+          color={'primary'}
           onPress={this.handleCardPayPress}>
           <View style={styles.item}>
             <View style={styles.row}>
@@ -69,7 +70,7 @@ export default class CardFormScreen extends PureComponent {
               <Text style={styles.itemtext}>{'Add Payment Card'}</Text>
             </View>
           </View>
-        </TouchableNativeFeedback>
+        </TouchableNativeReplacement>
         {/* <View style={styles.token} {...testID('cardFormToken')}>
           {token && (
             <Text style={styles.instruction}>Token: {token.tokenId}</Text>

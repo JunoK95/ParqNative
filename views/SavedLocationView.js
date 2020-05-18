@@ -8,13 +8,12 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableNativeFeedback,
   TouchableOpacity,
   ScrollView,
-  Dimensions,
 } from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import SavedLocationsItem from '../components/saved_locations/SavedLocationsItem';
+import TouchableNativeReplacement from '../components/layout/TouchableNativeReplacement';
 
 const SavedLocationView = props => {
   const context = useContext(AuthContext);
@@ -58,8 +57,8 @@ const SavedLocationView = props => {
       <ScrollView>
         {SavedLocationList}
         {SavedLocationList.length === 0 && (
-          <TouchableNativeFeedback
-            background={TouchableNativeFeedback.Ripple('#ffecb9')}
+          <TouchableNativeReplacement
+            color={'secondary'}
             onPress={() => props.navigation.navigate('SavedLocationsAdd')}>
             <View style={styles.item}>
               <View style={styles.itemleft}>
@@ -69,7 +68,7 @@ const SavedLocationView = props => {
                 <Text style={styles.itemtext}>{'No Saved Location'}</Text>
               </View>
             </View>
-          </TouchableNativeFeedback>
+          </TouchableNativeReplacement>
         )}
       </ScrollView>
     </View>

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, TouchableNativeFeedback} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import TouchableNativeReplacement from '../../components/layout/TouchableNativeReplacement';
 
 const brands = {
   Visa: 'cc-visa',
@@ -20,8 +21,8 @@ const CreditCardItem = props => {
   if (card) {
     const ccicon = brands[card.brand];
     return (
-      <TouchableNativeFeedback
-        background={TouchableNativeFeedback.Ripple('#ffecb9')}
+      <TouchableNativeReplacement
+        color={'secondary'}
         onPress={() => setactive(!active)}>
         <View style={styles.item}>
           <View style={styles.row}>
@@ -33,13 +34,11 @@ const CreditCardItem = props => {
             <Text style={styles.itemtext}>{'... ' + card.last4}</Text>
           </View>
         </View>
-      </TouchableNativeFeedback>
+      </TouchableNativeReplacement>
     );
   } else {
     return (
-      <TouchableNativeFeedback
-        background={TouchableNativeFeedback.Ripple('#ffecb9')}
-        onPress={() => {}}>
+      <TouchableNativeReplacement color={'secondary'} onPress={() => {}}>
         <View style={styles.item}>
           <View style={styles.rowdisabled}>
             <View style={styles.col}>
@@ -50,7 +49,7 @@ const CreditCardItem = props => {
             </View>
           </View>
         </View>
-      </TouchableNativeFeedback>
+      </TouchableNativeReplacement>
     );
   }
 };

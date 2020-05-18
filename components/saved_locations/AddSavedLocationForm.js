@@ -4,7 +4,6 @@ import {
   TextInput,
   ScrollView,
   StyleSheet,
-  TouchableNativeFeedback,
   View,
   Text,
   ActivityIndicator,
@@ -12,8 +11,8 @@ import {
 import {GoogleAutoComplete} from 'react-native-google-autocomplete';
 import Axios from 'axios';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-import {addSaveLocation} from '../../firebase_func/firestoreFunctions';
 import {AuthContext} from '../../context/AuthContext';
+import TouchableNativeReplacement from '../layout/TouchableNativeReplacement';
 
 function AddSavedLocationForm(props) {
   const context = useContext(AuthContext);
@@ -67,9 +66,9 @@ function AddSavedLocationForm(props) {
           />
           <ScrollView>
             {locationResults.map((el, i) => (
-              <TouchableNativeFeedback
+              <TouchableNativeReplacement
                 key={i}
-                background={TouchableNativeFeedback.Ripple('#ffecb9')}
+                color={'secondary'}
                 onPress={() => handlePress(el)}>
                 <View style={styles.item}>
                   <View style={styles.row}>
@@ -85,7 +84,7 @@ function AddSavedLocationForm(props) {
                     </View>
                   </View>
                 </View>
-              </TouchableNativeFeedback>
+              </TouchableNativeReplacement>
             ))}
           </ScrollView>
         </React.Fragment>

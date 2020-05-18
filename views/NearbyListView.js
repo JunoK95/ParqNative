@@ -6,7 +6,6 @@ import {
   ActivityIndicator,
   Dimensions,
   TouchableOpacity,
-  TouchableNativeFeedback,
 } from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import {geofirexQueryPoints} from '../firebase_func/geofirexFunctions';
@@ -16,6 +15,7 @@ import CustomMapMarker from '../components/map/CustomMapMarker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import CarportCard from '../components/map/CarportCard';
 import {checkCarportAvailablity} from '../firebase_func/firestoreFunctions';
+import TouchableNativeReplacement from '../components/layout/TouchableNativeReplacement';
 
 const NearbyListView = props => {
   const {params} = props.navigation.state;
@@ -147,12 +147,12 @@ const NearbyListView = props => {
             <Text style={styles.text}> Expand Radius</Text>
           </TouchableOpacity>
         </View>
-        <TouchableNativeFeedback onPress={() => setlistmode(true)}>
+        <TouchableNativeReplacement onPress={() => setlistmode(true)}>
           <View style={styles.listHeader}>
             <Icon name={'bars'} size={18} />
             <Text style={styles.listTitle}> List </Text>
           </View>
-        </TouchableNativeFeedback>
+        </TouchableNativeReplacement>
         <NearbyListModal
           setlistmode={setlistmode}
           carports={carport2}

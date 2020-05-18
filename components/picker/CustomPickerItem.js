@@ -1,12 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableNativeFeedback} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import TouchableNativeReplacement from '../layout/TouchableNativeReplacement';
 
 const CustomPickerItem = props => {
   const {title, subtitle, icon, iconColor, handlePress} = props;
 
   return (
-    <TouchableNativeFeedback onPress={handlePress}>
+    <TouchableNativeReplacement onPress={handlePress}>
       <View style={styles.item}>
         <View style={styles.itemleft}>
           <FontAwesome5Icon
@@ -21,7 +22,7 @@ const CustomPickerItem = props => {
           {subtitle && <Text style={styles.itemsubtext}>{subtitle}</Text>}
         </View>
       </View>
-    </TouchableNativeFeedback>
+    </TouchableNativeReplacement>
   );
 };
 

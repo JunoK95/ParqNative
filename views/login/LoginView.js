@@ -1,22 +1,15 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TextInput,
   ActivityIndicator,
-  TouchableNativeFeedback,
-  Dimensions,
 } from 'react-native';
-import {Icon, Button} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import {AuthContext} from '../../context/AuthContext';
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-} from '@react-native-community/google-signin';
+import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 import {SocialIcon} from 'react-native-elements';
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 const LoginView = props => {
   const context = useContext(AuthContext);

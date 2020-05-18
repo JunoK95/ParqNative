@@ -3,11 +3,11 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableNativeFeedback,
   Dimensions,
 } from 'react-native';
 import {withNavigation} from 'react-navigation';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import TouchableNativeReplacement from '../layout/TouchableNativeReplacement';
 
 const SavedLocationsItem = props => {
   const {lat, lng, address} = props;
@@ -19,8 +19,8 @@ const SavedLocationsItem = props => {
   };
 
   return (
-    <TouchableNativeFeedback
-      background={TouchableNativeFeedback.Ripple('#ffecb9')}
+    <TouchableNativeReplacement
+      color={'secondary'}
       onPress={() => navigateToResults(lat, lng)}>
       <View style={styles.item}>
         <View style={styles.itemleft}>
@@ -38,7 +38,7 @@ const SavedLocationsItem = props => {
           /> */}
         </View>
       </View>
-    </TouchableNativeFeedback>
+    </TouchableNativeReplacement>
   );
 };
 

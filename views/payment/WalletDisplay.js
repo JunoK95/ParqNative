@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import AddBalanceMenu from './AddBalanceMenu';
-import {TouchableNativeFeedback, View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import TouchableNativeReplacement from '../../components/layout/TouchableNativeReplacement';
 
 const WalletDisplay = props => {
   const {wallet} = props;
@@ -15,8 +16,8 @@ const WalletDisplay = props => {
   return (
     <React.Fragment>
       {wallet && (
-        <TouchableNativeFeedback
-          background={TouchableNativeFeedback.Ripple('#c2e8ff')}
+        <TouchableNativeReplacement
+          color={'primary'}
           onPress={() => console.log(wallet)}>
           <View style={styles.item}>
             <View style={styles.row}>
@@ -24,10 +25,10 @@ const WalletDisplay = props => {
               <Text style={styles.itemtext}>{creditAmount + ' coins'}</Text>
             </View>
           </View>
-        </TouchableNativeFeedback>
+        </TouchableNativeReplacement>
       )}
-      <TouchableNativeFeedback
-        background={TouchableNativeFeedback.Ripple('#c2e8ff')}
+      <TouchableNativeReplacement
+        color={'primary'}
         onPress={() => setmenu(true)}>
         <View style={styles.item}>
           <View style={styles.row}>
@@ -35,7 +36,7 @@ const WalletDisplay = props => {
             <Text style={styles.itemtext}>{'Add Balance'}</Text>
           </View>
         </View>
-      </TouchableNativeFeedback>
+      </TouchableNativeReplacement>
       <AddBalanceMenu open={menuOpen} setopen={setmenu} />
     </React.Fragment>
   );

@@ -1,15 +1,10 @@
 import React, {useContext} from 'react';
 import {withNavigation} from 'react-navigation';
 import {ListItem} from 'react-native-elements';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableNativeFeedback,
-  ScrollView,
-} from 'react-native';
+import {StyleSheet, View, Text, ScrollView} from 'react-native';
 import {AuthContext} from '../../context/AuthContext';
 import {splitStrByComma} from '../../helpers/helper';
+import TouchableNativeReplacement from '../layout/TouchableNativeReplacement';
 
 const SavedLocations = props => {
   const context = useContext(AuthContext);
@@ -45,11 +40,11 @@ const SavedLocations = props => {
     <ScrollView>
       {SavedLocationList}
       {SavedLocationList.length === 0 && (
-        <TouchableNativeFeedback onPress={() => console.log('no saved loc')}>
+        <TouchableNativeReplacement onPress={() => console.log('no saved loc')}>
           <View style={styles.container}>
             <Text style={styles.text}>No Saved Location</Text>
           </View>
-        </TouchableNativeFeedback>
+        </TouchableNativeReplacement>
       )}
     </ScrollView>
   );
