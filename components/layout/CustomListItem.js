@@ -1,14 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableNativeFeedback} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import TouchableNativeReplacement from './TouchableNativeReplacement';
 
 const CustomListItem = props => {
   const {title, subtitle, icon, iconColor, handlePress, rippleColor} = props;
 
   return (
-    <TouchableNativeFeedback
-      onPress={handlePress}
-      background={TouchableNativeFeedback.Ripple(rippleColor)}>
+    <TouchableNativeReplacement onPress={handlePress} color={rippleColor}>
       <View style={styles.item}>
         <View style={styles.itemleft}>
           <FontAwesome5Icon
@@ -23,7 +22,7 @@ const CustomListItem = props => {
           {subtitle && <Text style={styles.itemsubtext}>{subtitle}</Text>}
         </View>
       </View>
-    </TouchableNativeFeedback>
+    </TouchableNativeReplacement>
   );
 };
 

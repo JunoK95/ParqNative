@@ -18,6 +18,12 @@
 		30FB1F69FFB1C3C109C960F3 /* libPods-ParqNative-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4BD66A56A50D480D1A1F4A7 /* libPods-ParqNative-tvOSTests.a */; };
 		3BEABBAED9B3E97754448758 /* libPods-ParqNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00E5096936868DCD8EDE2BE9 /* libPods-ParqNative.a */; };
 		B80F3E3E247098EE00E26E91 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B80F3E3D247098ED00E26E91 /* GoogleService-Info.plist */; };
+		B80F3E3F2470C11A00E26E91 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F6F3635587B64C82ADA153B6 /* Montserrat-Medium.ttf */; };
+		B80F3E402470C13700E26E91 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9597F9F448ED4E6FA1D1033C /* Montserrat-Bold.ttf */; };
+		B80F3E412470C14000E26E91 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 03F7BE88A4A040A7A9A1F80B /* Montserrat-SemiBold.ttf */; };
+		B80F3E422470C16500E26E91 /* Muli-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 995225EA613F4962ADF13DE2 /* Muli-Black.ttf */; };
+		B80F3E432470C1CC00E26E91 /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7533D67E0FAF49CF954DF5DD /* Montserrat-SemiBoldItalic.ttf */; };
+		B80F3E442472016A00E26E91 /* Montserrat-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6EAED607E2141C79DAA1228 /* Montserrat-MediumItalic.ttf */; };
 		B8A600BB6C2727631275B468 /* libPods-ParqNativeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7553A16E5CCB11B40AB14F6 /* libPods-ParqNativeTests.a */; };
 /* End PBXBuildFile section */
 
@@ -472,6 +478,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B80F3E442472016A00E26E91 /* Montserrat-MediumItalic.ttf in Resources */,
+				B80F3E432470C1CC00E26E91 /* Montserrat-SemiBoldItalic.ttf in Resources */,
+				B80F3E422470C16500E26E91 /* Muli-Black.ttf in Resources */,
+				B80F3E412470C14000E26E91 /* Montserrat-SemiBold.ttf in Resources */,
+				B80F3E402470C13700E26E91 /* Montserrat-Bold.ttf in Resources */,
+				B80F3E3F2470C11A00E26E91 /* Montserrat-Medium.ttf in Resources */,
 				B80F3E3E247098EE00E26E91 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

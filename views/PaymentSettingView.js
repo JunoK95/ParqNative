@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   padding: {
     padding: 8,
-  }
+  },
 });
 
 export default PaymentSettingView;

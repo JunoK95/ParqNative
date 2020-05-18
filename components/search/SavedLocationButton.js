@@ -1,12 +1,13 @@
 import React from 'react';
 import {withNavigation} from 'react-navigation';
-import {View, Text, TouchableNativeFeedback, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import TouchableNativeReplacement from '../layout/TouchableNativeReplacement';
 
 const SavedLocationButton = props => {
   return (
-    <TouchableNativeFeedback
-      background={TouchableNativeFeedback.Ripple('#ffecb9')}
+    <TouchableNativeReplacement
+      color={'secondary'}
       onPress={() => props.navigation.navigate('SavedLocations')}>
       <View style={styles.item}>
         <View style={styles.row}>
@@ -14,7 +15,7 @@ const SavedLocationButton = props => {
           <Text style={styles.itemtext}>{'Your Saved Locations'}</Text>
         </View>
       </View>
-    </TouchableNativeFeedback>
+    </TouchableNativeReplacement>
   );
 };
 

@@ -21,7 +21,9 @@ export default class HomeView extends React.Component {
             return <LoadingView />;
           }
           if (!authContext.user_data.phone) {
-            return <GetPhoneView handlePress={authContext.functions.addPhone} />;
+            return (
+              <GetPhoneView handlePress={authContext.functions.addPhone} />
+            );
           }
           return (
             <GeolocationContext.Consumer>

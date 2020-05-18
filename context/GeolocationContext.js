@@ -1,6 +1,6 @@
 import React, {createContext, useState, useEffect} from 'react';
 import Geolocation from 'react-native-geolocation-service';
-import {PermissionsAndroid} from 'react-native';
+import {PermissionsAndroid, Platform, Alert} from 'react-native';
 
 export const GeolocationContext = createContext();
 
@@ -12,40 +12,62 @@ function GeolocationContextProvider(props) {
 
   useEffect(() => {
     async function initializeLocation() {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      if (Platform.OS === 'ios') {
+        // Get IOS Permission
+        console.log('in iOS Geolocation');
+        Geolocation.getCurrentPosition(
+          pos => {
+            const latitude = pos.coords.latitude;
+            const longitude = pos.coords.longitude;
+            setlocation({latitude, longitude});
+            console.log('You can use their location context iOS =>', location);
+          },
+          error => {
+            console.log(error.code, error.message);
+          },
           {
-            title: 'Request Location',
-            message: 'Parq needs access to your Location',
-            buttonNeutral: 'Ask Me Later',
-            buttonNegative: 'Cancel',
-            buttonPositive: 'OK',
+            enableHighAccuracy: true,
+            timeout: 2000,
+            maximumAge: 360000,
+            desiredAccuracy: 20,
           },
         );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          Geolocation.getCurrentPosition(
-            pos => {
-              const latitude = pos.coords.latitude;
-              const longitude = pos.coords.longitude;
-              setlocation({latitude, longitude});
-              console.log('You can use their location context', location);
-            },
-            error => {
-              console.log(error.code, error.message);
-            },
+      } else {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
             {
-              enableHighAccuracy: true,
-              timeout: 2000,
-              maximumAge: 360000,
-              desiredAccuracy: 20,
+              title: 'Request Location',
+              message: 'Parq needs access to your Location',
+              buttonNeutral: 'Ask Me Later',
+              buttonNegative: 'Cancel',
+              buttonPositive: 'OK',
             },
           );
-        } else {
-          console.log('location permission denied');
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            Geolocation.getCurrentPosition(
+              pos => {
+                const latitude = pos.coords.latitude;
+                const longitude = pos.coords.longitude;
+                setlocation({latitude, longitude});
+                console.log('You can use their location context', location);
+              },
+              error => {
+                console.log(error.code, error.message);
+              },
+              {
+                enableHighAccuracy: true,
+                timeout: 2000,
+                maximumAge: 360000,
+                desiredAccuracy: 20,
+              },
+            );
+          } else {
+            console.log('location permission denied');
+          }
+        } catch (err) {
+          console.warn(err);
         }
-      } catch (err) {
-        console.warn(err);
       }
     }
 

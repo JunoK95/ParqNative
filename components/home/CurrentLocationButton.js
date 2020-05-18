@@ -1,8 +1,9 @@
 import React, {useContext} from 'react';
 import {GeolocationContext} from '../../context/GeolocationContext';
 import {withNavigation} from 'react-navigation';
-import {View, Text, TouchableNativeFeedback, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import TouchableNativeReplacement from '../layout/TouchableNativeReplacement';
 
 const CurrentLocationButton = props => {
   const context = useContext(GeolocationContext);
@@ -17,8 +18,8 @@ const CurrentLocationButton = props => {
     return null;
   }
   return (
-    <TouchableNativeFeedback
-      background={TouchableNativeFeedback.Ripple('#c2e8ff')}
+    <TouchableNativeReplacement
+      color={'primary'}
       onPress={() => navigateTo({latitude, longitude})}>
       <View style={styles.item}>
         <View style={styles.row}>
@@ -26,7 +27,7 @@ const CurrentLocationButton = props => {
           <Text style={styles.itemtext}>{'Current Location'}</Text>
         </View>
       </View>
-    </TouchableNativeFeedback>
+    </TouchableNativeReplacement>
   );
 };
 

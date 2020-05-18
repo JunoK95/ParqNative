@@ -13,6 +13,7 @@ import Axios from 'axios';
 import CurrentLocationButton from '../home/CurrentLocationButton';
 import SavedLocationButton from './SavedLocationButton';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import TouchableNativeReplacement from '../layout/TouchableNativeReplacement';
 
 function LocationAutoComplete(props) {
   const apiKey = 'AIzaSyDH_piMcJHJJQLW3WjyLTZo0ICSbHbNXZ0';
@@ -57,9 +58,9 @@ function LocationAutoComplete(props) {
             <CurrentLocationButton />
             <SavedLocationButton />
             {locationResults.map((el, i) => (
-              <TouchableNativeFeedback
+              <TouchableNativeReplacement
                 key={i}
-                background={TouchableNativeFeedback.Ripple('#ffecb9')}
+                color={'secondary'}
                 onPress={() => handlePress(el)}>
                 <View style={styles.item}>
                   <View style={styles.row}>
@@ -75,7 +76,7 @@ function LocationAutoComplete(props) {
                     </View>
                   </View>
                 </View>
-              </TouchableNativeFeedback>
+              </TouchableNativeReplacement>
             ))}
           </ScrollView>
         </React.Fragment>
