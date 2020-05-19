@@ -44,8 +44,8 @@ const ReservationItem = props => {
 
   const openGps = (lat, lng) => {
     var url = `google.navigation:q=${lat},${lng}`;
-    if (Platform === 'ios') {
-      url = `maps://app?saddr=100+101&daddr=${lat}+${lng}`;
+    if (Platform.OS === 'ios') {
+      url = `maps://app?daddr=${lat}+${lng}`;
     }
     Linking.openURL(url);
   };

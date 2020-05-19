@@ -240,12 +240,6 @@ const CarportPayCard = props => {
           <View style={styles.right}>
             <View style={styles.box}>
               <Text style={styles.distance}>{scheduleTxt}</Text>
-              <Icon
-                style={styles.icon}
-                name={'information'}
-                size={20}
-                onPress={() => console.log('info')}
-              />
             </View>
           </View>
         </View>

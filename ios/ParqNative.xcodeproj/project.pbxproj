@@ -24,6 +24,7 @@
 		B80F3E422470C16500E26E91 /* Muli-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 995225EA613F4962ADF13DE2 /* Muli-Black.ttf */; };
 		B80F3E432470C1CC00E26E91 /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7533D67E0FAF49CF954DF5DD /* Montserrat-SemiBoldItalic.ttf */; };
 		B80F3E442472016A00E26E91 /* Montserrat-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6EAED607E2141C79DAA1228 /* Montserrat-MediumItalic.ttf */; };
+		B88A50B3247370F300980862 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		B8A600BB6C2727631275B468 /* libPods-ParqNativeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7553A16E5CCB11B40AB14F6 /* libPods-ParqNativeTests.a */; };
 /* End PBXBuildFile section */
 
@@ -426,19 +427,25 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 940;
+				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = H9Y2F6P7P3;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = H9Y2F6P7P3;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = H9Y2F6P7P3;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = H9Y2F6P7P3;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
@@ -479,6 +486,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B80F3E442472016A00E26E91 /* Montserrat-MediumItalic.ttf in Resources */,
+				B88A50B3247370F300980862 /* Images.xcassets in Resources */,
 				B80F3E432470C1CC00E26E91 /* Montserrat-SemiBoldItalic.ttf in Resources */,
 				B80F3E422470C16500E26E91 /* Muli-Black.ttf in Resources */,
 				B80F3E412470C14000E26E91 /* Montserrat-SemiBold.ttf in Resources */,
@@ -786,6 +794,7 @@
 			baseConfigurationReference = 9C97D15ED88D1C67385AA2B9 /* Pods-ParqNativeTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = H9Y2F6P7P3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -810,6 +819,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = H9Y2F6P7P3;
 				INFOPLIST_FILE = ParqNativeTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -831,6 +841,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = H9Y2F6P7P3;
 				INFOPLIST_FILE = ParqNative/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -850,6 +861,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H9Y2F6P7P3;
 				INFOPLIST_FILE = ParqNative/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -874,6 +886,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = H9Y2F6P7P3;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "ParqNative-tvOS/Info.plist";
@@ -903,6 +916,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = H9Y2F6P7P3;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "ParqNative-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -929,6 +943,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = H9Y2F6P7P3;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "ParqNative-tvOSTests/Info.plist";
@@ -957,6 +972,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = H9Y2F6P7P3;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "ParqNative-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -977,6 +993,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1030,6 +1047,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;

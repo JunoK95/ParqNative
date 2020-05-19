@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     height: 262,
   },
   button: {
+    alignSelf: 'center',
     width: 300,
   },
   centeredimg: {

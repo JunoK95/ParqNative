@@ -15,7 +15,7 @@ function GeolocationContextProvider(props) {
       if (Platform.OS === 'ios') {
         // Get IOS Permission
         console.log('in iOS Geolocation');
-        Geolocation.getCurrentPosition(
+        await Geolocation.getCurrentPosition(
           pos => {
             const latitude = pos.coords.latitude;
             const longitude = pos.coords.longitude;

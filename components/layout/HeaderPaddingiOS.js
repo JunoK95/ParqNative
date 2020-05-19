@@ -1,14 +1,10 @@
 import React from 'react';
 import BackToButton from '../navigation/BackToButton';
-import {View, Text, StyleSheet, Platform} from 'react-native';
-import HeaderPaddingiOS from './HeaderPaddingiOS';
+import {View, Text, StyleSheet} from 'react-native';
 
-const HeaderPadding = props => {
-  const {to, title, right, alt} = props;
+const HeaderPaddingiOS = props => {
+  const {to, alt, title, right} = props;
 
-  if (Platform.OS === 'ios') {
-    return <HeaderPaddingiOS to={to} title={title} right={right} alt={alt} />;
-  }
   return (
     <View style={alt ? styles.secondaryheader : styles.primaryheader}>
       <View style={styles.left}>
@@ -24,9 +20,10 @@ const HeaderPadding = props => {
   );
 };
 
+export default HeaderPaddingiOS;
+
 const styles = StyleSheet.create({
   primaryheader: {
-    height: 56,
     top: 0,
     zIndex: 5,
     justifyContent: 'flex-start',
@@ -35,9 +32,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#11a4ff',
     paddingHorizontal: 24,
     paddingVertical: 12,
+    paddingTop: 42,
   },
   secondaryheader: {
-    height: 56,
     top: 0,
     zIndex: 5,
     justifyContent: 'flex-start',
@@ -46,6 +43,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffc630',
     paddingHorizontal: 24,
     paddingVertical: 12,
+    paddingTop: 42,
   },
   title: {
     fontFamily: 'Montserrat-SemiBold',
@@ -73,5 +71,3 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
 });
-
-export default HeaderPadding;
