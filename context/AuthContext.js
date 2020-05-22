@@ -18,6 +18,7 @@ import {
 import {getWallet} from '../firebase_func/walletFunctions';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import axios from 'axios';
+import Axios from 'axios';
 
 export const AuthContext = createContext();
 
@@ -260,6 +261,17 @@ function AuthContextProvider(props) {
           }
         });
         return res;
+      })
+      .catch(err => {
+        console.log('Error using GoogleSignIn => ', err);
+        Axios({
+          method: 'POST',
+          data: {
+            type: 'error',
+            message: err,
+            description: 'Error using Google SignIn',
+          },
+        });
       });
     console.log('firebaseUserCredential', firebaseUserCredential);
     if (firebaseUserCredential) {
