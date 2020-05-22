@@ -15,6 +15,23 @@ const webhookAccountSig = functions.config().stripe.webhook.account_signing;
 //  response.send("Hello from Firebase!");
 // });
 
+exports.sendLog = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const {type, message, description} = request.body;
+    switch (type) {
+      case 'error':
+        console.error(description, message);
+        break;
+      case 'warning':
+        console.warn(description, message);
+        break;
+      default:
+        console.log(description, message);
+        break;
+    }
+  });
+});
+
 exports.stripeAccountEvents = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     let event;

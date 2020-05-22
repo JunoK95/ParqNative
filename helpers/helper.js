@@ -166,10 +166,12 @@ export function validatePassword(pw1, pw2) {
 export function getPortMaxHours(port, defaultHours) {
   let maxHours = defaultHours;
   if (port.schedule) {
-    if (port.schedule.end) {
-      maxHours = moment(port.schedule.end, 'HH:mm').diff(moment(), 'hours');
-      console.log('MAX SCHEDULE HOURS => ', maxHours);
-      return maxHours;
+    if (port.schedule.enabled) {
+      if (port.schedule.end) {
+        maxHours = moment(port.schedule.end, 'HH:mm').diff(moment(), 'hours');
+        console.log('MAX SCHEDULE HOURS => ', maxHours);
+        return maxHours;
+      }
     }
   }
   if (port.timer_end) {

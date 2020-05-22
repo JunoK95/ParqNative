@@ -100,7 +100,10 @@ const NearbyListView = props => {
               latitude: port.location.coordinates.lat,
               longitude: port.location.coordinates.lng,
             }}
-            onPress={() => setselect(port)}>
+            onPress={() => {
+              console.log('SELECTING PORT => ', port);
+              setselect(port);
+            }}>
             <CustomMapMarker selected={select} port={port} />
           </Marker>
         );

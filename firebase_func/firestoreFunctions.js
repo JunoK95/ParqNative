@@ -319,7 +319,11 @@ export async function activateCarport(port_id, updates) {
   var returnVal =
     await db.collection('carports')
             .doc(port_id)
-            .set({...updates, enabled: true}, {merge: true})
+            .set({
+              ...updates,
+              date_updated: moment().unix(),
+              enabled: true,
+            }, {merge: true})
             .then(() => {
               return true;
             }).catch(error => {

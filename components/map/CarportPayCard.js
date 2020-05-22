@@ -49,6 +49,8 @@ const CarportPayCard = props => {
   let maxHours = getPortMaxHours(port, 12);
   let hourItems = [];
 
+  console.log('PORT => price_hr === ', port.price_hr);
+
   for (let i = 1; i <= maxHours; i++) {
     const itemamount = parseInt(
       parseFloat(port.price_hr) * parseInt(i, 10) * 100,
@@ -60,6 +62,18 @@ const CarportPayCard = props => {
       title: `${i} hours`,
       subtitle: 'total = $' + itemDollarAmount,
       value: i,
+    });
+  }
+
+  //If time ends under an hour
+  if (maxHours === 0) {
+    const itemamount = parseInt(parseFloat(port.price_hr) * 100, 10);
+    const itemamountTax = parseInt(itemamount * 0.085, 10);
+    const itemDollarAmount = ((itemamount + itemamountTax) / 100).toFixed(2);
+    hourItems.push({
+      title: 'less than an hour',
+      subtitle: 'total = $' + itemDollarAmount,
+      value: 1,
     });
   }
 

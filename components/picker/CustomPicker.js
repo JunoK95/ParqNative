@@ -19,13 +19,16 @@ const CustomPicker = props => {
   const [modalopen, setmodalopen] = useState(false);
 
   useEffect(() => {
-    setselected(initialitem);
-    setselect(initialitem);
+    if (initialitem) {
+      setselected(initialitem);
+      setselect(initialitem);
+    }
   }, []);
 
-  let pickerItems;
-  if (items) {
+  let pickerItems = null;
+  if (items.length > 0) {
     pickerItems = items.map((item, i) => {
+      console.log('Item => ', item);
       return (
         <CustomPickerItem
           key={i}
@@ -54,7 +57,7 @@ const CustomPicker = props => {
               {select ? select.title : 'Select Hours'}
             </Text>
             <Text style={styles.itemsubtext}>
-              {select.subtitle && select.subtitle}
+              {select ? select.subtitle : ''}
             </Text>
           </View>
         </View>

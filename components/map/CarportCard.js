@@ -32,6 +32,7 @@ const CarportCard = props => {
     if (setopen) {
       setopen(false);
     }
+    console.log('BOOKING => ', port);
     props.navigation.navigate('PayParking', {port});
   };
 
