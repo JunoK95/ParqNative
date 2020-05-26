@@ -134,8 +134,8 @@ android {
         applicationId "com.parqnative"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 6
+        versionName "1.0.6"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true 
     }
@@ -206,10 +206,11 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+    implementation 'com.google.android.gms:play-services-analytics:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    implementation 'com.google.android.gms:play-services-base:16.0.0'
-    implementation 'com.google.android.gms:play-services-maps:16.0.0'
-    implementation "com.google.android.gms:play-services-location:16.0.0"
+    implementation 'com.google.android.gms:play-services-base:17.2.1'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.android.support:design:27.1.0'
 }
 
@@ -221,4 +222,4 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
-apply plugin: 'com.google.gms.google-services'
+

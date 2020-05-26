@@ -1,38 +1,14 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const cors = require('cors')({origin: true});
-const stripe = require('stripe')(functions.config().stripe.secret_key); //Change API Key On Launch
+const stripe = require('stripe')(functions.config().stripe.testkey);
+
+const webhookSig = functions.config().stripe.webhook.signing;
+const webhookAccountSig = functions.config().stripe.webhook.account_signing;
 
 admin.initializeApp(functions.config().firebase);
 
 const db = admin.firestore();
-const webhookChargeSig = functions.config().stripe.webhook.charge_signing;
-const webhookAccountSig = functions.config().stripe.webhook.account_signing;
-
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
-
-exports.sendLog = functions.https.onRequest((request, response) => {
-  cors(request, response, () => {
-    const {type, message, description} = request.body;
-    switch (type) {
-      case 'error':
-        console.error(description, message);
-        break;
-      case 'warning':
-        console.warn(description, message);
-        break;
-      default:
-        console.log(description, message);
-        break;
-    }
-    response.status(200).send('Logged');
-  });
-});
 
 exports.stripeAccountEvents = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
@@ -76,15 +52,11 @@ exports.stripeAccountEvents = functions.https.onRequest((request, response) => {
   });
 });
 
-exports.stripeChargeEvents = functions.https.onRequest((request, response) => {
+exports.stripeEvents = functions.https.onRequest((request, response) => {
   let event;
   let sig = request.headers['stripe-signature'];
   try {
-    event = stripe.webhooks.constructEvent(
-      request.rawBody,
-      sig,
-      webhookChargeSig,
-    );
+    event = stripe.webhooks.constructEvent(request.rawBody, sig, webhookSig);
     console.log('Webhook Event = ', event);
   } catch (err) {
     response.status(400).send(`Webhook Error: ${err.message}`);
@@ -496,159 +468,3 @@ exports.stripeElementCharge = functions.https.onRequest((request, response) => {
     );
   });
 });
-
-exports.getUserContactInfo = functions.https.onRequest((request, response) => {
-  cors(request, response, () => {
-    const {user_id} = request.body;
-    try {
-      const userRef = db.collection('users').doc(user_id);
-      userRef.get().then(doc => {
-        if (!doc.exists) {
-          response.status(404);
-        } else {
-          const {phone, email} = doc.data();
-          response.status(200).send({phone, email});
-        }
-      });
-    } catch (error) {
-      response.status(500).send(error);
-    }
-  });
-});
-
-exports.walletAddBalance = functions.firestore
-  .document('purchases/{purchaseId}')
-  .onCreate((snap, context) => {
-    const data = snap.data();
-    const {user_id, amount} = data;
-
-    console.log(data);
-    if (data.type === 'add_credit') {
-      const wallet = db
-        .doc(`wallets/${user_id}`)
-        .update({
-          credit: admin.firestore.FieldValue.increment(amount),
-        })
-        .then(res => {
-          return res;
-        })
-        .catch(err => {
-          return err;
-        });
-      return true;
-    }
-    return true;
-  });
-
-exports.userMetrics = functions.firestore
-  .document('users/{user_id}')
-  .onCreate((snap, context) => {
-    const data = snap.data();
-
-    db.doc('metrics/users').update({
-      total_users: admin.firestore.FieldValue.increment(1),
-    });
-
-    db.doc(`user_metrics/${context.params.user_id}`).set({
-      amount_refunded: 0,
-      amount_spent: 0,
-      hours_parked: 0,
-      parking_purchases: 0,
-    });
-
-    return true;
-  });
-
-exports.reservationMetrics = functions.firestore
-  .document('reservations/{reservationId}')
-  .onCreate((snap, context) => {
-    const data = snap.data();
-    const {hours, price, user_id, carport_id, carport_data} = data;
-
-    //update total reservations metrics
-    db.doc('metrics/reservations').update({
-      total_hours: admin.firestore.FieldValue.increment(parseInt(hours, 10)),
-      total_reservations: admin.firestore.FieldValue.increment(1),
-      gross_income: admin.firestore.FieldValue.increment(parseFloat(price)),
-    });
-
-    //update user metrics
-    db.doc(`user_metrics/${user_id}`).set(
-      {
-        amount_refunded: admin.firestore.FieldValue.increment(0),
-        amount_spent: admin.firestore.FieldValue.increment(parseFloat(price)),
-        hours_parked: admin.firestore.FieldValue.increment(parseInt(hours, 10)),
-        parking_purchases: admin.firestore.FieldValue.increment(1),
-      },
-      {merge: true},
-    );
-
-    //update carport metrics
-    db.doc(`carport_metrics/${carport_id}`).set(
-      {
-        amount_refunded: admin.firestore.FieldValue.increment(0),
-        amount_earned_gross: admin.firestore.FieldValue.increment(
-          parseFloat(price),
-        ),
-        amount_earned_net: admin.firestore.FieldValue.increment(0),
-        hours_parked: admin.firestore.FieldValue.increment(parseInt(hours, 10)),
-        total_parking: admin.firestore.FieldValue.increment(1),
-        owner_id: carport_data.owner_id,
-      },
-      {merge: true},
-    );
-
-    return true;
-  });
-
-exports.carportMetrics = functions.firestore
-  .document('carports/{carportId}')
-  .onCreate((snap, context) => {
-    const data = snap.data();
-    const {accomodations, type, available_spaces, owner_id} = data;
-    const updateData = {
-      accomodations: {
-        compact_only:
-          accomodations.compact_only && admin.firestore.FieldValue.increment(1),
-        covered_space:
-          accomodations.covered_space &&
-          admin.firestore.FieldValue.increment(1),
-        ev_charging:
-          accomodations.ev_charging && admin.firestore.FieldValue.increment(1),
-        low_clearance:
-          accomodations.low_clearance &&
-          admin.firestore.FieldValue.increment(1),
-        no_reentry:
-          accomodations.no_reentry && admin.firestore.FieldValue.increment(1),
-        parallel:
-          accomodations.parallel && admin.firestore.FieldValue.increment(1),
-      },
-      types: {
-        driveway:
-          type === 'driveway' && admin.firestore.FieldValue.increment(1),
-        parkinglot:
-          type === 'parkinglot' && admin.firestore.FieldValue.increment(1),
-        garage: type === 'garage' && admin.firestore.FieldValue.increment(1),
-        structure:
-          type === 'structure' && admin.firestore.FieldValue.increment(1),
-      },
-      total_parking_spaces: admin.firestore.FieldValue.increment(
-        parseInt(available_spaces, 10),
-      ),
-      total_carports: admin.firestore.FieldValue.increment(1),
-    };
-
-    db.doc(`carport_metrics/${context.params.carportId}`).set({
-      amount_earned_gross: 0,
-      amount_earned_net: 0,
-      amount_refunded: 0,
-      date_created: new Date(),
-      hours_parked: 0,
-      total_parking: 0,
-      owner_id: owner_id,
-    });
-
-    db.doc('metrics/carports').update(updateData);
-
-    return true;
-  });
