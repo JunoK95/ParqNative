@@ -8,6 +8,7 @@ import {
   Linking,
   TouchableOpacity,
 } from 'react-native';
+import {config} from '../../../config';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Axios from 'axios';
 
@@ -21,8 +22,7 @@ const ContactInfoCard = props => {
       const {owner_id} = port;
       Axios({
         method: 'POST',
-        url:
-          'https://us-central1-parq-dev.cloudfunctions.net/getUserContactInfo',
+        url: `${config.firebase_functions_url_base}getUserContactInfo`,
         data: {
           user_id: owner_id,
         },

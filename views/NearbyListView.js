@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   mapStyle: {
     top: 0,
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height - 44,
+    height: Dimensions.get('window').height - 64,
     zIndex: -1,
   },
   listHeader: {

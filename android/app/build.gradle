@@ -176,6 +176,11 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
+        releasestaging {
+            initWith release    
+            applicationIdSuffix ".releasestaging" 
+            matchingFallbacks =  ['release']
+        }
     }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
@@ -203,6 +208,7 @@ dependencies {
         def hermesPath = "../../node_modules/hermes-engine/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")
         releaseImplementation files(hermesPath + "hermes-release.aar")
+        releasestagingImplementation files(hermesPath +"hermes-release.aar")
     } else {
         implementation jscFlavor
     }

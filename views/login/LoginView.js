@@ -87,6 +87,7 @@ const LoginView = props => {
         <ActivityIndicator />
       ) : (
         <React.Fragment>
+          {process.env.NODE_ENV === 'development' && <Text>DEV MODE</Text>}
           <View style={styles.textFieldContainer}>
             <Icon iconStyle={styles.icon} name={'email'} size={30} />
             <TextInput

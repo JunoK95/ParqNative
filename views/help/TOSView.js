@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, ScrollView} from 'react-native';
+import {StyleSheet, View, Text, ScrollView} from 'react-native';
 import HeaderPadding from '../../components/layout/HeaderPadding';
 import ParagraphBlock from '../../components/layout/ParagraphBlock';
+import {config} from '../../config';
 
 const TOSView = () => {
   return (
@@ -353,6 +354,7 @@ const TOSView = () => {
           title={'REVISION DATE: October 8, 2019'}
           titleIcon={'angle-right'}
         />
+        <Text>{config.stripe_publishable_key}</Text>
       </ScrollView>
     </View>
   );

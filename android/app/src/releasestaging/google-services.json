@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "480005596961",
+    "firebase_url": "https://parq-alpha.firebaseio.com",
+    "project_id": "parq-alpha",
+    "storage_bucket": "parq-alpha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480005596961:android:44aae8342d4dbe5dba0060",
+        "android_client_info": {
+          "package_name": "com.parq.parqalpha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480005596961-j5phc9dmgdbm9sqj2l7usohksiemketh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.parq.parqalpha",
+            "certificate_hash": "4d1dc09f31bfedef4436b57a422ddb5732fe9673"
+          }
+        },
+        {
+          "client_id": "480005596961-gbloqo7semp724i2h8et0c21orb5sdra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaAm7LqIpugD8s_87lEdq9-UG064UGWVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480005596961-gbloqo7semp724i2h8et0c21orb5sdra.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
