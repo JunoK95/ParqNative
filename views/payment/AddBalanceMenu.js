@@ -79,7 +79,7 @@ const AddBalanceMenu = props => {
     await Axios({
       method: 'post',
       url:
-        'https://us-central1-parq-alpha.cloudfunctions.net/stripeElementCharge',
+        'https://us-central1-parq-dev.cloudfunctions.net/stripeElementCharge',
       data: resData,
     })
       .then(res => {

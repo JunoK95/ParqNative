@@ -21,7 +21,6 @@ import CarportInfoView from './views/carport/CarportInfoView';
 import PayParkingView from './views/PayParkingView';
 import CarportRegisterView from './views/carport/CarportRegisterView';
 import SavedLocationAddView from './views/SavedLocationAddView';
-import AddBankView from './views/payment/AddBankView';
 import StripeAccountVerification from './views/stripe_verification/StripeAccountVerification';
 import CarportInfoNoBookView from './views/carport/CarportInfoNoBookView';
 import HelpView from './views/HelpView';
@@ -48,7 +47,6 @@ const PaymentNavigator = createStackNavigator(
   {
     StripeAccountVerification: StripeAccountVerification,
     PaymentSetting: PaymentSettingView,
-    AddBank: AddBankView,
   },
   {
     headerMode: 'none',

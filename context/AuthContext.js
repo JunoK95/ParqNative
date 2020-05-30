@@ -444,21 +444,6 @@ function AuthContextProvider(props) {
     return stripeCards;
   };
 
-  const getStripeBanks = async stripe_customer_id => {
-    let stripeBanks = [];
-    stripeBanks = await axios({
-      method: 'post',
-      url: 'https://us-central1-parq-dev.cloudfunctions.net/stripeListBanks',
-      data: {
-        customer_id: stripe_customer_id,
-      },
-    }).then(res => {
-      console.log(res.data.data);
-      return res.data.data;
-    });
-    return stripeBanks;
-  };
-
   const getContextWallet = async () => {
     const wallet = await getWallet(state.user_id);
     return wallet;
@@ -595,7 +580,6 @@ function AuthContextProvider(props) {
           assignStripeId: assignStripeId,
           assignStripeAccount: assignStripeAccount,
           getStripePaymentMethods: getStripePaymentMethods,
-          getStripeBanks: getStripeBanks,
           getContextWallet: getContextWallet,
           getAllPaymentMethods: getAllPaymentMethods,
           setNearbyHomePorts: setNearbyHomePorts,
