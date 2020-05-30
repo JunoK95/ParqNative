@@ -42,6 +42,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480005596961:android:df1f7bf6ffe213a8ba0060",
+        "android_client_info": {
+          "package_name": "com.parqnative.releasestaging"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480005596961-em2shn8jktkdg6o58jdnldauc8ajlm0t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.parqnative.releasestaging",
+            "certificate_hash": "4d1dc09f31bfedef4436b57a422ddb5732fe9673"
+          }
+        },
+        {
+          "client_id": "480005596961-gbloqo7semp724i2h8et0c21orb5sdra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaAm7LqIpugD8s_87lEdq9-UG064UGWVE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480005596961-gbloqo7semp724i2h8et0c21orb5sdra.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

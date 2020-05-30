@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
   },
   hoverbutton: {
     position: 'absolute',
-    top: 36,
+    top: 46,
     alignItems: 'center',
     width: Dimensions.get('window').width,
   },

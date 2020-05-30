@@ -5,9 +5,10 @@ import testID from '../../components/tipsi/utils/testID';
 import Axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import TouchableNativeReplacement from '../../components/layout/TouchableNativeReplacement';
+import {config} from '../../config';
 
 stripe.setOptions({
-  publishableKey: 'pk_test_2a0X0i2dhIxdgSaLw9HxWrOP00mE8JnGY9',
+  publishableKey: config.stripe_publishable_key,
 });
 
 export default class CardFormScreen extends PureComponent {
