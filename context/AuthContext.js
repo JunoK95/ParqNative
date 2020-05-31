@@ -17,7 +17,6 @@ import {
 } from '../firebase_func/firestoreFunctions';
 import {getWallet} from '../firebase_func/walletFunctions';
 import {GoogleSignin} from '@react-native-community/google-signin';
-import axios from 'axios';
 import Axios from 'axios';
 
 export const AuthContext = createContext();
@@ -365,7 +364,7 @@ function AuthContextProvider(props) {
   const assignStripeId = async () => {
     const {email, display_name, stripe_customer_id} = state.user_data;
     if (!stripe_customer_id) {
-      await axios({
+      await Axios({
         method: 'post',
         url:
           'https://us-central1-parq-dev.cloudfunctions.net/stripeCreateNewCustomer',
@@ -395,7 +394,7 @@ function AuthContextProvider(props) {
     const {email, stripe_account_id} = state.user_data;
     let stripeAccount;
     if (!stripe_account_id) {
-      stripeAccount = await axios({
+      stripeAccount = await Axios({
         method: 'POST',
         url:
           'https://us-central1-parq-dev.cloudfunctions.net/stripeCreateAccount',
@@ -427,7 +426,7 @@ function AuthContextProvider(props) {
 
   const getStripePaymentMethods = async stripe_customer_id => {
     let stripeCards = [];
-    stripeCards = await axios({
+    stripeCards = await Axios({
       method: 'post',
       url: 'https://us-central1-parq-dev.cloudfunctions.net/stripeListCards',
       data: {

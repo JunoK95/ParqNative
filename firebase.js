@@ -40,6 +40,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   //   messagingSenderId: '480005596961',
   //   appId: '1:480005596961:web:b776dacf873bfa50ba0060',
   //   measurementId: 'G-5EYFZNH2EV',
+  // };
   firebaseConfig = {
     apiKey: 'AIzaSyCGAL8COJ7y7oWhg5sfI8MkWyL6EPcmg5U',
     authDomain: 'parq-dev.firebaseapp.com',
@@ -51,6 +52,16 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     measurementId: 'G-YM2EM0HP8S',
   };
 } else {
+  // firebaseConfig = {
+  //   apiKey: 'AIzaSyATcMKUsuSxIei9MXn6HKUp2GT5iiudrvk',
+  //   authDomain: 'parq-alpha.firebaseapp.com',
+  //   databaseURL: 'https://parq-alpha.firebaseio.com',
+  //   projectId: 'parq-alpha',
+  //   storageBucket: 'parq-alpha.appspot.com',
+  //   messagingSenderId: '480005596961',
+  //   appId: '1:480005596961:web:b776dacf873bfa50ba0060',
+  //   measurementId: 'G-5EYFZNH2EV',
+  // };
   firebaseConfig = {
     apiKey: 'AIzaSyCGAL8COJ7y7oWhg5sfI8MkWyL6EPcmg5U',
     authDomain: 'parq-dev.firebaseapp.com',

@@ -6,35 +6,13 @@ const stripe = require('stripe')(functions.config().stripe.test.secret_key); //C
 const metrics = require('./metrics');
 const stripe_functions = require('./stripe_functions');
 const stripe_webhooks = require('./stripe_webhooks');
+const logging = require('./logging');
 
 admin.initializeApp(functions.config().firebase);
 
 const store = admin.firestore();
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
-
-exports.sendLog = functions.https.onRequest((request, response) => {
-  cors(request, response, () => {
-    const {type, message, description} = request.body;
-    switch (type) {
-      case 'error':
-        console.error(description, message);
-        break;
-      case 'warning':
-        console.warn(description, message);
-        break;
-      default:
-        console.log(description, message);
-        break;
-    }
-    response.status(200).send('Logged');
-  });
-});
+exports.sendLog = logging.sendLog;
 
 exports.stripeAccountEvents = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
