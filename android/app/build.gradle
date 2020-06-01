@@ -132,7 +132,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.parqnative"
+        applicationId "com.parqalpha"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 6
@@ -162,12 +162,6 @@ android {
             keyAlias "my-key-alias"
             keyPassword "h!ghpointcoff33"
         }
-        releasestaging {
-            storeFile file("my-upload-key.keystore")
-            storePassword "h!ghpointcoff33"
-            keyAlias "my-key-alias"
-            keyPassword "h!ghpointcoff33"
-        }
     }
     buildTypes {
         debug {
@@ -180,11 +174,6 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-        }
-        releasestaging {
-            initWith release
-            applicationIdSuffix ".releasestaging" 
-            matchingFallbacks =  ['release']
         }
     }
     // applicationVariants are e.g. debug, release
@@ -213,7 +202,6 @@ dependencies {
         def hermesPath = "../../node_modules/hermes-engine/android/";
         debugImplementation files(hermesPath + "hermes-debug.aar")
         releaseImplementation files(hermesPath + "hermes-release.aar")
-        releasestagingImplementation files(hermesPath +"hermes-release.aar")
     } else {
         implementation jscFlavor
     }

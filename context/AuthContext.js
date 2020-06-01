@@ -227,14 +227,6 @@ function AuthContextProvider(props) {
       .signInWithCredential(credential)
       .then(res => {
         console.log('Google Signed In => ', res);
-        Axios({
-          method: 'POST',
-          data: {
-            message: res,
-            description: 'Google Sign In Success',
-          },
-          url: 'https://us-central1-parq-dev.cloudfunctions.net/sendLog',
-        });
         getUserData(auth.currentUser.uid).then(async data => {
           if (data.error) {
             const userData = await initializeDefaultUser(

@@ -1,4 +1,4 @@
-package com.parqnative;
+package com.parqalpha;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

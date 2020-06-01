@@ -1,4 +1,4 @@
-package com.parqnative;
+package com.parqalpha;
 
 import android.app.Application;
 import android.content.Context;

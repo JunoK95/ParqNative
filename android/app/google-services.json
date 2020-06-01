@@ -1,58 +1,43 @@
 {
   "project_info": {
-    "project_number": "449904544159",
-    "firebase_url": "https://parq-dev.firebaseio.com",
-    "project_id": "parq-dev",
-    "storage_bucket": "parq-dev.appspot.com"
+    "project_number": "480005596961",
+    "firebase_url": "https://parq-alpha.firebaseio.com",
+    "project_id": "parq-alpha",
+    "storage_bucket": "parq-alpha.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:449904544159:android:29e6aaf23ae426425e95aa",
+        "mobilesdk_app_id": "1:480005596961:android:0f7f1d0c5232e511ba0060",
         "android_client_info": {
-          "package_name": "com.awesomeproject"
+          "package_name": "com.parqalpha"
         }
       },
       "oauth_client": [
         {
-          "client_id": "449904544159-eqljf8803l97h3s37jpiv6nd97gp8k7m.apps.googleusercontent.com",
+          "client_id": "480005596961-h1nn13mdr3h3c30is4iocgm6l3g70vc7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.awesomeproject",
-            "certificate_hash": "1a867f07a407405a7dd21a8fed9f8a113a089fa2"
-          }
-        },
-        {
-          "client_id": "449904544159-figjpvbbu683mtm6hmlbrbebaie7mq1q.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.awesomeproject",
+            "package_name": "com.parqalpha",
             "certificate_hash": "4d1dc09f31bfedef4436b57a422ddb5732fe9673"
           }
         },
         {
-          "client_id": "449904544159-vbb92q2kjngq7q8vvog4rg1dkof1ndlk.apps.googleusercontent.com",
+          "client_id": "480005596961-gbloqo7semp724i2h8et0c21orb5sdra.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDDERFYV7I_4YKzKflpMJM9BbdsxB9qSo4"
+          "current_key": "AIzaSyBaAm7LqIpugD8s_87lEdq9-UG064UGWVE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "449904544159-9j71bekfa63ddjhsol66v63ds121bjkq.apps.googleusercontent.com",
+              "client_id": "480005596961-gbloqo7semp724i2h8et0c21orb5sdra.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "449904544159-cb2a7iglsafbl0hl54uacflbqmdsr34r.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.parqtech.parq"
-              }
             }
           ]
         }
@@ -60,43 +45,60 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:449904544159:android:00b3381c80fd6b3b5e95aa",
+        "mobilesdk_app_id": "1:480005596961:android:050d4c19d06adfaaba0060",
         "android_client_info": {
-          "package_name": "com.parqnative"
+          "package_name": "com.parqnative.releasestaging"
         }
       },
       "oauth_client": [
         {
-          "client_id": "449904544159-snu39976bas0vfjjbk07v0t2khdfbi9q.apps.googleusercontent.com",
+          "client_id": "480005596961-kuh1qfej3lhrtr2g6stvof9ho6bqe4uq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.parqnative",
+            "package_name": "com.parqnative.releasestaging",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "480005596961-lrc2k0qfqtfaj6nc1c2gqvuuk62de9a6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.parqnative.releasestaging",
+            "certificate_hash": "1a867f07a407405a7dd21a8fed9f8a113a089fa2"
+          }
+        },
+        {
+          "client_id": "480005596961-m8nhqm0icb88t388iipfp7hmmovoan71.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.parqnative.releasestaging",
+            "certificate_hash": "6808cb603c4cdb16573ca248c6f1338c189b55c9"
+          }
+        },
+        {
+          "client_id": "480005596961-em2shn8jktkdg6o58jdnldauc8ajlm0t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.parqnative.releasestaging",
             "certificate_hash": "4d1dc09f31bfedef4436b57a422ddb5732fe9673"
           }
         },
         {
-          "client_id": "449904544159-vbb92q2kjngq7q8vvog4rg1dkof1ndlk.apps.googleusercontent.com",
+          "client_id": "480005596961-gbloqo7semp724i2h8et0c21orb5sdra.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDDERFYV7I_4YKzKflpMJM9BbdsxB9qSo4"
+          "current_key": "AIzaSyBaAm7LqIpugD8s_87lEdq9-UG064UGWVE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "449904544159-9j71bekfa63ddjhsol66v63ds121bjkq.apps.googleusercontent.com",
+              "client_id": "480005596961-gbloqo7semp724i2h8et0c21orb5sdra.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "449904544159-cb2a7iglsafbl0hl54uacflbqmdsr34r.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.parqtech.parq"
-              }
             }
           ]
         }
