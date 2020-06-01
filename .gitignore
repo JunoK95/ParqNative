@@ -58,5 +58,11 @@ buck-out/
 # CocoaPods
 /ios/Pods/
 
+# Separate google-services between branches
+# Check firebase projects for new google-services.json
+/android/google-services.json
+
 #environment
 .env
+
+
