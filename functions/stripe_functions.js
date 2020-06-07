@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const cors = require('cors')({origin: true});
-const stripe = require('stripe')(functions.config().stripe.test.secret_key);
+const stripe = require('stripe')(functions.config().stripe.live.secret_key);
 
 const verifyRequest = req => {
   const tokenId = req.get('Authorization').split('Bearer ')[1];
@@ -225,7 +225,7 @@ exports.stripeElementCharge = functions.https.onRequest((request, response) => {
         amount: amount,
         currency: 'usd',
         description: description,
-        source: 'tok_visa', //replace with token when going live
+        source: token, //replace with token when going live
       },
       (err, charge) => {
         if (err) {

@@ -32,22 +32,23 @@ const dev = {
   },
   firebase_functions_url_base:
     'https://us-central1-parq-dev.cloudfunctions.net/',
-  stripe_publishable_key: STRIPE_PUBLISHABLE_KEY_TEST,
+  // stripe_publishable_key: STRIPE_PUBLISHABLE_KEY_TEST,
+  stripe_publishable_key: STRIPE_PUBLISHABLE_KEY_PROD,
 };
 
 const prod = {
   firebase_config: {
-    apiKey: FIREBASE_API_KEY_ALPHA,
-    authDomain: FIREBASE_AUTH_DOMAIN_ALPHA,
-    databaseURL: FIREBASE_DATABASE_URL_ALPHA,
-    projectId: FIREBASE_PROJECT_ID_ALPHA,
-    storageBucket: FIREBASE_STORAGE_BUCKET_ALPHA,
-    messagingSenderId: FIREBASE_MESSAGING_SENDER_ID_ALPHA,
-    appId: FIREBASE_APP_ID_ALPHA,
-    measurementId: FIREBASE_MEASUREMENT_ID_ALPHA,
+    apiKey: FIREBASE_API_KEY,
+    authDomain: FIREBASE_AUTH_DOMAIN,
+    databaseURL: FIREBASE_DATABASE_URL,
+    projectId: FIREBASE_PROJECT_ID,
+    storageBucket: FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+    appId: FIREBASE_APP_ID,
+    measurementId: FIREBASE_MEASUREMENT_ID,
   },
   firebase_functions_url_base:
-    'https://us-central1-parq-alpha.cloudfunctions.net/',
+    'https://us-central1-parq-dev.cloudfunctions.net/',
   stripe_publishable_key: STRIPE_PUBLISHABLE_KEY_PROD,
 };
 

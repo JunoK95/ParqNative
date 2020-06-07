@@ -22,7 +22,8 @@ const ContactInfoCard = props => {
       const {owner_id} = port;
       Axios({
         method: 'POST',
-        url: `${config.firebase_functions_url_base}getUserContactInfo`,
+        url:
+          'https://us-central1-parq-dev.cloudfunctions.net/getUserContactInfo',
         data: {
           user_id: owner_id,
         },
