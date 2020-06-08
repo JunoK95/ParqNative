@@ -140,6 +140,7 @@ const CarportPayCard = props => {
     const {object} = selectcard;
 
     const resData = {
+      customer_id: context.user_data.stripe_customer_id,
       token: selectcard.id,
       amount: amount + amountTax,
       port: port,

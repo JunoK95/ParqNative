@@ -47,7 +47,14 @@ exports.stripeListCards = stripe_functions.stripeListCards;
 exports.stripePayParkingCharge = functions.https.onRequest(
   (request, response) => {
     cors(request, response, async () => {
-      const {amount, description, token, port, metadata} = request.body;
+      const {
+        amount,
+        description,
+        token,
+        customer_id,
+        port,
+        metadata,
+      } = request.body;
       let destination_stripe_account;
       let destination_amount = parseInt(parseInt(amount, 10) * 0.8, 10);
       try {
@@ -84,6 +91,7 @@ exports.stripePayParkingCharge = functions.https.onRequest(
           currency: 'usd',
           description: description,
           metadata: metadata,
+          customer: customer_id,
           source: token, //replace with token when going live
           transfer_data: {
             destination: destination_stripe_account,
