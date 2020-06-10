@@ -54,7 +54,8 @@ const PaymentSettingView = () => {
     if (account_id) {
       accountData = await Axios({
         method: 'POST',
-        url: 'https://us-central1-parq-dev.cloudfunctions.net/stripeGetAccount',
+        url:
+          'https://us-central1-parq-alpha.cloudfunctions.net/stripeGetAccount',
         data: {
           account_id: account_id,
         },

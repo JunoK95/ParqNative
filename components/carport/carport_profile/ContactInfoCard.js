@@ -23,7 +23,7 @@ const ContactInfoCard = props => {
       Axios({
         method: 'POST',
         url:
-          'https://us-central1-parq-dev.cloudfunctions.net/getUserContactInfo',
+          'https://us-central1-parq-alpha.cloudfunctions.net/getUserContactInfo',
         data: {
           user_id: owner_id,
         },

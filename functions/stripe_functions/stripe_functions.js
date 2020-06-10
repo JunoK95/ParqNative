@@ -3,20 +3,6 @@ const admin = require('firebase-admin');
 const cors = require('cors')({origin: true});
 const stripe = require('stripe')(functions.config().stripe.test.secret_key);
 
-const verifyRequest = req => {
-  const tokenId = req.get('Authorization').split('Bearer ')[1];
-  return admin
-    .auth()
-    .verifyIdToken(tokenId)
-    .then(() => {
-      return true;
-    })
-    .catch(err => {
-      console.error(err);
-      return false;
-    });
-};
-
 exports.stripeGetAccount = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const {account_id} = request.body;

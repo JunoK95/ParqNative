@@ -169,6 +169,11 @@ function AuthContextProvider(props) {
     return auth.currentUser;
   };
 
+  const getCurrentUserIdToken = async () => {
+    const IdToken = await firebase.auth().currentUser.getIdToken();
+    return IdToken;
+  };
+
   const isVerified = () => {
     // console.log(auth)
     if (auth.currentUser) {
@@ -270,7 +275,7 @@ function AuthContextProvider(props) {
             message: err,
             description: 'Error using Google SignIn',
           },
-          url: 'https://us-central1-parq-dev.cloudfunctions.net/sendLog',
+          url: 'https://us-central1-parq-alpha.cloudfunctions.net/sendLog',
         });
       });
     console.log('firebaseUserCredential', firebaseUserCredential);
@@ -359,7 +364,7 @@ function AuthContextProvider(props) {
       await Axios({
         method: 'post',
         url:
-          'https://us-central1-parq-dev.cloudfunctions.net/stripeCreateNewCustomer',
+          'https://us-central1-parq-alpha.cloudfunctions.net/stripeCreateNewCustomer',
         data: {
           email,
           name: display_name,
@@ -389,7 +394,7 @@ function AuthContextProvider(props) {
       stripeAccount = await Axios({
         method: 'POST',
         url:
-          'https://us-central1-parq-dev.cloudfunctions.net/stripeCreateAccount',
+          'https://us-central1-parq-alpha.cloudfunctions.net/stripeCreateAccount',
         data: {
           email,
           user_id: state.user_id,
@@ -420,7 +425,7 @@ function AuthContextProvider(props) {
     let stripeCards = [];
     stripeCards = await Axios({
       method: 'post',
-      url: 'https://us-central1-parq-dev.cloudfunctions.net/stripeListCards',
+      url: 'https://us-central1-parq-alpha.cloudfunctions.net/stripeListCards',
       data: {
         customer_id: stripe_customer_id,
       },
@@ -553,6 +558,7 @@ function AuthContextProvider(props) {
         fetching,
         functions: {
           getCurrentUser: getCurrentUser,
+          getCurrentUserIdToken: getCurrentUserIdToken,
           registerUser: registerUser,
           signOutUser: signOutUser,
           signInUser: signInUser,

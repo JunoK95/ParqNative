@@ -32,7 +32,7 @@ const CarportRegisterView = props => {
         accountData = await Axios({
           method: 'POST',
           url:
-            'https://us-central1-parq-dev.cloudfunctions.net/stripeGetAccount',
+            'https://us-central1-parq-alpha.cloudfunctions.net/stripeGetAccount',
           data: {
             account_id: account_id,
           },

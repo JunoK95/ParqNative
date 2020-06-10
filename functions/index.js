@@ -3,9 +3,10 @@ const admin = require('firebase-admin');
 const cors = require('cors')({origin: true});
 const stripe = require('stripe')(functions.config().stripe.test.secret_key); //Change API Key On Launch
 
+const header_verification = require('./header_verification');
 const metrics = require('./metrics');
-const stripe_functions = require('./stripe_functions');
-const stripe_webhooks = require('./stripe_webhooks');
+const stripe_functions = require('./stripe_functions/stripe_functions');
+const stripe_webhooks = require('./stripe_functions/stripe_webhooks');
 const logging = require('./logging');
 
 admin.initializeApp(functions.config().firebase);
@@ -47,6 +48,12 @@ exports.stripeListCards = stripe_functions.stripeListCards;
 exports.stripePayParkingCharge = functions.https.onRequest(
   (request, response) => {
     cors(request, response, async () => {
+      const verified = await header_verification.isAuthenticated(request);
+      if (!verified) {
+        response.status(403).send('Unauthorized! Missing auth token');
+        return;
+      }
+
       const {amount, description, token, port, metadata} = request.body;
       let destination_stripe_account;
       let destination_amount = parseInt(parseInt(amount, 10) * 0.8, 10);

@@ -83,7 +83,7 @@ const StripeActivateForm1 = props => {
       Axios({
         method: 'POST',
         url:
-          'https://us-central1-parq-dev.cloudfunctions.net/stripeUpdateAccountWithTOS',
+          'https://us-central1-parq-alpha.cloudfunctions.net/stripeUpdateAccountWithTOS',
         data: {
           account_id: account.id,
           updates: stripeUpdateData,

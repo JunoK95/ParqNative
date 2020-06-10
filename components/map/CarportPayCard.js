@@ -146,6 +146,7 @@ const CarportPayCard = props => {
       description: `Test with vehicle ${vehicle.data.license_plate} and user ${
         context.user_id
       }`,
+      uid: context.user_id,
       metadata: {
         vehicle_license_plate: vehicle.data.license_plate,
         vehicle_owner_id: vehicle.data.owner_id,
@@ -186,10 +187,16 @@ const CarportPayCard = props => {
         });
       }
     } else if (object === 'card') {
+      const IdToken = await context.functions.getCurrentUserIdToken();
+      console.log('AUTH ID TOKEN => ', IdToken);
+      const authHeaders = {
+        Authorization: `Bearer ${IdToken}`,
+      };
       Axios({
+        headers: authHeaders,
         method: 'POST',
         url:
-          'https://us-central1-parq-dev.cloudfunctions.net/stripePayParkingCharge',
+          'https://us-central1-parq-alpha.cloudfunctions.net/stripePayParkingCharge',
         data: resData,
       })
         .then(res => {

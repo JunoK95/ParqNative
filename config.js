@@ -31,7 +31,7 @@ const dev = {
     measurementId: FIREBASE_MEASUREMENT_ID,
   },
   firebase_functions_url_base:
-    'https://us-central1-parq-dev.cloudfunctions.net/',
+    'https://us-central1-parq-alpha.cloudfunctions.net/',
   stripe_publishable_key: STRIPE_PUBLISHABLE_KEY_TEST,
 };
 

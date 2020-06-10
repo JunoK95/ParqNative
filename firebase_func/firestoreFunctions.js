@@ -21,7 +21,7 @@ export async function initializeDefaultUser(id, initialData, newName) {
   const stripe_id =
     await axios({
       method: 'post',
-      url: 'https://us-central1-parq-dev.cloudfunctions.net/stripeCreateNewCustomer',
+      url: 'https://us-central1-parq-alpha.cloudfunctions.net/stripeCreateNewCustomer',
       data: {
         email: initialData.email,
         user_id: id,

@@ -43,7 +43,7 @@ export default class CardFormScreen extends PureComponent {
         const newcard = await Axios({
           method: 'POST',
           url:
-            'https://us-central1-parq-dev.cloudfunctions.net/stripeCreateCard',
+            'https://us-central1-parq-alpha.cloudfunctions.net/stripeCreateCard',
           data: {
             customer_id: stripe_id,
             cardToken: token.tokenId,
