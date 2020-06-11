@@ -222,7 +222,7 @@ function AuthContextProvider(props) {
   };
 
   const googleSignIn = async (id_token, access_token) => {
-    const credential = await firebase.auth.GoogleAuthProvider.credential(
+    const credential = firebase.auth.GoogleAuthProvider.credential(
       id_token,
       access_token,
     );

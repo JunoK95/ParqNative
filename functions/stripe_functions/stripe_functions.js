@@ -2,6 +2,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const cors = require('cors')({origin: true});
 const stripe = require('stripe')(functions.config().stripe.test.secret_key);
+const header_verification = require('../header_verification');
 
 exports.stripeGetAccount = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
@@ -22,7 +23,12 @@ exports.stripeGetAccount = functions.https.onRequest((request, response) => {
 });
 
 exports.stripeUpdateAccount = functions.https.onRequest((request, response) => {
-  cors(request, response, () => {
+  cors(request, response, async () => {
+    const verified = await header_verification.isAuthenticated(request);
+    if (!verified) {
+      response.status(403).send('Unauthorized! Missing auth token');
+      return;
+    }
     const {account_id, updates} = request.body;
     if (account_id) {
       stripe.accounts.update(
@@ -47,7 +53,12 @@ exports.stripeUpdateAccount = functions.https.onRequest((request, response) => {
 
 exports.stripeUpdateAccountWithTOS = functions.https.onRequest(
   (request, response) => {
-    cors(request, response, () => {
+    cors(request, response, async () => {
+      const verified = await header_verification.isAuthenticated(request);
+      if (!verified) {
+        response.status(403).send('Unauthorized! Missing auth token');
+        return;
+      }
       const {account_id, updates} = request.body;
       if (account_id) {
         stripe.accounts.update(

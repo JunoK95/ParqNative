@@ -5,7 +5,6 @@ import moment from 'moment';
 import { GeoFirestore } from 'geofirestore';
 import { encode } from 'ngeohash';
 import { geofirexCreatePoint } from './geofirexFunctions';
-import Config from 'react-native-config';
 
 const db = firebase.firestore();
 

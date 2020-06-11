@@ -48,7 +48,7 @@ const StripeActivateForm1 = props => {
     setphone(normalizeInput(number));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setloading(true);
     let birthdate;
     if (dob.valueOf()) {
@@ -80,12 +80,20 @@ const StripeActivateForm1 = props => {
         phone: phone,
       };
 
+      const IdToken = await context.functions.getCurrentUserIdToken();
+      console.log('AUTH ID TOKEN => ', IdToken);
+      const authHeaders = {
+        Authorization: `Bearer ${IdToken}`,
+      };
+
       Axios({
+        headers: authHeaders,
         method: 'POST',
         url:
           'https://us-central1-parq-alpha.cloudfunctions.net/stripeUpdateAccountWithTOS',
         data: {
           account_id: account.id,
+          uid: context.user_id,
           updates: stripeUpdateData,
         },
       }).then(() => {
