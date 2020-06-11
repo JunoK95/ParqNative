@@ -1,13 +1,13 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, ActivityIndicator} from 'react-native';
 import HeaderPadding from '../../components/layout/HeaderPadding';
-import Axios from 'axios';
 import {AuthContext} from '../../context/AuthContext';
 import StripeActivateForm1 from './StripeActivateForm1';
 import StripeVerificationMenu from './StripeVerificationMenu';
 import StripeAddBankForm from './StripeAddBankForm';
 import {getWallet} from '../../firebase_func/walletFunctions';
 import {withNavigation} from 'react-navigation';
+import {stripeGetAccountInfo} from '../../api/stripe_index';
 
 const StripeAccountVerification = props => {
   const context = useContext(AuthContext);
@@ -29,17 +29,13 @@ const StripeAccountVerification = props => {
 
       let accountData;
       if (account_id) {
-        accountData = await Axios({
-          method: 'POST',
-          url:
-            'https://us-central1-parq-alpha.cloudfunctions.net/stripeGetAccount',
-          data: {
-            account_id: account_id,
-          },
-        }).then(res => {
-          console.log(res.data);
-          return res.data;
-        });
+        const response = await stripeGetAccountInfo(account_id);
+        if (response.error) {
+          console.error('ERROR RETRIEVING CONNECT ACCOUNT INFO');
+          seterror(response.error);
+        } else {
+          accountData = response.data;
+        }
       } else {
         accountData = await context.functions.assignStripeAccount();
       }

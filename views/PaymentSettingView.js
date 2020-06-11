@@ -6,7 +6,6 @@ import {
   ActivityIndicator,
   StyleSheet,
   Dimensions,
-  Text,
 } from 'react-native';
 import HeaderPadding from '../components/layout/HeaderPadding';
 import {AuthContext} from '../context/AuthContext';
@@ -34,7 +33,7 @@ const PaymentSettingView = () => {
     const {stripe_customer_id} = user_data;
     setfetch(true);
     if (!stripe_customer_id) {
-      context.functions.assignStripeId();
+      context.functions.assignStripeCustomerId();
     } else {
       await context.functions
         .getStripePaymentMethods(stripe_customer_id)
@@ -63,8 +62,6 @@ const PaymentSettingView = () => {
         console.log(res.data);
         return res.data;
       });
-    } else {
-      accountData = await context.functions.assignStripeAccount();
     }
     console.log('Account Data => ', accountData);
     setaccount(accountData);

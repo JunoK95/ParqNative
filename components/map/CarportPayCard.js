@@ -18,12 +18,11 @@ import {checkCarportAvailablity} from '../../firebase_func/firestoreFunctions';
 import {AuthContext} from '../../context/AuthContext';
 import {chargeWallet} from '../../firebase_func/walletFunctions';
 import moment from 'moment';
-import Axios from 'axios';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FeaturesList from '../carport/FeaturesList';
 import NewVehiclePicker from '../vehicle/NewVehiclePicker';
 import NewPaymentPicker from '../../views/payment/NewPaymentPicker';
 import CustomPicker from '../picker/CustomPicker';
+import {stripePayParkingCharge} from '../../api/stripe_index';
 
 const CarportPayCard = props => {
   const context = useContext(AuthContext);
@@ -187,27 +186,17 @@ const CarportPayCard = props => {
         });
       }
     } else if (object === 'card') {
-      const IdToken = await context.functions.getCurrentUserIdToken();
-      console.log('AUTH ID TOKEN => ', IdToken);
-      const authHeaders = {
-        Authorization: `Bearer ${IdToken}`,
-      };
-      Axios({
-        headers: authHeaders,
-        method: 'POST',
-        url:
-          'https://us-central1-parq-alpha.cloudfunctions.net/stripePayParkingCharge',
-        data: resData,
-      })
-        .then(res => {
-          finalizePay(port, vehicle, resData.amount, hours);
-          console.log(res);
-        })
-        .catch(err => {
-          setloading(false);
-          seterror('Payment Failed');
-          console.error(err);
-        });
+      const result = await stripePayParkingCharge(resData, context);
+      if (result.error) {
+        setloading(false);
+        seterror('Payment Failed');
+        console.error(result.error);
+        return;
+      } else {
+        finalizePay(port, vehicle, resData.amount, hours);
+        console.log(result);
+        return;
+      }
     } else {
       console.warn('Card Not Chosen');
       return;

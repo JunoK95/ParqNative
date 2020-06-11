@@ -18,6 +18,7 @@ import {
 import {getWallet} from '../firebase_func/walletFunctions';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import Axios from 'axios';
+import { stripeAssignCustomerId, stripeAssignConnectAccountId } from '../api/stripe_index';
 
 export const AuthContext = createContext();
 
@@ -78,7 +79,7 @@ function AuthContextProvider(props) {
               nearby_ports: [],
             });
             setfetching(false);
-            assignStripeId();
+            assignStripeCustomerId();
           }
           return true;
         }
@@ -358,31 +359,29 @@ function AuthContextProvider(props) {
     });
   };
 
-  const assignStripeId = async () => {
+  const assignStripeCustomerId = async () => {
     const {email, display_name, stripe_customer_id} = state.user_data;
     if (!stripe_customer_id) {
-      await Axios({
-        method: 'post',
-        url:
-          'https://us-central1-parq-alpha.cloudfunctions.net/stripeCreateNewCustomer',
-        data: {
-          email,
-          name: display_name,
-          user_id: state.user_id,
-        },
-      }).then(res => {
-        console.log('stripe customer', res);
-        if (res.status === 200) {
-          updateStripeId(state.user_id, res.data.id);
-          setstate({
-            ...state,
-            user_data: {
-              ...state.user_data,
-              stripe_customer_id: res.data.id,
-            },
-          });
-        }
-      });
+      const data = {
+        email,
+        name: display_name,
+        user_id: state.user_id,
+      };
+      const response = await stripeAssignCustomerId(data);
+      if (response.error) {
+        //handle Error
+        console.error('ERROR CREATING CUSTOMER ID');
+      } else {
+        console.log('STRIPE CUSTOMER ID CREATED => ', response);
+        updateStripeId(state.user_id, response.data.id);
+        setstate({
+          ...state,
+          user_data: {
+            ...state.user_data,
+            stripe_customer_id: response.data.id,
+          },
+        });
+      }
     }
     return;
   };
@@ -391,32 +390,31 @@ function AuthContextProvider(props) {
     const {email, stripe_account_id} = state.user_data;
     let stripeAccount;
     if (!stripe_account_id) {
-      stripeAccount = await Axios({
-        method: 'POST',
-        url:
-          'https://us-central1-parq-alpha.cloudfunctions.net/stripeCreateAccount',
-        data: {
-          email,
+      const data = {
+        email,
+        user_id: state.user_id,
+        metadata: {
           user_id: state.user_id,
-          metadata: {
-            user_id: state.user_id,
-            description: 'Assigning Stripe Account',
-          },
+          description: 'Assigning Stripe Account',
         },
-      }).then(res => {
-        console.log('stripe account', res);
-        if (res.status === 200) {
-          setStripeAccountId(state.user_id, res.data.id);
-          setstate({
-            ...state,
-            user_data: {
-              ...state.user_data,
-              stripe_account_id: res.data.id,
-            },
-          });
-          return res.data;
-        }
-      });
+      };
+      stripeAccount = await stripeAssignConnectAccountId(data);
+      if (stripeAccount.error) {
+        console.error(
+          'ERROR CREATING STRIPE CONNECT ACCOUNT ID => ',
+          stripeAccount.error,
+        );
+      } else {
+        setStripeAccountId(state.user_id, stripeAccount.data.id);
+        setstate({
+          ...state,
+          user_data: {
+            ...state.user_data,
+            stripe_account_id: stripeAccount.data.id,
+          },
+        });
+        return stripeAccount.data;
+      }
     }
     return stripeAccount;
   };
@@ -574,7 +572,7 @@ function AuthContextProvider(props) {
           sendVerificationEmail: sendVerificationEmail,
           reserveCarport: reserveCarport,
           reservationHistory: reservationHistory,
-          assignStripeId: assignStripeId,
+          assignStripeCustomerId: assignStripeCustomerId,
           assignStripeAccount: assignStripeAccount,
           getStripePaymentMethods: getStripePaymentMethods,
           getContextWallet: getContextWallet,

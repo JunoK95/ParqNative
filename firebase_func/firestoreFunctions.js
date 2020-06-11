@@ -5,6 +5,7 @@ import moment from 'moment';
 import { GeoFirestore } from 'geofirestore';
 import { encode } from 'ngeohash';
 import { geofirexCreatePoint } from './geofirexFunctions';
+import { stripeAssignCustomerId, stripeAssignConnectAccountId } from '../api/stripe_index';
 
 const db = firebase.firestore();
 
@@ -16,20 +17,33 @@ export async function initializeDefaultUser(id, initialData, newName) {
     newDisplayName = newName;
   }
 
-  //Create Stripe Customer Id
-  const stripe_id =
-    await axios({
-      method: 'post',
-      url: 'https://us-central1-parq-alpha.cloudfunctions.net/stripeCreateNewCustomer',
-      data: {
-        email: initialData.email,
+  //Assign Stripe Customer and Account Ids
+  let stripe_customer_id;
+  let stripe_connect_id;
+
+  const stripe_customer_id_response = await stripeAssignCustomerId({email: initialData.email, user_id: id});
+  if (stripe_customer_id_response.error) {
+    console.error('ERROR INITIALIZING CUSTOMER ID');
+  } else {
+    stripe_customer_id = stripe_customer_id_response.data.id;
+  }
+
+  const stripe_connect_id_response =
+    await stripeAssignConnectAccountId({
+      email: initialData.email,
+      user_id: id,
+      metadata: {
         user_id: id,
+        description: 'Assigning Stripe Account',
       },
-    }).then( res => {
-      if (res.status === 200){
-        return res.data.id;
-      }
     });
+
+  if (stripe_connect_id_response.error) {
+    console.error('ERROR INITIALIZING CONNECT ID');
+  } else {
+    stripe_connect_id = stripe_connect_id_response.data.id;
+  }
+
 
   //Setup Wallet
   const defaultWalletData = {
@@ -49,7 +63,8 @@ export async function initializeDefaultUser(id, initialData, newName) {
     display_name: newDisplayName,
     email: initialData.email,
     photo_url: '',
-    stripe_customer_id: stripe_id,
+    stripe_customer_id: stripe_customer_id,
+    stripe_account_id: stripe_connect_id,
     contact: {
       email: initialData.email,
       phone: '',

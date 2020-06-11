@@ -1,0 +1,86 @@
+import Axios from 'axios';
+import {config} from '../config';
+import firebase from '../firebase';
+
+const getCurrentUserIdToken = async () => {
+  const IdToken = await firebase.auth().currentUser.getIdToken();
+  return IdToken;
+};
+
+const createFirebaseAuthHeader = async () => {
+  const IdToken = await getCurrentUserIdToken();
+  const header = {
+    Authorization: `Bearer ${IdToken}`,
+  };
+  return header;
+};
+
+export const stripePayParkingCharge = async data => {
+  const authHeader = await createFirebaseAuthHeader();
+  let response;
+  try {
+    response = await Axios({
+      headers: authHeader,
+      method: 'POST',
+      url: `${config.firebase_functions_url_base}stripePayParkingCharge`,
+      data,
+    });
+  } catch (error) {
+    response = {error};
+  }
+
+  return response;
+};
+
+export const stripeAssignCustomerId = async data => {
+  const authHeader = await createFirebaseAuthHeader();
+  let response;
+  try {
+    response = await Axios({
+      headers: authHeader,
+      method: 'POST',
+      url: `${config.firebase_functions_url_base}stripeCreateNewCustomer`,
+      data,
+    });
+  } catch (error) {
+    response = {error};
+  }
+
+  return response;
+};
+
+export const stripeAssignConnectAccountId = async data => {
+  const authHeader = await createFirebaseAuthHeader();
+  let response;
+  try {
+    response = await Axios({
+      headers: authHeader,
+      method: 'POST',
+      url: `${config.firebase_functions_url_base}stripeCreateAccount`,
+      data,
+    });
+  } catch (error) {
+    response = {error};
+  }
+
+  return response;
+};
+
+export const stripeGetAccountInfo = async account_id => {
+  const authHeader = await createFirebaseAuthHeader();
+  let response;
+  try {
+    response = await Axios({
+      headers: authHeader,
+      method: 'POST',
+      url: `${config.firebase_functions_url_base}stripeGetAccount`,
+      data: {
+        account_id,
+      },
+    });
+  } catch (error) {
+    response = {error};
+  }
+
+  return response;
+};

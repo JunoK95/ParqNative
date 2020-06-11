@@ -50,8 +50,6 @@ const CarportListView = props => {
 
   const handleRegistrationClick = async () => {
     setload(true);
-    console.log('click');
-    await context.functions.assignStripeAccount();
     props.navigation.navigate('StripeAccountVerification');
     setload(false);
   };

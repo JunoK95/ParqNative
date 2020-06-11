@@ -41,7 +41,7 @@ const CarportRegisterView = props => {
           return res.data;
         });
       } else {
-        accountData = await context.functions.assignStripeAccount();
+        console.log('No Account Data');
       }
       console.log('Account Data => ', accountData);
       setaccount(accountData);

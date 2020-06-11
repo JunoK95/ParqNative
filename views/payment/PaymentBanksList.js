@@ -9,6 +9,23 @@ const PaymentBanksList = props => {
   console.log('We got Banks = ', account.external_accounts);
 
   let banksList = [];
+  if (!account) {
+    return (
+      <TouchableNativeReplacement color={'secondary'} onPress={() => {}}>
+        <View style={styles.item}>
+          <View style={styles.rowdisabled}>
+            <View style={styles.col}>
+              <Icon style={styles.itemicon} name={'times-circle'} size={20} />
+            </View>
+            <View style={styles.col}>
+              <Text style={styles.itemtext}>{'No Bank Added'}</Text>
+            </View>
+          </View>
+        </View>
+      </TouchableNativeReplacement>
+    );
+  }
+
   if (account.external_accounts) {
     banksList = account.external_accounts.data.map((item, i) => {
       const {bank_name, last4} = item;
