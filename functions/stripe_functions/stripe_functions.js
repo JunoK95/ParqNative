@@ -1,5 +1,4 @@
 const functions = require('firebase-functions');
-const admin = require('firebase-admin');
 const cors = require('cors')({origin: true});
 const stripe = require('stripe')(functions.config().stripe.test.secret_key);
 const header_verification = require('../header_verification');

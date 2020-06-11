@@ -15,6 +15,7 @@ import {getWallet} from '../firebase_func/walletFunctions';
 import {Icon} from 'react-native-elements';
 import PaymentBanksList from './payment/PaymentBanksList';
 import Axios from 'axios';
+import { stripeGetAccountInfo } from '../api/stripe_index';
 
 const PaymentSettingView = () => {
   const context = useContext(AuthContext);
@@ -51,17 +52,12 @@ const PaymentSettingView = () => {
 
     let accountData;
     if (account_id) {
-      accountData = await Axios({
-        method: 'POST',
-        url:
-          'https://us-central1-parq-alpha.cloudfunctions.net/stripeGetAccount',
-        data: {
-          account_id: account_id,
-        },
-      }).then(res => {
-        console.log(res.data);
-        return res.data;
-      });
+      const response = await stripeGetAccountInfo(account_id);
+      if (response.error) {
+        console.error('ERROR RETRIEVING CONNECT ACCOUNT INFO');
+      } else {
+        accountData = response.data;
+      }
     }
     console.log('Account Data => ', accountData);
     setaccount(accountData);

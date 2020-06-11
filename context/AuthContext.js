@@ -18,7 +18,12 @@ import {
 import {getWallet} from '../firebase_func/walletFunctions';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import Axios from 'axios';
-import { stripeAssignCustomerId, stripeAssignConnectAccountId } from '../api/stripe_index';
+import {
+  stripeAssignCustomerId,
+  stripeAssignConnectAccountId,
+  stripeListCustomerCards,
+} from '../api/stripe_index';
+import { sendLog } from '../api/firestore_index';
 
 export const AuthContext = createContext();
 
@@ -269,15 +274,7 @@ function AuthContextProvider(props) {
       })
       .catch(err => {
         console.log('Error using GoogleSignIn => ', err);
-        Axios({
-          method: 'POST',
-          data: {
-            type: 'error',
-            message: err,
-            description: 'Error using Google SignIn',
-          },
-          url: 'https://us-central1-parq-alpha.cloudfunctions.net/sendLog',
-        });
+        sendLog('error', err, 'Error using Google SignIn');
       });
     console.log('firebaseUserCredential', firebaseUserCredential);
     if (firebaseUserCredential) {
@@ -421,20 +418,15 @@ function AuthContextProvider(props) {
 
   const getStripePaymentMethods = async stripe_customer_id => {
     let stripeCards = [];
-    stripeCards = await Axios({
-      method: 'post',
-      url: 'https://us-central1-parq-alpha.cloudfunctions.net/stripeListCards',
-      data: {
-        customer_id: stripe_customer_id,
-      },
-    })
-      .then(res => {
-        console.log(res.data.data);
-        return res.data.data;
-      })
-      .catch(err => {
-        console.log('Error Getting Stripe Payment Methods => ', err);
-      });
+
+    const response = await stripeListCustomerCards(stripe_customer_id);
+    if (response.error) {
+      console.error('ERROR GETTING STRIPE PAYMENT METHODS => ', response.error);
+    } else {
+      console.log('STRIPE LIST CUSTOMER CARD', response);
+      stripeCards = response.data.data;
+    }
+
     return stripeCards;
   };
 

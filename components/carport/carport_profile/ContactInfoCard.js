@@ -11,6 +11,7 @@ import {
 import {config} from '../../../config';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Axios from 'axios';
+import { getUserContactInfo } from '../../../api/firestore_index';
 
 const ContactInfoCard = props => {
   const {port} = props;
@@ -18,24 +19,23 @@ const ContactInfoCard = props => {
   const [phone, setphone] = useState(null);
 
   useEffect(() => {
-    try {
-      const {owner_id} = port;
-      Axios({
-        method: 'POST',
-        url:
-          'https://us-central1-parq-alpha.cloudfunctions.net/getUserContactInfo',
-        data: {
-          user_id: owner_id,
-        },
-      }).then(res => {
-        console.log('CONTACT INFO => ', res.data);
-        setemail(res.data.email);
-        setphone(res.data.phone);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-    port.owner_id;
+    const fetchInfo = async () => {
+      try {
+        const {owner_id} = port;
+        const response = await getUserContactInfo(owner_id);
+        if (response.error) {
+          console.error('ERROR FETCHING CONTACT INFO => ', response.error);
+        } else {
+          console.log('CONTACT INFO => ', response.data);
+          setemail(response.data.email);
+          setphone(response.data.phone);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchInfo();
   }, []);
 
   return (

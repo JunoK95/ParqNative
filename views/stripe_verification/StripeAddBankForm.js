@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, View, ScrollView, Text} from 'react-native';
 import {Input, Button} from 'react-native-elements';
 import stripe from 'tipsi-stripe';
-import Axios from 'axios';
+import {stripeAddExternalAccount} from '../../api/stripe_index';
 
 const StripeAddBankForm = props => {
   const {account, setprogress, refresh, setrefresh} = props;
@@ -34,25 +34,16 @@ const StripeAddBankForm = props => {
       settoken(null);
       const bankToken = await stripe.createTokenWithBankAccount(inputs);
       if (bankToken) {
-        Axios({
-          method: 'POST',
-          url:
-            'https://us-central1-parq-alpha.cloudfunctions.net/stripeCreateExternalAccount',
-          data: {
-            account_id: account.id,
-            bankToken: bankToken,
-          },
-        })
-          .then(() => {
-            setloading(false);
-            setrefresh(!refresh);
-            setprogress(0);
-          })
-          .catch(err => {
-            setloading(false);
-            console.log(err);
-            seterror(err);
-          });
+        const response = await stripeAddExternalAccount(account.id, bankToken);
+        if (response.error) {
+          setloading(false);
+          console.log('ERROR ADDING EXTERNAL ACCOUNT => ', response.error);
+          seterror(response.error);
+        } else {
+          setloading(false);
+          setrefresh(!refresh);
+          setprogress(0);
+        }
       }
     } catch (err) {
       setloading(false);

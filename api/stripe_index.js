@@ -1,19 +1,6 @@
 import Axios from 'axios';
 import {config} from '../config';
-import firebase from '../firebase';
-
-const getCurrentUserIdToken = async () => {
-  const IdToken = await firebase.auth().currentUser.getIdToken();
-  return IdToken;
-};
-
-const createFirebaseAuthHeader = async () => {
-  const IdToken = await getCurrentUserIdToken();
-  const header = {
-    Authorization: `Bearer ${IdToken}`,
-  };
-  return header;
-};
+import {createFirebaseAuthHeader} from './header_functions';
 
 export const stripePayParkingCharge = async data => {
   const authHeader = await createFirebaseAuthHeader();
@@ -77,6 +64,62 @@ export const stripeGetAccountInfo = async account_id => {
       data: {
         account_id,
       },
+    });
+  } catch (error) {
+    response = {error};
+  }
+
+  return response;
+};
+
+export const stripeListCustomerCards = async customer_id => {
+  const authHeader = await createFirebaseAuthHeader();
+  let response;
+  try {
+    response = await Axios({
+      headers: authHeader,
+      method: 'POST',
+      url: `${config.firebase_functions_url_base}stripeListCards`,
+      data: {
+        customer_id,
+      },
+    });
+  } catch (error) {
+    response = {error};
+  }
+
+  return response;
+};
+
+export const stripeAddExternalAccount = async (account_id, bankToken) => {
+  const authHeader = await createFirebaseAuthHeader();
+  let response;
+  try {
+    response = await Axios({
+      headers: authHeader,
+      method: 'POST',
+      url: `${config.firebase_functions_url_base}stripeCreateExternalAccount`,
+      data: {
+        account_id,
+        bankToken,
+      },
+    });
+  } catch (error) {
+    response = {error};
+  }
+
+  return response;
+};
+
+export const stripeUpdateAccountAndTOS = async data => {
+  const authHeader = await createFirebaseAuthHeader();
+  let response;
+  try {
+    response = await Axios({
+      headers: authHeader,
+      method: 'POST',
+      url: `${config.firebase_functions_url_base}stripeUpdateAccountWithTOS`,
+      data,
     });
   } catch (error) {
     response = {error};

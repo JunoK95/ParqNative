@@ -10,15 +10,14 @@ import {
 import HeaderPadding from '../../components/layout/HeaderPadding';
 import AddressSubmissionForm from './AddressSubmissionForm';
 import {AuthContext} from '../../context/AuthContext';
-import Axios from 'axios';
 import {withNavigationFocus} from 'react-navigation';
+import {stripeGetAccountInfo} from '../../api/stripe_index';
 
 const CarportRegisterView = props => {
   const context = useContext(AuthContext);
   const {isFocused} = props;
   const [account, setaccount] = useState(null);
   useEffect(() => {
-    const {navigation} = props;
     const getAccountInfo = async () => {
       let account_id;
       try {
@@ -29,17 +28,12 @@ const CarportRegisterView = props => {
 
       let accountData;
       if (account_id) {
-        accountData = await Axios({
-          method: 'POST',
-          url:
-            'https://us-central1-parq-alpha.cloudfunctions.net/stripeGetAccount',
-          data: {
-            account_id: account_id,
-          },
-        }).then(res => {
-          console.log(res.data);
-          return res.data;
-        });
+        const response = await stripeGetAccountInfo(account_id);
+        if (response.error) {
+          console.error('ERROR RETRIEVING CONNECT ACCOUNT INFO');
+        } else {
+          accountData = response.data;
+        }
       } else {
         console.log('No Account Data');
       }

@@ -2,9 +2,9 @@ import React, {useState, useContext} from 'react';
 import {StyleSheet, Text, View, ScrollView, Linking} from 'react-native';
 import {Input, Button} from 'react-native-elements';
 import CustomDatePicker from '../../components/picker/CustomDatePicker';
-import Axios from 'axios';
 import {updateUserData} from '../../firebase_func/firestoreFunctions';
 import {AuthContext} from '../../context/AuthContext';
+import {stripeUpdateAccountAndTOS} from '../../api/stripe_index';
 
 const StripeActivateForm1 = props => {
   const {account, setprogress, refresh, setrefresh} = props;
@@ -80,27 +80,19 @@ const StripeActivateForm1 = props => {
         phone: phone,
       };
 
-      const IdToken = await context.functions.getCurrentUserIdToken();
-      console.log('AUTH ID TOKEN => ', IdToken);
-      const authHeaders = {
-        Authorization: `Bearer ${IdToken}`,
-      };
+      const response = await stripeUpdateAccountAndTOS({
+        account_id: account.id,
+        uid: context.user_id,
+        updates: stripeUpdateData,
+      });
 
-      Axios({
-        headers: authHeaders,
-        method: 'POST',
-        url:
-          'https://us-central1-parq-alpha.cloudfunctions.net/stripeUpdateAccountWithTOS',
-        data: {
-          account_id: account.id,
-          uid: context.user_id,
-          updates: stripeUpdateData,
-        },
-      }).then(() => {
+      if (response.error) {
+        console.error('ERROR UPDATING STRIPE CONNECT ACCOUNT');
+      } else {
         updateUserData(context.user_id, updateData);
         setprogress(0);
         setrefresh(!refresh);
-      });
+      }
     }
   };
 
