@@ -55,8 +55,10 @@ exports.stripePayParkingCharge = functions.https.onRequest(
         port,
         metadata,
       } = request.body;
+      let transfer_fee = parseInt(30 + parseInt(amount, 10) * 0.03, 10);
       let destination_stripe_account;
-      let destination_amount = parseInt(parseInt(amount, 10) * 0.8, 10);
+      let destination_amount =
+        parseInt(parseInt(amount, 10) * 0.8, 10) - transfer_fee;
       try {
         const portOwner = await store
           .collection('users')
@@ -79,6 +81,8 @@ exports.stripePayParkingCharge = functions.https.onRequest(
       }
 
       console.log(
+        'Customer',
+        customer_id,
         'Payment Token: ',
         token,
         'Destination Stripe Account: ',
