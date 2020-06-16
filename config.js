@@ -33,6 +33,7 @@ const dev = {
   firebase_functions_url_base:
     'https://us-central1-parq-alpha.cloudfunctions.net/',
   stripe_publishable_key: STRIPE_PUBLISHABLE_KEY_TEST,
+  googleSignIn_key: '480005596961-gbloqo7semp724i2h8et0c21orb5sdra.apps.googleusercontent.com',
 };
 
 const prod = {

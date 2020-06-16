@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:
-        '449904544159-vbb92q2kjngq7q8vvog4rg1dkof1ndlk.apps.googleusercontent.com',
+        '480005596961-gbloqo7semp724i2h8et0c21orb5sdra.apps.googleusercontent.com',
       offlineAccess: true,
       hostedDomain: '',
       forceConsentPrompt: true,

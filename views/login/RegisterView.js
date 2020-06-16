@@ -3,7 +3,6 @@ import {View, Text, StyleSheet, TextInput} from 'react-native';
 import {Icon, Button} from 'react-native-elements';
 import {AuthContext} from '../../context/AuthContext';
 import {validateEmail, validatePassword} from '../../helpers/helper';
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 const RegisterView = props => {
   const context = useContext(AuthContext);
@@ -32,7 +31,9 @@ const RegisterView = props => {
         seterror(res.error.message);
       } else {
         seterror(null);
-        props.navigation.navigate('Login');
+        props.navigation.navigate('Login', {
+          message: 'Successfully Created Account',
+        });
       }
     });
   };

@@ -63,7 +63,7 @@ const LoginView = props => {
       }
     } catch (err) {
       setload(false);
-      console.log(err);
+      console.log('ERROR SIGNING IN => ', err);
       if (err.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
       } else if (err.code === statusCodes.IN_PROGRESS) {

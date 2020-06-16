@@ -18,11 +18,12 @@ exports.stripeAccountEvents = (request, response, store) => {
     response.status(400).send(`Webhook Error: ${err.message}`);
   }
 
+  const {object} = event.data;
+
   //Handle Account Webhooks
   switch (event.type) {
     case 'account.updated':
       console.log('ACCOUNT UPDATED => ', event);
-      const {object} = event.data;
       if (object.tos_acceptance) {
         store
           .collection('wallets')

@@ -17,13 +17,12 @@ import {
 } from '../firebase_func/firestoreFunctions';
 import {getWallet} from '../firebase_func/walletFunctions';
 import {GoogleSignin} from '@react-native-community/google-signin';
-import Axios from 'axios';
 import {
   stripeAssignCustomerId,
   stripeAssignConnectAccountId,
   stripeListCustomerCards,
 } from '../api/stripe_index';
-import { sendLog } from '../api/firestore_index';
+import {sendLog} from '../api/firestore_index';
 
 export const AuthContext = createContext();
 
@@ -46,49 +45,27 @@ function AuthContextProvider(props) {
     console.log('onAuthChange', user);
     if (user) {
       //Sign In
-      let savedLocs = await getSavedLocations(user.uid).then(locations => {
-        return locations;
-      });
-      let savedVehicles = await getSavedVehicles(user.uid).then(vehicles => {
-        return vehicles;
-      });
+      let savedLocs = await getSavedLocations(user.uid);
+      let savedVehicles = await getSavedVehicles(user.uid);
+      let userData = await getUserData(user.uid);
 
-      var success = await getUserData(user.uid).then(data => {
-        console.log('getting UserData', data);
-        if (data.error) {
-          //New User
-          console.log('Current User', auth.currentUser);
-        } else {
-          if (data.stripe_customer_id) {
-            getStripePaymentMethods(data.stripe_customer_id).then(res => {
-              setstate({
-                ...state,
-                user_id: user.uid,
-                logged_in: true,
-                user_data: data,
-                saved_locations: savedLocs,
-                saved_vehicles: savedVehicles,
-                payment_methods: res,
-                nearby_ports: [],
-              });
-              setfetching(false);
-            });
-          } else {
-            setstate({
-              ...state,
-              user_id: user.uid,
-              logged_in: true,
-              user_data: data,
-              saved_locations: savedLocs,
-              saved_vehicles: savedVehicles,
-              nearby_ports: [],
-            });
-            setfetching(false);
-            assignStripeCustomerId();
-          }
-          return true;
-        }
-      });
+      if (userData.error) {
+        //New User
+        console.log('Current User', auth.currentUser);
+      } else {
+        setstate({
+          ...state,
+          user_id: user.uid,
+          logged_in: true,
+          user_data: userData,
+          saved_locations: savedLocs,
+          saved_vehicles: savedVehicles,
+          nearby_ports: [],
+        });
+        setfetching(false);
+        assignStripeCustomerId();
+        return true;
+      }
     } else {
       //Sign Out
       console.log('logged out');
@@ -105,7 +82,7 @@ function AuthContextProvider(props) {
       setfetching(false);
       return true;
     }
-    return success;
+    return true;
   }
 
   useEffect(() => {
@@ -523,9 +500,7 @@ function AuthContextProvider(props) {
   };
 
   const reservationHistory = async () => {
-    const history = await getUserReservationHistory(state.user_id).then(res => {
-      return res;
-    });
+    const history = await getUserReservationHistory(state.user_id);
     return history;
   };
 
@@ -547,29 +522,29 @@ function AuthContextProvider(props) {
         ...state,
         fetching,
         functions: {
-          getCurrentUser: getCurrentUser,
-          getCurrentUserIdToken: getCurrentUserIdToken,
-          registerUser: registerUser,
-          signOutUser: signOutUser,
-          signInUser: signInUser,
-          googleSignIn: googleSignIn,
-          signInSuccess: signInSuccess,
-          addContextSaveLocation: addContextSaveLocation,
-          addContextVehicle: addContextVehicle,
-          addContextPhone: addContextPhone,
-          deleteContextVehicle: deleteContextVehicle,
-          editContextCarport: editContextCarport,
-          enterSite: enterSite,
-          isVerified: isVerified,
-          sendVerificationEmail: sendVerificationEmail,
-          reserveCarport: reserveCarport,
-          reservationHistory: reservationHistory,
-          assignStripeCustomerId: assignStripeCustomerId,
-          assignStripeAccount: assignStripeAccount,
-          getStripePaymentMethods: getStripePaymentMethods,
-          getContextWallet: getContextWallet,
-          getAllPaymentMethods: getAllPaymentMethods,
-          setNearbyHomePorts: setNearbyHomePorts,
+          getCurrentUser,
+          getCurrentUserIdToken,
+          registerUser,
+          signOutUser,
+          signInUser,
+          googleSignIn,
+          signInSuccess,
+          addContextSaveLocation,
+          addContextVehicle,
+          addContextPhone,
+          deleteContextVehicle,
+          editContextCarport,
+          enterSite,
+          isVerified,
+          sendVerificationEmail,
+          reserveCarport,
+          reservationHistory,
+          assignStripeCustomerId,
+          assignStripeAccount,
+          getStripePaymentMethods,
+          getContextWallet,
+          getAllPaymentMethods,
+          setNearbyHomePorts,
         },
       }}>
       {props.children}
