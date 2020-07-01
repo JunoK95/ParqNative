@@ -341,20 +341,24 @@ function AuthContextProvider(props) {
         name: display_name,
         user_id: state.user_id,
       };
-      const response = await stripeAssignCustomerId(data);
-      if (response.error) {
-        //handle Error
+      try {
+        const response = await stripeAssignCustomerId(data);
+        if (response.error) {
+          //handle Error
+          console.error('ERROR CREATING CUSTOMER ID');
+        } else {
+          console.log('STRIPE CUSTOMER ID CREATED => ', response);
+          updateStripeId(state.user_id, response.data.id);
+          setstate({
+            ...state,
+            user_data: {
+              ...state.user_data,
+              stripe_customer_id: response.data.id,
+            },
+          });
+        }
+      } catch (error) {
         console.error('ERROR CREATING CUSTOMER ID');
-      } else {
-        console.log('STRIPE CUSTOMER ID CREATED => ', response);
-        updateStripeId(state.user_id, response.data.id);
-        setstate({
-          ...state,
-          user_data: {
-            ...state.user_data,
-            stripe_customer_id: response.data.id,
-          },
-        });
       }
     }
     return;

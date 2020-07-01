@@ -3,11 +3,10 @@ import {
   View,
   Text,
   StyleSheet,
-  ActivityIndicator,
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, {Marker, Circle} from 'react-native-maps';
 import {geofirexQueryPoints} from '../firebase_func/geofirexFunctions';
 import TransparentHeaderPadding from '../components/layout/TransparentHeaderPadding';
 import NearbyListModal from '../components/nearby/NearbyListModal';
@@ -16,6 +15,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import CarportCard from '../components/map/CarportCard';
 import {checkCarportAvailablity} from '../firebase_func/firestoreFunctions';
 import TouchableNativeReplacement from '../components/layout/TouchableNativeReplacement';
+import LottieLoading from '../components/loading/LottieLoading';
 
 const NearbyListView = props => {
   const {params} = props.navigation.state;
@@ -34,7 +34,7 @@ const NearbyListView = props => {
   const [select, setselect] = useState(null);
   const [fetching, setfetching] = useState(true);
   const [key, setKey] = useState(Math.floor(Math.random() * 100));
-  const [radius, setradius] = useState(1.6);
+  const [radius, setradius] = useState(1);
 
   const fetchDataGeoX = useCallback(
     async distance => {
@@ -76,20 +76,14 @@ const NearbyListView = props => {
   );
 
   useEffect(() => {
-    console.log('in Effect');
     setfetching(true);
     setselect(null);
-    fetchDataGeoX(1.6);
+    fetchDataGeoX(radius);
     setKey(Math.floor(Math.random() * 100));
   }, [fetchDataGeoX, latitude, longitude]);
 
   if (fetching) {
-    return (
-      <View style={styles.bg}>
-        <Text style={styles.loadTitle}>Finding Nearby Parking...</Text>
-        <ActivityIndicator />
-      </View>
-    );
+    return <LottieLoading />;
   } else {
     const mapMarkers = carport2.map((port, i) => {
       if (port.isAvailable) {
@@ -131,11 +125,17 @@ const NearbyListView = props => {
           initialRegion={{
             latitude: latitude,
             longitude: longitude,
-            latitudeDelta: 0.0352,
+            latitudeDelta: 0.1,
             longitudeDelta: 0.02,
           }}>
           <Marker coordinate={{latitude, longitude}} />
           {mapMarkers}
+          <Circle
+            center={{latitude, longitude}}
+            radius={radius * 1000}
+            strokeColor={'rgba(0,0,0,0)'}
+            fillColor={'rgba(17, 164, 255, 0.2)'}
+          />
         </MapView>
         <View style={styles.overlay}>
           <CarportCard port={select} currentlocation={{latitude, longitude}} />
@@ -172,12 +172,6 @@ const styles = StyleSheet.create({
     flex: 1,
     zIndex: 1,
     backgroundColor: '#fff',
-  },
-  bg: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ffc630',
   },
   overlay: {
     position: 'absolute',

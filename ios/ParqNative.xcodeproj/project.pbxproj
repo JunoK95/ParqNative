@@ -24,6 +24,7 @@
 		B80F3E422470C16500E26E91 /* Muli-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 995225EA613F4962ADF13DE2 /* Muli-Black.ttf */; };
 		B80F3E432470C1CC00E26E91 /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7533D67E0FAF49CF954DF5DD /* Montserrat-SemiBoldItalic.ttf */; };
 		B80F3E442472016A00E26E91 /* Montserrat-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6EAED607E2141C79DAA1228 /* Montserrat-MediumItalic.ttf */; };
+		B851763E24AA1475000857AC /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851763D24AA1475000857AC /* File.swift */; };
 		B88A50B3247370F300980862 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		B8A600BB6C2727631275B468 /* libPods-ParqNativeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7553A16E5CCB11B40AB14F6 /* libPods-ParqNativeTests.a */; };
 /* End PBXBuildFile section */
@@ -114,6 +115,8 @@
 		B5389FBC86374D038211692E /* Montserrat-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraLightItalic.ttf"; path = "../assets/fonts/Montserrat-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
 		B7553A16E5CCB11B40AB14F6 /* libPods-ParqNativeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ParqNativeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B80F3E3D247098ED00E26E91 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B851763C24AA1475000857AC /* ParqNative-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParqNative-Bridging-Header.h"; sourceTree = "<group>"; };
+		B851763D24AA1475000857AC /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		B9120180A10E4942B20A1878 /* Muli-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Muli-Light.ttf"; path = "../assets/fonts/Muli-Light.ttf"; sourceTree = "<group>"; };
 		BA6B12AA5DF08CCAFDD7AA15 /* Pods-ParqNative-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParqNative-tvOS.release.xcconfig"; path = "Target Support Files/Pods-ParqNative-tvOS/Pods-ParqNative-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		C1D4512C74A348E7A3AB8A9D /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
@@ -203,6 +206,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				B851763D24AA1475000857AC /* File.swift */,
+				B851763C24AA1475000857AC /* ParqNative-Bridging-Header.h */,
 			);
 			name = ParqNative;
 			sourceTree = "<group>";
@@ -437,6 +442,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = H9Y2F6P7P3;
+						LastSwiftMigration = 1150;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -740,6 +746,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				B851763E24AA1475000857AC /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -793,6 +800,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9C97D15ED88D1C67385AA2B9 /* Pods-ParqNativeTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = H9Y2F6P7P3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -817,6 +825,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A01D2C5883FA4C122A933BAD /* Pods-ParqNativeTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = H9Y2F6P7P3;
@@ -839,6 +848,7 @@
 			baseConfigurationReference = 73587A6B1E3B406C2E104837 /* Pods-ParqNative.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = H9Y2F6P7P3;
@@ -851,6 +861,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ParqNative;
+				SWIFT_OBJC_BRIDGING_HEADER = "ParqNative-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -860,6 +873,7 @@
 			baseConfigurationReference = B375604CF40E29BEA22AC928 /* Pods-ParqNative.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H9Y2F6P7P3;
 				INFOPLIST_FILE = ParqNative/Info.plist;
@@ -871,6 +885,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ParqNative;
+				SWIFT_OBJC_BRIDGING_HEADER = "ParqNative-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
