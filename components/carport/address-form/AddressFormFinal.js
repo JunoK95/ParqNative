@@ -6,12 +6,11 @@ import {
   StyleSheet,
   TouchableHighlight,
   ActivityIndicator,
-  Image,
 } from 'react-native';
 import {ListItem} from 'react-native-elements';
-import {initializeCarportWithParams} from '../../firebase_func/firestoreFunctions';
-import {AuthContext} from '../../context/AuthContext';
-import CarportRegistrationComplete from './CarportRegistrationComplete';
+import {initializeCarportWithParams} from '../../../firebase_func/firestoreFunctions';
+import {AuthContext} from '../../../context/AuthContext';
+import CarportRegistrationComplete from '../CarportRegistrationComplete';
 import {withNavigation} from 'react-navigation';
 
 const AddressFormFinal = props => {

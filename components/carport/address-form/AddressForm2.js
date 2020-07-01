@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
-import {splitStrByComma} from '../../helpers/helper';
+import {splitStrByComma} from '../../../helpers/helper';
 
 const AddressForm2 = props => {
   const {address, setstage, setaddress} = props;

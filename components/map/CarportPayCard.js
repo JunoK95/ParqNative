@@ -19,7 +19,7 @@ import {AuthContext} from '../../context/AuthContext';
 import {chargeWallet} from '../../firebase_func/walletFunctions';
 import moment from 'moment';
 import FeaturesList from '../carport/FeaturesList';
-import NewVehiclePicker from '../vehicle/NewVehiclePicker';
+import VehiclePicker from '../vehicle/vehicle-picker';
 import NewPaymentPicker from '../../views/payment/NewPaymentPicker';
 import CustomPicker from '../picker/CustomPicker';
 import {stripePayParkingCharge} from '../../api/stripe_index';
@@ -268,7 +268,7 @@ const CarportPayCard = props => {
               sethours(item.value);
             }}
           />
-          <NewVehiclePicker title={'Select Vehicle'} setselected={setvehicle} />
+          <VehiclePicker title={'Select Vehicle'} setselected={setvehicle} />
           <NewPaymentPicker
             title={'Select Payment'}
             setselected={setselectcard}

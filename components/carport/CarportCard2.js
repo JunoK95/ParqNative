@@ -1,7 +1,6 @@
 import React from 'react';
 import {withNavigation} from 'react-navigation';
-import DeactivatedCard from './card/DeactivatedCard';
-import ActivatedCard from './card/ActivatedCard';
+import {DeactivatedCard, ActivatedCard} from './host-card';
 
 const CarportCard2 = props => {
   const {port, port_id, refreshData} = props;

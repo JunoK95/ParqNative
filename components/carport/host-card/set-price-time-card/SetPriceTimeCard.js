@@ -7,11 +7,10 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import {splitStrByComma, convertToDollar} from '../../../helpers/helper';
+import {convertToDollar} from '../../../helpers/helper';
 import {activateCarport} from '../../../firebase_func/firestoreFunctions';
 import CustomTextInput from '../../picker/CustomTextInput';
 import moment from 'moment';
-import SchedulePicker from '../../picker/SchedulePicker';
 import SetPriceTimeCardRowItem from './SetPriceTimeCardRowItem';
 
 const SetPriceTimeCard = props => {

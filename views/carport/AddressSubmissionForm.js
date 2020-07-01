@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
-import AddressForm from '../../components/carport/AddressForm';
-import AddressForm2 from '../../components/carport/AddressForm2';
-import AddressForm3 from '../../components/carport/AddressForm3';
-import AddressForm4 from '../../components/carport/AddressForm4';
-import AddressFormFinal from '../../components/carport/AddressFormFinal';
-import AddressForm5 from '../../components/carport/AddressForm5';
+import {
+  AddressForm,
+  AddressForm2,
+  AddressForm3,
+  AddressForm4,
+  AddressForm5,
+  AddressFormFinal,
+} from '../../components/carport/address-form/index';
 
 const AddressSubmissionForm = () => {
   const [stage, setstage] = useState(1);

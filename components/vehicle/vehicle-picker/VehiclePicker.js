@@ -9,12 +9,12 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import CustomPickerItem from '../picker/CustomPickerItem';
-import {AuthContext} from '../../context/AuthContext';
+import CustomPickerItem from '../../picker/CustomPickerItem';
+import {AuthContext} from '../../../context/AuthContext';
 import {withNavigation} from 'react-navigation';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
-const NewVehiclePicker = props => {
+const VehiclePicker = props => {
   const context = useContext(AuthContext);
   const {saved_vehicles} = context;
   const {setselected, title} = props;
@@ -110,7 +110,7 @@ const NewVehiclePicker = props => {
   );
 };
 
-export default withNavigation(NewVehiclePicker);
+export default withNavigation(VehiclePicker);
 
 const styles = StyleSheet.create({
   modal: {

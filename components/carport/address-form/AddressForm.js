@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {Input} from 'react-native-elements';
 import {ScrollView, Text, StyleSheet, TouchableHighlight} from 'react-native';
-import {getGeocodeAddress} from '../../firebase_func/firestoreFunctions';
-import {combineString} from '../../helpers/helper';
+import {getGeocodeAddress} from '../../../firebase_func/firestoreFunctions';
+import {combineString} from '../../../helpers/helper';
 
 const AddressForm = props => {
   const {setaddress, setstage} = props;
