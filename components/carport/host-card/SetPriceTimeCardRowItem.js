@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import moment from 'moment';
-import SchedulePicker from '../../../picker/SchedulePicker';
+import SchedulePicker from '../../picker/SchedulePicker';
 
 const SetPriceTimeCardRowItem = props => {
   const {endtime, setendtime, schedule, setschedule} = props;

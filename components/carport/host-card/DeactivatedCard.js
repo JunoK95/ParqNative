@@ -13,7 +13,7 @@ import storeLogo from '../../../resources/images/112.png';
 import FeaturesList from '../FeaturesList';
 import {withNavigation} from 'react-navigation';
 import {activateCarport} from '../../../firebase_func/firestoreFunctions';
-import SetPriceTimeCard from './SetPriceTimeCard';
+import SetPriceTimeCard from '../host-card/SetPriceTimeCard';
 import moment from 'moment';
 
 const DeactivatedCard = props => {
