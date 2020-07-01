@@ -1,6 +1,6 @@
 import React, {useContext, useState, useEffect, useCallback} from 'react';
 import {View, ActivityIndicator, TouchableOpacity} from 'react-native';
-import HeaderPadding from '../components/layout/HeaderPadding';
+import HeaderPadding from '../components/header-padding/HeaderPadding';
 import {AuthContext} from '../context/AuthContext';
 import ReservationList from '../components/reservation/ReservationList';
 import {Icon} from 'react-native-elements';

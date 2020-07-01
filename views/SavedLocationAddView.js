@@ -1,7 +1,7 @@
 import React from 'react';
 import {View} from 'react-native';
 import AddSavedLocationForm from '../components/saved_locations/AddSavedLocationForm';
-import HeaderPadding from '../components/layout/HeaderPadding';
+import HeaderPadding from '../components/header-padding/HeaderPadding';
 
 const SavedLocationAddView = () => {
   return (

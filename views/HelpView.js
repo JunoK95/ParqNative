@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {StyleSheet, View, Linking} from 'react-native';
-import HeaderPadding from '../components/layout/HeaderPadding';
+import HeaderPadding from '../components/header-padding/HeaderPadding';
 import CustomListItem from '../components/layout/CustomListItem';
 import {withNavigation} from 'react-navigation';
 import {AuthContext} from '../context/AuthContext';

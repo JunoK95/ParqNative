@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
-import HeaderPadding from '../../components/layout/HeaderPadding';
+import HeaderPadding from '../../components/header-padding/HeaderPadding';
 import ParagraphBlock from '../../components/layout/ParagraphBlock';
 
 const PrivacyView = () => {

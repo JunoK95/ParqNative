@@ -3,7 +3,7 @@ import {withNavigation} from 'react-navigation';
 import {Icon} from 'react-native-elements';
 import {AuthContext} from '../context/AuthContext';
 import {splitStrByComma} from '../helpers/helper';
-import HeaderPadding from '../components/layout/HeaderPadding';
+import HeaderPadding from '../components/header-padding/HeaderPadding';
 import {
   StyleSheet,
   View,

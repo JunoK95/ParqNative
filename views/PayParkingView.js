@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import HeaderPadding from '../components/layout/HeaderPadding';
+import HeaderPadding from '../components/header-padding/HeaderPadding';
 import CarportPayCard from '../components/map/CarportPayCard';
 
 const PayParkingView = props => {

@@ -1,8 +1,8 @@
 import React from 'react';
-import BackToButton from '../navigation/BackToButton';
+import BackToButton from '../../navigation/BackToButton';
 import {View, Text, StyleSheet} from 'react-native';
 
-const HeaderPaddingiOS = props => {
+const HeaderPaddingDefault = props => {
   const {to, alt, title, right} = props;
 
   return (
@@ -20,10 +20,9 @@ const HeaderPaddingiOS = props => {
   );
 };
 
-export default HeaderPaddingiOS;
-
 const styles = StyleSheet.create({
   primaryheader: {
+    height: 56,
     top: 0,
     zIndex: 5,
     justifyContent: 'flex-start',
@@ -32,9 +31,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#11a4ff',
     paddingHorizontal: 24,
     paddingVertical: 12,
-    paddingTop: 42,
   },
   secondaryheader: {
+    height: 56,
     top: 0,
     zIndex: 5,
     justifyContent: 'flex-start',
@@ -43,7 +42,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffc630',
     paddingHorizontal: 24,
     paddingVertical: 12,
-    paddingTop: 42,
   },
   title: {
     fontFamily: 'Montserrat-SemiBold',
@@ -71,3 +69,5 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
 });
+
+export default HeaderPaddingDefault;

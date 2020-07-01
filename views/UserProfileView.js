@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
-import HeaderPadding from '../components/layout/HeaderPadding';
+import HeaderPadding from '../components/header-padding/HeaderPadding';
 import ProfilePicture from '../components/profile/ProfilePicture';
 import {AuthContext} from '../context/AuthContext';
 import {ListItem} from 'react-native-elements';

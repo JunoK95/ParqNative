@@ -7,7 +7,7 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
-import HeaderPadding from '../components/layout/HeaderPadding';
+import HeaderPadding from '../components/header-padding/HeaderPadding';
 import {ListItem} from 'react-native-elements';
 import {getCurrentReservations} from '../firebase_func/firestoreFunctions';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';

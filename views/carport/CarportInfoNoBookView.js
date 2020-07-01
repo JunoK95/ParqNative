@@ -7,7 +7,7 @@ import {
   Dimensions,
   Image,
 } from 'react-native';
-import HeaderPadding from '../../components/layout/HeaderPadding';
+import HeaderPadding from '../../components/header-padding/HeaderPadding';
 import storeLogo from '../../resources/images/112.png';
 import {splitStrByComma, convertToDollar} from '../../helpers/helper';
 import AccomodationCard from '../../components/carport/carport_profile/AccomodationCard';

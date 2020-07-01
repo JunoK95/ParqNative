@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, ActivityIndicator} from 'react-native';
-import HeaderPadding from '../../components/layout/HeaderPadding';
+import HeaderPadding from '../../components/header-padding/HeaderPadding';
 import {AuthContext} from '../../context/AuthContext';
 import StripeActivateForm1 from './StripeActivateForm1';
 import StripeVerificationMenu from './StripeVerificationMenu';

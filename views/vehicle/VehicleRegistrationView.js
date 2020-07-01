@@ -7,7 +7,7 @@ import {
   TouchableHighlight,
   Text,
 } from 'react-native';
-import HeaderPadding from '../../components/layout/HeaderPadding';
+import HeaderPadding from '../../components/header-padding/HeaderPadding';
 import {Input, Button} from 'react-native-elements';
 import {AuthContext} from '../../context/AuthContext';
 import CustomColorPicker from '../../components/picker/CustomColorPicker';

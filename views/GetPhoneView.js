@@ -8,6 +8,7 @@ import {
   TextInput,
 } from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import LottieView from 'lottie-react-native';
 import {AuthContext} from '../context/AuthContext';
 
 const GetPhoneView = () => {
@@ -46,7 +47,13 @@ const GetPhoneView = () => {
   return (
     <View style={styles.bg}>
       <View style={styles.contentcontainer}>
-        <FontAwesome5Icon name={'phone'} size={36} color={'white'} />
+        <LottieView
+          style={styles.lottieContainer}
+          source={require('../resources/animations/phone.json')}
+          autoPlay
+          loop
+        />
+        {/* <FontAwesome5Icon name={'phone'} size={36} color={'white'} /> */}
       </View>
       <View style={styles.contentcontainer}>
         <Text style={styles.titletext}>
@@ -131,5 +138,8 @@ const styles = StyleSheet.create({
     fontSize: 32,
     backgroundColor: 'rgba(0,0,0,0)',
     textAlign: 'center',
+  },
+  lottieContainer: {
+    width: '20%',
   },
 });

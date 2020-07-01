@@ -8,7 +8,7 @@ import {
   Image,
   TouchableHighlight,
 } from 'react-native';
-import HeaderPadding from '../../components/layout/HeaderPadding';
+import HeaderPadding from '../../components/header-padding/HeaderPadding';
 import storeLogo from '../../resources/images/112.png';
 import {splitStrByComma, convertToDollar} from '../../helpers/helper';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';

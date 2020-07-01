@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import HeaderPadding from '../components/layout/HeaderPadding';
+import HeaderPadding from '../components/header-padding/HeaderPadding';
 import {AuthContext} from '../context/AuthContext';
 import PaymentCardsList from './payment/PaymentCardsList';
 import WalletDisplay from './payment/WalletDisplay';

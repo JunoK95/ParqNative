@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import HeaderPadding from '../components/layout/HeaderPadding';
+import HeaderPadding from '../components/header-padding/HeaderPadding';
 import LocationAutoComplete from '../components/search/LocationAutocomplete';
 import {config} from '../config';
 

@@ -7,7 +7,7 @@ import {
   StyleSheet,
   ScrollView,
 } from 'react-native';
-import HeaderPadding from '../components/layout/HeaderPadding';
+import HeaderPadding from '../components/header-padding/HeaderPadding';
 import {AuthContext} from '../context/AuthContext';
 import {Icon} from 'react-native-elements';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';

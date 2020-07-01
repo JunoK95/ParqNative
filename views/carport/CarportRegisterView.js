@@ -7,7 +7,7 @@ import {
   Dimensions,
   TouchableHighlight,
 } from 'react-native';
-import HeaderPadding from '../../components/layout/HeaderPadding';
+import HeaderPadding from '../../components/header-padding/HeaderPadding';
 import AddressSubmissionForm from './AddressSubmissionForm';
 import {AuthContext} from '../../context/AuthContext';
 import {withNavigationFocus} from 'react-navigation';
