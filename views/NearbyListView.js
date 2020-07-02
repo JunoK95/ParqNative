@@ -16,6 +16,7 @@ import CarportCard from '../components/map/CarportCard';
 import {checkCarportAvailablity} from '../firebase_func/firestoreFunctions';
 import TouchableNativeReplacement from '../components/layout/TouchableNativeReplacement';
 import LottieLoading from '../components/loading/LottieLoading';
+import {isIphoneX, isIos} from '../helpers/is-iphoneX';
 
 const NearbyListView = props => {
   const {params} = props.navigation.state;
@@ -120,7 +121,7 @@ const NearbyListView = props => {
       <View>
         <MapView
           key={key}
-          style={styles.mapStyle}
+          style={isIos() ? styles.mapStyleX : styles.mapStyle}
           showsUserLocation={true}
           initialRegion={{
             latitude: latitude,
@@ -195,6 +196,12 @@ const styles = StyleSheet.create({
     top: 0,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height - 64,
+    zIndex: -1,
+  },
+  mapStyleX: {
+    top: 0,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height - 44,
     zIndex: -1,
   },
   listHeader: {

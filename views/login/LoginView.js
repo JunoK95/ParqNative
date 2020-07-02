@@ -10,6 +10,7 @@ import {Icon} from 'react-native-elements';
 import {AuthContext} from '../../context/AuthContext';
 import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 import {SocialIcon} from 'react-native-elements';
+import GoogleSignInButton from '../../components/google-login/GoogleSignInButton';
 
 const LoginView = props => {
   const context = useContext(AuthContext);
@@ -127,6 +128,7 @@ const LoginView = props => {
               onPress={() => _signIn()}
             />
           </View>
+          <GoogleSignInButton />
         </React.Fragment>
       )}
     </View>

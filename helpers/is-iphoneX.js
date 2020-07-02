@@ -18,3 +18,7 @@ export function isIPhoneXSize(dim) {
 export function isIPhoneXrSize(dim) {
   return dim.height === 896 || dim.width === 896;
 }
+
+export function isIos() {
+  return Platform.OS === 'ios';
+}

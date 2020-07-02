@@ -1,13 +1,9 @@
-import React, {useEffect} from 'react';
-import {
-  View,
-  Text,
-  Modal,
-  StyleSheet,
-} from 'react-native';
+import React from 'react';
+import {View, Text, Modal, StyleSheet} from 'react-native';
 import NearbyList from './NearbyList';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import TouchableNativeReplacement from '../layout/TouchableNativeReplacement';
+import {isIphoneX} from '../../helpers/is-iphoneX';
 
 const NearbyListModal = props => {
   const {open, setlistmode, currentlocation, carports} = props;
@@ -18,7 +14,7 @@ const NearbyListModal = props => {
       transparent={false}
       visible={open}
       onRequestClose={() => setlistmode(false)}>
-      <View style={styles.header}>
+      <View style={isIphoneX() ? styles.headerX : styles.header}>
         <Text style={styles.headertext}>Select Your Parking</Text>
       </View>
       <NearbyList
@@ -39,6 +35,13 @@ const NearbyListModal = props => {
 const styles = StyleSheet.create({
   header: {
     height: 56,
+    backgroundColor: '#11a4ff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerX: {
+    paddingVertical: 12,
+    paddingTop: 42,
     backgroundColor: '#11a4ff',
     justifyContent: 'center',
     alignItems: 'center',
