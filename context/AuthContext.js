@@ -120,17 +120,14 @@ function AuthContextProvider(props) {
   };
 
   const sendVerificationEmail = async () => {
-    var sent = await auth.currentUser
-      .sendEmailVerification()
-      .then(res => {
-        console.log('Verification Email sent', res);
-        return true;
-      })
-      .catch(err => {
-        console.error(err);
-        return false;
-      });
-    return sent;
+    try {
+      await auth.currentUser.sendEmailVerification();
+      console.log('Verification Email sent');
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
   };
 
   const registerUser = async (email, pass, display_name) => {
@@ -213,15 +210,6 @@ function AuthContextProvider(props) {
       return true;
     }
     return false;
-  };
-
-  const signInSuccess = authResult => {
-    console.log('authResult', authResult);
-    setstate({
-      ...state,
-      user_id: authResult.user.uid,
-      logged_in: true,
-    });
   };
 
   const signOutUser = async () => {
@@ -441,12 +429,12 @@ function AuthContextProvider(props) {
     var result = await createReservation(
       state.user_id,
       state.user_data,
+      carport_id,
+      carport_data,
       start,
       end,
       vehicle_id,
       vehicle_data,
-      carport_id,
-      carport_data,
       price,
       hours,
     )
@@ -487,7 +475,6 @@ function AuthContextProvider(props) {
           signOutUser,
           signInUser,
           googleSignIn,
-          signInSuccess,
           addContextSaveLocation,
           addContextVehicle,
           addContextPhone,

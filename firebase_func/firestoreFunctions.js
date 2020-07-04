@@ -72,10 +72,7 @@ export async function initializeDefaultUser(id, email, newName) {
   };
 
   let docData = db.collection('users').doc(id);
-  let returnVal = await docData.set(defaultUserData, {merge: true})
-    .then(doc => {
-      return doc;
-    });
+  await docData.set(defaultUserData, {merge: true});
 
   let walletRef = db.collection('wallets').doc(id);
   await walletRef.set(defaultWalletData)
@@ -105,11 +102,6 @@ export async function getUserData(id) {
       console.error('get user data error => ', error);
     }
   );
-
-  // if (data.error){
-  //   console.error(data.error.message);
-  //   console.log('making new data with id: ', id);
-  // }
 
   return data;
 }
@@ -568,7 +560,7 @@ export async function getCurrentUserReservations(user_id){
   return reservations;
 }
 
-export async function createReservation(user_id, user_data, start, end, vehicle_id, vehicle_data, carport_id, carport_data, price, hours){
+export async function createReservation(user_id, user_data, carport_id, carport_data, start, end, vehicle_id, vehicle_data, price, hours) {
   const batch = db.batch();
 
   const newReservation = {
