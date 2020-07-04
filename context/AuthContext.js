@@ -22,9 +22,6 @@ import {
   stripeAssignConnectAccountId,
   stripeListCustomerCards,
 } from '../api/stripe_index';
-import {sendLog} from '../api/firestore_index';
-import { googleFirebaseSignin } from './authentication/google-signin';
-import { getUserStateInfo } from './authentication/shared-functions';
 
 export const AuthContext = createContext();
 
