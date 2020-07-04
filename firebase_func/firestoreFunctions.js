@@ -9,10 +9,9 @@ import { stripeAssignCustomerId, stripeAssignConnectAccountId } from '../api/str
 
 const db = firebase.firestore();
 
-export async function initializeDefaultUser(id, initialData, newName) {
-  console.log('initialData => ', initialData);
-  console.log('initialData Email => ', initialData.email);
-  let newDisplayName = initialData.displayName;
+export async function initializeDefaultUser(id, email, newName) {
+  console.log('initialData Email => ', email);
+  let newDisplayName = newName;
   if (newName){
     newDisplayName = newName;
   }
@@ -21,7 +20,7 @@ export async function initializeDefaultUser(id, initialData, newName) {
   let stripe_customer_id;
   let stripe_connect_id;
 
-  const stripe_customer_id_response = await stripeAssignCustomerId({email: initialData.email, user_id: id});
+  const stripe_customer_id_response = await stripeAssignCustomerId({email: email, user_id: id});
   if (stripe_customer_id_response.error) {
     console.error('ERROR INITIALIZING CUSTOMER ID');
   } else {
@@ -30,7 +29,7 @@ export async function initializeDefaultUser(id, initialData, newName) {
 
   const stripe_connect_id_response =
     await stripeAssignConnectAccountId({
-      email: initialData.email,
+      email: email,
       user_id: id,
       metadata: {
         user_id: id,
@@ -61,12 +60,12 @@ export async function initializeDefaultUser(id, initialData, newName) {
     owned_carports: [],
     saved_locations: [],
     display_name: newDisplayName,
-    email: initialData.email,
+    email: email,
     photo_url: '',
     stripe_customer_id: stripe_customer_id,
     stripe_account_id: stripe_connect_id,
     contact: {
-      email: initialData.email,
+      email: email,
       phone: '',
     },
     billing_address: {},

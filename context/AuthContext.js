@@ -23,6 +23,8 @@ import {
   stripeListCustomerCards,
 } from '../api/stripe_index';
 import {sendLog} from '../api/firestore_index';
+import { googleFirebaseSignin } from './authentication/google-signin';
+import { getUserStateInfo } from './authentication/shared-functions';
 
 export const AuthContext = createContext();
 
@@ -109,7 +111,7 @@ function AuthContextProvider(props) {
         console.log('created user with email pass', res);
         const userData = await initializeDefaultUser(
           auth.currentUser.uid,
-          auth.currentUser,
+          auth.currentUser.email,
           display_name,
         );
         let savedLocs = await getSavedLocations(auth.currentUser.uid).then(
@@ -210,50 +212,29 @@ function AuthContextProvider(props) {
       access_token,
     );
     console.log('CREDENTIAL => ', credential);
-    const firebaseUserCredential = await firebase
-      .auth()
-      .signInWithCredential(credential)
-      .then(res => {
-        console.log('Google Signed In => ', res);
-        getUserData(auth.currentUser.uid).then(async data => {
-          if (data.error) {
-            const userData = await initializeDefaultUser(
-              auth.currentUser.uid,
-              res.additionalUserInfo.profile,
-              res.additionalUserInfo.profile.name,
-            );
-            let savedLocs = await getSavedLocations(auth.currentUser.uid).then(
-              locations => {
-                return locations;
-              },
-            );
-            let savedVehicles = await getSavedVehicles(
-              auth.currentUser.uid,
-              vehicles => {
-                return vehicles;
-              },
-            );
-            setstate({
-              ...state,
-              user_id: auth.currentUser.uid,
-              logged_in: true,
-              user_data: userData,
-              saved_locations: savedLocs,
-              saved_vehicles: savedVehicles,
-              payment_methods: [],
-              nearby_ports: [],
-            });
-            setfetching(false);
-            return true;
-          }
-        });
-        return res;
-      })
-      .catch(err => {
-        console.log('Error using GoogleSignIn => ', err);
-        sendLog('error', err, 'Error using Google SignIn');
-      });
-    console.log('firebaseUserCredential', firebaseUserCredential);
+    let firebaseUserCredential;
+    try {
+      firebaseUserCredential = await googleFirebaseSignin();
+      console.log('FIREBASE USER CREDENTIAL => ', firebaseUserCredential);
+    } catch (error) {
+      console.error('Google Sign In Failed');
+      return;
+    }
+    const {email, name} = firebaseUserCredential.additionalUserInfo.profile;
+    const userInfo = await getUserStateInfo(email, name);
+
+    setstate({
+      ...state,
+      user_id: auth.currentUser.uid,
+      logged_in: true,
+      user_data: userInfo.userData,
+      saved_locations: userInfo.savedLocations,
+      saved_vehicles: userInfo.savedVehicles,
+      payment_methods: [],
+      nearby_ports: [],
+    });
+    setfetching(false);
+
     if (firebaseUserCredential) {
       return true;
     }
