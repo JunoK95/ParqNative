@@ -2,7 +2,6 @@ import React, {useState, useEffect, createContext} from 'react';
 import firebase from '../firebase';
 import {
   getUserData,
-  initializeDefaultUser,
   getSavedLocations,
   addSaveLocation,
   getSavedVehicles,
@@ -22,6 +21,9 @@ import {
   stripeAssignConnectAccountId,
   stripeListCustomerCards,
 } from '../api/stripe_index';
+import {registerUserEmail, signInUserEmail} from './authentication/email';
+import {getUserStateInfo} from './authentication/shared-functions';
+import {googleFirebaseSignin} from './authentication/google-signin';
 
 export const AuthContext = createContext();
 
@@ -100,53 +102,6 @@ function AuthContextProvider(props) {
     });
   };
 
-  const registerUser = async (email, pass, display_name) => {
-    var result = false;
-    result = await auth
-      .createUserWithEmailAndPassword(email, pass)
-      .then(async res => {
-        console.log('created user with email pass', res);
-        const userData = await initializeDefaultUser(
-          auth.currentUser.uid,
-          auth.currentUser.email,
-          display_name,
-        );
-        let savedLocs = await getSavedLocations(auth.currentUser.uid).then(
-          locations => {
-            return locations;
-          },
-        );
-        let savedVehicles = await getSavedVehicles(auth.currentUser.uid).then(
-          vehicles => {
-            return vehicles;
-          },
-        );
-        setstate({
-          ...state,
-          user_id: auth.currentUser.uid,
-          logged_in: true,
-          user_data: userData,
-          saved_locations: savedLocs,
-          saved_vehicles: savedVehicles,
-          payment_methods: [],
-          nearby_ports: [],
-        });
-        setfetching(false);
-        return res;
-      })
-      .catch(function(error) {
-        // Handle Errors here.
-        return {
-          error: {
-            code: error.code,
-            message: error.message,
-          },
-        };
-      });
-
-    return result;
-  };
-
   const getCurrentUser = () => {
     return auth.currentUser;
   };
@@ -178,40 +133,62 @@ function AuthContextProvider(props) {
     return sent;
   };
 
-  const signInUser = async (email, pass) => {
-    var result = await auth
-      .signInWithEmailAndPassword(email, pass)
-      .then(res => {
-        setstate({
-          ...state,
-          user_id: res.user.uid,
-          logged_in: true,
-        });
-        console.log('Login Successful', res);
-        console.log('state is', state);
-        return res;
-      })
-      .catch(function(error) {
-        // Handle Errors here.
-        return {
-          error: {
-            code: error.code,
-            message: error.message,
-          },
-        };
+  const registerUser = async (email, pass, display_name) => {
+    try {
+      await registerUserEmail();
+    } catch (error) {
+      console.error('ERROR LOGGIN IN WITH EMAIL => ', error);
+      return {
+        error: {
+          code: error.code,
+          message: error.message,
+        },
+      };
+    }
+
+    const userInfo = await getUserStateInfo(email, display_name);
+    setstate({
+      ...state,
+      user_id: auth.currentUser.uid,
+      logged_in: true,
+      user_data: userInfo.userData,
+      saved_locations: userInfo.savedLocations,
+      saved_vehicles: userInfo.savedVehicles,
+      payment_methods: [],
+      nearby_ports: [],
+    });
+    setfetching(false);
+    return true;
+  };
+
+  const signInUser = async (email, pw) => {
+    const result = await signInUserEmail(email, pw);
+    if (result.error) {
+      console.error('ERROR SIGNING IN');
+      return {
+        error: {
+          code: result.error.code,
+          message: result.error.message,
+        },
+      };
+    } else {
+      setstate({
+        ...state,
+        user_id: result.user.uid,
+        logged_in: true,
       });
-    return result;
+      console.log('Login Successful', result);
+      return true;
+    }
   };
 
   const googleSignIn = async (id_token, access_token) => {
-    const credential = firebase.auth.GoogleAuthProvider.credential(
-      id_token,
-      access_token,
-    );
-    console.log('CREDENTIAL => ', credential);
     let firebaseUserCredential;
     try {
-      firebaseUserCredential = await googleFirebaseSignin();
+      firebaseUserCredential = await googleFirebaseSignin(
+        id_token,
+        access_token,
+      );
       console.log('FIREBASE USER CREDENTIAL => ', firebaseUserCredential);
     } catch (error) {
       console.error('Google Sign In Failed');
@@ -248,33 +225,33 @@ function AuthContextProvider(props) {
   };
 
   const signOutUser = async () => {
+    let success = false;
     try {
       await GoogleSignin.revokeAccess();
       await GoogleSignin.signOut();
+      success = true;
     } catch (err) {
       console.log(err);
     }
-    var result = await auth
-      .signOut()
-      .then(() => {
-        setstate({
-          user_id: null,
-          logged_in: false,
-          user_data: null,
-        });
-        console.log('sign out successful');
-        console.log(state);
-        return {success: true};
-      })
-      .catch(function(error) {
-        return {
-          error: {
-            code: error.code,
-            message: error.message,
-          },
-        };
+
+    try {
+      await auth.signOut();
+      success = true;
+    } catch (error) {
+      console.log(error);
+    }
+
+    if (success) {
+      setstate({
+        user_id: null,
+        logged_in: false,
+        user_data: null,
       });
-    return result;
+      console.log('sign out successful');
+      return;
+    } else {
+      return false;
+    }
   };
 
   const setNearbyHomePorts = async ports => {
