@@ -1,16 +1,10 @@
 import React, {useState, useContext} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  ActivityIndicator,
-} from 'react-native';
+import {View, Text, StyleSheet, TextInput} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {AuthContext} from '../../context/AuthContext';
 import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
-import {SocialIcon} from 'react-native-elements';
-import GoogleSignInButton from '../../components/google-login/GoogleSignInButton';
+import OrbLoading from '../../components/loading/OrbLoading';
+import {EmailSignInButton, GoogleSignInButton} from '../../components/login';
 
 const LoginView = props => {
   const context = useContext(AuthContext);
@@ -85,50 +79,37 @@ const LoginView = props => {
         </View>
       ) : null}
       {load ? (
-        <ActivityIndicator />
+        <OrbLoading />
       ) : (
         <React.Fragment>
           {process.env.NODE_ENV === 'development' && <Text>DEV MODE</Text>}
-          <View style={styles.textFieldContainer}>
-            <Icon iconStyle={styles.icon} name={'email'} size={30} />
-            <TextInput
-              style={styles.textField}
-              name={'email'}
-              placeholder={'email'}
-              textContentType={'emailAddress'}
-              value={email}
-              onChangeText={text => setemail(text)}
-            />
+          <View style={styles.formContainer}>
+            <View style={styles.textFieldContainer}>
+              <Icon iconStyle={styles.icon} name={'email'} size={30} />
+              <TextInput
+                style={styles.textField}
+                name={'email'}
+                placeholder={'email'}
+                textContentType={'emailAddress'}
+                value={email}
+                onChangeText={text => setemail(text)}
+              />
+            </View>
+            <View style={styles.textFieldContainer}>
+              <Icon iconStyle={styles.icon} name={'lock'} size={30} />
+              <TextInput
+                style={styles.textField}
+                name={'password'}
+                placeholder={'password'}
+                textContentType={'password'}
+                secureTextEntry
+                value={password}
+                onChangeText={text => setpassword(text)}
+              />
+            </View>
           </View>
-          <View style={styles.textFieldContainer}>
-            <Icon iconStyle={styles.icon} name={'lock'} size={30} />
-            <TextInput
-              style={styles.textField}
-              name={'password'}
-              placeholder={'password'}
-              textContentType={'password'}
-              secureTextEntry
-              value={password}
-              onChangeText={text => setpassword(text)}
-            />
-          </View>
-          <View style={{marginHorizontal: 48, marginTop: 36}}>
-            <SocialIcon
-              type={'envelope'}
-              title={'Sign in with Parq'}
-              button
-              onPress={() => handleSignIn()}
-            />
-          </View>
-          <View style={{marginHorizontal: 48}}>
-            <SocialIcon
-              type={'google'}
-              title={'Sign in with Google'}
-              button
-              onPress={() => _signIn()}
-            />
-          </View>
-          <GoogleSignInButton />
+          <EmailSignInButton handlePress={handleSignIn} />
+          <GoogleSignInButton handlePress={_signIn} />
         </React.Fragment>
       )}
     </View>
@@ -147,10 +128,8 @@ const styles = StyleSheet.create({
     paddingRight: 12,
     color: '#ffc630',
   },
-  icon2: {
-    paddingVertical: 8,
-    paddingRight: 12,
-    color: '#fff',
+  formContainer: {
+    marginVertical: 36,
   },
   textFieldContainer: {
     margin: 12,
@@ -165,41 +144,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     backgroundColor: '#fff',
     borderRadius: 12,
-  },
-  googleButtonContainer: {
-    width: 192,
-    height: 48,
-  },
-  buttonRowContainer: {
-    flexDirection: 'row',
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-  buttonleft: {
-    flex: 1,
-    justifyContent: 'flex-start',
-  },
-  buttonright: {
-    flex: 2,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  buttonContainer: {
-    width: 184,
-    height: 40,
-    marginTop: 36,
-    marginVertical: 8,
-    borderRadius: 4,
-    backgroundColor: '#3e51b5',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 4,
-  },
-  buttonText: {
-    color: 'white',
-    fontFamily: 'Roboto-Medium',
-    fontSize: 14,
   },
   errorBox: {
     backgroundColor: '#f44336',

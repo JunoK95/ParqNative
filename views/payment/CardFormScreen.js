@@ -1,7 +1,6 @@
 import React, {PureComponent} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import stripe from 'tipsi-stripe';
-import testID from '../../components/tipsi/utils/testID';
 import Axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import TouchableNativeReplacement from '../../components/layout/TouchableNativeReplacement';
