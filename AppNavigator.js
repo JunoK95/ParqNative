@@ -28,6 +28,7 @@ import FAQView from './views/help/FAQView';
 import TOSView from './views/help/TOSView';
 import PrivacyView from './views/help/PrivacyView';
 import GetPhoneView from './views/GetPhoneView';
+import CardTokenGenerator from './views/payment/card-token-generator/CardTokenGenerator';
 
 const SearchNavigator = createStackNavigator(
   {
@@ -83,6 +84,7 @@ const AppNavigator = createDrawerNavigator(
     CarportRegister: CarportRegisterView,
     ReservationList: ReservationListView,
     Help: HelpNavigator,
+    CardRegistration: CardTokenGenerator,
   },
   {
     initialRouteName: 'Home',

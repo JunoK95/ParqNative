@@ -14,8 +14,9 @@ import WalletDisplay from './payment/WalletDisplay';
 import {getWallet} from '../firebase_func/walletFunctions';
 import {Icon} from 'react-native-elements';
 import PaymentBanksList from './payment/PaymentBanksList';
-import Axios from 'axios';
-import { stripeGetAccountInfo } from '../api/stripe_index';
+import {stripeGetAccountInfo} from '../api/stripe_index';
+import CustomListItem from '../components/layout/CustomListItem';
+import CardTokenGenerator from './payment/card-token-generator/CardTokenGenerator';
 
 const PaymentSettingView = () => {
   const context = useContext(AuthContext);
@@ -25,6 +26,7 @@ const PaymentSettingView = () => {
   const [account, setaccount] = useState(null);
   const [banks, setbanks] = useState(null);
   const [wallet, setwallet] = useState(null);
+  const [OpenGen, setOpenGen] = useState(false);
 
   const fetchData = useCallback(async () => {
     if (!user_data) {
@@ -101,6 +103,13 @@ const PaymentSettingView = () => {
           stripe_id={stripe_customer_id}
           billing_address={billing_address}
         />
+        <CustomListItem
+          title={'Add Payment Card'}
+          icon={'plus-circle'}
+          iconSize={20}
+          handlePress={() => setOpenGen(!OpenGen)}
+        />
+        <CardTokenGenerator open={OpenGen} setopen={setOpenGen} />
         <View style={styles.padding} />
         <PaymentBanksList account={account} />
       </ScrollView>

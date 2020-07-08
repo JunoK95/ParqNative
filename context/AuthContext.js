@@ -347,7 +347,7 @@ function AuthContextProvider(props) {
     if (response.error) {
       console.error('ERROR GETTING STRIPE PAYMENT METHODS => ', response.error);
     } else {
-      console.log('STRIPE LIST CUSTOMER CARD', response);
+      console.log('STRIPE LIST CUSTOMER CARD', response.data);
       stripeCards = response.data.data;
     }
 

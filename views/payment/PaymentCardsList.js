@@ -18,7 +18,7 @@ const PaymentCardsList = props => {
   return (
     <View>
       {cardList ? cardList : <ActivityIndicator />}
-      <CardFormScreen stripe_id={stripe_id} billing_address={billing_address} />
+      {/* <CardFormScreen stripe_id={stripe_id} billing_address={billing_address} /> */}
     </View>
   );
 };

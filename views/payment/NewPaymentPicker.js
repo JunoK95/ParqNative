@@ -17,7 +17,7 @@ import CustomPickerItem from '../../components/picker/CustomPickerItem';
 
 const NewPaymentPicker = props => {
   const context = useContext(AuthContext);
-  const {title, setselected} = props;
+  const {title, setselected, setopenGen} = props;
   const [fetch, setfetch] = useState(false);
   const [select, setselect] = useState(null);
   const [cards, setcards] = useState(null);
@@ -54,7 +54,7 @@ const NewPaymentPicker = props => {
       }
     }
     fetchData();
-  }, [context.functions, context.user_data, setselect, setselected]);
+  }, [context.functions, context.user_data, setselect, setselected, modalopen]);
 
   let pickerItems = [];
   if (!fetch && cards) {
@@ -152,7 +152,7 @@ const NewPaymentPicker = props => {
                     icon={'plus'}
                     handlePress={() => {
                       setmodalopen(false);
-                      props.navigation.navigate('Payment');
+                      setopenGen(true);
                     }}
                   />
                 </ScrollView>

@@ -4,7 +4,15 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import TouchableNativeReplacement from './TouchableNativeReplacement';
 
 const CustomListItem = props => {
-  const {title, subtitle, icon, iconColor, handlePress, rippleColor} = props;
+  const {
+    title,
+    subtitle,
+    icon,
+    iconColor,
+    iconSize,
+    handlePress,
+    rippleColor,
+  } = props;
 
   return (
     <TouchableNativeReplacement onPress={handlePress} color={rippleColor}>
@@ -12,7 +20,7 @@ const CustomListItem = props => {
         <View style={styles.itemleft}>
           <FontAwesome5Icon
             name={icon}
-            size={24}
+            size={iconSize ? iconSize : 24}
             color={iconColor}
             style={iconColor === 'white' && styles.textshadow}
           />
@@ -32,6 +40,7 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: 'row',
     paddingVertical: 16,
+    backgroundColor: 'white',
   },
   itemleft: {
     paddingHorizontal: 20,

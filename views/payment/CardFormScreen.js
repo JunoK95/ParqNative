@@ -5,6 +5,7 @@ import Axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import TouchableNativeReplacement from '../../components/layout/TouchableNativeReplacement';
 import {config} from '../../config';
+import { stripeCreateCard } from '../../api/stripe_index';
 
 stripe.setOptions({
   publishableKey: config.stripe_publishable_key,
@@ -39,15 +40,17 @@ export default class CardFormScreen extends PureComponent {
         },
       });
       if (token && stripe_id) {
-        const newcard = await Axios({
-          method: 'POST',
-          url:
-            'https://us-central1-parq-alpha.cloudfunctions.net/stripeCreateCard',
-          data: {
-            customer_id: stripe_id,
-            cardToken: token.tokenId,
-          },
-        });
+        console.log(token);
+        const newcard = await stripeCreateCard(stripe_id, token.tokenId);
+        // const newcard = await Axios({
+        //   method: 'POST',
+        //   url:
+        //     'https://us-central1-parq-alpha.cloudfunctions.net/stripeCreateCard',
+        //   data: {
+        //     customer_id: stripe_id,
+        //     cardToken: token.tokenId,
+        //   },
+        // });
         console.log('new card created => ', newcard);
       }
       this.setState({loading: false, token});

@@ -72,6 +72,29 @@ export const stripeGetAccountInfo = async account_id => {
   return response;
 };
 
+export const stripeCreateCard = async (customer_id, token) => {
+  const authHeader = await createFirebaseAuthHeader();
+  let response;
+  try {
+    console.log('PARAMS => ', customer_id, token);
+    response = await Axios({
+      headers: authHeader,
+      method: 'POST',
+      url: `${config.firebase_functions_url_base}stripeCreateCard`,
+      data: {
+        customer_id: customer_id,
+        cardToken: token,
+      },
+    });
+    console.log('CARD CREATED =>', response);
+  } catch (error) {
+    console.error('Error Creating Card', error);
+    response = {error};
+  }
+
+  return response;
+};
+
 export const stripeListCustomerCards = async customer_id => {
   const authHeader = await createFirebaseAuthHeader();
   let response;
