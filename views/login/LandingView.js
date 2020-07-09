@@ -12,7 +12,7 @@ const LandingView = props => {
       <View style={styles.centeredimg}>
         <Image
           style={styles.image}
-          source={require('../../resources/logo/parqdino.png')}
+          source={require('../../resources/logo/parqdinopoppins.png')}
         />
       </View>
       <View style={styles.centered}>

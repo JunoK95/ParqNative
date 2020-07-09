@@ -1,11 +1,5 @@
 import React, {useState, useContext} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Modal,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {StyleSheet, View, Modal, TouchableWithoutFeedback} from 'react-native';
 import {CreditCardInput} from 'react-native-input-credit-card';
 import stripe from 'tipsi-stripe';
 import CustomButton from '../../../components/button/CustomButton';
@@ -32,7 +26,6 @@ const CardTokenGenerator = ({open, setopen}) => {
       postalCode: 'incomplete',
     },
   });
-  const [token, settoken] = useState('');
 
   const handleChange = form => {
     setFormData(form);

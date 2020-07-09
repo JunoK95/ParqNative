@@ -17,6 +17,7 @@ import PaymentBanksList from './payment/PaymentBanksList';
 import {stripeGetAccountInfo} from '../api/stripe_index';
 import CustomListItem from '../components/layout/CustomListItem';
 import CardTokenGenerator from './payment/card-token-generator/CardTokenGenerator';
+import OrbLoading from '../components/loading/OrbLoading';
 
 const PaymentSettingView = () => {
   const context = useContext(AuthContext);
@@ -83,10 +84,12 @@ const PaymentSettingView = () => {
 
   if (fetch) {
     return (
-      <View>
+      <ScrollView>
         <HeaderPadding to={'Home'} alt title={'Wallet'} right={refreshbutton} />
-        <ActivityIndicator />
-      </View>
+        <View style={styles.screen}>
+          <OrbLoading bgColor={'transparent'} />
+        </View>
+      </ScrollView>
     );
   }
 
@@ -130,6 +133,11 @@ const styles = StyleSheet.create({
   },
   padding: {
     padding: 8,
+  },
+  screen: {
+    flex: 1,
+    justifyContent: 'center',
+    height: Dimensions.get('window').height - 240,
   },
 });
 

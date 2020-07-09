@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, ActivityIndicator} from 'react-native';
-import ParqLogo from '../resources/logo/parqdino.png';
+import {StyleSheet, View, Image, ActivityIndicator} from 'react-native';
+import ParqLogo from '../resources/logo/parqdinopoppins.png';
 
 const LoadingView = () => {
   return (
