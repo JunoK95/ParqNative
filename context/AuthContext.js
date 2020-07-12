@@ -373,17 +373,20 @@ function AuthContextProvider(props) {
   };
 
   const addContextVehicle = async updates => {
-    addVehicle(state.user_id, updates).then(vehicles => {
+    try {
+      const v = await addVehicle(state.user_id, updates);
       const joinedVehicles = state.saved_vehicles.concat({
-        id: vehicles.id,
-        data: vehicles.data,
+        id: v.id,
+        data: v.data,
       });
-      console.log(joinedVehicles);
       setstate({
         ...state,
         saved_vehicles: joinedVehicles,
       });
-    });
+      return v;
+    } catch (error) {
+      throw error;
+    }
   };
 
   const deleteContextVehicle = async vehicle_id => {
