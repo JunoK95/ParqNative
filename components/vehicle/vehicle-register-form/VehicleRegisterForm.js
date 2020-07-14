@@ -3,7 +3,7 @@ import {StyleSheet, Text, ScrollView, TouchableHighlight} from 'react-native';
 import {Input} from 'react-native-elements';
 import CustomColorPicker from '../../picker/CustomColorPicker';
 import CustomPickerItem from '../../picker/CustomPickerItem';
-import {capitalizeFirstLetter, isNumber} from '../../../helpers/helper';
+import {capitalizeFirstLetter} from '../../../helpers/helper';
 
 const VehicleRegisterForm = ({onChange, onSubmit}) => {
   const [open, setopen] = useState(false);

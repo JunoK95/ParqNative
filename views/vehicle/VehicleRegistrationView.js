@@ -11,20 +11,8 @@ const VehicleRegistrationView = props => {
     setinputs(data);
   };
 
-  const handleSubmit = async valid => {
-    if (!valid) {
-      return;
-    }
-    const {
-      name,
-      license_plate,
-      us_state,
-      make,
-      model,
-      year,
-      description,
-      color,
-    } = inputs;
+  const handleSubmit = async () => {
+    const {name, license_plate, us_state, make, model, year, color} = inputs;
     if (name === '' || license_plate === '' || us_state === '') {
       return;
     } else if (context) {
@@ -37,7 +25,6 @@ const VehicleRegistrationView = props => {
           make,
           model,
           year,
-          description,
           color,
         });
       } catch (error) {

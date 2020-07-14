@@ -1,3 +1,5 @@
+//Unused... Sending email client side
+
 const functions = require('firebase-functions');
 const {default: Axios} = require('axios');
 const cors = require('cors')({origin: true});

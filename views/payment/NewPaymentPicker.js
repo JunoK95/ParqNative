@@ -15,9 +15,8 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import {AuthContext} from '../../context/AuthContext';
 import CustomPickerItem from '../../components/picker/CustomPickerItem';
 
-const NewPaymentPicker = props => {
+const NewPaymentPicker = ({title, setselected, setopenGen}) => {
   const context = useContext(AuthContext);
-  const {title, setselected, setopenGen} = props;
   const [fetch, setfetch] = useState(false);
   const [select, setselect] = useState(null);
   const [cards, setcards] = useState(null);

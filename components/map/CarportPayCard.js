@@ -24,6 +24,7 @@ import NewPaymentPicker from '../../views/payment/NewPaymentPicker';
 import CustomPicker from '../picker/CustomPicker';
 import {stripePayParkingCharge} from '../../api/stripe_index';
 import CardTokenGenerator from '../../views/payment/card-token-generator/CardTokenGenerator';
+import VehicleRegisterModal from '../vehicle/vehicle-register-modal/VehicleRegisterModal';
 
 const CarportPayCard = props => {
   const context = useContext(AuthContext);
@@ -37,6 +38,7 @@ const CarportPayCard = props => {
   const [error, seterror] = useState(null);
 
   const [openGen, setopenGen] = useState(false);
+  const [vmodal, setvmodal] = useState(false);
 
   //Calculating costs
   const amount = parseInt(
@@ -271,14 +273,19 @@ const CarportPayCard = props => {
               sethours(item.value);
             }}
           />
-          <VehiclePicker title={'Select Vehicle'} setselected={setvehicle} />
+          <VehiclePicker
+            title={'Select Vehicle'}
+            setselected={setvehicle}
+            setopen={setvmodal}
+          />
+          <VehicleRegisterModal open={vmodal} setopen={setvmodal} />
           <NewPaymentPicker
             title={'Select Payment'}
             setselected={setselectcard}
             setopenGen={setopenGen}
           />
+          <CardTokenGenerator open={openGen} setopen={setopenGen} />
         </View>
-        <CardTokenGenerator open={openGen} setopen={setopenGen} />
         <TouchableHighlight
           disabled={!vehicle || !selectcard || !hours || loading}
           style={

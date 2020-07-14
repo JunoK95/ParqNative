@@ -64,7 +64,7 @@ function AuthContextProvider(props) {
           nearby_ports: [],
         });
         setfetching(false);
-        assignStripeCustomerId();
+        await assignStripeCustomerId();
         return true;
       }
     } else {

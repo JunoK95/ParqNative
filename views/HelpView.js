@@ -43,9 +43,9 @@ const HelpView = props => {
         handlePress={() => navigateTo('Privacy')}
       />
       <CustomListItem
-        title={'Card Registration'}
+        title={'Phone'}
         icon={'user-shield'}
-        handlePress={() => navigateTo('CardRegistration')}
+        handlePress={() => navigateTo('Phone')}
       />
     </View>
   );

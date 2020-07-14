@@ -7,6 +7,7 @@ const header_verification = require('./header_verification');
 const metrics = require('./metrics');
 const stripe_functions = require('./stripe_functions/stripe_functions');
 const stripe_webhooks = require('./stripe_functions/stripe_webhooks');
+const twilio_verify_functions = require('./twilio_functions/twilio_verify_functions');
 const logging = require('./logging');
 
 admin.initializeApp(functions.config().firebase);
@@ -112,6 +113,9 @@ exports.stripePayParkingCharge = functions.https.onRequest(
 );
 
 exports.stripeElementCharge = stripe_functions.stripeElementCharge;
+
+exports.twilioCreateVerificationService =
+  twilio_verify_functions.twilioCreateVerificationService;
 
 exports.getUserContactInfo = functions.https.onRequest((request, response) => {
   cors(request, response, () => {

@@ -17,7 +17,7 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 const VehiclePicker = props => {
   const context = useContext(AuthContext);
   const {saved_vehicles} = context;
-  const {setselected, title} = props;
+  const {setselected, title, setopen} = props;
   const [vehicle, setvehicle] = useState(null);
   const [modalopen, setmodalopen] = useState(false);
 
@@ -97,7 +97,8 @@ const VehiclePicker = props => {
                     icon={'plus'}
                     handlePress={() => {
                       setmodalopen(false);
-                      props.navigation.navigate('VehicleReg');
+                      setopen(true);
+                      // props.navigation.navigate('VehicleReg');
                     }}
                   />
                 </ScrollView>

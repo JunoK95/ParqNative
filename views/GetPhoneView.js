@@ -53,7 +53,6 @@ const GetPhoneView = () => {
           autoPlay
           loop
         />
-        {/* <FontAwesome5Icon name={'phone'} size={36} color={'white'} /> */}
       </View>
       <View style={styles.contentcontainer}>
         <Text style={styles.titletext}>
@@ -78,15 +77,6 @@ const GetPhoneView = () => {
           />
         </View>
       </TouchableOpacity>
-      {/* <Input
-        containerStyle={styles.inputcontainer}
-        value={phone}
-        onChangeText={text => handlePhoneChange(text)}
-        placeholder={'(xxx) xxx-xxxx'}
-        label={'Phone Number'}
-        keyboardType={'phone-pad'}
-        textContentType={'telephoneNumber'}
-      /> */}
     </View>
   );
 };
