@@ -7,7 +7,6 @@ async function isAuthenticated(req) {
     return false;
   }
   let currentUid = await decodeAuthToken(authToken);
-
   return currentUid === requestedUid;
 }
 
@@ -17,7 +16,10 @@ function validateHeader(req) {
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer ')
   ) {
-    console.log('Auth Header Found');
+    console.log(
+      'Auth Header Found',
+      req.headers.authorization.split('Bearer ')[1],
+    );
     return req.headers.authorization.split('Bearer ')[1];
   }
 }

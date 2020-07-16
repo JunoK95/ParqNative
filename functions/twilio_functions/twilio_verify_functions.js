@@ -1,5 +1,4 @@
 const functions = require('firebase-functions');
-const {default: Axios} = require('axios');
 const cors = require('cors')({origin: true});
 const header_verification = require('../header_verification');
 
@@ -53,6 +52,13 @@ exports.twilioCreateVerificationService = functions.https.onRequest(
 exports.twilioCheckCodeVerification = functions.https.onRequest(
   (request, response) => {
     cors(request, response, async () => {
+      //Firebase header verification
+      const verified = await header_verification.isAuthenticated(request);
+      if (!verified) {
+        response.status(403).send('Unauthorized! Missing auth token');
+        return;
+      }
+      //Param verification
       const {phone_number, code, service_sid} = request.body;
       if (!phone_number || !code || !service_sid) {
         response.status(400).send('Missing Parameters');

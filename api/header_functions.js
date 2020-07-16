@@ -10,5 +10,6 @@ export const createFirebaseAuthHeader = async () => {
   const header = {
     Authorization: `Bearer ${IdToken}`,
   };
+  console.log(header);
   return header;
 };

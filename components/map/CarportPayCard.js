@@ -131,9 +131,7 @@ const CarportPayCard = props => {
     setloading(true);
 
     //check availablity
-    const isAvailable = await checkCarportAvailablity(port).then(res => {
-      return res;
-    });
+    const isAvailable = await checkCarportAvailablity(port);
     if (!isAvailable) {
       seterror('This parking spot became unavailable');
       setloading(false);
@@ -191,6 +189,7 @@ const CarportPayCard = props => {
         });
       }
     } else if (object === 'card') {
+      console.log('PAYING WITH THIS DATA =>', resData);
       const result = await stripePayParkingCharge(resData, context);
       if (result.error) {
         setloading(false);
