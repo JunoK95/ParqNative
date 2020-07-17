@@ -52,12 +52,6 @@ exports.twilioCreateVerificationService = functions.https.onRequest(
 exports.twilioCheckCodeVerification = functions.https.onRequest(
   (request, response) => {
     cors(request, response, async () => {
-      //Firebase header verification
-      const verified = await header_verification.isAuthenticated(request);
-      if (!verified) {
-        response.status(403).send('Unauthorized! Missing auth token');
-        return;
-      }
       //Param verification
       const {phone_number, code, service_sid} = request.body;
       if (!phone_number || !code || !service_sid) {

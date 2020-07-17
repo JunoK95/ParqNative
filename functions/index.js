@@ -117,6 +117,9 @@ exports.stripeElementCharge = stripe_functions.stripeElementCharge;
 exports.twilioCreateVerificationService =
   twilio_verify_functions.twilioCreateVerificationService;
 
+exports.twilioCheckCodeVerification =
+  twilio_verify_functions.twilioCheckCodeVerification;
+
 exports.getUserContactInfo = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const {user_id} = request.body;

@@ -4,14 +4,21 @@ import {PhoneCodeForm, PhoneEntryForm} from '../components/phone-verification';
 
 const GetPhoneView = () => {
   const [ssid, setssid] = useState(null);
-  const onPhoneEntry = service_sid => {
+  const [phone, setphone] = useState(null);
+
+  const onPhoneEntry = (service_sid, phone_no) => {
     console.log(service_sid);
     setssid(service_sid);
+    setphone(phone_no);
   };
 
   return (
     <View style={styles.bg}>
-      {!ssid ? <PhoneCodeForm /> : <PhoneEntryForm onSubmit={onPhoneEntry} />}
+      {ssid && phone ? (
+        <PhoneCodeForm service_sid={ssid} phone={phone} />
+      ) : (
+        <PhoneEntryForm onSubmit={onPhoneEntry} />
+      )}
     </View>
   );
 };

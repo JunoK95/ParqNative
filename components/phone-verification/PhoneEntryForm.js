@@ -11,10 +11,12 @@ import {AuthContext} from '../../context/AuthContext';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import LottieView from 'lottie-react-native';
 import {twilioCreateVerificationService} from '../../api/twilio_index';
+import OrbLoading from '../loading/OrbLoading';
 
 const PhoneEntryForm = ({onSubmit}) => {
   const [phone, setphone] = useState('');
   const [error, seterror] = useState(null);
+  const [loading, setloading] = useState(false);
   const context = useContext(AuthContext);
 
   const normalizeInput = (value, previousValue) => {
@@ -42,6 +44,7 @@ const PhoneEntryForm = ({onSubmit}) => {
 
   const handleSubmit = async () => {
     seterror(null);
+    setloading(true);
     if (phone.length === 14) {
       const formattedPhone =
         '+1' + phone.slice(1, 4) + phone.slice(6, 9) + phone.slice(10, 14);
@@ -50,14 +53,19 @@ const PhoneEntryForm = ({onSubmit}) => {
           formattedPhone,
           context.user_id,
         );
-        onSubmit(service_sid);
+        setloading(false);
+        onSubmit(service_sid, formattedPhone);
         return;
       } catch (err) {
         seterror({error: err, message: 'Error Sending Verification Code'});
+        setloading(false);
       }
-      // context.functions.addContextPhone(phone);
     }
   };
+
+  if (loading) {
+    return <OrbLoading />;
+  }
 
   return (
     <React.Fragment>
@@ -71,7 +79,7 @@ const PhoneEntryForm = ({onSubmit}) => {
       </View>
       <View style={styles.contentcontainer}>
         <Text style={styles.titletext}>
-          {'We need your phone number to get started'}
+          {error ? error.message : 'We need your phone number to get started'}
         </Text>
       </View>
       <TextInput

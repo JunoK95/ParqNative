@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,13 +9,48 @@ import {
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import {twilioCheckCodeVerification} from '../../api/twilio_index';
+import {AuthContext} from '../../context/AuthContext';
+import {withNavigation} from 'react-navigation';
+import OrbLoading from '../loading/OrbLoading';
 
-const PhoneCodeForm = () => {
+const PhoneCodeForm = ({service_sid, phone, navigation}) => {
+  const context = useContext(AuthContext);
   const [code, setcode] = useState('');
+  const [error, seterror] = useState(null);
+  const [loading, setloading] = useState(false);
 
-  const handleSubmit = () => {
-    console.log('submit');
+  const handleSubmit = async () => {
+    seterror(null);
+    setloading(true);
+    try {
+      const status = await twilioCheckCodeVerification(
+        service_sid,
+        phone,
+        code,
+      );
+      console.log('PHONE VERIFICATION STATUS => ', status.data);
+      if (status.data === 'approved') {
+        context.functions.addContextPhone(phone);
+        setloading(false);
+        navigation.navigate('Home');
+        return;
+      } else {
+        setloading(false);
+        seterror({
+          message:
+            'Phone could not verified. Please make sure you have entered the code correctly.',
+        });
+      }
+    } catch (err) {
+      setloading(false);
+      console.error(err);
+    }
   };
+
+  if (loading) {
+    return <OrbLoading />;
+  }
 
   return (
     <React.Fragment>
@@ -24,12 +59,12 @@ const PhoneCodeForm = () => {
           style={styles.lottieContainer}
           source={require('../../resources/animations/LockSMS.json')}
           autoPlay
-          loop={false}
+          loop={true}
         />
       </View>
       <View style={styles.contentcontainer}>
         <Text style={styles.titletext}>
-          {'We need your phone number to get started'}
+          {error ? error.message : 'Please Enter the 4-digit Verification Code'}
         </Text>
       </View>
       <TextInput
@@ -38,6 +73,7 @@ const PhoneCodeForm = () => {
         onChangeText={text => setcode(text)}
         placeholder={'xxxx'}
         label={'code'}
+        maxLength={4}
         keyboardType={'phone-pad'}
         textContentType={'oneTimeCode'}
       />
@@ -54,7 +90,7 @@ const PhoneCodeForm = () => {
   );
 };
 
-export default PhoneCodeForm;
+export default withNavigation(PhoneCodeForm);
 
 const styles = StyleSheet.create({
   container: {

@@ -27,19 +27,15 @@ export const twilioCheckCodeVerification = async (
   service_sid,
   phone_number,
   code,
-  uid,
 ) => {
-  const authHeader = await createFirebaseAuthHeader();
   try {
     let status = await Axios({
-      headers: authHeader,
       method: 'POST',
       url: `${config.firebase_functions_url_base}twilioCheckCodeVerification`,
       data: {
         service_sid,
         phone_number,
         code,
-        uid,
       },
     });
     return status;
