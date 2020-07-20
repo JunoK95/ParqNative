@@ -354,12 +354,9 @@ const TOSView = () => {
           title={'REVISION DATE: October 8, 2019'}
           titleIcon={'angle-right'}
         />
-        <Text>{config.stripe_publishable_key}</Text>
       </ScrollView>
     </View>
   );
 };
 
 export default TOSView;
-
-const styles = StyleSheet.create({});

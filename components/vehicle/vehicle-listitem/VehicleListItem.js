@@ -1,38 +1,48 @@
-import React, { useContext } from 'react';
+import React, {useContext, useState} from 'react';
 import {StyleSheet, Text, View, Dimensions} from 'react-native';
-import {withNavigation} from 'react-navigation';
+import TouchableNativeReplacement from '../../layout/TouchableNativeReplacement';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-import TouchableNativeReplacement from '../layout/TouchableNativeReplacement';
-import { AuthContext } from '../../context/AuthContext';
+import {AuthContext} from '../../../context/AuthContext';
 
-const SavedLocationsItem = props => {
+const VehicleListItem = ({vehicle}) => {
   const context = useContext(AuthContext);
-  const {lat, lng, address} = props;
+  const [deleting, setdeleting] = useState(false);
 
-  const navigateToResults = (latitude, longitude) => {
-    props.navigation.navigate('Nearby', {
-      location: {latitude, longitude},
-    });
+  const handleDeletePress = async () => {
+    setdeleting(true);
+    try {
+      await context.functions.deleteContextVehicle(vehicle.id);
+    } catch (error) {
+      console.error('Could Not Delete Vehicle');
+      setdeleting(false);
+    }
   };
 
   return (
     <TouchableNativeReplacement
-      color={'secondary'}
-      onPress={() => navigateToResults(lat, lng)}>
+      color={'primary'}
+      vehicle_id={vehicle.id}
+      disabled={deleting}
+      onPress={() => console.log(vehicle)}>
       <View style={styles.item}>
         <View style={styles.itemleft}>
-          <FontAwesome5Icon name={'star'} size={24} />
+          <FontAwesome5Icon name={'car'} size={26} color={vehicle.data.color} />
         </View>
         <View style={styles.itemcenter}>
-          <Text style={styles.itemtext}>{address[0]}</Text>
-          <Text style={styles.itemsubtext}>{address[1]}</Text>
+          <Text style={styles.itemtext}>
+            {vehicle.data.name + ' - ' + vehicle.data.license_plate}
+          </Text>
+          <Text style={styles.itemsubtext}>
+            {vehicle.data.make + ' ' + vehicle.data.model}
+          </Text>
         </View>
         <View style={styles.itemright}>
           <FontAwesome5Icon
             style={styles.floatright}
             name={'trash'}
             size={20}
-            onPress={() => console.log('TRASH')}
+            color={'#11a4ff'}
+            onPress={handleDeletePress}
           />
         </View>
       </View>
@@ -40,7 +50,7 @@ const SavedLocationsItem = props => {
   );
 };
 
-export default withNavigation(SavedLocationsItem);
+export default VehicleListItem;
 
 const styles = StyleSheet.create({
   item: {

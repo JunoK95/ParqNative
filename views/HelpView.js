@@ -42,11 +42,11 @@ const HelpView = props => {
         icon={'user-shield'}
         handlePress={() => navigateTo('Privacy')}
       />
-      <CustomListItem
+      {/* <CustomListItem
         title={'Phone'}
         icon={'user-shield'}
         handlePress={() => navigateTo('Phone')}
-      />
+      /> */}
     </View>
   );
 };

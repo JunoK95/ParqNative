@@ -17,14 +17,6 @@ import TouchableNativeReplacement from '../components/layout/TouchableNativeRepl
 
 const SavedLocationView = props => {
   const context = useContext(AuthContext);
-
-  const navigateToResults = location => {
-    console.log(location);
-    props.navigation.navigate('Nearby', {
-      location,
-    });
-  };
-
   let SavedLocationList = [];
 
   if (context.saved_locations) {

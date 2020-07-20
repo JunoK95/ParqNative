@@ -17,7 +17,7 @@ const PaymentPicker = props => {
         setfetch(false);
         return;
       } else if (!context.user_data.stripe_customer_id) {
-        await context.functions.assignStripeCustomerId();
+        await context.functions.assignStripeCustomerId(context.user_data);
         setfetch(false);
       } else {
         const payments = await context.functions

@@ -64,7 +64,7 @@ function AuthContextProvider(props) {
           nearby_ports: [],
         });
         setfetching(false);
-        await assignStripeCustomerId();
+        await assignStripeCustomerId(userData);
         return true;
       }
     } else {
@@ -276,8 +276,8 @@ function AuthContextProvider(props) {
     });
   };
 
-  const assignStripeCustomerId = async () => {
-    const {email, display_name, stripe_customer_id} = state.user_data;
+  const assignStripeCustomerId = async userData => {
+    const {email, display_name, stripe_customer_id} = userData;
     if (!stripe_customer_id) {
       const data = {
         email,

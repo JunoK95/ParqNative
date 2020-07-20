@@ -37,7 +37,7 @@ const PaymentSettingView = () => {
     const {stripe_customer_id} = user_data;
     setfetch(true);
     if (!stripe_customer_id) {
-      context.functions.assignStripeCustomerId();
+      context.functions.assignStripeCustomerId(user_data);
     } else {
       await context.functions
         .getStripePaymentMethods(stripe_customer_id)
