@@ -2,14 +2,8 @@ import React, {useState, useEffect, createContext, useCallback} from 'react';
 import firebase from '../firebase';
 import {
   getUserData,
-  getSavedLocations,
-  addSaveLocation,
-  getSavedVehicles,
-  addVehicle,
-  updateCarportData,
   createReservation,
   getUserReservationHistory,
-  deleteVehicle,
   updateStripeId,
   setStripeAccountId,
   updateUserData,
@@ -24,12 +18,20 @@ import {
 import {registerUserEmail, signInUserEmail} from './authentication/email';
 import {getUserStateInfo} from './authentication/shared-functions';
 import {googleFirebaseSignin} from './authentication/google-signin';
+import {
+  updateCarportData,
+  addVehicle,
+  deleteVehicle,
+  getUserVehicles,
+  addSavedLocation,
+  getSavedLocations,
+} from '../firebase_func';
 
 export const AuthContext = createContext();
 
 const auth = firebase.auth();
 
-function AuthContextProvider(props) {
+function AuthContextProvider({children}) {
   const [fetching, setfetching] = useState(true);
   const [state, setstate] = useState({
     user_id: null,
@@ -47,7 +49,7 @@ function AuthContextProvider(props) {
     if (user) {
       //Sign In
       let savedLocs = await getSavedLocations(user.uid);
-      let savedVehicles = await getSavedVehicles(user.uid);
+      let savedVehicles = await getUserVehicles(user.uid);
       let userData = await getUserData(user.uid);
 
       if (userData.error) {
@@ -256,7 +258,7 @@ function AuthContextProvider(props) {
     lat,
     lng,
   ) => {
-    addSaveLocation(
+    addSavedLocation(
       state.user_id,
       title,
       formatted_address,
@@ -496,7 +498,7 @@ function AuthContextProvider(props) {
           setNearbyHomePorts,
         },
       }}>
-      {props.children}
+      {children}
     </AuthContext.Provider>
   );
 }

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-import { withNavigation } from 'react-navigation';
+import {withNavigation} from 'react-navigation';
 
 const CarportRegistrationComplete = props => {
   const handlePress = () => {

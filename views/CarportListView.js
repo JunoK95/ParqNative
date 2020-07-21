@@ -11,10 +11,10 @@ import {
 } from 'react-native';
 import {AuthContext} from '../context/AuthContext';
 import HeaderPadding from '../components/header-padding/HeaderPadding';
-import {getOwnedCarports} from '../firebase_func/firestoreFunctions';
 import {Icon} from 'react-native-elements';
 import CarportCard2 from '../components/carport/CarportCard2';
 import {withNavigationFocus} from 'react-navigation';
+import {getOwnedCarports} from '../firebase_func';
 
 const CarportListView = props => {
   const context = useContext(AuthContext);

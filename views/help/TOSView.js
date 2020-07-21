@@ -1,8 +1,7 @@
 import React from 'react';
-import {StyleSheet, View, Text, ScrollView} from 'react-native';
+import {View, ScrollView} from 'react-native';
 import HeaderPadding from '../../components/header-padding/HeaderPadding';
 import ParagraphBlock from '../../components/layout/ParagraphBlock';
-import {config} from '../../config';
 
 const TOSView = () => {
   return (

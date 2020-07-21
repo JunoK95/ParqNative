@@ -1,10 +1,10 @@
 import firebase from '../../firebase';
 import {
   initializeDefaultUser,
-  getSavedLocations,
-  getSavedVehicles,
   getUserData,
 } from '../../firebase_func/firestoreFunctions';
+import {getSavedLocations} from '../../firebase_func/savedLocationsFunctions';
+import {getUserVehicles} from '../../firebase_func/vehicleFunctions';
 
 const auth = firebase.auth();
 
@@ -18,7 +18,7 @@ export const getUserStateInfo = async (email, display_name) => {
     );
   }
   const savedLocations = await getSavedLocations(auth.currentUser.uid);
-  const savedVehicles = await getSavedVehicles(auth.currentUser.uid);
+  const savedVehicles = await getUserVehicles(auth.currentUser.uid);
 
   return {
     userData,

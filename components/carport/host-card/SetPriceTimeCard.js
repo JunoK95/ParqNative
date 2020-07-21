@@ -8,10 +8,10 @@ import {
   Dimensions,
 } from 'react-native';
 import {convertToDollar} from '../../../helpers/helper';
-import {activateCarport} from '../../../firebase_func/firestoreFunctions';
 import CustomTextInput from '../../picker/CustomTextInput';
 import moment from 'moment';
 import SetPriceTimeCardRowItem from './SetPriceTimeCardRowItem';
+import {activateCarport} from '../../../firebase_func';
 
 const SetPriceTimeCard = props => {
   const {port, port_id, setactive, refreshData} = props;

@@ -12,8 +12,8 @@ import {withNavigation} from 'react-navigation';
 import {splitStrByComma, convertToDollar} from '../../../helpers/helper';
 import storeLogo from '../../../resources/images/112.png';
 import FeaturesList from '../FeaturesList';
-import {deactivateCarport} from '../../../firebase_func/firestoreFunctions';
 import moment from 'moment';
+import {deactivateCarport} from '../../../firebase_func';
 
 const ActivatedCard = props => {
   const {port, port_id, refreshData} = props;

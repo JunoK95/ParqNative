@@ -8,10 +8,10 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {ListItem} from 'react-native-elements';
-import {initializeCarportWithParams} from '../../../firebase_func/firestoreFunctions';
 import {AuthContext} from '../../../context/AuthContext';
 import CarportRegistrationComplete from '../CarportRegistrationComplete';
 import {withNavigation} from 'react-navigation';
+import {initializeCarportWithParams} from '../../../firebase_func';
 
 const AddressFormFinal = props => {
   const context = useContext(AuthContext);
@@ -52,10 +52,6 @@ const AddressFormFinal = props => {
       setloading('fail');
       return;
     }
-  };
-
-  const testSubmit = () => {
-    setloading('success');
   };
 
   if (loading === 'loading') {

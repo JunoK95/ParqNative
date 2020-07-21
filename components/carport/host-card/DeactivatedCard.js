@@ -12,7 +12,6 @@ import {splitStrByComma, convertToDollar} from '../../../helpers/helper';
 import storeLogo from '../../../resources/images/112.png';
 import FeaturesList from '../FeaturesList';
 import {withNavigation} from 'react-navigation';
-import {activateCarport} from '../../../firebase_func/firestoreFunctions';
 import SetPriceTimeCard from '../host-card/SetPriceTimeCard';
 import moment from 'moment';
 
@@ -22,20 +21,6 @@ const DeactivatedCard = props => {
 
   const handleClick = () => {
     props.navigation.navigate('CarportEdit', {port, port_id});
-  };
-
-  const handleActivate = () => {
-    console.log('activate');
-  };
-
-  const handleSubmit = async () => {
-    if (port_id) {
-      const success = await activateCarport(port_id);
-      if (success) {
-        setactive(false);
-        refreshData();
-      }
-    }
   };
 
   if (!port) {
