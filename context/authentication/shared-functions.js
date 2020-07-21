@@ -1,10 +1,10 @@
 import firebase from '../../firebase';
 import {
-  initializeDefaultUser,
   getUserData,
-} from '../../firebase_func/firestoreFunctions';
-import {getSavedLocations} from '../../firebase_func/savedLocationsFunctions';
-import {getUserVehicles} from '../../firebase_func/vehicleFunctions';
+  initializeDefaultUser,
+  getSavedLocations,
+  getUserVehicles,
+} from '../../firebase_func';
 
 const auth = firebase.auth();
 

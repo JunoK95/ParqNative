@@ -2,9 +2,9 @@ import React, {useState, useContext} from 'react';
 import {StyleSheet, Text, View, ScrollView, Linking} from 'react-native';
 import {Input, Button} from 'react-native-elements';
 import CustomDatePicker from '../../components/picker/CustomDatePicker';
-import {updateUserData} from '../../firebase_func/firestoreFunctions';
 import {AuthContext} from '../../context/AuthContext';
 import {stripeUpdateAccountAndTOS} from '../../api/stripe_index';
+import {updateUserData} from '../../firebase_func';
 
 const StripeActivateForm1 = props => {
   const {account, setprogress, refresh, setrefresh} = props;

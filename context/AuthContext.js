@@ -1,12 +1,8 @@
 import React, {useState, useEffect, createContext, useCallback} from 'react';
 import firebase from '../firebase';
 import {
-  getUserData,
-  createReservation,
-  getUserReservationHistory,
   updateStripeId,
   setStripeAccountId,
-  updateUserData,
 } from '../firebase_func/firestoreFunctions';
 import {getWallet} from '../firebase_func/walletFunctions';
 import {GoogleSignin} from '@react-native-community/google-signin';
@@ -25,6 +21,10 @@ import {
   getUserVehicles,
   addSavedLocation,
   getSavedLocations,
+  getUserReservationHistory,
+  createReservation,
+  getUserData,
+  updateUserData,
 } from '../firebase_func';
 
 export const AuthContext = createContext();

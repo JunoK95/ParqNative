@@ -8,9 +8,6 @@ import {
   StyleSheet,
 } from 'react-native';
 import HeaderPadding from '../components/header-padding/HeaderPadding';
-import {ListItem} from 'react-native-elements';
-import {getCurrentReservations} from '../firebase_func/firestoreFunctions';
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import AccomodationCard from '../components/carport/carport_profile/AccomodationCard';
 import RestrictionCard from '../components/carport/carport_profile/RestrictionCard';
 import storeLogo from '../resources/images/112.png';
@@ -18,6 +15,7 @@ import {splitStrByComma, convertToDollar} from '../helpers/helper';
 import ParkedVehiclesCard from '../components/carport/carport_profile/ParkedVehiclesCard';
 import {withNavigationFocus} from 'react-navigation';
 import PortInfoCard from '../components/carport/carport_profile/PortInfoCard';
+import {getCurrentReservations} from '../firebase_func';
 
 const typeMenu = {
   driveway: {

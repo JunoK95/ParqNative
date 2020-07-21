@@ -13,10 +13,10 @@ import NearbyListModal from '../components/nearby/NearbyListModal';
 import CustomMapMarker from '../components/map/CustomMapMarker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import CarportCard from '../components/map/CarportCard';
-import {checkCarportAvailablity} from '../firebase_func/firestoreFunctions';
 import TouchableNativeReplacement from '../components/layout/TouchableNativeReplacement';
 import LottieLoading from '../components/loading/LottieLoading';
 import {isIphoneX, isIos} from '../helpers/is-iphoneX';
+import {checkCarportAvailablity} from '../firebase_func';
 
 const NearbyListView = props => {
   const {params} = props.navigation.state;

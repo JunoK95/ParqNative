@@ -14,7 +14,6 @@ import {
 } from '../../helpers/helper';
 import {withNavigation} from 'react-navigation';
 import storeLogo from '../../resources/images/112.png';
-import {checkCarportAvailablity} from '../../firebase_func/firestoreFunctions';
 import {AuthContext} from '../../context/AuthContext';
 import {chargeWallet} from '../../firebase_func/walletFunctions';
 import moment from 'moment';
@@ -25,6 +24,7 @@ import CustomPicker from '../picker/CustomPicker';
 import {stripePayParkingCharge} from '../../api/stripe_index';
 import CardTokenGenerator from '../../views/payment/card-token-generator/CardTokenGenerator';
 import VehicleRegisterModal from '../vehicle/vehicle-register-modal/VehicleRegisterModal';
+import { checkCarportAvailablity } from '../../firebase_func';
 
 const CarportPayCard = props => {
   const context = useContext(AuthContext);
