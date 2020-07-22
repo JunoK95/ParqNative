@@ -24,7 +24,7 @@ import CustomPicker from '../picker/CustomPicker';
 import {stripePayParkingCharge} from '../../api/stripe_index';
 import CardTokenGenerator from '../../views/payment/card-token-generator/CardTokenGenerator';
 import VehicleRegisterModal from '../vehicle/vehicle-register-modal/VehicleRegisterModal';
-import { checkCarportAvailablity } from '../../firebase_func';
+import {checkCarportAvailablity} from '../../firebase_func';
 
 const CarportPayCard = props => {
   const context = useContext(AuthContext);

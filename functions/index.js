@@ -71,12 +71,13 @@ exports.stripePayParkingCharge = functions.https.onRequest(
             }
           })
           .catch(err => {
-            console.log('Error getting document', err);
+            console.error('Error getting document', err);
           });
         console.log('port owner', portOwner);
         destination_stripe_account = portOwner.stripe_account_id;
       } catch (err) {
-        response.status(400).send(err);
+        console.error(err);
+        response.status(400);
       }
 
       console.log(

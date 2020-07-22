@@ -23,13 +23,14 @@ const SavedLocationView = props => {
     SavedLocationList = context.saved_locations.map(location => {
       const address = splitStrByComma(location.data.formatted_address);
       const {title, lat, lng, place_id} = location.data;
-      console.log(location.data);
+      console.log('SAVED LOCATION ID =>', location);
       return (
         <SavedLocationsItem
           key={place_id}
           lat={lat}
           lng={lng}
           address={address}
+          location_id={location.id}
         />
       );
     });

@@ -15,7 +15,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import CarportCard from '../components/map/CarportCard';
 import TouchableNativeReplacement from '../components/layout/TouchableNativeReplacement';
 import LottieLoading from '../components/loading/LottieLoading';
-import {isIphoneX, isIos} from '../helpers/is-iphoneX';
+import {isIos} from '../helpers/is-iphoneX';
 import {checkCarportAvailablity} from '../firebase_func';
 
 const NearbyListView = props => {
@@ -25,13 +25,12 @@ const NearbyListView = props => {
   const [state, setstate] = useState({
     lat: latitude,
     lng: longitude,
-    carports: [],
     selected: {
       id: 'none',
       data: 'none',
     },
   });
-  const [carport2, setcarport2] = useState(null);
+  const [nearbyPorts, setnearbyPorts] = useState(null);
   const [select, setselect] = useState(null);
   const [fetching, setfetching] = useState(true);
   const [key, setKey] = useState(Math.floor(Math.random() * 100));
@@ -39,7 +38,6 @@ const NearbyListView = props => {
 
   const fetchDataGeoX = useCallback(
     async distance => {
-      console.log('fetching data');
       const center = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
       console.log(center, distance);
       const nearbyCarports = await geofirexQueryPoints(
@@ -51,7 +49,6 @@ const NearbyListView = props => {
           console.log(res);
           setstate({
             ...state,
-            carports: res,
           });
           return res;
         })
@@ -67,7 +64,7 @@ const NearbyListView = props => {
       });
       const availableCarports = await Promise.all(promises);
       console.log('Available Carports => ', availableCarports);
-      setcarport2(availableCarports);
+      setnearbyPorts(availableCarports);
       setradius(parseFloat(distance + 1));
       setfetching(false);
       return;
@@ -86,7 +83,7 @@ const NearbyListView = props => {
   if (fetching) {
     return <LottieLoading />;
   } else {
-    const mapMarkers = carport2.map((port, i) => {
+    const mapMarkers = nearbyPorts.map((port, i) => {
       if (port.isAvailable) {
         return (
           <Marker
@@ -159,7 +156,7 @@ const NearbyListView = props => {
         </TouchableNativeReplacement>
         <NearbyListModal
           setlistmode={setlistmode}
-          carports={carport2}
+          carports={nearbyPorts}
           currentlocation={{latitude, longitude}}
           open={listmode}
         />

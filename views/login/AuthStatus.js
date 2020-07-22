@@ -1,5 +1,5 @@
 import React, {useEffect, useContext} from 'react';
-import {View, ActivityIndicator, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {AuthContext} from '../../context/AuthContext';
 import LoadingView from '../LoadingView';
 

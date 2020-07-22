@@ -1,18 +1,22 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, Text, View, Dimensions} from 'react-native';
 import {withNavigation} from 'react-navigation';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import TouchableNativeReplacement from '../layout/TouchableNativeReplacement';
-import { AuthContext } from '../../context/AuthContext';
+import {AuthContext} from '../../context/AuthContext';
 
 const SavedLocationsItem = props => {
   const context = useContext(AuthContext);
-  const {lat, lng, address} = props;
+  const {lat, lng, address, location_id} = props;
 
   const navigateToResults = (latitude, longitude) => {
     props.navigation.navigate('Nearby', {
       location: {latitude, longitude},
     });
+  };
+
+  const handleDelete = async () => {
+    await context.functions.deleteContextSavedLocation(location_id);
   };
 
   return (
@@ -32,7 +36,8 @@ const SavedLocationsItem = props => {
             style={styles.floatright}
             name={'trash'}
             size={20}
-            onPress={() => console.log('TRASH')}
+            color={'#11a4ff'}
+            onPress={handleDelete}
           />
         </View>
       </View>

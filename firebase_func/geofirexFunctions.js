@@ -16,11 +16,8 @@ export async function geofirexQueryPoints(center, radius, field) {
   const geoCenter = geo.point(lat, lng);
   const points = geo.query(collection).within(geoCenter, radius, field);
 
-  console.log(geoCenter);
-  const hits = await get(points).then(res => {
-    console.log(res);
-    return res;
-  });
+  const hits = await get(points);
+  console.log('HITS', hits);
 
   const filteredHits = hits.filter(port => {
     let ifTrue = true;

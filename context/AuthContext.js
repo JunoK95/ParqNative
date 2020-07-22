@@ -1,4 +1,4 @@
-import React, {useState, useEffect, createContext, useCallback} from 'react';
+import React, {useState, useEffect, createContext} from 'react';
 import firebase from '../firebase';
 import {
   updateStripeId,
@@ -11,9 +11,6 @@ import {
   stripeAssignConnectAccountId,
   stripeListCustomerCards,
 } from '../api/stripe_index';
-import {registerUserEmail, signInUserEmail} from './authentication/email';
-import {getUserStateInfo} from './authentication/shared-functions';
-import {googleFirebaseSignin} from './authentication/google-signin';
 import {
   updateCarportData,
   addVehicle,
@@ -25,7 +22,14 @@ import {
   createReservation,
   getUserData,
   updateUserData,
+  deleteSavedLocation,
 } from '../firebase_func';
+import {
+  googleFirebaseSignin,
+  getUserStateInfo,
+  registerUserEmail,
+  signInUserEmail,
+} from './authentication';
 
 export const AuthContext = createContext();
 
@@ -44,8 +48,9 @@ function AuthContextProvider({children}) {
     nearby_ports: [],
   });
 
-  async function onAuthChange(user, credentials) {
+  async function onAuthChange(user) {
     console.log('onAuthChange', user);
+    setfetching(true);
     if (user) {
       //Sign In
       let savedLocs = await getSavedLocations(user.uid);
@@ -65,8 +70,8 @@ function AuthContextProvider({children}) {
           saved_vehicles: savedVehicles,
           nearby_ports: [],
         });
-        setfetching(false);
         await assignStripeCustomerId(userData);
+        setfetching(false);
         return true;
       }
     } else {
@@ -90,19 +95,11 @@ function AuthContextProvider({children}) {
 
   useEffect(() => {
     setfetching(true);
-    console.log('incontext');
     const unsubscribe = auth.onAuthStateChanged(onAuthChange);
     return () => {
       unsubscribe();
     };
   }, []);
-
-  const enterSite = () => {
-    setstate({
-      ...state,
-      site_access: true,
-    });
-  };
 
   const getCurrentUser = () => {
     return auth.currentUser;
@@ -114,7 +111,6 @@ function AuthContextProvider({children}) {
   };
 
   const isVerified = () => {
-    // console.log(auth)
     if (auth.currentUser) {
       return auth.currentUser.emailVerified;
     }
@@ -244,14 +240,7 @@ function AuthContextProvider({children}) {
     }
   };
 
-  const setNearbyHomePorts = async ports => {
-    setstate({
-      ...state,
-      nearby_ports: ports,
-    });
-  };
-
-  const addContextSaveLocation = async (
+  const addContextSavedLocation = async (
     title,
     formatted_address,
     place_id,
@@ -276,6 +265,21 @@ function AuthContextProvider({children}) {
         saved_locations: joinedLocations,
       });
     });
+  };
+
+  const deleteContextSavedLocation = async doc_id => {
+    try {
+      await deleteSavedLocation(state.user_id, doc_id);
+      const filteredLocations = state.saved_locations.filter(location => {
+        return location.id !== doc_id;
+      });
+      setstate({
+        ...state,
+        saved_locations: filteredLocations,
+      });
+    } catch (error) {
+      console.error('LOCATION DELETION FAILED');
+    }
   };
 
   const assignStripeCustomerId = async userData => {
@@ -397,7 +401,6 @@ function AuthContextProvider({children}) {
         const removedVehicle = state.saved_vehicles.filter(vehicle => {
           return vehicle.id !== vehicle_id;
         });
-        console.log(removedVehicle);
         setstate({
           ...state,
           saved_vehicles: removedVehicle,
@@ -480,12 +483,12 @@ function AuthContextProvider({children}) {
           signOutUser,
           signInUser,
           googleSignIn,
-          addContextSaveLocation,
+          addContextSavedLocation,
+          deleteContextSavedLocation,
           addContextVehicle,
-          addContextPhone,
           deleteContextVehicle,
+          addContextPhone,
           editContextCarport,
-          enterSite,
           isVerified,
           sendVerificationEmail,
           reserveCarport,
@@ -495,7 +498,6 @@ function AuthContextProvider({children}) {
           getStripePaymentMethods,
           getContextWallet,
           getAllPaymentMethods,
-          setNearbyHomePorts,
         },
       }}>
       {children}

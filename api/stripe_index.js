@@ -5,6 +5,7 @@ import {createFirebaseAuthHeader} from './header_functions';
 export const stripePayParkingCharge = async data => {
   const authHeader = await createFirebaseAuthHeader();
   let response;
+  console.log(data);
   try {
     response = await Axios({
       headers: authHeader,
