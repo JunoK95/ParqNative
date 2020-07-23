@@ -21,23 +21,6 @@ import {
 
 const dev = {
   firebase_config: {
-    apiKey: FIREBASE_API_KEY,
-    authDomain: FIREBASE_AUTH_DOMAIN,
-    databaseURL: FIREBASE_DATABASE_URL,
-    projectId: FIREBASE_PROJECT_ID,
-    storageBucket: FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
-    appId: FIREBASE_APP_ID,
-    measurementId: FIREBASE_MEASUREMENT_ID,
-  },
-  firebase_functions_url_base:
-    'https://us-central1-parq-alpha.cloudfunctions.net/',
-  stripe_publishable_key: STRIPE_PUBLISHABLE_KEY_TEST,
-  googleSignIn_key: '480005596961-gbloqo7semp724i2h8et0c21orb5sdra.apps.googleusercontent.com',
-};
-
-const prod = {
-  firebase_config: {
     apiKey: FIREBASE_API_KEY_ALPHA,
     authDomain: FIREBASE_AUTH_DOMAIN_ALPHA,
     databaseURL: FIREBASE_DATABASE_URL_ALPHA,
@@ -49,7 +32,28 @@ const prod = {
   },
   firebase_functions_url_base:
     'https://us-central1-parq-alpha.cloudfunctions.net/',
+  stripe_publishable_key: STRIPE_PUBLISHABLE_KEY_TEST,
+  googleSignIn_key:
+    '480005596961-gbloqo7semp724i2h8et0c21orb5sdra.apps.googleusercontent.com',
+};
+
+const prod = {
+  firebase_config: {
+    apiKey: FIREBASE_API_KEY,
+    authDomain: FIREBASE_AUTH_DOMAIN,
+    databaseURL: FIREBASE_DATABASE_URL,
+    projectId: FIREBASE_PROJECT_ID,
+    storageBucket: FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+    appId: FIREBASE_APP_ID,
+    measurementId: FIREBASE_MEASUREMENT_ID,
+  },
+
+  firebase_functions_url_base:
+    'https://us-central1-parq-alpha.cloudfunctions.net/',
   stripe_publishable_key: STRIPE_PUBLISHABLE_KEY_PROD,
+  googleSignIn_key:
+    '449904544159-vbb92q2kjngq7q8vvog4rg1dkof1ndlk.apps.googleusercontent.com',
 };
 
 export const config = process.env.NODE_ENV === 'development' ? dev : prod;

@@ -132,7 +132,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.parqalpha"
+        applicationId "com.parqnative"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 6

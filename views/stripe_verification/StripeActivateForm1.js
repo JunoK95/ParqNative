@@ -11,7 +11,6 @@ const StripeActivateForm1 = props => {
   const context = useContext(AuthContext);
   const [loading, setloading] = useState(false);
   const [dob, setdob] = useState(null);
-  const [phone, setphone] = useState('');
   const [individual, setindividual] = useState({
     first_name: '',
     last_name: '',
@@ -44,10 +43,6 @@ const StripeActivateForm1 = props => {
     }
   };
 
-  const handlePhoneChange = number => {
-    setphone(normalizeInput(number));
-  };
-
   const handleSubmit = async () => {
     setloading(true);
     let birthdate;
@@ -77,7 +72,6 @@ const StripeActivateForm1 = props => {
         first_name: individual.first_name,
         last_name: individual.last_name,
         dob: dob,
-        phone: phone,
       };
 
       const response = await stripeUpdateAccountAndTOS({
@@ -113,15 +107,6 @@ const StripeActivateForm1 = props => {
         placeholder={'e.g. Doe'}
         label={'Last Name'}
         textContentType={'familyName'}
-      />
-      <Input
-        containerStyle={styles.inputcontainer}
-        value={phone}
-        onChangeText={text => handlePhoneChange(text)}
-        placeholder={'(xxx) xxx-xxxx'}
-        label={'Phone Number'}
-        keyboardType={'phone-pad'}
-        textContentType={'telephoneNumber'}
       />
       <Input
         containerStyle={styles.inputcontainer}
@@ -163,7 +148,6 @@ const StripeActivateForm1 = props => {
           individual.first_name === '' ||
           individual.last_name === '' ||
           individual.ssn_last_4.length !== 4 ||
-          phone.length < 14 ||
           !dob ||
           loading
         }

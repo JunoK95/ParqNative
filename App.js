@@ -1,6 +1,4 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
  *
  * @format
  * @flow
@@ -16,12 +14,12 @@ import LoadingView from './views/LoadingView';
 import {GoogleSignin} from '@react-native-community/google-signin';
 import {YellowBox} from 'react-native';
 import _ from 'lodash';
+import {config} from './config';
 
 function App() {
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId:
-        '480005596961-gbloqo7semp724i2h8et0c21orb5sdra.apps.googleusercontent.com',
+      webClientId: config.googleSignIn_key,
       offlineAccess: true,
       hostedDomain: '',
       forceConsentPrompt: true,
@@ -35,6 +33,7 @@ function App() {
       _console.warn(message);
     }
   };
+
   return (
     <NavigationContainer>
       {

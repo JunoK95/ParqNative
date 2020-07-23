@@ -103,6 +103,10 @@ const StripeVerificationMenu = props => {
           </View>
         </View>
       </TouchableNativeReplacement>
+      <Text style={styles.infoText}>
+        To start hosting you need to verify your account with stripe and then
+        add a bank account where Parq can payout to.
+      </Text>
     </View>
   );
 };
@@ -124,5 +128,10 @@ const styles = StyleSheet.create({
   },
   itemicon: {
     paddingHorizontal: 20,
+  },
+  infoText: {
+    paddingHorizontal: 48,
+    paddingVertical: 32,
+    textAlign: 'center',
   },
 });
