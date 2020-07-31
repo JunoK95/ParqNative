@@ -13,11 +13,12 @@ import Axios from 'axios';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import {AuthContext} from '../../context/AuthContext';
 import TouchableNativeReplacement from '../layout/TouchableNativeReplacement';
+import {config} from '../../config';
 
 function AddSavedLocationForm(props) {
   const context = useContext(AuthContext);
   const [load, setload] = useState(false);
-  const apiKey = 'AIzaSyDH_piMcJHJJQLW3WjyLTZo0ICSbHbNXZ0';
+  const apiKey = config.googleMaps_key;
 
   const handlePress = element => {
     const {place_id} = element;

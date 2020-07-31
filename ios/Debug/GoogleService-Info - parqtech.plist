@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>480005596961-01v0ras2badnp57btp7h7d3pvpuiuse1.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.480005596961-01v0ras2badnp57btp7h7d3pvpuiuse1</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>480005596961-dimfoiv8r3218n7n5f7fc7va94dk69ed.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBqQ_KNwmX4und1g2jajTAJ3JmMmw5ppSE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>480005596961</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.parqalpha</string>
+	<key>PROJECT_ID</key>
+	<string>parq-alpha</string>
+	<key>STORAGE_BUCKET</key>
+	<string>parq-alpha.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:480005596961:ios:238795ba9556c43aba0060</string>
+	<key>DATABASE_URL</key>
+	<string>https://parq-alpha.firebaseio.com</string>
+</dict>
+</plist>

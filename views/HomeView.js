@@ -29,6 +29,10 @@ export default class HomeView extends React.Component {
             <GeolocationContext.Consumer>
               {geolocationContext => {
                 const {latitude, longitude} = geolocationContext.location;
+                const {fetch} = geolocationContext;
+                if (fetch) {
+                  return <LoadingView />;
+                }
                 return (
                   <React.Fragment>
                     <View style={styles.container}>

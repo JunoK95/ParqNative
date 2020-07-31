@@ -1,6 +1,6 @@
 import React, {createContext, useState, useEffect} from 'react';
 import Geolocation from 'react-native-geolocation-service';
-import {PermissionsAndroid, Platform, Alert} from 'react-native';
+import {PermissionsAndroid, Platform} from 'react-native';
 
 export const GeolocationContext = createContext();
 
@@ -9,17 +9,17 @@ function GeolocationContextProvider(props) {
     latitude: null,
     location: null,
   });
+  const [fetch, setfetch] = useState(true);
 
   useEffect(() => {
     async function initializeLocation() {
       if (Platform.OS === 'ios') {
         // Get IOS Permission
-        console.log('in iOS Geolocation');
         await Geolocation.getCurrentPosition(
           pos => {
-            const latitude = pos.coords.latitude;
-            const longitude = pos.coords.longitude;
+            const {latitude, longitude} = pos.coords;
             setlocation({latitude, longitude});
+            setfetch(false);
             console.log('You can use their location context iOS =>', location);
           },
           error => {
@@ -44,12 +44,14 @@ function GeolocationContextProvider(props) {
               buttonPositive: 'OK',
             },
           );
+
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             Geolocation.getCurrentPosition(
               pos => {
                 const latitude = pos.coords.latitude;
                 const longitude = pos.coords.longitude;
                 setlocation({latitude, longitude});
+                setfetch(false);
                 console.log('You can use their location context', location);
               },
               error => {
@@ -64,11 +66,13 @@ function GeolocationContextProvider(props) {
             );
           } else {
             console.log('location permission denied');
+            setfetch(false);
           }
         } catch (err) {
           console.warn(err);
         }
       }
+      setfetch(false);
     }
 
     initializeLocation();
@@ -78,6 +82,7 @@ function GeolocationContextProvider(props) {
     <GeolocationContext.Provider
       value={{
         location,
+        fetch,
       }}>
       {props.children}
     </GeolocationContext.Provider>

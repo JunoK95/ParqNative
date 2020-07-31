@@ -7,9 +7,10 @@ import CurrentLocationButton from '../home/CurrentLocationButton';
 import SavedLocationButton from './SavedLocationButton';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import TouchableNativeReplacement from '../layout/TouchableNativeReplacement';
+import {config} from '../../config';
 
 function LocationAutoComplete(props) {
-  const apiKey = 'AIzaSyDH_piMcJHJJQLW3WjyLTZo0ICSbHbNXZ0';
+  const apiKey = config.googleMaps_key;
 
   const handlePress = element => {
     const {place_id} = element;

@@ -17,6 +17,7 @@ import {
   FIREBASE_MESSAGING_SENDER_ID_ALPHA,
   FIREBASE_APP_ID_ALPHA,
   FIREBASE_MEASUREMENT_ID_ALPHA,
+  GOOGLE_MAPS_API_KEY,
 } from 'react-native-dotenv';
 
 const dev = {
@@ -33,6 +34,7 @@ const dev = {
   firebase_functions_url_base:
     'https://us-central1-parq-alpha.cloudfunctions.net/',
   stripe_publishable_key: STRIPE_PUBLISHABLE_KEY_TEST,
+  googleMaps_key: GOOGLE_MAPS_API_KEY,
   googleSignIn_key:
     '480005596961-gbloqo7semp724i2h8et0c21orb5sdra.apps.googleusercontent.com',
 };
@@ -48,10 +50,10 @@ const prod = {
     appId: FIREBASE_APP_ID,
     measurementId: FIREBASE_MEASUREMENT_ID,
   },
-
   firebase_functions_url_base:
     'https://us-central1-parq-alpha.cloudfunctions.net/',
   stripe_publishable_key: STRIPE_PUBLISHABLE_KEY_PROD,
+  googleMaps_key: GOOGLE_MAPS_API_KEY,
   googleSignIn_key:
     '449904544159-vbb92q2kjngq7q8vvog4rg1dkof1ndlk.apps.googleusercontent.com',
 };
