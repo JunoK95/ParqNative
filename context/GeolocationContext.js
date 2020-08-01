@@ -20,7 +20,7 @@ function GeolocationContextProvider(props) {
             const {latitude, longitude} = pos.coords;
             setlocation({latitude, longitude});
             setfetch(false);
-            console.log('You can use their location context iOS =>', location);
+            console.log('You can use their location iOS =>', location);
           },
           error => {
             console.log(error.code, error.message);
@@ -48,8 +48,7 @@ function GeolocationContextProvider(props) {
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             Geolocation.getCurrentPosition(
               pos => {
-                const latitude = pos.coords.latitude;
-                const longitude = pos.coords.longitude;
+                const {latitude, longitude} = pos.coords;
                 setlocation({latitude, longitude});
                 setfetch(false);
                 console.log('You can use their location context', location);
