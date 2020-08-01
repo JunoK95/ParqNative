@@ -1,11 +1,6 @@
 const functions = require('firebase-functions');
-const admin = require('firebase-admin');
 const cors = require('cors')({origin: true});
-const stripe = require('stripe')(functions.config().stripe.test.secret_key); //change to live
-
-exports.stripeUpdateAccount2 = functions.https.onCall((data, context) => {
-  const {account_id, updates} = data;
-});
+const stripe = require('stripe')(functions.config().stripe.live.secret_key); //change to live
 
 exports.stripeUpdateAccount = functions.https.onRequest((request, response) => {
   cors(request, response, () => {

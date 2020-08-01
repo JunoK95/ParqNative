@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
 const cors = require('cors')({origin: true});
-const stripe = require('stripe')(functions.config().stripe.test.secret_key);
+const stripe = require('stripe')(functions.config().stripe.live.secret_key);
 const header_verification = require('../header_verification');
 
 exports.stripeGetAccount = functions.https.onRequest((request, response) => {

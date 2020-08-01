@@ -54,7 +54,10 @@ const StripeAddBankForm = props => {
 
   return (
     <View>
-      <ScrollView contentContainerStyle={styles.formcontainer}>
+      <ScrollView
+        contentContainerStyle={styles.formcontainer}
+        keyboardShouldPersistTaps={'handled'}
+        accessible={false}>
         {error != null && (
           <View>
             <Text style={styles.errorText}>Error Adding Bank Account</Text>

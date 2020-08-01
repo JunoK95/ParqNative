@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const cors = require('cors')({origin: true});
-const stripe = require('stripe')(functions.config().stripe.test.secret_key); //Change API Key On Launch
+const stripe = require('stripe')(functions.config().stripe.live.secret_key); //Change API Key On Launch
 
 const header_verification = require('./header_verification');
 const metrics = require('./metrics');
@@ -93,7 +93,7 @@ exports.stripePayParkingCharge = functions.https.onRequest(
           currency: 'usd',
           description: description,
           metadata: metadata,
-          source: 'tok_visa', //replace with token when going live
+          source: token, //replace with token when going live
           transfer_data: {
             destination: destination_stripe_account,
             amount: destination_amount,

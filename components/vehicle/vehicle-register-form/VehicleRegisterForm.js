@@ -102,8 +102,9 @@ const VehicleRegisterForm = ({onChange, onSubmit}) => {
       <Input
         containerStyle={styles.textField}
         name={'us_state'}
-        placeholder={'State'}
+        placeholder={'e.g. CA'}
         label={'State'}
+        maxLength={2}
         value={inputs.us_state}
         onChangeText={text => handleChange('us_state', text)}
       />

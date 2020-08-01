@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
+import {View, StyleSheet, Dimensions, Keyboard, ScrollView} from 'react-native';
 import {
   AddressForm,
   AddressForm2,
@@ -8,6 +8,7 @@ import {
   AddressForm5,
   AddressFormFinal,
 } from '../../components/carport/address-form/index';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const AddressSubmissionForm = () => {
   const [stage, setstage] = useState(1);
@@ -19,66 +20,62 @@ const AddressSubmissionForm = () => {
   const [parkinginstructions, setparkinginstructions] = useState(null);
   const [description, setdescription] = useState(null);
 
+  let form;
+
   if (stage === 1) {
-    return (
-      <View style={styles.container}>
-        <AddressForm setaddress={setaddress} setstage={setstage} />
-      </View>
-    );
+    form = <AddressForm setaddress={setaddress} setstage={setstage} />;
   } else if (stage === 2 && address) {
-    return (
-      <View style={styles.container}>
-        <AddressForm2
-          address={address}
-          setaddress={setaddress}
-          setstage={setstage}
-        />
-      </View>
+    form = (
+      <AddressForm2
+        address={address}
+        setaddress={setaddress}
+        setstage={setstage}
+      />
     );
   } else if (stage === 3) {
-    return (
-      <View style={styles.container}>
-        <AddressForm3 settype={settype} setstage={setstage} />
-      </View>
-    );
+    form = <AddressForm3 settype={settype} setstage={setstage} />;
   } else if (stage === 4) {
-    return (
-      <View style={styles.container}>
-        <AddressForm4
-          setstage={setstage}
-          setfeatures={setfeatures}
-          setavailablespaces={setavailablespaces}
-        />
-      </View>
+    form = (
+      <AddressForm4
+        setstage={setstage}
+        setfeatures={setfeatures}
+        setavailablespaces={setavailablespaces}
+      />
     );
   } else if (stage === 5) {
-    return (
-      <View style={styles.container}>
-        <AddressForm5
-          setstage={setstage}
-          setparkinginstructions={setparkinginstructions}
-          setdescription={setdescription}
-        />
-      </View>
+    form = (
+      <AddressForm5
+        setstage={setstage}
+        setparkinginstructions={setparkinginstructions}
+        setdescription={setdescription}
+      />
     );
   } else if (stage === 6) {
-    return (
-      <View style={styles.container}>
-        <AddressFormFinal
-          setstage={setstage}
-          address={address}
-          type={type}
-          features={features}
-          availablespaces={availablespaces}
-          parkinginstructions={parkinginstructions}
-          description={description}
-        />
-      </View>
+    form = (
+      <AddressFormFinal
+        setstage={setstage}
+        address={address}
+        type={type}
+        features={features}
+        availablespaces={availablespaces}
+        parkinginstructions={parkinginstructions}
+        description={description}
+      />
     );
   }
+
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <ScrollView contentContainerStyle={styles.flexscreen}>{form}</ScrollView>
+    </TouchableWithoutFeedback>
+  );
 };
 
 const styles = StyleSheet.create({
+  flexscreen: {
+    flex: 1,
+    paddingTop: 64,
+  },
   container: {
     width: Dimensions.get('window').width - 48,
     backgroundColor: '#fff',

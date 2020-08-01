@@ -1,5 +1,11 @@
 import React, {useState, useContext} from 'react';
-import {StyleSheet, View, Modal, TouchableWithoutFeedback} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Modal,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import {CreditCardInput} from 'react-native-input-credit-card';
 import stripe from 'tipsi-stripe';
 import CustomButton from '../../../components/button/CustomButton';
@@ -80,7 +86,7 @@ const CardTokenGenerator = ({open, setopen}) => {
       onRequestClose={() => setopen(false)}>
       <TouchableWithoutFeedback onPress={() => setopen(false)}>
         <View style={styles.container}>
-          <TouchableWithoutFeedback onPress={() => {}}>
+          <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.box}>
               <CreditCardInput
                 inputStyle={styles.fieldContainer}

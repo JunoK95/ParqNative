@@ -91,7 +91,10 @@ const StripeActivateForm1 = props => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.formcontainer}>
+    <ScrollView
+      contentContainerStyle={styles.formcontainer}
+      keyboardShouldPersistTaps={'handled'}
+      accessible={false}>
       <Input
         containerStyle={styles.inputcontainer}
         value={individual.first_name}

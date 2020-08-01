@@ -6,6 +6,9 @@ import {
   TouchableOpacity,
   TextInput,
   Dimensions,
+  TouchableWithoutFeedback,
+  Keyboard,
+  ScrollView,
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
@@ -44,7 +47,10 @@ const PhoneCodeForm = ({service_sid, phone, navigation}) => {
       }
     } catch (err) {
       setloading(false);
-      console.error(err);
+      seterror({
+        message:
+          'Phone could not verified. Please make sure you have entered the code correctly.',
+      });
     }
   };
 
@@ -53,46 +59,54 @@ const PhoneCodeForm = ({service_sid, phone, navigation}) => {
   }
 
   return (
-    <React.Fragment>
-      <View style={styles.contentcontainer}>
-        <LottieView
-          style={styles.lottieContainer}
-          source={require('../../resources/animations/LockSMS.json')}
-          autoPlay
-          loop={true}
-        />
-      </View>
-      <View style={styles.contentcontainer}>
-        <Text style={styles.titletext}>
-          {error ? error.message : 'Please Enter the 4-digit Verification Code'}
-        </Text>
-      </View>
-      <TextInput
-        style={styles.inputcontainer}
-        value={code}
-        onChangeText={text => setcode(text)}
-        placeholder={'xxxx'}
-        label={'code'}
-        maxLength={4}
-        keyboardType={'phone-pad'}
-        textContentType={'oneTimeCode'}
-      />
-      <TouchableOpacity onPress={handleSubmit}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.flexscreen}>
         <View style={styles.contentcontainer}>
-          <FontAwesome5Icon
-            name={'arrow-circle-right'}
-            size={36}
-            color={'#ffc630'}
+          <LottieView
+            style={styles.lottieContainer}
+            source={require('../../resources/animations/LockSMS.json')}
+            autoPlay
+            loop={true}
           />
         </View>
-      </TouchableOpacity>
-    </React.Fragment>
+        <View style={styles.contentcontainer}>
+          <Text style={styles.titletext}>
+            {error
+              ? error.message
+              : 'Please Enter the 4-digit Verification Code'}
+          </Text>
+        </View>
+        <TextInput
+          style={styles.inputcontainer}
+          value={code}
+          onChangeText={text => setcode(text)}
+          placeholder={'xxxx'}
+          label={'code'}
+          maxLength={4}
+          keyboardType={'numeric'}
+          textContentType={'oneTimeCode'}
+        />
+        <TouchableOpacity onPress={handleSubmit}>
+          <View style={styles.contentcontainer}>
+            <FontAwesome5Icon
+              name={'arrow-circle-right'}
+              size={36}
+              color={'#ffc630'}
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
 export default withNavigation(PhoneCodeForm);
 
 const styles = StyleSheet.create({
+  flexscreen: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   container: {
     width: Dimensions.get('window').width - 32,
     backgroundColor: '#fff',
