@@ -189,6 +189,7 @@ function AuthContextProvider({children}) {
       console.error('Google Sign In Failed');
       return;
     }
+
     const {email, name} = firebaseUserCredential.additionalUserInfo.profile;
     const userInfo = await getUserStateInfo(email, name);
 

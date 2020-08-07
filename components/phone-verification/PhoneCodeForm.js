@@ -70,7 +70,7 @@ const PhoneCodeForm = ({service_sid, phone, navigation}) => {
           />
         </View>
         <View style={styles.contentcontainer}>
-          <Text style={styles.titletext}>
+          <Text style={error ? styles.errortext : styles.titletext}>
             {error
               ? error.message
               : 'Please Enter the 4-digit Verification Code'}
@@ -131,6 +131,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 24,
     color: '#fff',
+    paddingHorizontal: 32,
+    fontFamily: 'Montserrat-Bold',
+  },
+  errortext: {
+    textAlign: 'center',
+    fontSize: 24,
+    color: '#f44336',
     paddingHorizontal: 32,
     fontFamily: 'Montserrat-Bold',
   },

@@ -51,7 +51,7 @@ const prod = {
     measurementId: FIREBASE_MEASUREMENT_ID,
   },
   firebase_functions_url_base:
-    'https://us-central1-parq-alpha.cloudfunctions.net/',
+    'https://us-central1-parq-dev.cloudfunctions.net/',
   stripe_publishable_key: STRIPE_PUBLISHABLE_KEY_PROD,
   googleMaps_key: GOOGLE_MAPS_API_KEY,
   googleSignIn_key:

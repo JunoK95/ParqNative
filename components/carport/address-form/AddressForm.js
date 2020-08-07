@@ -104,7 +104,7 @@ const AddressForm = props => {
 
 const styles = StyleSheet.create({
   container: {
-    height: 1000,
+    flex: 1,
   },
   button: {
     alignItems: 'center',

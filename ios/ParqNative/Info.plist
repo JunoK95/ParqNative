@@ -38,6 +38,24 @@
 				<string>com.googleusercontent.apps.449904544159-cb2a7iglsafbl0hl54uacflbqmdsr34r</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string></string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.449904544159-ll3m3do8s4liqqcqttsfi4k6vtf30aqd</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.480005596961-c0de0391jqachh97phicoiorcigp3bvd</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>

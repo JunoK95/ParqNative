@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>449904544159-ll3m3do8s4liqqcqttsfi4k6vtf30aqd.apps.googleusercontent.com</string>
+	<string>480005596961-c0de0391jqachh97phicoiorcigp3bvd.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.449904544159-ll3m3do8s4liqqcqttsfi4k6vtf30aqd</string>
+	<string>com.googleusercontent.apps.480005596961-c0de0391jqachh97phicoiorcigp3bvd</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>449904544159-dc3gegvkrvv06o22p85rsui4csf3mrd1.apps.googleusercontent.com</string>
+	<string>480005596961-ljqcofmnbq635redqfj3v84hbkjskt6i.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCZUKKehElzBu38_HO5DlVnQl2WYKgL2_A</string>
+	<string>AIzaSyBqQ_KNwmX4und1g2jajTAJ3JmMmw5ppSE</string>
 	<key>GCM_SENDER_ID</key>
-	<string>449904544159</string>
+	<string>480005596961</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.parqnative.ios</string>
+	<string>com.parqnative</string>
 	<key>PROJECT_ID</key>
-	<string>parq-dev</string>
+	<string>parq-alpha</string>
 	<key>STORAGE_BUCKET</key>
-	<string>parq-dev.appspot.com</string>
+	<string>parq-alpha.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,8 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:449904544159:ios:22577f685a5411d65e95aa</string>
+	<string>1:480005596961:ios:5df142c49f5bd8aeba0060</string>
 	<key>DATABASE_URL</key>
-	<string>https://parq-dev.firebaseio.com</string>
+	<string>https://parq-alpha.firebaseio.com</string>
 </dict>
 </plist>

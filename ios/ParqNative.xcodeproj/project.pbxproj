@@ -17,7 +17,6 @@
 		2DCD954D1E0B4F2C00145EB5 /* ParqNativeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ParqNativeTests.m */; };
 		30FB1F69FFB1C3C109C960F3 /* libPods-ParqNative-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4BD66A56A50D480D1A1F4A7 /* libPods-ParqNative-tvOSTests.a */; };
 		3BEABBAED9B3E97754448758 /* libPods-ParqNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00E5096936868DCD8EDE2BE9 /* libPods-ParqNative.a */; };
-		B80F3E3E247098EE00E26E91 /* GoogleService-Info (2).plist in Resources */ = {isa = PBXBuildFile; fileRef = B80F3E3D247098ED00E26E91 /* GoogleService-Info (2).plist */; };
 		B80F3E3F2470C11A00E26E91 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F6F3635587B64C82ADA153B6 /* Montserrat-Medium.ttf */; };
 		B80F3E402470C13700E26E91 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9597F9F448ED4E6FA1D1033C /* Montserrat-Bold.ttf */; };
 		B80F3E412470C14000E26E91 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 03F7BE88A4A040A7A9A1F80B /* Montserrat-SemiBold.ttf */; };
@@ -25,9 +24,6 @@
 		B80F3E432470C1CC00E26E91 /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7533D67E0FAF49CF954DF5DD /* Montserrat-SemiBoldItalic.ttf */; };
 		B80F3E442472016A00E26E91 /* Montserrat-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6EAED607E2141C79DAA1228 /* Montserrat-MediumItalic.ttf */; };
 		B851763E24AA1475000857AC /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851763D24AA1475000857AC /* File.swift */; };
-		B86DDFC524B0A66300FBA045 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B86DDFC424B0A66300FBA045 /* GoogleService-Info.plist */; };
-		B8895F9E24CAB77100C8BB36 /* Debug in Resources */ = {isa = PBXBuildFile; fileRef = B8895F9D24CAB77100C8BB36 /* Debug */; };
-		B8895FA024CAB93C00C8BB36 /* Release in Resources */ = {isa = PBXBuildFile; fileRef = B8895F9F24CAB93C00C8BB36 /* Release */; };
 		B88A50B3247370F300980862 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		B8A600BB6C2727631275B468 /* libPods-ParqNativeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7553A16E5CCB11B40AB14F6 /* libPods-ParqNativeTests.a */; };
 /* End PBXBuildFile section */
@@ -117,14 +113,10 @@
 		B3FDC495ED1E4264A60B58FA /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		B5389FBC86374D038211692E /* Montserrat-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-ExtraLightItalic.ttf"; path = "../assets/fonts/Montserrat-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
 		B7553A16E5CCB11B40AB14F6 /* libPods-ParqNativeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ParqNativeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B80F3E3D247098ED00E26E91 /* GoogleService-Info (2).plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info (2).plist"; path = "../../Downloads/GoogleService-Info (2).plist"; sourceTree = "<group>"; };
+		B819A04224DD1BD200932DF4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B819A04424DD1BD200932DF4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B851763C24AA1475000857AC /* ParqNative-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParqNative-Bridging-Header.h"; sourceTree = "<group>"; };
 		B851763D24AA1475000857AC /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		B86DDFC424B0A66300FBA045 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		B8895F9B24CAB74700C8BB36 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		B8895F9C24CAB74700C8BB36 /* GoogleService-Info - parqtech.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info - parqtech.plist"; sourceTree = "<group>"; };
-		B8895F9D24CAB77100C8BB36 /* Debug */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Debug; sourceTree = "<group>"; };
-		B8895F9F24CAB93C00C8BB36 /* Release */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Release; sourceTree = "<group>"; };
 		B9120180A10E4942B20A1878 /* Muli-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Muli-Light.ttf"; path = "../assets/fonts/Muli-Light.ttf"; sourceTree = "<group>"; };
 		BA6B12AA5DF08CCAFDD7AA15 /* Pods-ParqNative-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ParqNative-tvOS.release.xcconfig"; path = "Target Support Files/Pods-ParqNative-tvOS/Pods-ParqNative-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		C1D4512C74A348E7A3AB8A9D /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
@@ -206,8 +198,7 @@
 		13B07FAE1A68108700A75B9A /* ParqNative */ = {
 			isa = PBXGroup;
 			children = (
-				B86DDFC424B0A66300FBA045 /* GoogleService-Info.plist */,
-				B80F3E3D247098ED00E26E91 /* GoogleService-Info (2).plist */,
+				B819A04024DD1BD200932DF4 /* Firebase */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -314,9 +305,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				B8895F9F24CAB93C00C8BB36 /* Release */,
-				B8895F9A24CAB74700C8BB36 /* Debug */,
-				B8895F9D24CAB77100C8BB36 /* Debug */,
 				13B07FAE1A68108700A75B9A /* ParqNative */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* ParqNativeTests */,
@@ -341,11 +329,28 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B8895F9A24CAB74700C8BB36 /* Debug */ = {
+		B819A04024DD1BD200932DF4 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				B8895F9B24CAB74700C8BB36 /* GoogleService-Info.plist */,
-				B8895F9C24CAB74700C8BB36 /* GoogleService-Info - parqtech.plist */,
+				B819A04124DD1BD200932DF4 /* Release */,
+				B819A04324DD1BD200932DF4 /* Debug */,
+			);
+			name = Firebase;
+			path = ParqNative/Firebase;
+			sourceTree = "<group>";
+		};
+		B819A04124DD1BD200932DF4 /* Release */ = {
+			isa = PBXGroup;
+			children = (
+				B819A04224DD1BD200932DF4 /* GoogleService-Info.plist */,
+			);
+			path = Release;
+			sourceTree = "<group>";
+		};
+		B819A04324DD1BD200932DF4 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				B819A04424DD1BD200932DF4 /* GoogleService-Info.plist */,
 			);
 			path = Debug;
 			sourceTree = "<group>";
@@ -395,6 +400,7 @@
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+				B889A2A024DD16FE00C8BB36 /* Setup Firebase plist files */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				4F6C7AF25FC7D2D6BB702C25 /* [CP] Copy Pods Resources */,
@@ -453,7 +459,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -481,12 +487,20 @@
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "ParqNative" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
+				de,
+				"zh-Hans",
+				ja,
+				nb,
+				es,
+				it,
+				fr,
+				fi,
+				nl,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -514,16 +528,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B80F3E442472016A00E26E91 /* Montserrat-MediumItalic.ttf in Resources */,
-				B86DDFC524B0A66300FBA045 /* GoogleService-Info.plist in Resources */,
 				B88A50B3247370F300980862 /* Images.xcassets in Resources */,
-				B8895F9E24CAB77100C8BB36 /* Debug in Resources */,
-				B8895FA024CAB93C00C8BB36 /* Release in Resources */,
 				B80F3E432470C1CC00E26E91 /* Montserrat-SemiBoldItalic.ttf in Resources */,
 				B80F3E422470C16500E26E91 /* Muli-Black.ttf in Resources */,
 				B80F3E412470C14000E26E91 /* Montserrat-SemiBold.ttf in Resources */,
 				B80F3E402470C13700E26E91 /* Montserrat-Bold.ttf in Resources */,
 				B80F3E3F2470C11A00E26E91 /* Montserrat-Medium.ttf in Resources */,
-				B80F3E3E247098EE00E26E91 /* GoogleService-Info (2).plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -557,7 +567,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -672,6 +682,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		B889A2A024DD16FE00C8BB36 /* Setup Firebase plist files */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Setup Firebase plist files";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Name of the resource we're selectively copying\nGOOGLESERVICE_INFO_PLIST=GoogleService-Info.plist\n\n# Get references to dev and prod versions of the GoogleService-Info.plist\n# NOTE: These should only live on the file system and should NOT be part of the target (since we'll be adding them to the target manually)\nGOOGLESERVICE_INFO_DEBUG=${PROJECT_DIR}/${TARGET_NAME}/Firebase/Debug/${GOOGLESERVICE_INFO_PLIST}\nGOOGLESERVICE_INFO_RELEASE=${PROJECT_DIR}/${TARGET_NAME}/Firebase/Release/${GOOGLESERVICE_INFO_PLIST}\n\n# Make sure the dev version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO_DEBUG}\"\nif [ ! -f $GOOGLESERVICE_INFO_DEBUG ]\nthen\n    echo \"No Development GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\n# Make sure the prod version of GoogleService-Info.plist exists\necho \"Looking for ${GOOGLESERVICE_INFO_PLIST} in ${GOOGLESERVICE_INFO_RELEASE}\"\nif [ ! -f $GOOGLESERVICE_INFO_RELEASE ]\nthen\n    echo \"No Production GoogleService-Info.plist found. Please ensure it's in the proper directory.\"\n    exit 1\nfi\n\n# Get a reference to the destination location for the GoogleService-Info.plist\nPLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\necho \"Will copy ${GOOGLESERVICE_INFO_PLIST} to final destination: ${PLIST_DESTINATION}\"\n\n# Copy over the prod GoogleService-Info.plist for Release builds\nif [ \"${CONFIGURATION}\" == \"Release\" ]\nthen\n    echo \"Using ${GOOGLESERVICE_INFO_RELEASE}\"\n    cp \"${GOOGLESERVICE_INFO_RELEASE}\" \"${PLIST_DESTINATION}\"\nelse\n    echo \"Using ${GOOGLESERVICE_INFO_DEBUG}\"\n    cp \"${GOOGLESERVICE_INFO_DEBUG}\" \"${PLIST_DESTINATION}\"\nfi\n";
 		};
 		BD299A75854B4081C098C8F7 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1135,6 +1163,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

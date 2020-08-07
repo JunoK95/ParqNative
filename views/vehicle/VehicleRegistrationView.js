@@ -2,10 +2,13 @@ import React, {useState, useContext} from 'react';
 import HeaderPadding from '../../components/header-padding/HeaderPadding';
 import {AuthContext} from '../../context/AuthContext';
 import VehicleRegisterForm from '../../components/vehicle/vehicle-register-form/VehicleRegisterForm';
+import {withNavigation} from 'react-navigation';
+import OrbLoading from '../../components/loading/OrbLoading';
 
 const VehicleRegistrationView = props => {
   const context = useContext(AuthContext);
   const [inputs, setinputs] = useState('');
+  const [load, setload] = useState(false);
 
   const handleChange = data => {
     setinputs(data);
@@ -18,6 +21,7 @@ const VehicleRegistrationView = props => {
     } else if (context) {
       const {addContextVehicle} = context.functions;
       try {
+        setload(true);
         await addContextVehicle({
           name,
           license_plate,
@@ -27,12 +31,18 @@ const VehicleRegistrationView = props => {
           year,
           color,
         });
+        setload(false);
+        props.navigation.navigate('VehicleList');
       } catch (error) {
+        setload(false);
         console.error(error);
       }
     }
   };
 
+  if (load) {
+    return <OrbLoading />;
+  }
   return (
     <React.Fragment>
       <HeaderPadding to={'VehicleList'} />
@@ -41,4 +51,4 @@ const VehicleRegistrationView = props => {
   );
 };
 
-export default VehicleRegistrationView;
+export default withNavigation(VehicleRegistrationView);

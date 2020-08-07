@@ -1,10 +1,19 @@
 import React, {useState, useContext} from 'react';
-import {View, Text, StyleSheet, TextInput} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableWithoutFeedback,
+  Keyboard,
+  TouchableOpacity,
+} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {AuthContext} from '../../context/AuthContext';
 import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 import OrbLoading from '../../components/loading/OrbLoading';
 import {EmailSignInButton, GoogleSignInButton} from '../../components/login';
+import {config} from '../../config';
 
 const LoginView = props => {
   const context = useContext(AuthContext);
@@ -61,58 +70,72 @@ const LoginView = props => {
       console.log('ERROR SIGNING IN => ', err);
       if (err.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
+        seterror('Sign In Cancelled');
       } else if (err.code === statusCodes.IN_PROGRESS) {
         // operation (f.e. sign in) is in progress already
       } else if (err.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
         // play services not available or outdated
+        seterror('Play Services Not Available');
       } else {
         // some other error happened
+        seterror('Error Logging In');
       }
     }
   };
 
   return (
-    <View style={styles.bg}>
-      {error ? (
-        <View style={styles.errorBox}>
-          <Text style={styles.errorText}>{error}</Text>
-        </View>
-      ) : null}
-      {load ? (
-        <OrbLoading />
-      ) : (
-        <React.Fragment>
-          {process.env.NODE_ENV === 'development' && <Text>DEV MODE</Text>}
-          <View style={styles.formContainer}>
-            <View style={styles.textFieldContainer}>
-              <Icon iconStyle={styles.icon} name={'email'} size={30} />
-              <TextInput
-                style={styles.textField}
-                name={'email'}
-                placeholder={'email'}
-                textContentType={'emailAddress'}
-                value={email}
-                onChangeText={text => setemail(text)}
-              />
-            </View>
-            <View style={styles.textFieldContainer}>
-              <Icon iconStyle={styles.icon} name={'lock'} size={30} />
-              <TextInput
-                style={styles.textField}
-                name={'password'}
-                placeholder={'password'}
-                textContentType={'password'}
-                secureTextEntry
-                value={password}
-                onChangeText={text => setpassword(text)}
-              />
-            </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.bg}>
+        {error ? (
+          <View style={styles.errorBox}>
+            <Text style={styles.errorText}>{error}</Text>
           </View>
-          <EmailSignInButton handlePress={handleSignIn} />
-          <GoogleSignInButton handlePress={_signIn} />
-        </React.Fragment>
-      )}
-    </View>
+        ) : null}
+        {load ? (
+          <OrbLoading />
+        ) : (
+          <React.Fragment>
+            {process.env.NODE_ENV === 'development' && <Text>DEV MODE</Text>}
+            <View style={styles.formContainer}>
+              <View style={styles.textFieldContainer}>
+                <Icon iconStyle={styles.icon} name={'email'} size={30} />
+                <TextInput
+                  style={styles.textField}
+                  name={'email'}
+                  placeholder={'email'}
+                  textContentType={'emailAddress'}
+                  value={email}
+                  onChangeText={text => setemail(text)}
+                />
+              </View>
+              <View style={styles.textFieldContainer}>
+                <Icon iconStyle={styles.icon} name={'lock'} size={30} />
+                <TextInput
+                  style={styles.textField}
+                  name={'password'}
+                  placeholder={'password'}
+                  textContentType={'password'}
+                  secureTextEntry
+                  autoCorrect={false}
+                  value={password}
+                  onChangeText={text => setpassword(text)}
+                />
+              </View>
+            </View>
+            <EmailSignInButton handlePress={handleSignIn} />
+            <GoogleSignInButton handlePress={_signIn} />
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate('Landing');
+              }}>
+              <View style={styles.backContainer}>
+                <Text style={styles.backText}>Go Back</Text>
+              </View>
+            </TouchableOpacity>
+          </React.Fragment>
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -158,6 +181,16 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontFamily: 'Montserrat',
+  },
+  backContainer: {
+    paddingVertical: 16,
+    alignItems: 'center',
+  },
+  backText: {
+    fontSize: 16,
+    color: 'blue',
+    fontFamily: 'Montserrat',
+    textAlign: 'center',
   },
 });
 

@@ -1,5 +1,13 @@
 import React, {useState, useContext} from 'react';
-import {View, Text, StyleSheet, TextInput} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import {Icon, Button} from 'react-native-elements';
 import {AuthContext} from '../../context/AuthContext';
 import {validateEmail, validatePassword} from '../../helpers/helper';
@@ -43,69 +51,73 @@ const RegisterView = props => {
   };
 
   return (
-    <View style={styles.bg}>
-      {error ? (
-        <View style={styles.errorBox}>
-          <Text style={styles.errorText}>{error}</Text>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.bg}>
+        {error ? (
+          <View style={styles.errorBox}>
+            <Text style={styles.errorText}>{error}</Text>
+          </View>
+        ) : null}
+        <View style={styles.textFieldContainer}>
+          <Icon iconStyle={styles.icon} name={'email'} size={30} />
+          <TextInput
+            style={styles.textField}
+            name={'email'}
+            placeholder={'email'}
+            textContentType={'emailAddress'}
+            value={email}
+            onChangeText={text => setemail(text)}
+          />
         </View>
-      ) : null}
-      <View style={styles.textFieldContainer}>
-        <Icon iconStyle={styles.icon} name={'email'} size={30} />
-        <TextInput
-          style={styles.textField}
-          name={'email'}
-          placeholder={'email'}
-          textContentType={'emailAddress'}
-          value={email}
-          onChangeText={text => setemail(text)}
+        <View style={styles.textFieldContainer}>
+          <Icon iconStyle={styles.icon} name={'face'} size={30} />
+          <TextInput
+            style={styles.textField}
+            name={'display_name'}
+            placeholder={'display name'}
+            textContentType={'name'}
+            value={display_name}
+            onChangeText={text => setname(text)}
+          />
+        </View>
+        <View style={styles.textFieldContainer}>
+          <Icon iconStyle={styles.icon} name={'lock'} size={30} />
+          <TextInput
+            style={styles.textField}
+            name={'password'}
+            placeholder={'password'}
+            textContentType={'newPassword'}
+            autoCorrect={false}
+            value={password}
+            secureTextEntry
+            onChangeText={text => setpassword(text)}
+          />
+        </View>
+        <View style={styles.textFieldContainer}>
+          <Icon iconStyle={styles.icon} name={'done'} size={30} />
+          <TextInput
+            style={styles.textField}
+            name={'password2'}
+            placeholder={'confirm password'}
+            textContentType={'newPassword'}
+            autoCorrect={false}
+            secureTextEntry
+            value={password2}
+            onChangeText={text => setpassword2(text)}
+          />
+        </View>
+        <Button
+          containerStyle={styles.buttonContainer}
+          title={'Sign Up'}
+          onPress={handleSubmit}
+        />
+        <Button
+          containerStyle={styles.buttonContainer}
+          title={'Sign Up With Google'}
+          onPress={handleRedirect}
         />
       </View>
-      <View style={styles.textFieldContainer}>
-        <Icon iconStyle={styles.icon} name={'face'} size={30} />
-        <TextInput
-          style={styles.textField}
-          name={'display_name'}
-          placeholder={'display name'}
-          textContentType={'name'}
-          value={display_name}
-          onChangeText={text => setname(text)}
-        />
-      </View>
-      <View style={styles.textFieldContainer}>
-        <Icon iconStyle={styles.icon} name={'lock'} size={30} />
-        <TextInput
-          style={styles.textField}
-          name={'password'}
-          placeholder={'password'}
-          textContentType={'password'}
-          secureTextEntry
-          value={password}
-          onChangeText={text => setpassword(text)}
-        />
-      </View>
-      <View style={styles.textFieldContainer}>
-        <Icon iconStyle={styles.icon} name={'done'} size={30} />
-        <TextInput
-          style={styles.textField}
-          name={'password2'}
-          placeholder={'confirm password'}
-          textContentType={'password'}
-          secureTextEntry
-          value={password2}
-          onChangeText={text => setpassword2(text)}
-        />
-      </View>
-      <Button
-        containerStyle={styles.buttonContainer}
-        title={'Sign Up'}
-        onPress={handleSubmit}
-      />
-      <Button
-        containerStyle={styles.buttonContainer}
-        title={'Sign Up With Google'}
-        onPress={handleRedirect}
-      />
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

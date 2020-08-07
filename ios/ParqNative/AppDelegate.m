@@ -16,19 +16,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  if ([FIRApp defaultApp] == nil) {
-    NSString *filePath;
-    #ifdef DEBUG
-      NSLog(@"[FIREBASE] Development mode.");
-      filePath = [[NSBundle mainBundle] pathForResource:@"GoogleService-Info" ofType:@"plist" inDirectory:@"Debug"];
-    #else
-      NSLog(@"[FIREBASE] Production mode.");
-      filePath = [[NSBundle mainBundle] pathForResource:@"GoogleService-Info" ofType:@"plist" inDirectory:@"Release"];
-    #endif
-      
-      FIROptions *options = [[FIROptions alloc] initWithContentsOfFile:filePath];
-      [FIRApp configureWithOptions:options];
-  }
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"ParqNative"
