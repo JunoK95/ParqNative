@@ -3,6 +3,7 @@ import firebase from '../../firebase';
 const auth = firebase.auth();
 
 export const registerUserEmail = async (email, pw) => {
+  console.log('CREATING ACCOUNT FOR => ', email);
   try {
     await auth.createUserWithEmailAndPassword(email, pw);
     return true;

@@ -130,9 +130,9 @@ function AuthContextProvider({children}) {
 
   const registerUser = async (email, pass, display_name) => {
     try {
-      await registerUserEmail();
+      await registerUserEmail(email, pass);
     } catch (error) {
-      console.error('ERROR LOGGIN IN WITH EMAIL => ', error);
+      console.error('ERROR LOGGING IN WITH EMAIL => ', error);
       return {
         error: {
           code: error.code,
