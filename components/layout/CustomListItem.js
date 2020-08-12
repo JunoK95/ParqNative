@@ -3,17 +3,15 @@ import {StyleSheet, Text, View} from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import TouchableNativeReplacement from './TouchableNativeReplacement';
 
-const CustomListItem = props => {
-  const {
-    title,
-    subtitle,
-    icon,
-    iconColor,
-    iconSize,
-    handlePress,
-    rippleColor,
-  } = props;
-
+const CustomListItem = ({
+  title,
+  subtitle,
+  icon,
+  iconColor,
+  iconSize,
+  handlePress,
+  rippleColor,
+}) => {
   return (
     <TouchableNativeReplacement onPress={handlePress} color={rippleColor}>
       <View style={styles.item}>

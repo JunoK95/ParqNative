@@ -29,6 +29,8 @@ import TOSView from './views/help/TOSView';
 import PrivacyView from './views/help/PrivacyView';
 import GetPhoneView from './views/GetPhoneView';
 import CardTokenGenerator from './views/payment/card-token-generator/CardTokenGenerator';
+import IndexView from './views/IndexView';
+import ReferralView from './views/ReferralView';
 
 const SearchNavigator = createStackNavigator(
   {
@@ -85,6 +87,7 @@ const AppNavigator = createDrawerNavigator(
     ReservationList: ReservationListView,
     Help: HelpNavigator,
     CardRegistration: CardTokenGenerator,
+    Index: IndexView,
   },
   {
     initialRouteName: 'Home',
@@ -114,6 +117,7 @@ export default createAppContainer(
       App: AppNavigator,
       Auth: AuthNavigator,
       Phone: GetPhoneView,
+      Referral: ReferralView,
     },
     {
       initialRouteName: 'AuthStatus',

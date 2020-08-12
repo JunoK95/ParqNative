@@ -9,6 +9,7 @@ import {
   FIREBASE_MESSAGING_SENDER_ID,
   FIREBASE_APP_ID,
   FIREBASE_MEASUREMENT_ID,
+  FIREBASE_FUNCTIONS_URL,
   FIREBASE_API_KEY_ALPHA,
   FIREBASE_AUTH_DOMAIN_ALPHA,
   FIREBASE_PROJECT_ID_ALPHA,
@@ -17,6 +18,7 @@ import {
   FIREBASE_MESSAGING_SENDER_ID_ALPHA,
   FIREBASE_APP_ID_ALPHA,
   FIREBASE_MEASUREMENT_ID_ALPHA,
+  FIREBASE_FUNCTIONS_URL_ALPHA,
   GOOGLE_MAPS_API_KEY,
 } from 'react-native-dotenv';
 
@@ -31,8 +33,7 @@ const dev = {
     appId: FIREBASE_APP_ID_ALPHA,
     measurementId: FIREBASE_MEASUREMENT_ID_ALPHA,
   },
-  firebase_functions_url_base:
-    'https://us-central1-parq-alpha.cloudfunctions.net/',
+  firebase_functions_url_base: FIREBASE_FUNCTIONS_URL_ALPHA,
   stripe_publishable_key: STRIPE_PUBLISHABLE_KEY_TEST,
   googleMaps_key: GOOGLE_MAPS_API_KEY,
   googleSignIn_key:
@@ -50,8 +51,7 @@ const prod = {
     appId: FIREBASE_APP_ID,
     measurementId: FIREBASE_MEASUREMENT_ID,
   },
-  firebase_functions_url_base:
-    'https://us-central1-parq-dev.cloudfunctions.net/',
+  firebase_functions_url_base: FIREBASE_FUNCTIONS_URL,
   stripe_publishable_key: STRIPE_PUBLISHABLE_KEY_PROD,
   googleMaps_key: GOOGLE_MAPS_API_KEY,
   googleSignIn_key:

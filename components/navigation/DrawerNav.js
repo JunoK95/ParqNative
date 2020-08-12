@@ -65,6 +65,20 @@ function DrawerNav(props) {
     );
   });
 
+  if (process.env.NODE_ENV === 'development') {
+    navLinks.push(
+      <ListItem
+        key={'index'}
+        containerStyle={styles.linkContainer}
+        underlayColor={'#11a4ff'}
+        titleStyle={styles.linkText}
+        title={'Index'}
+        leftIcon={{name: 'list', color: '#000'}}
+        onPress={() => navigateTo('Index')}
+      />,
+    );
+  }
+
   return (
     <View style={styles.drawer}>
       <ScrollView style={styles.scroll}>

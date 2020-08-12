@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 32,
     borderRadius: 12,
     elevation: 4,
+    color: '#222',
   },
   item: {
     justifyContent: 'center',

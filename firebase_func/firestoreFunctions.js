@@ -2,36 +2,42 @@ import firebase from '../firebase';
 import axios from 'axios';
 import moment from 'moment';
 import {GeoFirestore} from 'geofirestore';
+import { config } from '../config';
 
 const db = firebase.firestore();
 
 export async function updateStripeId(user_id, stripe_customer_id) {
-  await db
-    .collection('users')
-    .doc(user_id)
-    .set(
-      {
-        stripe_customer_id: stripe_customer_id,
-        date_updated: moment().unix(),
-      },
-      {merge: true},
-    )
-    .then(res => {
-      console.log('updated stripe_customer_id name', res);
-    });
+  try {
+    await db
+      .collection('users')
+      .doc(user_id)
+      .set(
+        {
+          stripe_customer_id: stripe_customer_id,
+          date_updated: moment().unix(),
+        },
+        {merge: true},
+      );
+  } catch (error) {
+    console.error('ERROR CREATING STRIPE CUSTOMER ID =>', error);
+  }
 }
 
 export async function updateWallet(user_id, updates) {
-  await db
-    .collection('wallets')
-    .doc(user_id)
-    .set(
-      {
-        stripe_account_verified: true,
-        ...updates,
-      },
-      {merge: true},
-    );
+  try {
+    await db
+      .collection('wallets')
+      .doc(user_id)
+      .set(
+        {
+          stripe_account_verified: true,
+          ...updates,
+        },
+        {merge: true},
+      );
+  } catch (error) {
+    console.error('ERROR UPDATING WALLET =>', error);
+  }
 }
 
 export async function setStripeAccountId(user_id, stripe_account_id) {
@@ -56,7 +62,7 @@ export async function getGeocodeAddress(address) {
     url: 'https://maps.googleapis.com/maps/api/geocode/json',
     params: {
       address: address,
-      key: 'AIzaSyDH_piMcJHJJQLW3WjyLTZo0ICSbHbNXZ0',
+      key: config.googleMaps_key,
     },
   })
     .then(res => {

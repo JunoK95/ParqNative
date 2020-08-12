@@ -60,6 +60,11 @@ const PhoneEntryForm = ({onSubmit}) => {
         seterror({error: err, message: 'Error Sending Verification Code'});
         setloading(false);
       }
+    } else {
+      setloading(false);
+      seterror({
+        message: 'Invalid Phone Number',
+      });
     }
   };
 
