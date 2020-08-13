@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const cors = require('cors')({origin: true});
-const stripe = require('stripe')(functions.config().stripe.live.secret_key); //Change API Key On Launch
+const stripe = require('stripe')(functions.config().stripe.keys.secret_key);
 
 const header_verification = require('./header_verification');
 const metrics = require('./metrics');
@@ -55,7 +55,24 @@ exports.stripePayParkingCharge = functions.https.onRequest(
         return;
       }
 
-      const {amount, description, token, port, metadata} = request.body;
+      const {
+        amount,
+        description,
+        token,
+        port,
+        customer_id,
+        metadata,
+      } = request.body;
+
+      console.log('STRIPE PAY PARKING DATA =>', {
+        amount,
+        description,
+        token,
+        port,
+        customer_id,
+        metadata,
+      });
+
       let destination_stripe_account;
       let destination_amount = parseInt(parseInt(amount, 10) * 0.8, 10);
       try {
@@ -87,13 +104,17 @@ exports.stripePayParkingCharge = functions.https.onRequest(
         destination_stripe_account,
       );
 
+      let submitToken =
+        functions.config().environment.env_mode === 'DEV' ? 'tok_visa' : token;
+
       stripe.charges.create(
         {
           amount: amount,
           currency: 'usd',
           description: description,
           metadata: metadata,
-          source: token, //replace with token when going live
+          customer: customer_id,
+          source: token,
           transfer_data: {
             destination: destination_stripe_account,
             amount: destination_amount,

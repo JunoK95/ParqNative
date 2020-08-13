@@ -149,6 +149,7 @@ const CarportPayCard = props => {
         context.user_id
       }`,
       uid: context.user_id,
+      customer_id: context.user_data.stripe_customer_id,
       metadata: {
         vehicle_license_plate: vehicle.data.license_plate,
         vehicle_owner_id: vehicle.data.owner_id,
@@ -198,7 +199,6 @@ const CarportPayCard = props => {
         return;
       } else {
         finalizePay(port, vehicle, resData.amount, hours);
-        console.log(result);
         return;
       }
     } else {

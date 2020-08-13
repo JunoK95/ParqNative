@@ -1,8 +1,8 @@
 const functions = require('firebase-functions');
-const stripe = require('stripe')(functions.config().stripe.live.secret_key);
+const stripe = require('stripe')(functions.config().stripe.keys.secret_key);
 
-const webhookAccountSig = functions.config().stripe.live.webhook.account_signing;
-const webhookChargeSig = functions.config().stripe.live.webhook.charge_signing;
+const webhookAccountSig = functions.config().stripe.keys.webhook.account_signing;
+const webhookChargeSig = functions.config().stripe.keys.webhook.charge_signing;
 
 exports.stripeAccountEvents = (request, response, store) => {
   let event;
