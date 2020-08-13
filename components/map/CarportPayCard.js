@@ -61,7 +61,11 @@ const CarportPayCard = props => {
       10,
     );
     const itemamountTax = parseInt(itemamount * 0.085, 10);
-    const itemDollarAmount = ((itemamount + itemamountTax) / 100).toFixed(2);
+    const itemamountFee = 30 + parseInt(amount * 0.03, 10);
+    const itemDollarAmount = (
+      (itemamount + itemamountTax + itemamountFee) /
+      100
+    ).toFixed(2);
     hourItems.push({
       title: `${i} hours`,
       subtitle: 'total = $' + itemDollarAmount,
@@ -73,7 +77,11 @@ const CarportPayCard = props => {
   if (maxHours === 0) {
     const itemamount = parseInt(parseFloat(port.price_hr) * 100, 10);
     const itemamountTax = parseInt(itemamount * 0.085, 10);
-    const itemDollarAmount = ((itemamount + itemamountTax) / 100).toFixed(2);
+    const itemamountFee = 30 + parseInt(amount * 0.03, 10);
+    const itemDollarAmount = (
+      (itemamount + itemamountTax + itemamountFee) /
+      100
+    ).toFixed(2);
     hourItems.push({
       title: 'less than an hour',
       subtitle: 'total = $' + itemDollarAmount,
@@ -143,7 +151,7 @@ const CarportPayCard = props => {
 
     const resData = {
       token: selectcard.id,
-      amount: amount + amountTax,
+      amount: totalAmount,
       port: port,
       description: `Test with vehicle ${vehicle.data.license_plate} and user ${
         context.user_id
