@@ -11,6 +11,7 @@ import {
   convertToDollar,
   splitStrByComma,
   getPortMaxHours,
+  calculateParkingCosts,
 } from '../../helpers/helper';
 import {withNavigation} from 'react-navigation';
 import storeLogo from '../../resources/images/112.png';
@@ -20,15 +21,14 @@ import moment from 'moment';
 import FeaturesList from '../carport/FeaturesList';
 import VehiclePicker from '../vehicle/vehicle-picker';
 import NewPaymentPicker from '../../views/payment/NewPaymentPicker';
-import CustomPicker from '../picker/CustomPicker';
 import {stripePayParkingCharge} from '../../api/stripe_index';
 import CardTokenGenerator from '../../views/payment/card-token-generator/CardTokenGenerator';
 import VehicleRegisterModal from '../vehicle/vehicle-register-modal/VehicleRegisterModal';
 import {checkCarportAvailablity} from '../../firebase_func';
+import CustomPricePicker from '../picker/price-picker/CustomPricePicker';
 
-const CarportPayCard = props => {
+const CarportPayCard = ({port, setopen, navigation}) => {
   const context = useContext(AuthContext);
-  const {port, setopen} = props;
   const [selectcard, setselectcard] = useState(null);
   const [vehicle, setvehicle] = useState(null);
   const [hours, sethours] = useState(1);
@@ -40,56 +40,7 @@ const CarportPayCard = props => {
   const [openGen, setopenGen] = useState(false);
   const [vmodal, setvmodal] = useState(false);
 
-  //Calculating costs
-  const amount = parseInt(
-    parseFloat(port.price_hr) * parseInt(hours, 10) * 100,
-    10,
-  );
-  const amountFee = 30 + parseInt(amount * 0.03, 10);
-  const amountTax = parseInt(amount * 0.085, 10);
-  const totalAmount = amount + amountFee + amountTax;
-  const dollarAmount = (totalAmount / 100).toFixed(2);
-
   let maxHours = getPortMaxHours(port, 12);
-  let hourItems = [];
-
-  console.log('PORT => price_hr === ', port.price_hr);
-
-  for (let i = 1; i <= maxHours; i++) {
-    const itemamount = parseInt(
-      parseFloat(port.price_hr) * parseInt(i, 10) * 100,
-      10,
-    );
-    const itemamountTax = parseInt(itemamount * 0.085, 10);
-    const itemamountFee = 30 + parseInt(amount * 0.03, 10);
-    const itemDollarAmount = (
-      (itemamount + itemamountTax + itemamountFee) /
-      100
-    ).toFixed(2);
-    hourItems.push({
-      title: `${i} hours`,
-      subtitle: 'total = $' + itemDollarAmount,
-      value: i,
-    });
-  }
-
-  //If time ends under an hour
-  if (maxHours === 0) {
-    const itemamount = parseInt(parseFloat(port.price_hr) * 100, 10);
-    const itemamountTax = parseInt(itemamount * 0.085, 10);
-    const itemamountFee = 30 + parseInt(amount * 0.03, 10);
-    const itemDollarAmount = (
-      (itemamount + itemamountTax + itemamountFee) /
-      100
-    ).toFixed(2);
-    hourItems.push({
-      title: 'less than an hour',
-      subtitle: 'total = $' + itemDollarAmount,
-      value: 1,
-    });
-  }
-
-  console.log('hourItems', hourItems);
 
   const finalizePay = (_port, _vehicle, _price, _hours) => {
     _hours = parseInt(_hours, 10);
@@ -113,9 +64,9 @@ const CarportPayCard = props => {
         _hours,
       )
       .then(res => {
-        console.log('transaction complete', res);
+        console.log('transaction complete');
         setloading(false);
-        props.navigation.navigate('ReservationList');
+        navigation.navigate('ReservationList');
       })
       .catch(err => {
         setloading(false);
@@ -127,7 +78,7 @@ const CarportPayCard = props => {
     if (setopen) {
       setopen(false);
     }
-    props.navigation.navigate('CarportInfo', {port});
+    navigation.navigate('CarportInfo', {port});
   };
 
   const handlePay = async () => {
@@ -149,13 +100,17 @@ const CarportPayCard = props => {
     //Perform checkout
     const {object} = selectcard;
 
+    const finalPrices = calculateParkingCosts(
+      parseFloat(port.price_hr),
+      parseInt(hours, 10),
+    );
+
     const resData = {
       token: selectcard.id,
-      amount: totalAmount,
+      amount: finalPrices.total_price,
       port: port,
-      description: `Test with vehicle ${vehicle.data.license_plate} and user ${
-        context.user_id
-      }`,
+      // eslint-disable-next-line prettier/prettier
+      description: `User ${context.user_id} parked with Vehicle ${vehicle.data.license_plate}`,
       uid: context.user_id,
       customer_id: context.user_data.stripe_customer_id,
       metadata: {
@@ -173,9 +128,9 @@ const CarportPayCard = props => {
         location_geohash: port.location.geohash,
         hours: hours,
         price_hr: port.price_hr,
-        price_base: amount,
-        price_stripe_fee: amountFee,
-        price_tax: amountTax,
+        price_base: finalPrices.base_price,
+        price_stripe_fee: finalPrices.stripe_fee,
+        price_tax: finalPrices.tax_fee,
       },
     };
 
@@ -198,12 +153,12 @@ const CarportPayCard = props => {
         });
       }
     } else if (object === 'card') {
-      console.log('PAYING WITH THIS DATA =>', resData);
+      // console.log('PAYING WITH THIS DATA =>', resData);
       const result = await stripePayParkingCharge(resData, context);
       if (result.error) {
         setloading(false);
         seterror('Payment Failed');
-        console.error(result.error);
+        // console.error(result.error);
         return;
       } else {
         finalizePay(port, vehicle, resData.amount, hours);
@@ -272,10 +227,10 @@ const CarportPayCard = props => {
           <FeaturesList features={port.accomodations} />
         </View>
         <View style={styles.selectsection}>
-          <CustomPicker
-            items={hourItems}
-            initialitem={hourItems[0]}
+          <CustomPricePicker
             title={'Hours'}
+            price_hr={port.price_hr}
+            max_hours={maxHours}
             setselected={item => {
               sethours(item.value);
             }}

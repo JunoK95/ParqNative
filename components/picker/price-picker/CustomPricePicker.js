@@ -9,25 +9,54 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import CustomPickerItem from '../picker/CustomPickerItem';
+import CustomPickerItem from '../CustomPickerItem';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import {calculateParkingCosts, convertToDollar} from '../../../helpers/helper';
 
-const CustomPicker = props => {
-  const {title, items, initialitem, setselected} = props;
+const CustomPricePicker = ({
+  title,
+  initialitem,
+  setselected,
+  price_hr,
+  max_hours,
+}) => {
   const [select, setselect] = useState(initialitem);
   const [modalopen, setmodalopen] = useState(false);
+  const [items, setitems] = useState([]);
 
   useEffect(() => {
-    if (initialitem) {
-      setselected(initialitem);
-      setselect(initialitem);
+    let maxHours = max_hours;
+    let hourItems = [];
+
+    for (let i = 1; i <= maxHours; i++) {
+      const prices = calculateParkingCosts(parseFloat(price_hr), i);
+      const itemDollarAmount = convertToDollar(prices.total_price / 100);
+      hourItems.push({
+        title: `${i} hours`,
+        subtitle: 'total = $' + itemDollarAmount,
+        value: i,
+      });
     }
+
+    //If time ends under an hour
+    if (maxHours === 0) {
+      const prices = calculateParkingCosts(parseFloat(price_hr));
+      const itemDollarAmount = convertToDollar(prices.total_price / 100);
+      hourItems.push({
+        title: 'less than an hour',
+        subtitle: 'total = $' + itemDollarAmount,
+        value: 1,
+      });
+    }
+
+    setitems(hourItems);
+    setselected(hourItems[0]);
+    setselect(hourItems[0]);
   }, []);
 
   let pickerItems = null;
   if (items.length > 0) {
     pickerItems = items.map((item, i) => {
-      console.log('Item => ', item);
       return (
         <CustomPickerItem
           key={i}
@@ -86,7 +115,7 @@ const CustomPicker = props => {
   );
 };
 
-export default CustomPicker;
+export default CustomPricePicker;
 
 const styles = StyleSheet.create({
   modal: {
