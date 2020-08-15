@@ -74,7 +74,9 @@ exports.stripePayParkingCharge = functions.https.onRequest(
       });
 
       let destination_stripe_account;
-      let destination_amount = parseInt(parseInt(amount, 10) * 0.8, 10);
+      let stripe_fee = 30 + parseInt((amount, 10) * 0.03, 10);
+      let destination_amount =
+        parseInt(parseInt(amount, 10) * 0.8, 10) - stripe_fee;
       try {
         const portOwner = await store
           .collection('users')
