@@ -18,6 +18,7 @@ import {stripeGetAccountInfo} from '../api/stripe_index';
 import CustomListItem from '../components/layout/CustomListItem';
 import CardTokenGenerator from './payment/card-token-generator/CardTokenGenerator';
 import OrbLoading from '../components/loading/OrbLoading';
+import ReferralCodeGenerator from '../components/referral/referral-code-generator/ReferralCodeGenerator';
 
 const PaymentSettingView = () => {
   const context = useContext(AuthContext);
@@ -115,6 +116,7 @@ const PaymentSettingView = () => {
         <CardTokenGenerator open={OpenGen} setopen={setOpenGen} />
         <View style={styles.padding} />
         <PaymentBanksList account={account} />
+        <ReferralCodeGenerator />
       </ScrollView>
     );
   }

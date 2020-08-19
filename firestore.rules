@@ -47,5 +47,8 @@ service cloud.firestore {
       allow write, update, delete: if resource.data.owner_id == request.auth.uid;
       allow read, create: if request.auth.uid != null;
     }
+    match /referrals/{refId} {
+    	allow create: if request.auth.uid != null;
+    }
   }
 }

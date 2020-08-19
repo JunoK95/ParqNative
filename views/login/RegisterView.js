@@ -62,6 +62,7 @@ const RegisterView = props => {
           <Icon iconStyle={styles.icon} name={'email'} size={30} />
           <TextInput
             style={styles.textField}
+            placeholderTextColor={'#AAA'}
             name={'email'}
             placeholder={'email'}
             textContentType={'emailAddress'}
@@ -73,6 +74,7 @@ const RegisterView = props => {
           <Icon iconStyle={styles.icon} name={'face'} size={30} />
           <TextInput
             style={styles.textField}
+            placeholderTextColor={'#AAA'}
             name={'display_name'}
             placeholder={'display name'}
             textContentType={'name'}
@@ -84,6 +86,7 @@ const RegisterView = props => {
           <Icon iconStyle={styles.icon} name={'lock'} size={30} />
           <TextInput
             style={styles.textField}
+            placeholderTextColor={'#AAA'}
             name={'password'}
             placeholder={'password'}
             textContentType={'newPassword'}
@@ -97,6 +100,7 @@ const RegisterView = props => {
           <Icon iconStyle={styles.icon} name={'done'} size={30} />
           <TextInput
             style={styles.textField}
+            placeholderTextColor={'#AAA'}
             name={'password2'}
             placeholder={'confirm password'}
             textContentType={'newPassword'}
@@ -146,6 +150,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     backgroundColor: '#fff',
     borderRadius: 12,
+    color: '#333',
   },
   buttonContainer: {
     margin: 8,

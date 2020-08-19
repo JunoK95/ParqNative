@@ -8,13 +8,22 @@ import {
   Keyboard,
   TouchableOpacity,
 } from 'react-native';
+import {getUserIdByReferralCode} from '../firebase_func/referral-functions/ReferralFunctions';
+import { withNavigation } from 'react-navigation';
 
-const ReferralView = () => {
+const ReferralView = props => {
   const [value, setvalue] = useState('');
+  const [uid, setuid] = useState(null);
+  const [load, setload] = useState(false);
   const [error, seterror] = useState(null);
 
   const handleTextChange = text => {
     setvalue(text);
+  };
+
+  const handleSubmit = async () => {
+    const id_result = await getUserIdByReferralCode(value);
+    setuid(id_result);
   };
 
   return (
@@ -23,7 +32,7 @@ const ReferralView = () => {
         <View style={styles.contentcontainer}>
           <Text style={styles.titletext}>
             {error
-              ? error.message
+              ? 'Unable to find user'
               : 'If you have been referred by someone, please enter their referral code below'}
           </Text>
         </View>
@@ -35,7 +44,12 @@ const ReferralView = () => {
           label={'Referral Code'}
           keyboardType={'default'}
         />
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={() => handleSubmit()}>
+          <View style={styles.row}>
+            <Text style={styles.skiptext}>Submit</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
           <View style={styles.row}>
             <Text style={styles.skiptext}>Skip</Text>
           </View>
@@ -45,7 +59,7 @@ const ReferralView = () => {
   );
 };
 
-export default ReferralView;
+export default withNavigation(ReferralView);
 
 const styles = StyleSheet.create({
   bg: {

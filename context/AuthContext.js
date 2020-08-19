@@ -30,6 +30,7 @@ import {
   registerUserEmail,
   signInUserEmail,
 } from './authentication';
+import { generateReferralCode } from '../firebase_func/referral-functions/ReferralFunctions';
 
 export const AuthContext = createContext();
 
@@ -472,6 +473,27 @@ function AuthContextProvider({children}) {
     });
   };
 
+  const contextGenerateReferralCode = async () => {
+    try {
+      const code = await generateReferralCode(state.user_id, state.user_data);
+      if (code) {
+        const data = await updateUserData(state.user_id, {referral_code: code});
+        if (data) {
+          setstate({
+            ...state,
+            user_data: {
+              ...state.user_data,
+              referral_code: code,
+            },
+          });
+        }
+      }
+      return code;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -499,6 +521,7 @@ function AuthContextProvider({children}) {
           getStripePaymentMethods,
           getContextWallet,
           getAllPaymentMethods,
+          contextGenerateReferralCode,
         },
       }}>
       {children}

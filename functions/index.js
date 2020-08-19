@@ -8,6 +8,7 @@ const metrics = require('./metrics');
 const stripe_functions = require('./stripe_functions/stripe_functions');
 const stripe_webhooks = require('./stripe_functions/stripe_webhooks');
 const twilio_verify_functions = require('./twilio_functions/twilio_verify_functions');
+const referral_functions = require('./referral_functions/referral_functions');
 const logging = require('./logging');
 
 admin.initializeApp(functions.config().firebase);
@@ -163,29 +164,17 @@ exports.getUserContactInfo = functions.https.onRequest((request, response) => {
   });
 });
 
-// exports.walletAddBalance = functions.firestore
-//   .document('purchases/{purchaseId}')
-//   .onCreate((snap, context) => {
-//     const data = snap.data();
-//     const {user_id, amount} = data;
+exports.referralCreated = functions.firestore
+  .document('referrals/{ref_id}')
+  .onCreate((snap, context) => {
+    return referral_functions.referralCreated(snap, context, store);
+  });
 
-//     console.log(data);
-//     if (data.type === 'add_credit') {
-//       const wallet = store
-//         .doc(`wallets/${user_id}`)
-//         .update({
-//           credit: admin.firestore.FieldValue.increment(amount),
-//         })
-//         .then(res => {
-//           return res;
-//         })
-//         .catch(err => {
-//           return err;
-//         });
-//       return true;
-//     }
-//     return true;
-//   });
+exports.referralRedeemed = functions.firestore
+  .document('referrals/{ref_id}')
+  .onUpdate((change, context) => {
+    return referral_functions.referralRedeemed(change, context, store);
+  });
 
 exports.userMetrics = functions.firestore
   .document('users/{user_id}')
