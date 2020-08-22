@@ -20,15 +20,23 @@ export async function getUserIdByEmail(email) {
 
 export async function getUserIdByReferralCode(code) {
   const querySnapshot = await db
-    .collection('users')
-    .where('referral_code', '==', 'dajbubblezng0')
+    .collection('referral_promo_codes')
+    .where('code', '==', 'dajbubble#yn625')
     .get();
 
   if (querySnapshot.empty) {
     console.log('Snap Empty');
     throw new Error(`${code} Not Found`);
   } else {
-    return querySnapshot[0].id;
+    let returnArray = [];
+    querySnapshot.forEach(doc => {
+      console.log(doc.id, doc.data());
+      returnArray.push(doc.data().user_id);
+    });
+    if (returnArray.length > 1) {
+      throw new Error('More than one user found');
+    }
+    return returnArray[0];
   }
 }
 

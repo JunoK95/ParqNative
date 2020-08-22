@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,11 +8,14 @@ import {
   Keyboard,
   TouchableOpacity,
 } from 'react-native';
+import LottieView from 'lottie-react-native';
 import {getUserIdByReferralCode} from '../firebase_func/referral-functions/ReferralFunctions';
-import { withNavigation } from 'react-navigation';
+import {withNavigation} from 'react-navigation';
+import {AuthContext} from '../context/AuthContext';
 
 const ReferralView = props => {
   const [value, setvalue] = useState('');
+  const context = useContext(AuthContext);
   const [uid, setuid] = useState(null);
   const [load, setload] = useState(false);
   const [error, seterror] = useState(null);
@@ -23,13 +26,28 @@ const ReferralView = props => {
 
   const handleSubmit = async () => {
     const id_result = await getUserIdByReferralCode(value);
-    setuid(id_result);
+    console.log(id_result);
+    if (id_result === context.user_id) {
+      setuid('ERROR, you are using your own referral code');
+    } else {
+      setuid(id_result + context.user_id);
+    }
+    // setuid(id_result);
   };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.bg}>
         <View style={styles.contentcontainer}>
+          <LottieView
+            style={styles.lottieContainer}
+            source={require('../resources/animations/chatting.json')}
+            autoPlay
+            loop
+          />
+        </View>
+        <View style={styles.contentcontainer}>
+          {uid && <Text style={styles.titletext}>{uid}</Text>}
           <Text style={styles.titletext}>
             {error
               ? 'Unable to find user'
