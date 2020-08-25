@@ -10,10 +10,13 @@ import {
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import {AuthContext} from '../../context/AuthContext';
-import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 import OrbLoading from '../../components/loading/OrbLoading';
-import {EmailSignInButton, GoogleSignInButton} from '../../components/login';
-import AppleSignIn from '../../components/login/AppleSignInButton';
+import {
+  EmailSignInButton,
+  GoogleSignInButton,
+  AppleSignInButton,
+} from '../../components/login';
+import firebase from '../../firebase';
 
 const LoginView = props => {
   const context = useContext(AuthContext);
@@ -47,40 +50,7 @@ const LoginView = props => {
   };
 
   const handleFbSignIn = () => {
-    console.log('fblogin');
-  };
-
-  const _signIn = async () => {
-    try {
-      setload(true);
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      console.log('USER INFO => ', userInfo);
-      const loggedIn = await context.functions.googleSignIn(
-        userInfo.idToken,
-        userInfo.accessToken,
-      );
-      console.log(loggedIn);
-      if (loggedIn) {
-        setload(false);
-        props.navigation.navigate('App');
-      }
-    } catch (err) {
-      setload(false);
-      console.log('ERROR SIGNING IN => ', err);
-      if (err.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-        seterror('Sign In Cancelled');
-      } else if (err.code === statusCodes.IN_PROGRESS) {
-        // operation (f.e. sign in) is in progress already
-      } else if (err.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
-        seterror('Play Services Not Available');
-      } else {
-        // some other error happened
-        seterror('Error Logging In');
-      }
-    }
+    console.log('FIREBASE AUTH CURRENTUSER =>', firebase.auth());
   };
 
   return (
@@ -123,8 +93,11 @@ const LoginView = props => {
               </View>
             </View>
             <EmailSignInButton handlePress={handleSignIn} />
-            <GoogleSignInButton handlePress={_signIn} />
-            <AppleSignIn />
+            <GoogleSignInButton seterror={seterror} setload={setload} />
+            <AppleSignInButton />
+            <TouchableOpacity onPress={handleFbSignIn}>
+              <Text>Test</Text>
+            </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
                 props.navigation.navigate('Landing');

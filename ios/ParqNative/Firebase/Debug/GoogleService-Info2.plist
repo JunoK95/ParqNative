@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>480005596961-s82mo1rqbu8auoclotsshbufouvv4582.apps.googleusercontent.com</string>
+	<string>480005596961-c0de0391jqachh97phicoiorcigp3bvd.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.480005596961-s82mo1rqbu8auoclotsshbufouvv4582</string>
+	<string>com.googleusercontent.apps.480005596961-c0de0391jqachh97phicoiorcigp3bvd</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>480005596961-ljqcofmnbq635redqfj3v84hbkjskt6i.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.parqnative.ios</string>
+	<string>com.parqnative</string>
 	<key>PROJECT_ID</key>
 	<string>parq-alpha</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:480005596961:ios:2b9e24d36d2d848fba0060</string>
+	<string>1:480005596961:ios:5df142c49f5bd8aeba0060</string>
 	<key>DATABASE_URL</key>
 	<string>https://parq-alpha.firebaseio.com</string>
 </dict>

@@ -25,7 +25,7 @@ import {
   deleteSavedLocation,
 } from '../firebase_func';
 import {
-  googleFirebaseSignin,
+  googleFirebaseSignIn,
   getUserStateInfo,
   registerUserEmail,
   signInUserEmail,
@@ -181,7 +181,7 @@ function AuthContextProvider({children}) {
   const googleSignIn = async (id_token, access_token) => {
     let firebaseUserCredential;
     try {
-      firebaseUserCredential = await googleFirebaseSignin(
+      firebaseUserCredential = await googleFirebaseSignIn(
         id_token,
         access_token,
       );

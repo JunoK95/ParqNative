@@ -1,10 +1,10 @@
 import {registerUserEmail, signInUserEmail} from './email';
-import {googleFirebaseSignin} from './google-signin';
+import {googleFirebaseSignIn} from './google-signin';
 import {getUserStateInfo} from './shared-functions';
 
 export {
   registerUserEmail,
   signInUserEmail,
-  googleFirebaseSignin,
+  googleFirebaseSignIn,
   getUserStateInfo,
 };

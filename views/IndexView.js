@@ -35,7 +35,7 @@ const IndexView = ({navigation}) => {
   return (
     <View>
       <HeaderPadding to={'Home'} />
-      <Text>{context.user_data.email}</Text>
+      <Text>{context.user_data ? context.user_data.email : ''}</Text>
       {indexList}
     </View>
   );

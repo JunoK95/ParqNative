@@ -1,7 +1,7 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/functions';
-import 'firebase/auth';
+import firebase from '@react-native-firebase/app';
+import '@react-native-firebase/auth';
+import '@react-native-firebase/functions';
+import '@react-native-firebase/firestore';
 import {config} from './config';
 
 const {

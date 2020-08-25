@@ -7,7 +7,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {AppleButton} from '@invertase/react-native-apple-authentication';
 
-function AppleSignIn() {
+function AppleSignInButton({seterror, setload}) {
   async function onAppleButtonPress() {
     // Start the sign-in request
     console.log('START APPLE SIGN IN');
@@ -26,22 +26,21 @@ function AppleSignIn() {
 
     // Create a Firebase credential from the response
     const {identityToken, nonce} = appleAuthRequestResponse;
-    console.log(
-      'APPLE AUTH REQUEST RESPONSE =>',
-      identityToken,
-      'nonce',
-      nonce,
-    );
+
     const appleCredential = firebase.auth.AppleAuthProvider.credential(
       identityToken,
       nonce,
     );
 
     console.log('APPLE CREDENTIAL =>', appleCredential);
-
+    const userCredential = await firebase
+      .auth()
+      .signInWithCredential(appleCredential);
+    console.log('USER CREDENTIALS =>', userCredential);
     // Sign the user in with the credential
-    return firebase.auth().signInWithCredential(appleCredential);
+    return userCredential;
   }
+
   return (
     <AppleButton
       buttonStyle={AppleButton.Style.WHITE}
@@ -54,7 +53,7 @@ function AppleSignIn() {
   );
 }
 
-export default AppleSignIn;
+export default AppleSignInButton;
 
 const styles = StyleSheet.create({
   appleButtonDimensions: {

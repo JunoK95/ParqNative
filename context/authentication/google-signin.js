@@ -1,6 +1,6 @@
 import firebase from '../../firebase';
 
-export const googleFirebaseSignin = async (id_token, access_token) => {
+export const googleFirebaseSignIn = async (id_token, access_token) => {
   const credential = firebase.auth.GoogleAuthProvider.credential(
     id_token,
     access_token,
