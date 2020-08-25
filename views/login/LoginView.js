@@ -13,7 +13,7 @@ import {AuthContext} from '../../context/AuthContext';
 import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 import OrbLoading from '../../components/loading/OrbLoading';
 import {EmailSignInButton, GoogleSignInButton} from '../../components/login';
-import {config} from '../../config';
+import AppleSignIn from '../../components/login/AppleSignInButton';
 
 const LoginView = props => {
   const context = useContext(AuthContext);
@@ -124,6 +124,7 @@ const LoginView = props => {
             </View>
             <EmailSignInButton handlePress={handleSignIn} />
             <GoogleSignInButton handlePress={_signIn} />
+            <AppleSignIn />
             <TouchableOpacity
               onPress={() => {
                 props.navigation.navigate('Landing');

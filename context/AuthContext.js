@@ -30,7 +30,7 @@ import {
   registerUserEmail,
   signInUserEmail,
 } from './authentication';
-import { generateReferralCode } from '../firebase_func/referral-functions/ReferralFunctions';
+import {generateReferralCode} from '../firebase_func/referral-functions/ReferralFunctions';
 
 export const AuthContext = createContext();
 

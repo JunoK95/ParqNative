@@ -5,18 +5,18 @@ import LottieView from 'lottie-react-native';
 export default function OrbLoading({bgcolor}) {
   return (
     <View style={{...styles.bg, backgroundColor: bgcolor}}>
-      <LottieView
+      {/* <LottieView
         style={styles.lottieContainer}
         source={require('../../resources/animations/BlueYellowOrb.json')}
         autoPlay
         loop
-      />
-      {/* <LottieView
+      /> */}
+      <LottieView
         style={styles.lottieContainer}
-        source={require('../../resources/animations/gif_f.json')}
+        source={require('../../resources/animations/Best_5.json')}
         autoPlay
         loop
-      /> */}
+      />
       <Text style={styles.loadTitle}>Loading...</Text>
     </View>
   );
