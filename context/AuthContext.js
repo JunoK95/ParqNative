@@ -26,6 +26,7 @@ import {
 } from '../firebase_func';
 import {
   googleFirebaseSignIn,
+  appleFirebaseSignIn,
   getUserStateInfo,
   registerUserEmail,
   signInUserEmail,
@@ -194,6 +195,35 @@ function AuthContextProvider({children}) {
     const {email, name} = firebaseUserCredential.additionalUserInfo.profile;
     const userInfo = await getUserStateInfo(email, name);
 
+    setstate({
+      ...state,
+      user_id: auth.currentUser.uid,
+      logged_in: true,
+      user_data: userInfo.userData,
+      saved_locations: userInfo.savedLocations,
+      saved_vehicles: userInfo.savedVehicles,
+      payment_methods: [],
+      nearby_ports: [],
+    });
+    setfetching(false);
+
+    if (firebaseUserCredential) {
+      return true;
+    }
+    return false;
+  };
+
+  const appleSignIn = async (identityToken, nonce) => {
+    let firebaseUserCredential;
+    try {
+      firebaseUserCredential = await appleFirebaseSignIn(identityToken, nonce);
+    } catch (error) {
+      console.error('Apple Sign In Error =>', error);
+      return;
+    }
+
+    const {email, name} = firebaseUserCredential.additionalUserInfo.profile;
+    const userInfo = await getUserStateInfo(email, name);
     setstate({
       ...state,
       user_id: auth.currentUser.uid,
@@ -506,6 +536,7 @@ function AuthContextProvider({children}) {
           signOutUser,
           signInUser,
           googleSignIn,
+          appleSignIn,
           addContextSavedLocation,
           deleteContextSavedLocation,
           addContextVehicle,

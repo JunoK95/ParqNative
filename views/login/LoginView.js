@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import {AuthContext} from '../../context/AuthContext';
@@ -94,10 +95,9 @@ const LoginView = props => {
             </View>
             <EmailSignInButton handlePress={handleSignIn} />
             <GoogleSignInButton seterror={seterror} setload={setload} />
-            <AppleSignInButton />
-            <TouchableOpacity onPress={handleFbSignIn}>
-              <Text>Test</Text>
-            </TouchableOpacity>
+            {Platform.OS === 'ios' ? (
+              <AppleSignInButton seterror={seterror} setload={setload} />
+            ) : null}
             <TouchableOpacity
               onPress={() => {
                 props.navigation.navigate('Landing');

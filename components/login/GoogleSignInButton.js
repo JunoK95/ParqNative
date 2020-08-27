@@ -14,14 +14,14 @@ function GoogleSignInButton({seterror, setload, navigation}) {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       console.log('USER INFO => ', userInfo);
+      const {idToken, accessToken} = userInfo;
       const loggedIn = await context.functions.googleSignIn(
-        userInfo.idToken,
-        userInfo.accessToken,
+        idToken,
+        accessToken,
       );
-      console.log(loggedIn);
       if (loggedIn) {
-        navigation.navigate('App');
         setload(false);
+        navigation.navigate('App');
       }
     } catch (err) {
       setload(false);
