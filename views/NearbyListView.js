@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   mapStyle: {
     top: 0,
     width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height - 64,
+    height: Dimensions.get('window').height - 80,
     zIndex: -1,
   },
   mapStyleX: {

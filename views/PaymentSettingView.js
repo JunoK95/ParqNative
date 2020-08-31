@@ -3,7 +3,6 @@ import {
   ScrollView,
   View,
   TouchableOpacity,
-  ActivityIndicator,
   StyleSheet,
   Dimensions,
 } from 'react-native';
@@ -116,7 +115,9 @@ const PaymentSettingView = () => {
         <CardTokenGenerator open={OpenGen} setopen={setOpenGen} />
         <View style={styles.padding} />
         <PaymentBanksList account={account} />
-        <ReferralCodeGenerator />
+        {process.env.NODE_ENV === 'development' ? (
+          <ReferralCodeGenerator />
+        ) : null}
       </ScrollView>
     );
   }
