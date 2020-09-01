@@ -11,12 +11,6 @@ export default function OrbLoading({bgcolor}) {
         autoPlay
         loop
       />
-      {/* <LottieView
-        style={styles.lottieContainer}
-        source={require('../../resources/animations/Best_5.json')}
-        autoPlay
-        loop
-      /> */}
       <Text style={styles.loadTitle}>Loading...</Text>
     </View>
   );

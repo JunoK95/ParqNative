@@ -15,6 +15,7 @@ import {GoogleSignin} from '@react-native-community/google-signin';
 import {YellowBox} from 'react-native';
 import _ from 'lodash';
 import {config} from './config';
+import NotificationsContextProvider from './context/NotificationsContext';
 
 function App() {
   useEffect(() => {
@@ -38,17 +39,19 @@ function App() {
     <NavigationContainer>
       {
         <GeolocationContextProvider>
-          <AuthContextProvider>
-            <AuthContext.Consumer>
-              {authContext => {
-                if (authContext.fetching) {
-                  return <LoadingView />;
-                } else {
-                  return <AppNavigator />;
-                }
-              }}
-            </AuthContext.Consumer>
-          </AuthContextProvider>
+          <NotificationsContextProvider>
+            <AuthContextProvider>
+              <AuthContext.Consumer>
+                {authContext => {
+                  if (authContext.fetching) {
+                    return <LoadingView />;
+                  } else {
+                    return <AppNavigator />;
+                  }
+                }}
+              </AuthContext.Consumer>
+            </AuthContextProvider>
+          </NotificationsContextProvider>
         </GeolocationContextProvider>
       }
     </NavigationContainer>

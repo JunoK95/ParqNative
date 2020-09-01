@@ -19,11 +19,11 @@ function GeolocationContextProvider(props) {
           pos => {
             const {latitude, longitude} = pos.coords;
             setlocation({latitude, longitude});
-            setfetch(false);
             console.log('You can use their location iOS =>', location);
           },
           error => {
             console.log(error.code, error.message);
+            setfetch(false);
           },
           {
             enableHighAccuracy: true,
@@ -32,6 +32,7 @@ function GeolocationContextProvider(props) {
             desiredAccuracy: 20,
           },
         );
+        setfetch(false);
       } else {
         try {
           const granted = await PermissionsAndroid.request(
@@ -71,7 +72,6 @@ function GeolocationContextProvider(props) {
           console.warn(err);
         }
       }
-      setfetch(false);
     }
 
     initializeLocation();
