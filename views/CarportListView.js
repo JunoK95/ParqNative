@@ -134,10 +134,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 24,
     marginVertical: 12,
-    shadowColor: '#000',
-    shadowOffset: {width: 4, height: 4},
-    shadowOpacity: 1,
-    shadowRadius: 4,
     elevation: 4,
   },
   text: {

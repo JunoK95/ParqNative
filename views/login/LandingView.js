@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import {Button} from 'react-native-elements';
+import RoundedButton from '../../components/button/RoundedButton';
 
 const LandingView = props => {
   const navigateTo = destination => {
@@ -16,14 +17,17 @@ const LandingView = props => {
         />
       </View>
       <View style={styles.centered}>
-        <Button
-          style={styles.button}
-          title="Sign In"
+        <RoundedButton
+          title={'Sign In'}
+          backgroundColor={'#fff'}
+          textColor={'#11a4ff'}
+          width={140}
           onPress={() => navigateTo('Login')}
         />
-        <Button
-          style={styles.button}
-          title="Sign Up"
+        <RoundedButton
+          title={'Sign Up'}
+          backgroundColor={'#ffc630'}
+          width={140}
           onPress={() => navigateTo('Register')}
         />
       </View>
@@ -54,6 +58,7 @@ const styles = StyleSheet.create({
     paddingVertical: 96,
   },
   centered: {
+    flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center',
   },

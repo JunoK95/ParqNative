@@ -4,13 +4,19 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
+  TouchableOpacity,
+  Platform,
+  Dimensions,
+  ScrollView,
 } from 'react-native';
-import {Icon, Button} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import {AuthContext} from '../../context/AuthContext';
 import {validateEmail, validatePassword} from '../../helpers/helper';
+import RoundedButton from '../../components/button/RoundedButton';
+import {GoogleSignInButton, AppleSignInButton} from '../../components/login';
+import OrbLoading from '../../components/loading/OrbLoading';
 
 const RegisterView = props => {
   const context = useContext(AuthContext);
@@ -18,27 +24,34 @@ const RegisterView = props => {
   const [password, setpassword] = useState('');
   const [password2, setpassword2] = useState('');
   const [display_name, setname] = useState('');
+  const [load, setload] = useState(false);
   const [error, seterror] = useState('');
 
   const handleSubmit = () => {
+    setload(true);
     if (!validateEmail(email)) {
       seterror('Invalid Email');
+      setload(false);
       return;
     }
     if (!validatePassword(password, password2)) {
       seterror('Invalid Password');
+      setload(false);
       return;
     }
     if (display_name.length <= 0) {
       seterror('Display Name Empty');
+      setload(false);
       return;
     }
     context.functions.registerUser(email, password, display_name).then(res => {
       if (res.error) {
         console.log(res);
         seterror(res.error.message);
+        setload(false);
       } else {
         seterror(null);
+        setload(false);
         props.navigation.navigate('Login', {
           message: 'Successfully Created Account',
         });
@@ -46,13 +59,13 @@ const RegisterView = props => {
     });
   };
 
-  const handleRedirect = () => {
-    props.navigation.navigate('Login');
-  };
+  if (load) {
+    return <OrbLoading bgcolor={'#11a4ff'} />;
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={styles.bg}>
+      <ScrollView contentContainerStyle={styles.bg}>
         {error ? (
           <View style={styles.errorBox}>
             <Text style={styles.errorText}>{error}</Text>
@@ -110,17 +123,32 @@ const RegisterView = props => {
             onChangeText={text => setpassword2(text)}
           />
         </View>
-        <Button
-          containerStyle={styles.buttonContainer}
-          title={'Sign Up'}
-          onPress={handleSubmit}
-        />
-        <Button
-          containerStyle={styles.buttonContainer}
-          title={'Sign Up With Google'}
-          onPress={handleRedirect}
-        />
-      </View>
+        <View style={styles.buttonGroup}>
+          <RoundedButton
+            title={'Submit'}
+            onPress={handleSubmit}
+            width={Dimensions.get('window').width - 96}
+            backgroundColor={'#ffc630'}
+          />
+        </View>
+        <View style={styles.centeredGroup}>
+          <Text style={styles.orText}>- OR -</Text>
+        </View>
+        <View style={styles.buttonGroup}>
+          <GoogleSignInButton seterror={seterror} setload={setload} />
+          {Platform.OS === 'ios' ? (
+            <AppleSignInButton seterror={seterror} setload={setload} />
+          ) : null}
+        </View>
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate('Landing');
+          }}>
+          <View style={styles.backContainer}>
+            <Text style={styles.backText}>Go Back</Text>
+          </View>
+        </TouchableOpacity>
+      </ScrollView>
     </TouchableWithoutFeedback>
   );
 };
@@ -173,6 +201,31 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontFamily: 'Montserrat',
+  },
+  orText: {
+    textAlign: 'center',
+    color: '#000',
+    fontWeight: '600',
+    fontFamily: 'Montserrat',
+  },
+  buttonGroup: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 18,
+  },
+  centeredGroup: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  backContainer: {
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  backText: {
+    fontSize: 16,
+    color: 'blue',
+    fontFamily: 'Montserrat',
+    textAlign: 'center',
   },
 });
 

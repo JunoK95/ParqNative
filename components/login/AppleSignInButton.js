@@ -3,7 +3,7 @@ import appleAuth, {
   AppleAuthRequestOperation,
 } from '@invertase/react-native-apple-authentication';
 import React, {useContext} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Dimensions} from 'react-native';
 import {AuthContext} from '../../context/AuthContext';
 import {withNavigation} from 'react-navigation';
 import {SocialIcon} from 'react-native-elements';
@@ -45,19 +45,12 @@ function AppleSignInButton({seterror, setload, navigation}) {
       <SocialIcon
         type={'apple'}
         title={'Sign in with Apple'}
+        style={styles.button}
         light
         button
         onPress={() => onAppleButtonPress()}
       />
     </View>
-    // <AppleButton
-    //   buttonStyle={AppleButton.Style.WHITE}
-    //   buttonType={AppleButton.Type.SIGN_IN}
-    //   style={styles.appleButtonDimensions}
-    //   onPress={() =>
-    //     onAppleButtonPress().then(() => console.log('Apple sign-in complete!'))
-    //   }
-    // />
   );
 }
 
@@ -66,5 +59,8 @@ export default withNavigation(AppleSignInButton);
 const styles = StyleSheet.create({
   buttonContainer: {
     marginHorizontal: 48,
+  },
+  button: {
+    width: Dimensions.get('window').width - 96,
   },
 });

@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
 import {SocialIcon} from 'react-native-elements';
 import {GoogleSignin, statusCodes} from '@react-native-community/google-signin';
 import {AuthContext} from '../../context/AuthContext';
@@ -46,6 +46,7 @@ function GoogleSignInButton({seterror, setload, navigation}) {
       <SocialIcon
         type={'google'}
         title={'Sign in with Google'}
+        style={styles.button}
         button
         onPress={_signIn}
       />
@@ -56,6 +57,9 @@ function GoogleSignInButton({seterror, setload, navigation}) {
 const styles = StyleSheet.create({
   buttonContainer: {
     marginHorizontal: 48,
+  },
+  button: {
+    width: Dimensions.get('window').width - 96,
   },
 });
 
