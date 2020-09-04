@@ -5,8 +5,13 @@ import {View, Text, StyleSheet} from 'react-native';
 const HeaderPaddingDefault = props => {
   const {to, alt, title, right} = props;
 
+  const HeaderStyle = StyleSheet.flatten([
+    styles.primaryheader,
+    {backgroundColor: alt ? '#ffc630' : '#11a4ff'},
+  ]);
+
   return (
-    <View style={alt ? styles.secondaryheader : styles.primaryheader}>
+    <View style={HeaderStyle}>
       <View style={styles.left}>
         <BackToButton to={to} />
       </View>
@@ -28,18 +33,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     flexDirection: 'row',
-    backgroundColor: '#11a4ff',
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-  },
-  secondaryheader: {
-    height: 56,
-    top: 0,
-    zIndex: 5,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-    backgroundColor: '#ffc630',
     paddingHorizontal: 24,
     paddingVertical: 12,
   },

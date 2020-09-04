@@ -15,6 +15,7 @@ import {Icon} from 'react-native-elements';
 import CarportCard2 from '../components/carport/CarportCard2';
 import {withNavigationFocus} from 'react-navigation';
 import {getOwnedCarports} from '../firebase_func';
+import RoundedButton from '../components/button/RoundedButton';
 
 const CarportListView = props => {
   const context = useContext(AuthContext);
@@ -106,12 +107,16 @@ const CarportListView = props => {
         ) : (
           <ScrollView contentContainerStyle={styles.scrollcontainer}>
             {carportCardList}
-            <TouchableHighlight
-              onPress={() => props.navigation.navigate('CarportRegister')}
-              style={styles.container}
-              underlayColor={'#c2e8ff'}>
-              <Text style={styles.text}>Add Listing</Text>
-            </TouchableHighlight>
+            <View style={styles.container}>
+              <RoundedButton
+                title={'+ Add Listing'}
+                backgroundColor={'#11a4ff'}
+                textColor={'white'}
+                fontSize={16}
+                width={Dimensions.get('window').width - 48}
+                onPress={() => props.navigation.navigate('CarportRegister')}
+              />
+            </View>
           </ScrollView>
         )}
       </View>
@@ -127,17 +132,14 @@ const styles = StyleSheet.create({
     paddingBottom: 64,
   },
   container: {
-    width: Dimensions.get('window').width - 48,
-    height: 48,
-    backgroundColor: '#ccc',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 24,
     marginVertical: 12,
-    elevation: 4,
   },
   text: {
-    fontFamily: 'Montserrat-MediumItalic',
+    fontWeight: 'bold',
+    color: 'white',
+    fontSize: 16,
   },
 });
 

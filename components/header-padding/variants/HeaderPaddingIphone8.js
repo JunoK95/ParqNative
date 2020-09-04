@@ -2,7 +2,7 @@ import React from 'react';
 import BackToButton from '../../navigation/BackToButton';
 import {View, Text, StyleSheet} from 'react-native';
 
-const HeaderPaddingIphoneX = props => {
+const HeaderPaddingIphone8 = props => {
   const {to, alt, title, right} = props;
 
   const HeaderStyle = StyleSheet.flatten([
@@ -25,7 +25,7 @@ const HeaderPaddingIphoneX = props => {
   );
 };
 
-export default HeaderPaddingIphoneX;
+export default HeaderPaddingIphone8;
 
 const styles = StyleSheet.create({
   primaryheader: {
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 24,
     paddingVertical: 12,
-    paddingTop: 42,
+    paddingTop: 30,
   },
   title: {
     fontFamily: 'Montserrat-SemiBold',

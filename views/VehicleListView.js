@@ -6,11 +6,13 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import HeaderPadding from '../components/header-padding/HeaderPadding';
 import {AuthContext} from '../context/AuthContext';
 import {Icon} from 'react-native-elements';
 import VehicleListItem from '../components/vehicle/vehicle-listitem';
+import RoundedButton from '../components/button/RoundedButton';
 
 const VehicleListView = props => {
   const context = useContext(AuthContext);
@@ -37,12 +39,14 @@ const VehicleListView = props => {
       <ScrollView contentContainerStyle={styles.scrollcontainer}>
         {saved_vehicles && vehicles}
         <View style={styles.centercontainer}>
-          <TouchableHighlight
+          <RoundedButton
+            title={'+ Add Vehicle'}
+            backgroundColor={'#11a4ff'}
+            textColor={'white'}
+            fontSize={16}
+            width={Dimensions.get('window').width - 48}
             onPress={() => props.navigation.navigate('VehicleReg')}
-            style={styles.container}
-            underlayColor={'#c2e8ff'}>
-            <Text style={styles.text}>Add Vehicle</Text>
-          </TouchableHighlight>
+          />
         </View>
       </ScrollView>
     </View>
@@ -56,6 +60,7 @@ const styles = StyleSheet.create({
   centercontainer: {
     justifyContent: 'center',
     alignSelf: 'center',
+    marginVertical: 12,
   },
   container: {
     width: 340,

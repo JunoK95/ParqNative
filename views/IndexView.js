@@ -10,6 +10,14 @@ const indexItems = [
     title: 'Referral Entry',
     to: 'Referral',
   },
+  {
+    title: 'Code Entry',
+    to: 'Phone',
+  },
+  {
+    title: 'SandBox',
+    to: 'Sandbox',
+  },
 ];
 
 const IndexView = ({navigation}) => {

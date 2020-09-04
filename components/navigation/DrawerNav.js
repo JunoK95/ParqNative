@@ -5,6 +5,7 @@ import {ListItem} from 'react-native-elements';
 import {useContext} from 'react';
 import {AuthContext} from '../../context/AuthContext';
 import logo from '../../resources/images/parq_dino64x64.png';
+import {isIphoneX} from '../../helpers/is-iphoneX';
 
 function DrawerNav(props) {
   const context = useContext(AuthContext);
@@ -82,7 +83,7 @@ function DrawerNav(props) {
   return (
     <View style={styles.drawer}>
       <ScrollView style={styles.scroll}>
-        <View style={styles.card}>
+        <View style={isIphoneX() ? styles.cardX : styles.card}>
           <View style={styles.textcol}>
             <Image source={logo} />
           </View>
@@ -119,6 +120,16 @@ const styles = StyleSheet.create({
   },
   card: {
     paddingVertical: 24,
+    paddingLeft: 16,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    backgroundColor: '#11a4ff',
+    borderWidth: 0,
+  },
+  cardX: {
+    paddingVertical: 24,
+    paddingTop: 48,
     paddingLeft: 16,
     alignItems: 'center',
     justifyContent: 'flex-start',

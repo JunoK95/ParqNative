@@ -80,7 +80,7 @@ const PhoneCodeForm = ({service_sid, phone, navigation}) => {
           style={styles.inputcontainer}
           value={code}
           onChangeText={text => setcode(text)}
-          placeholder={'xxxx'}
+          placeholder={'__ __ __ __'}
           label={'code'}
           maxLength={4}
           keyboardType={'numeric'}

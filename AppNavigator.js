@@ -31,6 +31,7 @@ import GetPhoneView from './views/GetPhoneView';
 import CardTokenGenerator from './views/payment/card-token-generator/CardTokenGenerator';
 import IndexView from './views/IndexView';
 import ReferralView from './views/ReferralView';
+import SandboxView from './views/SandboxView';
 
 const SearchNavigator = createStackNavigator(
   {
@@ -63,6 +64,7 @@ const HelpNavigator = createStackNavigator(
     FAQ: FAQView,
     TOS: TOSView,
     Privacy: PrivacyView,
+    Sandbox: SandboxView,
   },
   {
     headerMode: 'none',

@@ -107,9 +107,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 24,
-    borderColor: '#666',
-    borderWidth: 2,
     marginVertical: 12,
+    shadowColor: '#000',
+    shadowOffset: {width: 4, height: 4},
+    shadowOpacity: 1,
+    shadowRadius: 4,
     elevation: 4,
   },
   cardheader: {
