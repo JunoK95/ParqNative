@@ -1,5 +1,5 @@
 import React, {createContext, useState, useEffect} from 'react';
-import Geolocation from 'react-native-geolocation-service';
+import Geolocation from '@react-native-community/geolocation';
 import {PermissionsAndroid, Platform} from 'react-native';
 
 export const GeolocationContext = createContext();
@@ -7,32 +7,40 @@ export const GeolocationContext = createContext();
 function GeolocationContextProvider(props) {
   const [location, setlocation] = useState({
     latitude: null,
-    location: null,
+    longitude: null,
   });
   const [fetch, setfetch] = useState(true);
+
+  useEffect(() => {
+    const {latitude, longitude} = location;
+    if (latitude && longitude) {
+      setfetch(false);
+    }
+  }, [location]);
 
   useEffect(() => {
     async function initializeLocation() {
       if (Platform.OS === 'ios') {
         // Get IOS Permission
-        await Geolocation.getCurrentPosition(
+        const Permission = Geolocation.requestAuthorization('whenInUse');
+        console.log('GEOLOCATION PERMISSION =>', Permission);
+        Geolocation.getCurrentPosition(
           pos => {
             const {latitude, longitude} = pos.coords;
             setlocation({latitude, longitude});
             console.log('You can use their location iOS =>', location);
           },
           error => {
-            console.log(error.code, error.message);
+            console.log('ERROR GETTING LOCATION =>', error.code, error.message);
             setfetch(false);
           },
           {
             enableHighAccuracy: true,
-            timeout: 2000,
+            timeout: 5000,
             maximumAge: 360000,
             desiredAccuracy: 20,
           },
         );
-        setfetch(false);
       } else {
         try {
           const granted = await PermissionsAndroid.request(
@@ -51,7 +59,6 @@ function GeolocationContextProvider(props) {
               pos => {
                 const {latitude, longitude} = pos.coords;
                 setlocation({latitude, longitude});
-                setfetch(false);
                 console.log('You can use their location context', location);
               },
               error => {

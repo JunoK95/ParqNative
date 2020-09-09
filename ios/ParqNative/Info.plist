@@ -82,8 +82,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Get location to find nearby parking</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Get location to find nearby parking</string>
 	<key>NSPhotoLibraryUsageDescription</key>

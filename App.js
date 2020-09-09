@@ -3,6 +3,7 @@
  * @format
  * @flow
  */
+navigator.geolocation = require('@react-native-community/geolocation');
 
 import React, {useEffect} from 'react';
 import 'react-native-gesture-handler';
