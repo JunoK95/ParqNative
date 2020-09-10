@@ -32,6 +32,7 @@ import CardTokenGenerator from './views/payment/card-token-generator/CardTokenGe
 import IndexView from './views/IndexView';
 import ReferralView from './views/ReferralView';
 import SandboxView from './views/SandboxView';
+import PWResetView from './views/login/PWResetView';
 
 const SearchNavigator = createStackNavigator(
   {
@@ -104,6 +105,7 @@ const AuthNavigator = createStackNavigator(
     Login: LoginView,
     Landing: LandingView,
     Register: RegisterView,
+    PWReset: PWResetView,
   },
   {
     initialRouteName: 'Landing',

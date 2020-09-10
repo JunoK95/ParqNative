@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,47 +7,53 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TouchableOpacity,
-  Platform,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
-import {AuthContext} from '../../context/AuthContext';
 import OrbLoading from '../../components/loading/OrbLoading';
-import {
-  EmailSignInButton,
-  GoogleSignInButton,
-  AppleSignInButton,
-} from '../../components/login';
+import {sendPWResetEmail} from '../../firebase_func/userFunctions';
 
-const LoginView = props => {
-  const context = useContext(AuthContext);
+const PWResetView = props => {
   const [email, setemail] = useState('');
-  const [password, setpassword] = useState('');
   const [error, seterror] = useState('');
+  const [success, setsuccess] = useState(false);
   const [load, setload] = useState(false);
 
-  const handleSignIn = async () => {
-    if (email === '') {
-      seterror('Email Address Missing');
+  const handleSubmit = async () => {
+    setload(true);
+    try {
+      await sendPWResetEmail(email);
       setload(false);
-      return;
-    } else if (password === '') {
-      seterror('Password Missing');
+      setsuccess(true);
+    } catch (err) {
+      console.error(err);
       setload(false);
-      return;
-    } else {
-      console.log('signing in');
-      setload(true);
-      await context.functions.signInUser(email, password).then(res => {
-        if (res.error) {
-          seterror(res.error.message);
-          setload(false);
-        } else {
-          setload(false);
-          props.navigation.navigate('App');
-        }
-      });
+      seterror('Unable to send password reset email');
     }
   };
+
+  if (success) {
+    return (
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.bg}>
+          <View style={styles.infoTextContainer}>
+            <Text style={styles.infoText}>
+              You will be sent an email to reset your password shortly! {'\n'}
+              {'\n'}
+              Thank you for using Parq!
+            </Text>
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('Login');
+            }}>
+            <View style={styles.backContainer}>
+              <Text style={styles.backText}>Go Back</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -74,36 +80,15 @@ const LoginView = props => {
                   onChangeText={text => setemail(text)}
                 />
               </View>
-              <View style={styles.textFieldContainer}>
-                <Icon iconStyle={styles.icon} name={'lock'} size={30} />
-                <TextInput
-                  style={styles.textField}
-                  name={'password'}
-                  placeholder={'password'}
-                  textContentType={'password'}
-                  secureTextEntry
-                  autoCorrect={false}
-                  value={password}
-                  onChangeText={text => setpassword(text)}
-                />
-              </View>
             </View>
-            <EmailSignInButton handlePress={handleSignIn} />
-            <GoogleSignInButton seterror={seterror} setload={setload} />
-            {Platform.OS === 'ios' ? (
-              <AppleSignInButton seterror={seterror} setload={setload} />
-            ) : null}
-            <TouchableOpacity
-              onPress={() => {
-                props.navigation.navigate('PWReset');
-              }}>
+            <TouchableOpacity onPress={handleSubmit}>
               <View style={styles.backContainer}>
-                <Text style={styles.backText}>Forgot Your Password?</Text>
+                <Text style={styles.backText}>Submit</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                props.navigation.navigate('Landing');
+                props.navigation.navigate('Login');
               }}>
               <View style={styles.backContainer}>
                 <Text style={styles.backText}>Go Back</Text>
@@ -169,6 +154,16 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat',
     textAlign: 'center',
   },
+  infoTextContainer: {
+    paddingHorizontal: 32,
+  },
+  infoText: {
+    fontSize: 18,
+    textAlign: 'center',
+    color: '#fff',
+    fontWeight: 'bold',
+    fontFamily: 'Montserrat',
+  },
 });
 
-export default LoginView;
+export default PWResetView;

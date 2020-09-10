@@ -127,3 +127,12 @@ export async function updateUserData(user_id, data) {
     });
   return success;
 }
+
+export async function sendPWResetEmail(email) {
+  try {
+    await firebase.auth().sendPasswordResetEmail(email);
+    return true;
+  } catch (error) {
+    throw error;
+  }
+}
