@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
   },
   backText: {
     fontSize: 16,
+    fontWeight: 'bold',
     color: 'blue',
     fontFamily: 'Montserrat',
     textAlign: 'center',

@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, StyleSheet, Dimensions, Image} from 'react-native';
+import {View, StyleSheet, Dimensions, Image, Text} from 'react-native';
+import LottieView from 'lottie-react-native';
 import MapView, {Marker} from 'react-native-maps';
 import {GeolocationContext} from '../context/GeolocationContext';
 import DrawerHeaderPadding from '../components/layout/DrawerHeaderPadding';
@@ -37,7 +38,14 @@ export default class HomeView extends React.Component {
                   <React.Fragment>
                     <View style={styles.container}>
                       {latitude === null || longitude === null ? (
-                        <View style={styles.mapStyle} />
+                        <View style={styles.noMapStyle}>
+                          <LottieView
+                            style={styles.lottieContainer}
+                            source={require('../resources/animations/radar.json')}
+                            autoPlay
+                            loop
+                          />
+                        </View>
                       ) : (
                         <MapView
                           style={styles.mapStyle}
@@ -91,5 +99,12 @@ const styles = StyleSheet.create({
   mapStyle: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+  },
+  noMapStyle: {
+    flex: 1,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

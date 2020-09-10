@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'blue',
     fontFamily: 'Montserrat',
+    fontWeight: 'bold',
     textAlign: 'center',
   },
 });

@@ -53,7 +53,6 @@ function GeolocationContextProvider(props) {
               buttonPositive: 'OK',
             },
           );
-
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             Geolocation.getCurrentPosition(
               pos => {
@@ -62,11 +61,16 @@ function GeolocationContextProvider(props) {
                 console.log('You can use their location context', location);
               },
               error => {
-                console.log(error.code, error.message);
+                console.log(
+                  'ERROR GETTING LOCATION =>',
+                  error.code,
+                  error.message,
+                );
+                setfetch(false);
               },
               {
                 enableHighAccuracy: true,
-                timeout: 2000,
+                timeout: 5000,
                 maximumAge: 360000,
                 desiredAccuracy: 20,
               },
@@ -80,7 +84,6 @@ function GeolocationContextProvider(props) {
         }
       }
     }
-
     initializeLocation();
   }, []);
 
