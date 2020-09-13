@@ -153,12 +153,10 @@ const CarportPayCard = ({port, setopen, navigation}) => {
         });
       }
     } else if (object === 'card') {
-      // console.log('PAYING WITH THIS DATA =>', resData);
       const result = await stripePayParkingCharge(resData, context);
       if (result.error) {
         setloading(false);
         seterror('Payment Failed');
-        // console.error(result.error);
         return;
       } else {
         finalizePay(port, vehicle, resData.amount, hours);

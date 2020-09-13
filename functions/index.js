@@ -107,9 +107,6 @@ exports.stripePayParkingCharge = functions.https.onRequest(
         destination_stripe_account,
       );
 
-      let submitToken =
-        functions.config().environment.env_mode === 'DEV' ? 'tok_visa' : token;
-
       stripe.charges.create(
         {
           amount: amount,

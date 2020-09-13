@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, StyleSheet, Dimensions, Image, Text} from 'react-native';
-import LottieView from 'lottie-react-native';
 import MapView, {Marker} from 'react-native-maps';
 import {GeolocationContext} from '../context/GeolocationContext';
 import DrawerHeaderPadding from '../components/layout/DrawerHeaderPadding';
@@ -10,6 +9,7 @@ import mapicon from '../resources/images/parq_dino64x64.png';
 import {AuthContext} from '../context/AuthContext';
 import LoadingView from './LoadingView';
 import GetPhoneView from './GetPhoneView';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default class HomeView extends React.Component {
   render() {
@@ -39,12 +39,14 @@ export default class HomeView extends React.Component {
                     <View style={styles.container}>
                       {latitude === null || longitude === null ? (
                         <View style={styles.noMapStyle}>
-                          <LottieView
-                            style={styles.lottieContainer}
-                            source={require('../resources/animations/radar.json')}
-                            autoPlay
-                            loop
+                          <FontAwesome5Icon
+                            name={'search-location'}
+                            size={48}
+                            color={'#888'}
                           />
+                          <Text style={styles.grayText}>
+                            Sorry, We Could Not Get Your Location.
+                          </Text>
                         </View>
                       ) : (
                         <MapView
@@ -96,6 +98,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: Dimensions.get('window').width,
   },
+  grayText: {
+    color: '#888',
+    fontSize: 18,
+    paddingHorizontal: 32,
+    paddingVertical: 32,
+    textAlign: 'center',
+  },
   mapStyle: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
@@ -106,5 +115,8 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  lottieContainer: {
+    width: '30%',
   },
 });
