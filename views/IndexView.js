@@ -16,7 +16,7 @@ const indexItems = [
   },
   {
     title: 'SandBox',
-    to: 'Sandbox',
+    to: 'StripeIdentityVerification',
   },
 ];
 

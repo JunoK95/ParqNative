@@ -24,25 +24,6 @@ const StripeActivateForm1 = props => {
     });
   };
 
-  const normalizeInput = (value, previousValue) => {
-    if (!value) {
-      return value;
-    }
-    const currentValue = value.replace(/[^\d]/g, '');
-    const cvLength = currentValue.length;
-
-    if (!previousValue || value.length > previousValue.length) {
-      if (cvLength < 4) {
-        return currentValue;
-      }
-      if (cvLength < 7) {
-        return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3)}`;
-      }
-      // eslint-disable-next-line prettier/prettier
-      return (`(${currentValue.slice(0, 3)}) ${currentValue.slice(3, 6)}-${currentValue.slice(6, 10)}`);
-    }
-  };
-
   const handleSubmit = async () => {
     setloading(true);
     let birthdate;

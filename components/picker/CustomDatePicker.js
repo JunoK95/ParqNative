@@ -80,6 +80,7 @@ const CustomDatePicker = props => {
         onRequestClose={() => setmodalopen(false)}>
         <TouchableWithoutFeedback
           onPress={() => {
+            setselected(date);
             setmoved(true);
             setmodalopen(false);
           }}>

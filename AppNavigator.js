@@ -33,6 +33,7 @@ import IndexView from './views/IndexView';
 import ReferralView from './views/ReferralView';
 import SandboxView from './views/SandboxView';
 import PWResetView from './views/login/PWResetView';
+import StripeIdentityVerificationView from './views/stripe_verification/stripe-identity-verification';
 
 const SearchNavigator = createStackNavigator(
   {
@@ -51,6 +52,7 @@ const SearchNavigator = createStackNavigator(
 const PaymentNavigator = createStackNavigator(
   {
     StripeAccountVerification: StripeAccountVerification,
+    StripeIdentityVerification: StripeIdentityVerificationView,
     PaymentSetting: PaymentSettingView,
   },
   {

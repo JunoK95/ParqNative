@@ -1,3 +1,3 @@
-import StripeIdentityVerification from './StripeIdentityVerificationView';
+import StripeIdentityVerificationView from './StripeIdentityVerificationView';
 
-export default StripeIdentityVerification;
+export default StripeIdentityVerificationView;
