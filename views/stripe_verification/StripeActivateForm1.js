@@ -55,11 +55,11 @@ const StripeActivateForm1 = props => {
         dob: dob,
       };
 
-      const response = await stripeUpdateAccountAndTOS({
-        account_id: account.id,
-        uid: context.user_id,
-        updates: stripeUpdateData,
-      });
+      const response = await stripeUpdateAccountAndTOS(
+        context.user_id,
+        account.id,
+        stripeUpdateData,
+      );
 
       if (response.error) {
         console.error('ERROR UPDATING STRIPE CONNECT ACCOUNT');

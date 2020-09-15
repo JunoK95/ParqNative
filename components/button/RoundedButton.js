@@ -8,8 +8,9 @@ const RoundedButton = ({
   width,
   fontSize,
   textColor,
+  disabled,
 }) => {
-  const containerStyle = StyleSheet.flatten([
+  let containerStyle = StyleSheet.flatten([
     styles.container,
     {backgroundColor, width},
   ]);
@@ -19,8 +20,12 @@ const RoundedButton = ({
     {color: textColor, fontSize},
   ]);
 
+  if (disabled) {
+    containerStyle = StyleSheet.flatten([containerStyle, {opacity: 0.4}]);
+  }
+
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity disabled={disabled} onPress={onPress}>
       <View style={containerStyle}>
         <Text style={textStyle}>{title}</Text>
       </View>

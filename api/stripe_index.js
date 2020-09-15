@@ -135,7 +135,7 @@ export const stripeAddExternalAccount = async (account_id, bankToken) => {
   return response;
 };
 
-export const stripeUpdateAccountAndTOS = async data => {
+export const stripeUpdateAccountAndTOS = async (uid, account_id, updates) => {
   const authHeader = await createFirebaseAuthHeader();
   let response;
   try {
@@ -143,7 +143,11 @@ export const stripeUpdateAccountAndTOS = async data => {
       headers: authHeader,
       method: 'POST',
       url: `${config.firebase_functions_url_base}stripeUpdateAccountWithTOS`,
-      data,
+      data: {
+        uid,
+        account_id,
+        updates,
+      },
     });
   } catch (error) {
     response = {error};

@@ -1,12 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import HeaderPadding from '../../../components/header-padding/HeaderPadding';
-import {StripeBusinessTypeForm, StripeIndividualInfoForm} from './form-pages';
+import {StripeBusinessTypeForm} from './form-pages';
 import StripeAdditionalInfoForm from './form-pages/StripeAdditionalInfoForm';
 
 const StripeIdentityVerificationView = () => {
   const [progress, setProgress] = useState(0);
   const [businessType, setBusinessType] = useState('individual');
+
+  const handleSubmit = useCallback(
+    fieldValues => {
+      console.log('SUBMIT VALUES =>', {...fieldValues, businessType});
+    },
+    [businessType],
+  );
 
   let page;
   switch (progress) {
@@ -24,6 +31,7 @@ const StripeIdentityVerificationView = () => {
         <StripeAdditionalInfoForm
           businessType={businessType}
           nextPress={() => setProgress(2)}
+          handleSubmit={handleSubmit}
         />
       );
       break;

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {StyleSheet, ScrollView, View, Text, Linking} from 'react-native';
 import {Input, CheckBox} from 'react-native-elements';
 import RoundedButton from '../../../../components/button/RoundedButton';
@@ -16,11 +16,11 @@ const textInputInfo = [
     placeholder: 'XX-XXXXXXX',
     label: 'Tax ID (EIN)',
     textContentType: 'familyName',
-    maxLength: 12,
+    maxLength: 10,
   },
 ];
 
-const StripeBusinessInfoForm = ({nextPress}) => {
+const StripeBusinessInfoForm = ({nextPress, handleSubmit}) => {
   const [formValues, setFormValues] = useState({
     name: '',
     tax_id: '',
@@ -30,6 +30,52 @@ const StripeBusinessInfoForm = ({nextPress}) => {
     product_description: '',
   });
   const [noURL, setNoURL] = useState(false);
+  const [valid, setValid] = useState({
+    name: false,
+    tax_id: false,
+    product_description: false,
+    url: false,
+  });
+
+  function isUrl(s) {
+    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+    s = s.toLowerCase();
+    return regexp.test(s);
+  }
+
+  const checkFormat = useCallback(() => {
+    const {name, tax_id} = formValues;
+    const {url, product_description} = businessProfile;
+    var patternEIN = /^\d{2}\-?\d{7}$/;
+
+    let isValid = {
+      name: false,
+      tax_id: false,
+      product_description: false,
+      url: false,
+    };
+
+    if (name.length > 1) {
+      isValid.name = true;
+    }
+    if (patternEIN.test(tax_id)) {
+      isValid.tax_id = true;
+    }
+    if (noURL) {
+      if (product_description.length > 1) {
+        isValid.product_description = true;
+      }
+    } else {
+      if (isUrl(url)) {
+        isValid.url = true;
+      }
+    }
+    setValid(isValid);
+  }, [businessProfile, formValues, noURL]);
+
+  useEffect(() => {
+    checkFormat();
+  }, [formValues, businessProfile, checkFormat]);
 
   const textInputs = textInputInfo.map((item, i) => {
     const {
@@ -43,6 +89,11 @@ const StripeBusinessInfoForm = ({nextPress}) => {
     return (
       <Input
         key={i}
+        rightIcon={
+          valid[value]
+            ? {type: 'font-awesome', name: 'check', color: 'green'}
+            : {type: 'font-awesome', name: 'times', color: 'red'}
+        }
         containerStyle={styles.inputcontainer}
         value={formValues[value]}
         onChangeText={text => handleTextChange(value, text)}
@@ -62,6 +113,36 @@ const StripeBusinessInfoForm = ({nextPress}) => {
     });
   };
 
+  const handleNext = () => {
+    const {name, tax_id} = formValues;
+    console.log(valid);
+    if (noURL) {
+      if (valid.product_description && valid.name && valid.tax_id) {
+        handleSubmit({
+          company: {
+            name,
+            tax_id,
+          },
+          business_profile: {
+            product_description: businessProfile.product_description,
+          },
+        });
+      }
+    } else {
+      if (valid.product_description && valid.name && valid.tax_id) {
+        handleSubmit({
+          company: {
+            name,
+            tax_id,
+          },
+          business_profile: {
+            url: businessProfile.url,
+          },
+        });
+      }
+    }
+  };
+
   return (
     <ScrollView
       contentContainerStyle={styles.formcontainer}
@@ -72,6 +153,11 @@ const StripeBusinessInfoForm = ({nextPress}) => {
         containerStyle={styles.inputcontainer}
         value={businessProfile.url}
         disabled={noURL}
+        rightIcon={
+          valid.url || noURL
+            ? {type: 'font-awesome', name: 'check', color: 'green'}
+            : {type: 'font-awesome', name: 'times', color: 'red'}
+        }
         onChangeText={text =>
           setBusinessProfile({...businessProfile, url: text})
         }
@@ -91,6 +177,11 @@ const StripeBusinessInfoForm = ({nextPress}) => {
         <Input
           containerStyle={styles.inputcontainer}
           value={businessProfile.product_description}
+          rightIcon={
+            valid.product_description
+              ? {type: 'font-awesome', name: 'check', color: 'green'}
+              : {type: 'font-awesome', name: 'times', color: 'red'}
+          }
           onChangeText={text =>
             setBusinessProfile({...businessProfile, product_description: text})
           }
@@ -122,10 +213,16 @@ const StripeBusinessInfoForm = ({nextPress}) => {
       <View style={styles.buttonContainer}>
         <RoundedButton
           fontSize={18}
+          disabled={
+            !valid.name ||
+            !valid.tax_id ||
+            (!valid.url && !noURL) ||
+            (!valid.product_description && noURL)
+          }
           backgroundColor={'#11a4ff'}
           textColor={'white'}
           title={'Next >'}
-          onPress={() => console.log(formValues, businessProfile)}
+          onPress={handleNext}
         />
       </View>
     </ScrollView>

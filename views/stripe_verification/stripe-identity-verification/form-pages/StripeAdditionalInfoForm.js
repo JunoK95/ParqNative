@@ -3,19 +3,17 @@ import { StyleSheet, Text, View } from 'react-native';
 import StripeIndividualInfoForm from './StripeIndividualInfoForm';
 import StripeBusinessInfoForm from './StripeBusinessInfoForm';
 
-const StripeAdditionalInfoForm = ({businessType}) => {
+const StripeAdditionalInfoForm = ({businessType, handleSubmit}) => {
   let formPage;
   switch (businessType) {
     case 'individual':
-      formPage = <StripeIndividualInfoForm />;
+      formPage = <StripeIndividualInfoForm handleSubmit={handleSubmit} />;
       break;
     default:
-      formPage = <StripeBusinessInfoForm />;
+      formPage = <StripeBusinessInfoForm handleSubmit={handleSubmit} />;
       break;
   }
   return <View>{formPage}</View>;
 };
 
 export default StripeAdditionalInfoForm;
-
-const styles = StyleSheet.create({});

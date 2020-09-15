@@ -17,7 +17,7 @@ const businessOptions = [
     value: 'non_profit',
   },
   {
-    title: 'Goverment Entity',
+    title: 'Goverment Entity (US Only)',
     value: 'government_entity',
   },
 ];
