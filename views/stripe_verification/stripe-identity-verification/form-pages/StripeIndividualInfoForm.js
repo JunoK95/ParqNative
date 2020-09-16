@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {StyleSheet, ScrollView, View, Text, Linking} from 'react-native';
 import {Input} from 'react-native-elements';
 import RoundedButton from '../../../../components/button/RoundedButton';
@@ -29,19 +29,70 @@ const textInputInfo = [
   },
 ];
 
-const StripeIndividualInfoForm = ({nextPress}) => {
+const StripeIndividualInfoForm = ({handleSubmit}) => {
   const [individual, setindividual] = useState({
     first_name: '',
     last_name: '',
     ssn_last_4: '',
   });
   const [dob, setdob] = useState(null);
+  const [valid, setValid] = useState({
+    first_name: false,
+    last_name: false,
+    ssn_last_4: false,
+    dob: false,
+  });
+
+  const checkFormat = useCallback(() => {
+    const {first_name, last_name, ssn_last_4} = individual;
+    let isValid = {
+      first_name: false,
+      last_name: false,
+      ssn_last_4: false,
+      dob: false,
+    };
+    if (first_name.length > 0) {
+      isValid.first_name = true;
+    }
+    if (last_name.length > 0) {
+      isValid.last_name = true;
+    }
+    if (ssn_last_4.length === 4) {
+      isValid.ssn_last_4 = true;
+    }
+    if (dob) {
+      isValid.dob = true;
+    }
+    setValid(isValid);
+  }, [dob, individual]);
+
+  useEffect(() => {
+    checkFormat();
+  }, [individual, dob, checkFormat]);
 
   const handleTextChange = (name, text) => {
     setindividual({
       ...individual,
       [name]: text,
     });
+  };
+
+  const handleNext = () => {
+    let birthdate;
+
+    if (dob) {
+      // Valid date
+      birthdate = {
+        month: dob.getMonth() + 1,
+        day: dob.getDate(),
+        year: dob.getFullYear(),
+      };
+    } else {
+      console.log('Invalid Date');
+      return;
+    }
+
+    handleSubmit({...individual, dob: {...birthdate}});
   };
 
   const textInputs = textInputInfo.map((item, i) => {
@@ -101,10 +152,16 @@ const StripeIndividualInfoForm = ({nextPress}) => {
       <View style={styles.buttonContainer}>
         <RoundedButton
           fontSize={18}
+          disabled={
+            !valid.first_name ||
+            !valid.last_name ||
+            !valid.ssn_last_4 ||
+            !valid.dob
+          }
           backgroundColor={'#11a4ff'}
           textColor={'white'}
           title={'Next >'}
-          onPress={() => console.log(dob, individual)}
+          onPress={handleNext}
         />
       </View>
     </ScrollView>

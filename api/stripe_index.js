@@ -149,9 +149,8 @@ export const stripeUpdateAccountAndTOS = async (uid, account_id, updates) => {
         updates,
       },
     });
+    return response;
   } catch (error) {
-    response = {error};
+    throw error;
   }
-
-  return response;
 };

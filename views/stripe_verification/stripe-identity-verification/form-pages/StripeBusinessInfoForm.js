@@ -20,7 +20,7 @@ const textInputInfo = [
   },
 ];
 
-const StripeBusinessInfoForm = ({nextPress, handleSubmit}) => {
+const StripeBusinessInfoForm = ({handleSubmit}) => {
   const [formValues, setFormValues] = useState({
     name: '',
     tax_id: '',
@@ -115,7 +115,6 @@ const StripeBusinessInfoForm = ({nextPress, handleSubmit}) => {
 
   const handleNext = () => {
     const {name, tax_id} = formValues;
-    console.log(valid);
     if (noURL) {
       if (valid.product_description && valid.name && valid.tax_id) {
         handleSubmit({
@@ -129,14 +128,14 @@ const StripeBusinessInfoForm = ({nextPress, handleSubmit}) => {
         });
       }
     } else {
-      if (valid.product_description && valid.name && valid.tax_id) {
+      if (valid.url && valid.name && valid.tax_id) {
         handleSubmit({
           company: {
             name,
             tax_id,
           },
           business_profile: {
-            url: businessProfile.url,
+            url: businessProfile.url.toLowerCase(),
           },
         });
       }
