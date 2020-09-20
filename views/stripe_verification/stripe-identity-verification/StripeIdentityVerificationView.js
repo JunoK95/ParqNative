@@ -21,11 +21,11 @@ const StripeIdentityVerificationView = ({navigation}) => {
       const updates = {...fieldValues, businessType};
       console.log('SUBMIT VALUES =>', updates);
       try {
-        // await stripeUpdateAccountAndTOS(
-        //   user_id,
-        //   user_data.stripe_account_id,
-        //   updates,
-        // );
+        await stripeUpdateAccountAndTOS(
+          user_id,
+          user_data.stripe_account_id,
+          updates,
+        );
         setProgress('success');
       } catch (e) {
         setProgress('failure');

@@ -35,6 +35,7 @@ import SandboxView from './views/SandboxView';
 import PWResetView from './views/login/PWResetView';
 import StripeIdentityVerificationView from './views/stripe_verification/stripe-identity-verification';
 import StripeAddBankView from './views/stripe_verification/StripeAddBankView';
+import StripeAccountMenuView from './views/stripe_verification/StripeAccountMenuView';
 
 const SearchNavigator = createStackNavigator(
   {
@@ -52,7 +53,7 @@ const SearchNavigator = createStackNavigator(
 
 const PaymentNavigator = createStackNavigator(
   {
-    StripeAccountVerification: StripeAccountVerification,
+    StripeAccountVerification: StripeAccountMenuView,
     StripeIdentityVerification: StripeIdentityVerificationView,
     StripeAddBankAccount: StripeAddBankView,
     PaymentSetting: PaymentSettingView,
