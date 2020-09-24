@@ -152,6 +152,7 @@ const StripeIndividualInfoForm = ({handleSubmit}) => {
       <View style={styles.buttonContainer}>
         <RoundedButton
           fontSize={18}
+          width={200}
           disabled={
             !valid.first_name ||
             !valid.last_name ||
@@ -180,7 +181,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingVertical: 32,
-    paddingHorizontal: 64,
+    alignSelf: 'center',
   },
   textcontainer: {
     padding: 8,

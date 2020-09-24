@@ -48,6 +48,7 @@ const StripeBusinessTypeForm = ({businessType, setBusinessType, nextPress}) => {
       <View style={styles.buttonContainer}>
         <RoundedButton
           fontSize={18}
+          width={200}
           backgroundColor={'#11a4ff'}
           textColor={'white'}
           title={'Next >'}
@@ -76,6 +77,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingVertical: 32,
-    paddingHorizontal: 64,
+    alignItems: 'center',
   },
 });

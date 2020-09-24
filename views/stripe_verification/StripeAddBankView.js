@@ -1,7 +1,7 @@
 import React, {useCallback, useState, useContext} from 'react';
 import {StyleSheet, View} from 'react-native';
 import HeaderPadding from '../../components/header-padding/HeaderPadding';
-import StripeAddBankForm2 from './StripeAddBankForm2';
+import StripeAddBankForm from './StripeAddBankForm';
 import {AuthContext} from '../../context/AuthContext';
 import {stripeAddExternalAccount} from '../../api/stripe_index';
 import OrbLoading from '../../components/loading/OrbLoading';
@@ -34,21 +34,13 @@ const StripeAddBankView = () => {
     [context],
   );
 
-  const handleBackClick = useCallback(() => {
-    console.log('Back');
-  }, []);
-
   if (loading) {
-    return <OrbLoading bgcolor={'#ffc630'} />;
+    return <OrbLoading />;
   }
   return (
     <View>
       <HeaderPadding alt to={'StripeAccountVerification'} title={'Add Bank'} />
-      <StripeAddBankForm2
-        handleBankToken={handleBankToken}
-        handleBackClick={handleBackClick}
-        error={error}
-      />
+      <StripeAddBankForm handleBankToken={handleBankToken} error={error} />
     </View>
   );
 };

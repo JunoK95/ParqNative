@@ -218,6 +218,7 @@ const StripeBusinessInfoForm = ({handleSubmit}) => {
             (!valid.url && !noURL) ||
             (!valid.product_description && noURL)
           }
+          width={200}
           backgroundColor={'#11a4ff'}
           textColor={'white'}
           title={'Next >'}
@@ -240,7 +241,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingVertical: 32,
-    paddingHorizontal: 64,
+    alignItems: 'center',
   },
   textcontainer: {
     padding: 8,

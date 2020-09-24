@@ -1,12 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {StyleSheet, Text, ScrollView, TouchableHighlight} from 'react-native';
+import USStateData from '../../../resources/data/us_state.json';
+import CarMakeData from '../../../resources/data/car_manufacturer.json';
 import {Input} from 'react-native-elements';
 import CustomColorPicker from '../../picker/CustomColorPicker';
 import CustomPickerItem from '../../picker/CustomPickerItem';
 import {capitalizeFirstLetter} from '../../../helpers/helper';
+import NewCustomPicker from '../../picker/NewCustomPicker';
+import RoundedButton from '../../button/RoundedButton';
 
 const VehicleRegisterForm = ({onChange, onSubmit}) => {
   const [open, setopen] = useState(false);
+  const [stateModalOpen, setStateModalOpen] = useState(false);
+  const [makeModalOpen, setMakeModalOpen] = useState(false);
+  const [yearModalOpen, setYearModalOpen] = useState(false);
   const [valid, setvalid] = useState(false);
   const [color, setcolor] = useState(null);
   const [inputs, setinputs] = useState({
@@ -28,10 +35,37 @@ const VehicleRegisterForm = ({onChange, onSubmit}) => {
     color: false,
   });
 
+  const isValid = useCallback(() => {
+    if (Object.values(status).every(item => item === true)) {
+      setvalid(true);
+    } else {
+      setvalid(false);
+    }
+  }, [status]);
+
+  const createYearList = () => {
+    const currentYear = new Date().getFullYear();
+    const range = (start, stop, step) =>
+      Array.from(
+        {length: (stop - start) / step + 1},
+        (_, i) => start + i * step,
+      );
+    const yearArray = range(currentYear, currentYear - 50, -1);
+    const yearData = yearArray.map((year, i) => {
+      return {
+        title: year,
+        value: year,
+      };
+    });
+    return yearData;
+  };
+
+  const yearData = createYearList();
+
   useEffect(() => {
     isValid();
     onChange({...inputs, color, status});
-  }, [inputs, color, status]);
+  }, [inputs, color, status, isValid, onChange]);
 
   const checkField = (field, value) => {
     if (['name', 'license_plate', 'make', 'model'].includes(field)) {
@@ -41,7 +75,7 @@ const VehicleRegisterForm = ({onChange, onSubmit}) => {
         setstatus({...status, [field]: true});
       }
     } else if (field === 'year') {
-      if (value.length !== 4) {
+      if (!value) {
         setstatus({...status, [field]: false});
       } else {
         setstatus({...status, [field]: true});
@@ -53,20 +87,43 @@ const VehicleRegisterForm = ({onChange, onSubmit}) => {
         setstatus({...status, [field]: true});
       }
     } else if (field === 'color') {
-      if (value) {
-        setstatus({...status, [field]: true});
-      } else {
+      if (!value) {
         setstatus({...status, [field]: false});
+      } else {
+        setstatus({...status, [field]: true});
       }
     }
   };
 
   const handleChange = (name, text) => {
     checkField(name, text);
-    isValid();
     setinputs({
       ...inputs,
       [name]: text,
+    });
+  };
+
+  const handleUSStateChange = item => {
+    checkField('us_state', item.value);
+    setinputs({
+      ...inputs,
+      us_state: item.value,
+    });
+  };
+
+  const handleMakeModalChange = item => {
+    checkField('make', item.value);
+    setinputs({
+      ...inputs,
+      make: item.value,
+    });
+  };
+
+  const handleYearModalChange = item => {
+    checkField('year', item.value.toString());
+    setinputs({
+      ...inputs,
+      year: item.value.toString(),
     });
   };
 
@@ -74,16 +131,11 @@ const VehicleRegisterForm = ({onChange, onSubmit}) => {
     onSubmit();
   };
 
-  const isValid = () => {
-    if (Object.values(status).every(item => item === true)) {
-      setvalid(true);
-    } else {
-      setvalid(false);
-    }
-  };
-
   return (
-    <ScrollView contentContainerStyle={styles.formcontainer}>
+    <ScrollView
+      contentContainerStyle={styles.formcontainer}
+      keyboardShouldPersistTaps={'handled'}
+      accessible={false}>
       <Input
         containerStyle={styles.textField}
         name={'name'}
@@ -106,7 +158,7 @@ const VehicleRegisterForm = ({onChange, onSubmit}) => {
         label={'State'}
         maxLength={2}
         value={inputs.us_state}
-        onChangeText={text => handleChange('us_state', text)}
+        onTouchStart={() => setStateModalOpen(true)}
       />
       <Input
         containerStyle={styles.textField}
@@ -114,7 +166,7 @@ const VehicleRegisterForm = ({onChange, onSubmit}) => {
         placeholder={'e.g. Honda'}
         label={'Make'}
         value={inputs.make}
-        onChangeText={text => handleChange('make', text)}
+        onTouchStart={() => setMakeModalOpen(true)}
       />
       <Input
         containerStyle={styles.textField}
@@ -130,9 +182,28 @@ const VehicleRegisterForm = ({onChange, onSubmit}) => {
         placeholder={'Year'}
         label={'Year'}
         value={inputs.year}
-        maxLength={4}
-        keyboardType={'numeric'}
-        onChangeText={text => handleChange('year', text)}
+        onTouchStart={() => setYearModalOpen(true)}
+      />
+      <NewCustomPicker
+        title={'US State'}
+        items={USStateData}
+        open={stateModalOpen}
+        setopen={setStateModalOpen}
+        onChange={handleUSStateChange}
+      />
+      <NewCustomPicker
+        title={'Car Make'}
+        items={CarMakeData}
+        open={makeModalOpen}
+        setopen={setMakeModalOpen}
+        onChange={handleMakeModalChange}
+      />
+      <NewCustomPicker
+        title={'Model Year'}
+        items={yearData}
+        open={yearModalOpen}
+        setopen={setYearModalOpen}
+        onChange={handleYearModalChange}
       />
       <CustomColorPicker
         modalopen={open}
@@ -148,13 +219,14 @@ const VehicleRegisterForm = ({onChange, onSubmit}) => {
         iconColor={color}
         handlePress={() => setopen(true)}
       />
-      <TouchableHighlight
+      <RoundedButton
         disabled={!valid}
-        style={valid ? styles.button : styles.buttondisabled}
-        underlayColor={'#ffc630'}
-        onPress={() => handleSubmit()}>
-        <Text style={styles.buttonText}>Register</Text>
-      </TouchableHighlight>
+        backgroundColor={'#11a4ff'}
+        fontSize={18}
+        textColor={'white'}
+        onPress={() => handleSubmit()}
+        title={'Register'}
+      />
     </ScrollView>
   );
 };

@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, ScrollView, Text} from 'react-native';
-import {Input, Button} from 'react-native-elements';
+import {Input, Button, CheckBox} from 'react-native-elements';
 import stripe from 'tipsi-stripe';
-import {stripeAddExternalAccount} from '../../api/stripe_index';
+import RoundedButton from '../../components/button/RoundedButton';
 
-const StripeAddBankForm = props => {
-  const {account, setprogress, refresh, setrefresh} = props;
+const StripeAddBankForm = ({handleBackClick, handleBankToken}) => {
   const [loading, setloading] = useState(false);
   const [error, seterror] = useState(null);
   const [token, settoken] = useState(null);
@@ -27,6 +26,13 @@ const StripeAddBankForm = props => {
     });
   };
 
+  const handleAccountTypeChange = type => {
+    setinputs({
+      ...inputs,
+      accountHolderType: type,
+    });
+  };
+
   const handleSubmit = async () => {
     try {
       setloading(true);
@@ -34,16 +40,8 @@ const StripeAddBankForm = props => {
       settoken(null);
       const bankToken = await stripe.createTokenWithBankAccount(inputs);
       if (bankToken) {
-        const response = await stripeAddExternalAccount(account.id, bankToken);
-        if (response.error) {
-          setloading(false);
-          console.log('ERROR ADDING EXTERNAL ACCOUNT => ', response.error);
-          seterror(response.error);
-        } else {
-          setloading(false);
-          setrefresh(!refresh);
-          setprogress(0);
-        }
+        handleBankToken(bankToken);
+        setloading(false);
       }
     } catch (err) {
       setloading(false);
@@ -90,25 +88,45 @@ const StripeAddBankForm = props => {
           value={inputs.accountHolderName}
           onChangeText={text => handleChange('accountHolderName', text)}
         />
-        <Button
-          disabled={
-            inputs.accountNumber === '' ||
-            inputs.routingNumber.length !== 9 ||
-            inputs.accountHolderName === '' ||
-            loading
-          }
-          containerStyle={styles.button}
-          raised
-          title={'Submit'}
-          onPress={() => handleSubmit()}
-        />
-        <Button
-          containerStyle={styles.button}
-          title={'Back'}
-          type={'clear'}
-          raised
-          onPress={() => setprogress(0)}
-        />
+        <View style={styles.accountTypeContainer}>
+          <Text style={styles.checkboxTitle}>Account Type</Text>
+          <View style={styles.checkboxRow}>
+            <CheckBox
+              containerStyle={styles.checkboxContainer}
+              textStyle={styles.checkboxText}
+              title={'Individual'}
+              checkedIcon="dot-circle-o"
+              uncheckedIcon="circle-o"
+              checked={inputs.accountHolderType === 'individual'}
+              onPress={() => handleAccountTypeChange('individual')}
+            />
+            <CheckBox
+              containerStyle={styles.checkboxContainer}
+              textStyle={styles.checkboxText}
+              title={'Company'}
+              checkedIcon="dot-circle-o"
+              uncheckedIcon="circle-o"
+              checked={inputs.accountHolderType === 'company'}
+              onPress={() => handleAccountTypeChange('company')}
+            />
+          </View>
+        </View>
+        <View style={styles.buttonContainer}>
+          <RoundedButton
+            fontSize={18}
+            width={200}
+            backgroundColor={'#11a4ff'}
+            textColor={'white'}
+            disabled={
+              inputs.accountNumber === '' ||
+              inputs.routingNumber.length !== 9 ||
+              inputs.accountHolderName === '' ||
+              loading
+            }
+            title={'Submit'}
+            onPress={() => handleSubmit()}
+          />
+        </View>
       </ScrollView>
     </View>
   );
@@ -124,6 +142,10 @@ const styles = StyleSheet.create({
   inputcontainer: {
     marginVertical: 16,
   },
+  buttonContainer: {
+    paddingVertical: 32,
+    alignItems: 'center',
+  },
   button: {
     marginVertical: 8,
   },
@@ -135,5 +157,24 @@ const styles = StyleSheet.create({
     color: '#f44336',
     fontWeight: 'bold',
     fontFamily: 'Montserrat',
+  },
+  accountTypeContainer: {
+    marginVertical: 12,
+  },
+  checkboxContainer: {
+    backgroundColor: 'transparent',
+    borderColor: 'transparent',
+  },
+  checkboxTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#87939e',
+    paddingLeft: 12,
+  },
+  checkboxRow: {
+    flexDirection: 'row',
+  },
+  checkboxText: {
+    fontSize: 16,
   },
 });

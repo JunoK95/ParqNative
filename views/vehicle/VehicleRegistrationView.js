@@ -1,18 +1,19 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useCallback} from 'react';
 import HeaderPadding from '../../components/header-padding/HeaderPadding';
 import {AuthContext} from '../../context/AuthContext';
 import VehicleRegisterForm from '../../components/vehicle/vehicle-register-form/VehicleRegisterForm';
 import {withNavigation} from 'react-navigation';
 import OrbLoading from '../../components/loading/OrbLoading';
+import {View} from 'react-native';
 
 const VehicleRegistrationView = props => {
   const context = useContext(AuthContext);
   const [inputs, setinputs] = useState('');
   const [load, setload] = useState(false);
 
-  const handleChange = data => {
+  const handleChange = useCallback(data => {
     setinputs(data);
-  };
+  }, []);
 
   const handleSubmit = async () => {
     const {name, license_plate, us_state, make, model, year, color} = inputs;
@@ -44,10 +45,10 @@ const VehicleRegistrationView = props => {
     return <OrbLoading />;
   }
   return (
-    <React.Fragment>
+    <View>
       <HeaderPadding to={'VehicleList'} />
       <VehicleRegisterForm onChange={handleChange} onSubmit={handleSubmit} />
-    </React.Fragment>
+    </View>
   );
 };
 

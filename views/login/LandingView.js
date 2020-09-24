@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, StyleSheet, Image} from 'react-native';
-import {Button} from 'react-native-elements';
 import RoundedButton from '../../components/button/RoundedButton';
 
 const LandingView = props => {
