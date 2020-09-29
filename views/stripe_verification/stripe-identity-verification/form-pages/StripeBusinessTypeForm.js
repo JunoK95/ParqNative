@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingVertical: 32,
     fontWeight: '600',
+    paddingHorizontal: 32,
   },
   buttonContainer: {
     paddingVertical: 32,

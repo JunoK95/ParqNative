@@ -3,17 +3,17 @@ import moment from 'moment';
 
 const db = firebase.firestore();
 
-export async function getCurrentReservations(carport) {
+export async function getCurrentReservations(carport_id) {
   const query = db
     .collection('carports')
-    .doc(carport.id)
+    .doc(carport_id)
     .collection('reservations')
     .where('end', '>', moment().unix());
 
   let reservations = await query.get().then(querySnapshot => {
-    var resList = {};
+    var resList = [];
     querySnapshot.forEach(doc => {
-      resList[doc.id] = doc.data();
+      resList.push(doc.data());
     });
     return resList;
   });

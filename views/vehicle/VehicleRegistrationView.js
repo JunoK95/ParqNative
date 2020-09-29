@@ -47,7 +47,11 @@ const VehicleRegistrationView = props => {
   return (
     <View>
       <HeaderPadding to={'VehicleList'} />
-      <VehicleRegisterForm onChange={handleChange} onSubmit={handleSubmit} />
+      <VehicleRegisterForm
+        onChange={handleChange}
+        onSubmit={handleSubmit}
+        handleBack={() => props.navigation.navigate('VehicleList')}
+      />
     </View>
   );
 };

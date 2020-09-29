@@ -92,6 +92,7 @@ const NearbyListView = props => {
               latitude: port.location.coordinates.lat,
               longitude: port.location.coordinates.lng,
             }}
+            zIndex={200}
             onPress={() => {
               console.log('SELECTING PORT => ', port);
               setselect(port);
@@ -133,6 +134,7 @@ const NearbyListView = props => {
             radius={radius * 1000}
             strokeColor={'rgba(0,0,0,0)'}
             fillColor={'rgba(17, 164, 255, 0.2)'}
+            zIndex={-1}
           />
         </MapView>
         <View style={styles.overlay}>

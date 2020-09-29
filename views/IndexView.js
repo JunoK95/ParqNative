@@ -18,6 +18,11 @@ const indexItems = [
     title: 'SandBox',
     to: 'StripeIdentityVerification',
   },
+  {
+    title: 'Parked Vehicles',
+    to: 'ParkedVehicles',
+    params: 'id',
+  },
 ];
 
 const IndexView = ({navigation}) => {

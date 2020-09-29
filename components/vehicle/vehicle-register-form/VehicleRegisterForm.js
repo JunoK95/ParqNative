@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {StyleSheet, Text, ScrollView, TouchableHighlight} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import USStateData from '../../../resources/data/us_state.json';
 import CarMakeData from '../../../resources/data/car_manufacturer.json';
 import {Input} from 'react-native-elements';
@@ -9,7 +9,7 @@ import {capitalizeFirstLetter} from '../../../helpers/helper';
 import NewCustomPicker from '../../picker/NewCustomPicker';
 import RoundedButton from '../../button/RoundedButton';
 
-const VehicleRegisterForm = ({onChange, onSubmit}) => {
+const VehicleRegisterForm = ({onChange, onSubmit, handleBack}) => {
   const [open, setopen] = useState(false);
   const [stateModalOpen, setStateModalOpen] = useState(false);
   const [makeModalOpen, setMakeModalOpen] = useState(false);
@@ -158,7 +158,9 @@ const VehicleRegisterForm = ({onChange, onSubmit}) => {
         label={'State'}
         maxLength={2}
         value={inputs.us_state}
-        onTouchStart={() => setStateModalOpen(true)}
+        onTouchStart={() => {
+          setStateModalOpen(true);
+        }}
       />
       <Input
         containerStyle={styles.textField}
@@ -226,6 +228,13 @@ const VehicleRegisterForm = ({onChange, onSubmit}) => {
         textColor={'white'}
         onPress={() => handleSubmit()}
         title={'Register'}
+      />
+      <RoundedButton
+        backgroundColor={'transparent'}
+        fontSize={18}
+        textColor={'#11a4ff'}
+        onPress={() => handleBack()}
+        title={'Go Back'}
       />
     </ScrollView>
   );

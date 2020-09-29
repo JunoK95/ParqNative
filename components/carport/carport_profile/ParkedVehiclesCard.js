@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,13 +6,11 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
-import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import DuoIconListItem from '../../layout/DuoIconListItem';
 import moment from 'moment';
+import {withNavigation} from 'react-navigation';
 
-const ParkedVehiclesCard = props => {
-  const {reservations} = props;
-
+const ParkedVehiclesCard = ({reservations, navigation, port_id}) => {
   const reserveItems = reservations.map((r, i) => {
     console.log(r.vehicle_data);
     const {end} = r;
@@ -27,46 +25,34 @@ const ParkedVehiclesCard = props => {
         rightText={moment(end, 'X').format('hh:mm A')}
         rightContent={<Text>{moment(end, 'X').format('hh:mm A')}</Text>}
       />
-      // <TouchableOpacity key={i}>
-      //   <View style={styles.row}>
-      //     <View style={styles.rowitem}>
-      //       <View style={styles.itemcolumn}>
-      //         <FontAwesome5Icon
-      //           name={'car'}
-      //           size={30}
-      //           style={color === 'white' && styles.iconOutline}
-      //           color={color ? color : 'black'}
-      //         />
-      //       </View>
-      //       <View style={styles.itemcolumn}>
-      //         <Text numberOfLines={1} style={styles.rowitemtitle}>
-      //           {license_plate + ' - ' + us_state}
-      //         </Text>
-      //         <Text style={styles.rowitemtext}>{make + ' ' + model}</Text>
-      //       </View>
-      //     </View>
-      //   </View>
-      // </TouchableOpacity>
     );
   });
 
+  const navigateTo = useCallback(() => {
+    navigation.navigate('ParkedVehicles', {port_id: port_id});
+  }, [navigation, port_id]);
+
   return (
-    <View style={styles.container}>
-      <View style={styles.row}>
-        <View style={styles.rowtitle}>
-          <Text style={styles.rowitemtitle}>Currently Parked</Text>
+    <TouchableOpacity onPress={navigateTo}>
+      <View style={styles.container}>
+        <View style={styles.row}>
+          <View style={styles.rowtitle}>
+            <Text style={styles.rowitemtitle}>Currently Parked</Text>
+          </View>
         </View>
+        {reserveItems.length > 0 ? (
+          <Text style={styles.rowitemtext2}>
+            {reserveItems.length + ' Parked\nClick to See More'}
+          </Text>
+        ) : (
+          <Text style={styles.rowitemtext2}>No Currently Parked Vehicles</Text>
+        )}
       </View>
-      {reserveItems.length > 0 ? (
-        <View style={styles.rowpadding}>{reserveItems}</View>
-      ) : (
-        <Text style={styles.rowitemtext2}>No Currently Parked Vehicles</Text>
-      )}
-    </View>
+    </TouchableOpacity>
   );
 };
 
-export default ParkedVehiclesCard;
+export default withNavigation(ParkedVehiclesCard);
 
 const styles = StyleSheet.create({
   container: {

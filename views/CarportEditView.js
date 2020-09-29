@@ -50,10 +50,10 @@ const CarportEditView = props => {
   }
 
   const fetchReservations = useCallback(async () => {
-    const res = await getCurrentReservations({data: port, id: port_id});
+    const res = await getCurrentReservations(port_id);
     console.log(res);
     setreservations(res);
-  }, [port, port_id]);
+  }, [port_id]);
 
   useEffect(() => {
     if (!port || !port_id) {
@@ -87,7 +87,7 @@ const CarportEditView = props => {
           </View>
         </View>
       </View>
-      <ParkedVehiclesCard reservations={reserves} />
+      <ParkedVehiclesCard reservations={reserves} port_id={port_id} />
       <PortInfoCard port={port} />
       <AccomodationCard accomodations={port.accomodations} />
       <RestrictionCard accomodations={port.accomodations} />

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useCallback} from 'react';
 import {StyleSheet, Modal, View, TouchableWithoutFeedback} from 'react-native';
 import VehicleRegisterForm from '../vehicle-register-form';
 import {AuthContext} from '../../../context/AuthContext';
@@ -6,10 +6,11 @@ import {AuthContext} from '../../../context/AuthContext';
 const VehicleRegisterModal = ({open, setopen}) => {
   const context = useContext(AuthContext);
   const [inputs, setinputs] = useState('');
+  const [load, setload] = useState(false);
 
-  const handleChange = data => {
+  const handleChange = useCallback(data => {
     setinputs(data);
-  };
+  }, []);
 
   const handleSubmit = async () => {
     const {name, license_plate, us_state, make, model, year, color} = inputs;
@@ -18,6 +19,7 @@ const VehicleRegisterModal = ({open, setopen}) => {
     } else if (context) {
       const {addContextVehicle} = context.functions;
       try {
+        setload(true);
         await addContextVehicle({
           name,
           license_plate,
@@ -27,8 +29,10 @@ const VehicleRegisterModal = ({open, setopen}) => {
           year,
           color,
         });
+        setload(false);
         setopen(false);
       } catch (error) {
+        setload(false);
         console.error(error);
       }
     }
@@ -48,7 +52,7 @@ const VehicleRegisterModal = ({open, setopen}) => {
               <VehicleRegisterForm
                 onChange={handleChange}
                 onSubmit={handleSubmit}
-                trigger={setopen}
+                handleBack={() => setopen(false)}
               />
             </View>
           </TouchableWithoutFeedback>

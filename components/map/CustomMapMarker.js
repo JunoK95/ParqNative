@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {convertToDollar} from '../../helpers/helper';
 
 const CustomMapMarker = props => {
@@ -18,14 +18,16 @@ const CustomMapMarker = props => {
     );
   }
   return (
-    <View
-      style={
-        isSelected
-          ? {...styles.container, ...styles.selected}
-          : {...styles.container, ...styles.unselected}
-      }>
-      <Text style={styles.text}>{`$${dollarPrice}`}</Text>
-    </View>
+    <TouchableOpacity onPress={() => console.log('Press')}>
+      <View
+        style={
+          isSelected
+            ? {...styles.container, ...styles.selected}
+            : {...styles.container, ...styles.unselected}
+        }>
+        <Text style={styles.text}>{`$${dollarPrice}`}</Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 

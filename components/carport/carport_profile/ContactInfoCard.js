@@ -8,10 +8,8 @@ import {
   Linking,
   TouchableOpacity,
 } from 'react-native';
-import {config} from '../../../config';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-import Axios from 'axios';
-import { getUserContactInfo } from '../../../api/firestore_index';
+import {getUserContactInfo} from '../../../api/firestore_index';
 
 const ContactInfoCard = props => {
   const {port} = props;

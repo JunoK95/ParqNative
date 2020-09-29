@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   TextInput,
   Dimensions,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import {AuthContext} from '../../context/AuthContext';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
@@ -73,39 +75,41 @@ const PhoneEntryForm = ({onSubmit}) => {
   }
 
   return (
-    <React.Fragment>
-      <View style={styles.contentcontainer}>
-        <LottieView
-          style={styles.lottieContainer}
-          source={require('../../resources/animations/phone.json')}
-          autoPlay
-          loop
-        />
-      </View>
-      <View style={styles.contentcontainer}>
-        <Text style={styles.titletext}>
-          {error ? error.message : 'We need your phone number to get started'}
-        </Text>
-      </View>
-      <TextInput
-        style={styles.inputcontainer}
-        value={phone}
-        onChangeText={text => handlePhoneChange(text)}
-        placeholder={'(xxx) xxx-xxxx'}
-        label={'Phone Number'}
-        keyboardType={'phone-pad'}
-        textContentType={'telephoneNumber'}
-      />
-      <TouchableOpacity onPress={handleSubmit}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.flexscreen}>
         <View style={styles.contentcontainer}>
-          <FontAwesome5Icon
-            name={'arrow-circle-right'}
-            size={36}
-            color={'#ffc630'}
+          <LottieView
+            style={styles.lottieContainer}
+            source={require('../../resources/animations/phone.json')}
+            autoPlay
+            loop
           />
         </View>
-      </TouchableOpacity>
-    </React.Fragment>
+        <View style={styles.contentcontainer}>
+          <Text style={styles.titletext}>
+            {error ? error.message : 'We need your phone number to get started'}
+          </Text>
+        </View>
+        <TextInput
+          style={styles.inputcontainer}
+          value={phone}
+          onChangeText={text => handlePhoneChange(text)}
+          placeholder={'(xxx) xxx-xxxx'}
+          label={'Phone Number'}
+          keyboardType={'phone-pad'}
+          textContentType={'telephoneNumber'}
+        />
+        <TouchableOpacity onPress={handleSubmit}>
+          <View style={styles.contentcontainer}>
+            <FontAwesome5Icon
+              name={'arrow-circle-right'}
+              size={36}
+              color={'#ffc630'}
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
