@@ -25,7 +25,6 @@ const ActivatedCard = props => {
   const handleDeactivate = async () => {
     if (port_id) {
       const success = await deactivateCarport(port_id);
-      console.log(port_id, ' deactivated ', success);
       if (success) {
         refreshData();
       }

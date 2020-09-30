@@ -22,7 +22,8 @@ function NotificationsContextProvider(props) {
   }, []);
 
   const getFCNToken = useCallback(async () => {
-    console.log('FCN TOKEN =>', await messaging().getToken()); 
+    console.log('FCN TOKEN =>');
+    // console.log('FCN TOKEN =>', await messaging().getToken());
   }, []);
 
   useEffect(() => {

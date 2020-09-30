@@ -6,7 +6,6 @@ import TouchableNativeReplacement from '../../components/layout/TouchableNativeR
 
 const PaymentBanksList = props => {
   const {account} = props;
-  console.log('We got Banks = ', account.external_accounts);
 
   let banksList = [];
   if (!account) {

@@ -31,7 +31,6 @@ const AddressFormFinal = props => {
   };
 
   const handleSubmit = async () => {
-    console.log('submit');
     const {user_id} = context;
     setloading('loading');
     const newport_id = await initializeCarportWithParams(

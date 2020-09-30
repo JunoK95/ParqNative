@@ -22,7 +22,6 @@ const SavedLocations = props => {
     SavedLocationList = context.saved_locations.map(location => {
       const address = splitStrByComma(location.data.formatted_address);
       const {title, lat, lng, place_id} = location.data;
-      console.log(location.data);
       return (
         <ListItem
           key={place_id}

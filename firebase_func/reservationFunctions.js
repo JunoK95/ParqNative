@@ -58,7 +58,7 @@ export async function checkCarportAvailablity(carport) {
         moment(carport.end, 'HH:mm'),
       )
     ) {
-      console.log('time not in between');
+      console.log('Time Not In Between Parking Spot Schedule');
       return false;
     }
   }

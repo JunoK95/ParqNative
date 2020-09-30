@@ -21,7 +21,6 @@ const ReservationList = props => {
     );
   }
 
-  console.log('reservation list', reservations);
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {reservationList}

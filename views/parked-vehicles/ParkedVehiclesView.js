@@ -3,14 +3,14 @@ import {StyleSheet, Text, View} from 'react-native';
 import HeaderPadding from '../../components/header-padding/HeaderPadding';
 import {ParkedVehiclesList} from '../../components/parked-vehicles';
 import {getCurrentReservations} from '../../firebase_func';
-import { withNavigationFocus } from 'react-navigation';
+import {withNavigationFocus} from 'react-navigation';
 import OrbLoading from '../../components/loading/OrbLoading';
 
 const ParkedVehiclesView = props => {
   const [load, setLoad] = useState(true);
   const [error, setError] = useState(null);
   const [reservations, setReservations] = useState(null);
-  const {port_id} = props.navigation.state.params;
+  const {port_id, street_address} = props.navigation.state.params;
 
   const getReservations = useCallback(async () => {
     setLoad(true);
@@ -24,7 +24,9 @@ const ParkedVehiclesView = props => {
   }, [getReservations, port_id, props.isFocused]);
 
   useEffect(() => {
-    setLoad(false);
+    if (reservations) {
+      setLoad(false);
+    }
   }, [reservations]);
 
   if (!port_id) {
@@ -32,13 +34,14 @@ const ParkedVehiclesView = props => {
     console.error('Could Not Get Parking ID');
   }
 
-  if (load) {
-    return <OrbLoading />;
-  }
   return (
     <View>
-      <HeaderPadding to={'Home'} />
-      <ParkedVehiclesList reservations={reservations} />
+      <HeaderPadding to={'CarportList'} title={street_address} />
+      {load ? (
+        <OrbLoading />
+      ) : (
+        <ParkedVehiclesList reservations={reservations} />
+      )}
     </View>
   );
 };

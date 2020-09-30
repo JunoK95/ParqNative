@@ -51,7 +51,6 @@ const CarportEditView = props => {
 
   const fetchReservations = useCallback(async () => {
     const res = await getCurrentReservations(port_id);
-    console.log(res);
     setreservations(res);
   }, [port_id]);
 
@@ -87,7 +86,11 @@ const CarportEditView = props => {
           </View>
         </View>
       </View>
-      <ParkedVehiclesCard reservations={reserves} port_id={port_id} />
+      <ParkedVehiclesCard
+        reservations={reserves}
+        port_id={port_id}
+        street_address={splitAddress[0]}
+      />
       <PortInfoCard port={port} />
       <AccomodationCard accomodations={port.accomodations} />
       <RestrictionCard accomodations={port.accomodations} />

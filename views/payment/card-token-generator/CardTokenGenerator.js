@@ -52,7 +52,6 @@ const CardTokenGenerator = ({open, setopen}) => {
       let cardToken;
       try {
         cardToken = await stripe.createTokenWithCard(data);
-        console.log('CARD TOKEN => ', cardToken);
       } catch (error) {
         console.error('Error Creating Card Token =>', error);
         return;

@@ -10,9 +10,13 @@ import DuoIconListItem from '../../layout/DuoIconListItem';
 import moment from 'moment';
 import {withNavigation} from 'react-navigation';
 
-const ParkedVehiclesCard = ({reservations, navigation, port_id}) => {
+const ParkedVehiclesCard = ({
+  reservations,
+  navigation,
+  port_id,
+  street_address,
+}) => {
   const reserveItems = reservations.map((r, i) => {
-    console.log(r.vehicle_data);
     const {end} = r;
     const {color, us_state, license_plate, make, model} = r.vehicle_data;
     return (
@@ -29,8 +33,11 @@ const ParkedVehiclesCard = ({reservations, navigation, port_id}) => {
   });
 
   const navigateTo = useCallback(() => {
-    navigation.navigate('ParkedVehicles', {port_id: port_id});
-  }, [navigation, port_id]);
+    navigation.navigate('ParkedVehicles', {
+      port_id: port_id,
+      street_address,
+    });
+  }, [navigation, port_id, street_address]);
 
   return (
     <TouchableOpacity onPress={navigateTo}>
@@ -42,7 +49,7 @@ const ParkedVehiclesCard = ({reservations, navigation, port_id}) => {
         </View>
         {reserveItems.length > 0 ? (
           <Text style={styles.rowitemtext2}>
-            {reserveItems.length + ' Parked\nClick to See More'}
+            {reserveItems.length + ' Parked - Click to See More'}
           </Text>
         ) : (
           <Text style={styles.rowitemtext2}>No Currently Parked Vehicles</Text>
@@ -116,6 +123,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-MediumItalic',
     color: '#777',
     fontSize: 15,
+    paddingVertical: 16,
   },
   itemcolumn: {
     flexDirection: 'column',

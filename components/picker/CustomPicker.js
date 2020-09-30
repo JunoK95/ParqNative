@@ -27,7 +27,6 @@ const CustomPicker = props => {
   let pickerItems = null;
   if (items.length > 0) {
     pickerItems = items.map((item, i) => {
-      console.log('Item => ', item);
       return (
         <CustomPickerItem
           key={i}

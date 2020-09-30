@@ -13,7 +13,6 @@ function GoogleSignInButton({seterror, setload, navigation}) {
       setload(true);
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      console.log('USER INFO => ', userInfo);
       const {idToken, accessToken} = userInfo;
       const loggedIn = await context.functions.googleSignIn(
         idToken,

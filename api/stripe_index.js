@@ -5,7 +5,6 @@ import {createFirebaseAuthHeader} from './header_functions';
 export const stripePayParkingCharge = async data => {
   const authHeader = await createFirebaseAuthHeader();
   let response;
-  console.log('PAYING WITH THIS DATA', data);
   try {
     response = await Axios({
       headers: authHeader,
@@ -77,7 +76,6 @@ export const stripeCreateCard = async (customer_id, token) => {
   const authHeader = await createFirebaseAuthHeader();
   let response;
   try {
-    console.log('PARAMS => ', customer_id, token);
     response = await Axios({
       headers: authHeader,
       method: 'POST',
@@ -87,7 +85,6 @@ export const stripeCreateCard = async (customer_id, token) => {
         cardToken: token,
       },
     });
-    console.log('CARD CREATED =>', response);
   } catch (error) {
     console.error('Error Creating Card', error);
     response = {error};

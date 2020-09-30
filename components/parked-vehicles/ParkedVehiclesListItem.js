@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Linking} from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import moment from 'moment';
 import {setTwoDigit} from '../../helpers/helper';
 
 const ParkedVehiclesListItem = ({reservation}) => {
-  const {vehicle_data, start, end} = reservation;
+  const {vehicle_data, user_data, start, end} = reservation;
   const {
     color,
     license_plate,
@@ -15,7 +15,10 @@ const ParkedVehiclesListItem = ({reservation}) => {
     us_state,
     owner_id,
   } = vehicle_data;
+  const {phone, email} = user_data;
+
   const [currenttime, setcurrenttime] = useState(moment().unix());
+  const [expand, setExpand] = useState(false);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -26,7 +29,7 @@ const ParkedVehiclesListItem = ({reservation}) => {
   }, []);
 
   const handlePress = () => {
-    console.log('Press');
+    setExpand(!expand);
   };
 
   const startTime = moment(start, 'X').format('hh:mm A');
@@ -48,7 +51,9 @@ const ParkedVehiclesListItem = ({reservation}) => {
     scheduleTxt = reservation.end;
   }
 
-  const remainingTime = moment(moment(end, 'X') - moment(start, 'X')).format('');
+  const remainingTime = moment(moment(end, 'X') - moment(start, 'X')).format(
+    '',
+  );
 
   return (
     <TouchableOpacity onPress={handlePress}>
@@ -82,19 +87,43 @@ const ParkedVehiclesListItem = ({reservation}) => {
             </View>
           </View>
         </View>
-        <View style={styles.row}>
-          <View>
-            <Text style={styles.itemtext}>{startTime}</Text>
-            <Text style={styles.itemsubtext}>{startDate}</Text>
+        {expand && (
+          <View style={styles.row}>
+            <View style={styles.timeblock}>
+              <View>
+                <Text style={styles.itemtext}>{startTime}</Text>
+                <Text style={styles.itemsubtext}>{startDate}</Text>
+              </View>
+              <View style={styles.arrowicon}>
+                <FontAwesome5Icon
+                  name={'arrow-right'}
+                  color={'black'}
+                  size={18}
+                />
+              </View>
+              <View>
+                <Text style={styles.itemtext}>{endTime}</Text>
+                <Text style={styles.itemsubtext}>{endDate}</Text>
+              </View>
+            </View>
+            <View style={styles.buttonblock}>
+              <TouchableOpacity
+                style={styles.contacticon}
+                onPress={() => {
+                  Linking.openURL(`mailto:${email}`);
+                }}>
+                <FontAwesome5Icon name={'envelope'} color={'black'} size={18} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.contacticon}
+                onPress={() => {
+                  Linking.openURL(`tel:${phone}`);
+                }}>
+                <FontAwesome5Icon name={'phone'} color={'black'} size={18} />
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.arrowicon}>
-            <FontAwesome5Icon name={'arrow-right'} color={'black'} size={18} />
-          </View>
-          <View>
-            <Text style={styles.itemtext}>{endTime}</Text>
-            <Text style={styles.itemsubtext}>{endDate}</Text>
-          </View>
-        </View>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -106,6 +135,8 @@ const styles = StyleSheet.create({
   item: {
     paddingVertical: 16,
     paddingHorizontal: 16,
+    borderBottomWidth: 2,
+    borderBottomColor: '#CCC',
   },
   row: {
     flexDirection: 'row',
@@ -157,5 +188,19 @@ const styles = StyleSheet.create({
   arrowicon: {
     paddingHorizontal: 16,
     justifyContent: 'center',
+  },
+  contacticon: {
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    textAlignVertical: 'center',
+  },
+  timeblock: {
+    flexDirection: 'row',
+    flex: 8,
+  },
+  buttonblock: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    flex: 4,
   },
 });

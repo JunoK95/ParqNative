@@ -31,7 +31,6 @@ function AppleSignInButton({seterror, setload, navigation}) {
     const {identityToken, nonce} = appleAuthRequestResponse;
 
     const loggedIn = await context.functions.appleSignIn(identityToken, nonce);
-    console.log('APPLE LOGGED IN =>', loggedIn);
     if (loggedIn) {
       setload(false);
       navigation.navigate('App');

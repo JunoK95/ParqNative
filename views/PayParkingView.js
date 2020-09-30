@@ -18,7 +18,6 @@ const PayParkingView = props => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 24,
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',

@@ -34,7 +34,6 @@ function AddSavedLocationForm(props) {
     }).then(async res => {
       const {lat, lng} = res.data.result.geometry.location;
       const {formatted_address} = res.data.result;
-      console.log(formatted_address, place_id, context.user_id, lat, lng);
       await context.functions.addContextSavedLocation(
         formatted_address,
         formatted_address,

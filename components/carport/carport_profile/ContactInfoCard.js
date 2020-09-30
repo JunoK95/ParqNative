@@ -24,7 +24,6 @@ const ContactInfoCard = props => {
         if (response.error) {
           console.error('ERROR FETCHING CONTACT INFO => ', response.error);
         } else {
-          console.log('CONTACT INFO => ', response.data);
           setemail(response.data.email);
           setphone(response.data.phone);
         }

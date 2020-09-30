@@ -35,7 +35,6 @@ const ReservationItem = props => {
   }, []);
 
   const handleClick = () => {
-    console.log('handleclick');
     props.navigation.navigate('CarportInfoNoBook', {
       port,
       previousScreen: 'ReservationList',

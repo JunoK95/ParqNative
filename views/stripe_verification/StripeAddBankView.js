@@ -13,7 +13,6 @@ const StripeAddBankView = () => {
   const handleBankToken = useCallback(
     async bankToken => {
       setError(null);
-      console.log('BANK TOKEN =>', bankToken);
       const {user_data} = context;
       try {
         const connect_id = user_data.stripe_account_id;

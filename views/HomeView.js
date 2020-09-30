@@ -16,7 +16,6 @@ export default class HomeView extends React.Component {
     return (
       <AuthContext.Consumer>
         {authContext => {
-          console.log('Home Auth Context => ', authContext);
           if (!authContext.user_data) {
             console.log('Loading User Data');
             return <LoadingView />;

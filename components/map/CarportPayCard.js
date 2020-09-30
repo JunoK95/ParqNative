@@ -26,6 +26,7 @@ import CardTokenGenerator from '../../views/payment/card-token-generator/CardTok
 import VehicleRegisterModal from '../vehicle/vehicle-register-modal/VehicleRegisterModal';
 import {checkCarportAvailablity} from '../../firebase_func';
 import CustomPricePicker from '../picker/price-picker/CustomPricePicker';
+import OrbLoading from '../loading/OrbLoading';
 
 const CarportPayCard = ({port, setopen, navigation}) => {
   const context = useContext(AuthContext);
@@ -193,6 +194,13 @@ const CarportPayCard = ({port, setopen, navigation}) => {
   }
   const splitAddress = splitStrByComma(port.location.address);
 
+  if (loading) {
+    return (
+      <View style={styles.loadingcontainer}>
+        <OrbLoading />
+      </View>
+    );
+  }
   if (port) {
     return (
       <View style={styles.container} onPress={handleClick}>
@@ -266,6 +274,7 @@ const CarportPayCard = ({port, setopen, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     width: Dimensions.get('window').width - 32,
+    marginTop: 24,
     paddingVertical: 8,
     backgroundColor: '#fff',
     alignItems: 'center',
@@ -276,6 +285,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 4,
     elevation: 4,
+  },
+  loadingcontainer: {
+    width: Dimensions.get('window').width - 32,
+    height: Dimensions.get('window').height - 128,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cardheader: {
     flexDirection: 'row',

@@ -51,7 +51,6 @@ function AuthContextProvider({children}) {
   });
 
   async function onAuthChange(user) {
-    console.log('onAuthChange', user);
     setfetching(true);
     if (user) {
       //Sign In
@@ -61,7 +60,7 @@ function AuthContextProvider({children}) {
 
       if (userData.error) {
         //New User
-        console.log('Current User', auth.currentUser);
+        console.log('Current User', userData.error);
       } else {
         setstate({
           ...state,
@@ -174,7 +173,7 @@ function AuthContextProvider({children}) {
         user_id: result.user.uid,
         logged_in: true,
       });
-      console.log('Login Successful', result);
+      console.log('Login Successful');
       return true;
     }
   };
@@ -186,7 +185,6 @@ function AuthContextProvider({children}) {
         id_token,
         access_token,
       );
-      console.log('FIREBASE USER CREDENTIAL => ', firebaseUserCredential);
     } catch (error) {
       console.error('Google Sign In Failed');
       return;
@@ -291,7 +289,6 @@ function AuthContextProvider({children}) {
         id: locations.id,
         data: locations.data,
       });
-      console.log(joinedLocations);
       setstate({
         ...state,
         saved_locations: joinedLocations,
@@ -328,7 +325,7 @@ function AuthContextProvider({children}) {
           //handle Error
           console.error('ERROR CREATING CUSTOMER ID');
         } else {
-          console.log('STRIPE CUSTOMER ID CREATED => ', response);
+          console.log('STRIPE CUSTOMER ID CREATED');
           updateStripeId(state.user_id, response.data.id);
           setstate({
             ...state,
@@ -385,7 +382,7 @@ function AuthContextProvider({children}) {
     if (response.error) {
       console.error('ERROR GETTING STRIPE PAYMENT METHODS => ', response.error);
     } else {
-      console.log('STRIPE LIST CUSTOMER CARD', response.data);
+      console.log('GETTING STRIPE CUSTOMER CARD LIST');
       stripeCards = response.data.data;
     }
 
@@ -449,7 +446,6 @@ function AuthContextProvider({children}) {
   const editContextCarport = async (carport_id, changedData) => {
     let complete = false;
     complete = await updateCarportData(carport_id, changedData).then(res => {
-      console.log('editContextCarport', res);
       return true;
     });
 

@@ -33,7 +33,6 @@ const VehiclePicker = props => {
   let pickerItems;
   if (saved_vehicles) {
     pickerItems = saved_vehicles.map((v, i) => {
-      console.log(v.data.name);
       return (
         <CustomPickerItem
           key={i}
@@ -45,7 +44,6 @@ const VehiclePicker = props => {
             setvehicle(v);
             setselected(v);
             setmodalopen(false);
-            console.log(vehicle);
           }}
         />
       );

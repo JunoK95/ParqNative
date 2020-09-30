@@ -25,7 +25,6 @@ const CustomTextInput = props => {
     if (inputType === 'dollar') {
       const int_part = Math.trunc(initialitem);
       const float_part = Number((initialitem - int_part).toFixed(2));
-      console.log((float_part * 100).toString());
       setpicker1(int_part);
       setpicker2((float_part * 100).toString());
     }
@@ -33,11 +32,9 @@ const CustomTextInput = props => {
 
   const handleSubmit = () => {
     if (inputType === 'dollar') {
-      console.log(picker1 + picker2);
       setselected(picker1 + picker2);
       setmodalopen(false);
     } else if (inputType === 'number') {
-      console.log(select);
       setselected(select);
       setmodalopen(false);
     }

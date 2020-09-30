@@ -146,10 +146,7 @@ export async function batchUpdateCarportData(carports) {
     const ref = db.collection('carports').doc(key);
     batch.update(ref, carports[key]);
   }
-  var batchResult = await batch.commit().then(result => {
-    console.log(result);
-    return result;
-  });
+  var batchResult = await batch.commit();
 
   return batchResult;
 }

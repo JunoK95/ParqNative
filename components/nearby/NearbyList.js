@@ -12,7 +12,6 @@ import CarportCard from '../map/CarportCard';
 const NearbyList = props => {
   const {carports, currentlocation, setopen} = props;
   const availableCarports = carports.filter(port => {
-    console.log(port);
     return port.isAvailable;
   });
   console.log('AVAILABLE CARPORTS => ', availableCarports);
