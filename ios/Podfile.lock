@@ -560,7 +560,7 @@ PODS:
     - React
   - react-native-date-picker (2.7.8):
     - React
-  - react-native-geolocation (1.4.2):
+  - react-native-geolocation (2.0.2):
     - React
   - react-native-maps (0.26.1):
     - React
@@ -886,7 +886,7 @@ SPEC CHECKSUMS:
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
   react-native-config: f2c2ae45625a068c35681a16b9bfb1ca58b0adc7
   react-native-date-picker: 808a9657e6032657a7c718ed21a99dfa89ea4b46
-  react-native-geolocation: a7b94614afbd5fd8350e0233a2025c8228fc8041
+  react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
   react-native-maps: 6e499eee4eabf422ba8b6f94e993cc768bf35153
   react-native-safe-area-context: e200d4433aba6b7e60b52da5f37af11f7a0b0392
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
@@ -919,6 +919,6 @@ SPEC CHECKSUMS:
   tipsi-stripe: 61c247493a58d7e8e0bf6ee6b014271f473d2b11
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 93c455f053f8697df66c07dee841be983ff183f1
+PODFILE CHECKSUM: 0f1eff782aed032cc1219ccb09bef03d41e71962
 
 COCOAPODS: 1.8.4

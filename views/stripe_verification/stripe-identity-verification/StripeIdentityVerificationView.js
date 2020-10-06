@@ -18,7 +18,7 @@ const StripeIdentityVerificationView = ({navigation}) => {
     async fieldValues => {
       const {user_id, user_data} = context;
       setProgress('loading');
-      const updates = {...fieldValues, businessType};
+      const updates = {...fieldValues, business_type: businessType};
       console.log('SUBMIT VALUES =>', updates);
       try {
         await stripeUpdateAccountAndTOS(

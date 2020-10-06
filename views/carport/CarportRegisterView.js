@@ -37,7 +37,6 @@ const CarportRegisterView = props => {
       } else {
         console.log('No Account Data');
       }
-      console.log('Account Data => ', accountData);
       setaccount(accountData);
     };
 

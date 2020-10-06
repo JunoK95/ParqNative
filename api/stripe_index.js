@@ -136,6 +136,7 @@ export const stripeUpdateAccountAndTOS = async (uid, account_id, updates) => {
   const authHeader = await createFirebaseAuthHeader();
   let response;
   try {
+    console.log('STRIPE UPDATE WITH =>', uid, account_id, updates);
     response = await Axios({
       headers: authHeader,
       method: 'POST',

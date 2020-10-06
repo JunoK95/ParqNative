@@ -10,7 +10,9 @@ const PaymentBanksList = props => {
   let banksList = [];
   if (!account) {
     return (
-      <TouchableNativeReplacement color={'secondary'} onPress={() => {}}>
+      <TouchableNativeReplacement
+        color={'secondary'}
+        onPress={() => props.navigation.navigate('StripeAccountVerification')}>
         <View style={styles.item}>
           <View style={styles.rowdisabled}>
             <View style={styles.col}>

@@ -92,7 +92,13 @@ const StripeIndividualInfoForm = ({handleSubmit}) => {
       return;
     }
 
-    handleSubmit({...individual, dob: {...birthdate}});
+    handleSubmit({
+      business_profile: {
+        product_description:
+          'A platform that allows home and business owners to rent out their unused parking spaces.',
+      },
+      individual: {...individual, dob: {...birthdate}},
+    });
   };
 
   const textInputs = textInputInfo.map((item, i) => {

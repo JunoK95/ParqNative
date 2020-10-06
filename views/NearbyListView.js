@@ -46,7 +46,6 @@ const NearbyListView = props => {
         'geopointx',
       )
         .then(res => {
-          console.log(res);
           setstate({
             ...state,
           });

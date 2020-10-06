@@ -72,6 +72,7 @@ exports.stripeUpdateAccountWithTOS = functions.https.onRequest(
           (err, account) => {
             console.log(account);
             if (err) {
+              console.error(err);
               response.status(500).send(err);
             } else {
               response.send(account);
@@ -93,11 +94,6 @@ exports.stripeCreateAccount = functions.https.onRequest((request, response) => {
       {
         country: 'US',
         type: 'custom',
-        business_type: 'individual',
-        business_profile: {
-          product_description:
-            'A platform that allows home and business owners to rent out their unused parking spaces.',
-        },
         email: email,
         requested_capabilities: ['transfers'],
         metadata: {

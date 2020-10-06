@@ -62,7 +62,6 @@ const PaymentSettingView = () => {
         accountData = response.data;
       }
     }
-    console.log('Account Data => ', accountData);
     setaccount(accountData);
     // const newWallet = await getWallet(user_id).then(res => {
     //   return res;
