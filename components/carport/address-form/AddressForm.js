@@ -3,6 +3,7 @@ import {Input} from 'react-native-elements';
 import {ScrollView, Text, StyleSheet, TouchableHighlight, View} from 'react-native';
 import {getGeocodeAddress} from '../../../firebase_func/firestoreFunctions';
 import {combineString} from '../../../helpers/helper';
+import RoundedButton from '../../button/RoundedButton';
 
 const AddressForm = props => {
   const {setaddress, setstage} = props;
@@ -91,13 +92,14 @@ const AddressForm = props => {
         textContentType={'postalCode'}
         keyboardType={'numeric'}
       />
-      <TouchableHighlight
+      <RoundedButton
         disabled={disabled}
-        style={disabled ? styles.buttondisabled : styles.button}
-        underlayColor={'#ffc630'}
-        onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Find Location</Text>
-      </TouchableHighlight>
+        backgroundColor={'#11a4ff'}
+        textColor={'white'}
+        title={'Find Location'}
+        fontSize={16}
+        onPress={handleSubmit}
+      />
     </View>
   );
 };

@@ -28,7 +28,10 @@ const CarportRegisterView = props => {
 
       let accountData;
       if (account_id) {
-        const response = await stripeGetAccountInfo(account_id);
+        const response = await stripeGetAccountInfo(
+          account_id,
+          context.user_data.role,
+        );
         if (response.error) {
           console.error('ERROR RETRIEVING CONNECT ACCOUNT INFO');
         } else {

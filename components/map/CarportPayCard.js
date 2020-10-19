@@ -154,7 +154,8 @@ const CarportPayCard = ({port, setopen, navigation}) => {
         });
       }
     } else if (object === 'card') {
-      const result = await stripePayParkingCharge(resData, context);
+      let role = context.user_data.role ? context.user_data.role : 'user';
+      const result = await stripePayParkingCharge({...resData, role});
       if (result.error) {
         setloading(false);
         seterror('Payment Failed');

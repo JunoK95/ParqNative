@@ -63,6 +63,7 @@ exports.stripePayParkingCharge = functions.https.onRequest(
         port,
         customer_id,
         metadata,
+        role,
       } = request.body;
 
       console.log('STRIPE PAY PARKING DATA =>', {
@@ -72,6 +73,7 @@ exports.stripePayParkingCharge = functions.https.onRequest(
         port,
         customer_id,
         metadata,
+        role,
       });
 
       let destination_stripe_account;
@@ -100,36 +102,34 @@ exports.stripePayParkingCharge = functions.https.onRequest(
         response.status(400);
       }
 
-      console.log(
-        'Payment Token: ',
-        token,
-        'Destination Stripe Account: ',
-        destination_stripe_account,
-      );
-
-      stripe.charges.create(
-        {
-          amount: amount,
-          currency: 'usd',
-          description: description,
-          metadata: metadata,
-          customer: customer_id,
-          source: token,
-          transfer_data: {
-            destination: destination_stripe_account,
-            amount: destination_amount,
+      if (role === 'demo') {
+        console.warn('USING DEMO ACCOUNT');
+        response.status(200).send({demo: true});
+      } else {
+        stripe.charges.create(
+          {
+            amount: amount,
+            currency: 'usd',
+            description: description,
+            metadata: metadata,
+            customer: customer_id,
+            source: token,
+            transfer_data: {
+              destination: destination_stripe_account,
+              amount: destination_amount,
+            },
           },
-        },
-        (err, charge) => {
-          if (err) {
-            console.error(err);
-            response.status(500).send(err);
-          } else {
-            console.log(charge);
-            response.status(200).send(charge);
-          }
-        },
-      );
+          (err, charge) => {
+            if (err) {
+              console.error(err);
+              response.status(500).send(err);
+            } else {
+              console.log(charge);
+              response.status(200).send(charge);
+            }
+          },
+        );
+      }
     });
   },
 );

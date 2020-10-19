@@ -40,11 +40,7 @@ const PaymentPicker = props => {
       }
     }
     fetchData();
-  }, [
-    context.functions,
-    context.user_data,
-    setselectcard,
-  ]);
+  }, [context.functions, context.user_data, setselectcard]);
 
   let pickerItems;
   if (cards) {

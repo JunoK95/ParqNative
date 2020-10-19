@@ -6,6 +6,7 @@ import TouchableNativeReplacement from '../../components/layout/TouchableNativeR
 
 const PaymentBanksList = props => {
   const {account} = props;
+  console.log('PAYMENT BANKS LIST =>', account);
 
   let banksList = [];
   if (!account) {
@@ -28,6 +29,7 @@ const PaymentBanksList = props => {
   }
 
   if (account.external_accounts) {
+    console.log('EXTERNAL ACCOUNTS =>', account.external_accounts);
     banksList = account.external_accounts.data.map((item, i) => {
       const {bank_name, last4} = item;
       return (

@@ -1,0 +1,32 @@
+{
+  "object": "list",
+  "url": "/v1/customers/cus_IE8jfsQh8GP7xs/sources",
+  "has_more": false,
+  "data": [
+    {
+      "id": "card_parqdemo0123456789",
+      "object": "card",
+      "address_city": null,
+      "address_country": null,
+      "address_line1": null,
+      "address_line1_check": null,
+      "address_line2": null,
+      "address_state": null,
+      "address_zip": null,
+      "address_zip_check": null,
+      "brand": "Visa",
+      "country": "US",
+      "customer": "cus_parqdemo0123456789",
+      "cvc_check": "pass",
+      "dynamic_last4": null,
+      "exp_month": 8,
+      "exp_year": 2021,
+      "fingerprint": "zwIDcRcj7NCO9Y4c",
+      "funding": "credit",
+      "last4": "4242",
+      "metadata": {},
+      "name": null,
+      "tokenization_method": null
+    }
+  ]
+}

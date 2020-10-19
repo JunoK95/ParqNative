@@ -55,7 +55,10 @@ const PaymentSettingView = () => {
 
     let accountData;
     if (account_id) {
-      const response = await stripeGetAccountInfo(account_id);
+      const response = await stripeGetAccountInfo(
+        account_id,
+        context.user_data.role,
+      );
       if (response.error) {
         console.error('ERROR RETRIEVING CONNECT ACCOUNT INFO');
       } else {
@@ -68,7 +71,7 @@ const PaymentSettingView = () => {
     // });
     // setwallet(newWallet);
     setfetch(false);
-  }, []);
+  }, [context.functions, context.user_data.stripe_account_id, user_data]);
 
   useEffect(() => {
     setfetch(true);

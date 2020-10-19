@@ -5,13 +5,16 @@ import StripeAddBankForm from './StripeAddBankForm';
 import {AuthContext} from '../../context/AuthContext';
 import {stripeAddExternalAccount} from '../../api/stripe_index';
 import OrbLoading from '../../components/loading/OrbLoading';
+import {withNavigation} from 'react-navigation';
 
-const StripeAddBankView = () => {
+const StripeAddBankView = props => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const context = useContext(AuthContext);
+
   const handleBankToken = useCallback(
     async bankToken => {
+      setLoading(true);
       setError(null);
       const {user_data} = context;
       try {
@@ -23,6 +26,7 @@ const StripeAddBankView = () => {
           setError(response.error);
         } else {
           setLoading(false);
+          props.navigation.navigate('StripeAccountVerification');
         }
       } catch (e) {
         setError(
@@ -30,7 +34,7 @@ const StripeAddBankView = () => {
         );
       }
     },
-    [context],
+    [context, props.navigation],
   );
 
   if (loading) {
@@ -44,6 +48,6 @@ const StripeAddBankView = () => {
   );
 };
 
-export default StripeAddBankView;
+export default withNavigation(StripeAddBankView);
 
 const styles = StyleSheet.create({});

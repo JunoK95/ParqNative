@@ -2,17 +2,22 @@ const functions = require('firebase-functions');
 const cors = require('cors')({origin: true});
 const stripe = require('stripe')(functions.config().stripe.keys.secret_key);
 const header_verification = require('../header_verification');
+const demoStripeAccount = require('../demo_data/stripe_demo_account.json');
+const demoStripeCard = require('../demo_data/stripe_demo_account.json');
 
 exports.stripeGetAccount = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
-    const {account_id} = request.body;
+    const {account_id, role} = request.body;
+    if (role === 'demo') {
+      response.status(200).send(demoStripeAccount);
+    }
     if (account_id) {
       stripe.accounts.retrieve(account_id, (err, account) => {
         console.log(account);
         if (err) {
           response.status(500).send(err);
         } else {
-          response.send(account);
+          response.status(200).send(account);
         }
       });
     } else {
@@ -191,7 +196,11 @@ exports.stripeCreateExternalAccount = functions.https.onRequest(
 
 exports.stripeListCards = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
-    const {customer_id} = request.body;
+    const {customer_id, role} = request.body;
+    if (role === 'demo') {
+      response.status(200).send(demoStripeCard);
+    }
+
     const options = {
       object: 'card',
       limit: 10,

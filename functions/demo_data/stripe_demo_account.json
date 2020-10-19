@@ -1,0 +1,130 @@
+{
+  "id": "acct_parqdemo0123456789",
+  "object": "account",
+  "business_profile": {
+    "mcc": "5817",
+    "name": "Parq",
+    "product_description": "A platform that allows home and business owners to rent out their unused parking spaces.",
+    "support_address": null,
+    "support_email": null,
+    "support_phone": "+13854016575",
+    "support_url": null,
+    "url": "parq.tech"
+  },
+  "business_type": "individual",
+  "capabilities": {
+    "card_payments": {
+      "requested": true
+    },
+    "transfers": {
+      "requested": true
+    }
+  },
+  "charges_enabled": true,
+  "company": {
+    "address": {
+      "city": "Salt Lake City",
+      "country": "US",
+      "line1": "4852 Taylors Hill Drive",
+      "line2": null,
+      "postal_code": "84123",
+      "state": "UT"
+    },
+    "directors_provided": false,
+    "executives_provided": true,
+    "name": "Parq",
+    "owners_provided": true,
+    "phone": "+11231231234",
+    "tax_id_provided": true,
+    "verification": {
+      "document": {
+        "back": null,
+        "details": null,
+        "details_code": null,
+        "front": null
+      }
+    }
+  },
+  "country": "US",
+  "created": 1574672246,
+  "default_currency": "usd",
+  "details_submitted": true,
+  "email": "jenny.rosen@example.com",
+  "external_accounts": {
+    "object": "list",
+    "data": [
+      {
+        "id": "ba_1GIn0VIeDnsqtd1Ei3bfm76G",
+        "object": "bank_account",
+        "account": "acct_1FidNqIeDnsqtd1E",
+        "account_holder_name": null,
+        "account_holder_type": null,
+        "available_payout_methods": [
+          "standard"
+        ],
+        "bank_name": "PARQ TEST BANK",
+        "country": "US",
+        "currency": "usd",
+        "default_for_currency": true,
+        "fingerprint": "kSjEgzxAYBw8O3Us",
+        "last4": "3600",
+        "metadata": {},
+        "routing_number": "124001545",
+        "status": "new"
+      }
+    ],
+    "has_more": false,
+    "url": "/v1/accounts/acct_parqdemo123456789/external_accounts"
+  },
+  "metadata": {},
+  "payouts_enabled": true,
+  "requirements": {
+    "current_deadline": null,
+    "currently_due": [],
+    "disabled_reason": null,
+    "errors": [],
+    "eventually_due": [],
+    "past_due": [],
+    "pending_verification": []
+  },
+  "settings": {
+    "bacs_debit_payments": {},
+    "branding": {
+      "icon": null,
+      "logo": null,
+      "primary_color": null,
+      "secondary_color": null
+    },
+    "card_payments": {
+      "decline_on": {
+        "avs_failure": false,
+        "cvc_failure": true
+      },
+      "statement_descriptor_prefix": "PARKING"
+    },
+    "dashboard": {
+      "display_name": "Parq Tech",
+      "timezone": "America/Denver"
+    },
+    "payments": {
+      "statement_descriptor": "PARQ APP",
+      "statement_descriptor_kana": null,
+      "statement_descriptor_kanji": null
+    },
+    "payouts": {
+      "debit_negative_balances": true,
+      "schedule": {
+        "delay_days": 2,
+        "interval": "monthly",
+        "monthly_anchor": 1
+      },
+      "statement_descriptor": null
+    }
+  },
+  "tos_acceptance": {
+    "date": 1583289161,
+    "ip": "73.63.19.30",
+    "user_agent": null
+  },
+  "type": "custom"
+}

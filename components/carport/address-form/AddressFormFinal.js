@@ -12,6 +12,7 @@ import {AuthContext} from '../../../context/AuthContext';
 import CarportRegistrationComplete from '../CarportRegistrationComplete';
 import {withNavigation} from 'react-navigation';
 import {initializeCarportWithParams} from '../../../firebase_func';
+import CarportRegistrationDemoComplete from '../CarportRegistrationDemoComplete';
 
 const AddressFormFinal = props => {
   const context = useContext(AuthContext);
@@ -31,25 +32,31 @@ const AddressFormFinal = props => {
   };
 
   const handleSubmit = async () => {
-    const {user_id} = context;
+    const {user_id, user_data} = context;
     setloading('loading');
-    const newport_id = await initializeCarportWithParams(
-      user_id,
-      address,
-      availablespaces,
-      features,
-      type,
-      parkinginstructions,
-      description,
-    );
-
-    console.log('NEW CARPORT CREATED => ', newport_id);
-    if (newport_id) {
-      setloading('success');
+    if (user_data.role === 'demo') {
+      console.log('YOU ARE IN DEMO MODE');
+      setloading('demo');
       return;
     } else {
-      setloading('fail');
-      return;
+      const newport_id = await initializeCarportWithParams(
+        user_id,
+        address,
+        availablespaces,
+        features,
+        type,
+        parkinginstructions,
+        description,
+      );
+
+      console.log('NEW CARPORT CREATED => ', newport_id);
+      if (newport_id) {
+        setloading('success');
+        return;
+      } else {
+        setloading('fail');
+        return;
+      }
     }
   };
 
@@ -61,6 +68,8 @@ const AddressFormFinal = props => {
     );
   } else if (loading === 'success') {
     return <CarportRegistrationComplete />;
+  } else if (loading === 'demo') {
+    return <CarportRegistrationDemoComplete />;
   }
 
   return (

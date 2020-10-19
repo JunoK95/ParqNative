@@ -30,7 +30,11 @@ const StripeAccountMenuView = props => {
 
     let accountData;
     if (account_id) {
-      const response = await stripeGetAccountInfo(account_id);
+      console.log("ROLE =>", context.user_data.role);
+      const response = await stripeGetAccountInfo(
+        account_id,
+        context.user_data.role,
+      );
       if (response.error) {
         console.error('ERROR RETRIEVING CONNECT ACCOUNT INFO');
         seterror(response.error);
@@ -40,7 +44,10 @@ const StripeAccountMenuView = props => {
     } else {
       accountData = await context.functions.assignStripeAccount();
     }
-    console.log('Account Data => ', accountData.requirements);
+    console.log(
+      'Account Data Account Menu View => ',
+      accountData.external_accounts,
+    );
     const newWallet = await getWallet(context.user_id);
     setwallet(newWallet);
     setaccount(accountData);

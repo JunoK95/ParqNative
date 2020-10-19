@@ -53,8 +53,9 @@ export const stripeAssignConnectAccountId = async data => {
   return response;
 };
 
-export const stripeGetAccountInfo = async account_id => {
+export const stripeGetAccountInfo = async (account_id, role) => {
   const authHeader = await createFirebaseAuthHeader();
+  role = role ? role : 'user';
   let response;
   try {
     response = await Axios({
@@ -63,6 +64,7 @@ export const stripeGetAccountInfo = async account_id => {
       url: `${config.firebase_functions_url_base}stripeGetAccount`,
       data: {
         account_id,
+        role,
       },
     });
   } catch (error) {

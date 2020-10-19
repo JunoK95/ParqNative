@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Dimensions, Keyboard, ScrollView, KeyboardAvoidingView} from 'react-native';
+import {StyleSheet, Dimensions, Keyboard, ScrollView} from 'react-native';
 import {
   AddressForm,
   AddressForm2,
