@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* ParqNativeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ParqNativeTests.m */; };
 		11A530FDA4437B338F5ECDE3 /* libPods-ParqNative-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9C0FD4FF9D604920F1889CD /* libPods-ParqNative-tvOS.a */; };
-		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -23,7 +21,9 @@
 		B80F3E422470C16500E26E91 /* Muli-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 995225EA613F4962ADF13DE2 /* Muli-Black.ttf */; };
 		B80F3E432470C1CC00E26E91 /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7533D67E0FAF49CF954DF5DD /* Montserrat-SemiBoldItalic.ttf */; };
 		B80F3E442472016A00E26E91 /* Montserrat-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6EAED607E2141C79DAA1228 /* Montserrat-MediumItalic.ttf */; };
-		B851763E24AA1475000857AC /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851763D24AA1475000857AC /* File.swift */; };
+		B882E7FC2546B44F00A7455D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		B882E7FD2546B45700A7455D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		B882E7FE2546B47A00A7455D /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = B851763D24AA1475000857AC /* File.swift */; };
 		B88A50B3247370F300980862 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		B8A600BB6C2727631275B468 /* libPods-ParqNativeTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7553A16E5CCB11B40AB14F6 /* libPods-ParqNativeTests.a */; };
 /* End PBXBuildFile section */
@@ -813,9 +813,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				B851763E24AA1475000857AC /* File.swift in Sources */,
-				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				B882E7FE2546B47A00A7455D /* File.swift in Sources */,
+				B882E7FD2546B45700A7455D /* main.m in Sources */,
+				B882E7FC2546B44F00A7455D /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

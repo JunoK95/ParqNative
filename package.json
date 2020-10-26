@@ -29,7 +29,7 @@
     "lottie-react-native": "^3.4.0",
     "moment": "^2.24.0",
     "ngeohash": "^0.6.3",
-    "react": "16.9.0",
+    "react": "16.13.1",
     "react-native": "0.61.5",
     "react-native-color-wheel": "^0.1.7",
     "react-native-config": "^0.12.0",
