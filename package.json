@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@invertase/react-native-apple-authentication": "^1.1.2",
@@ -29,6 +30,8 @@
     "lottie-react-native": "^3.4.0",
     "moment": "^2.24.0",
     "ngeohash": "^0.6.3",
+    "patch-package": "^6.2.2",
+    "postinstall-postinstall": "^2.1.0",
     "react": "16.13.1",
     "react-native": "0.61.5",
     "react-native-color-wheel": "^0.1.7",
