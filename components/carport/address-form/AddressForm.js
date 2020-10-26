@@ -92,6 +92,7 @@ const AddressForm = props => {
         textContentType={'postalCode'}
         keyboardType={'numeric'}
       />
+      <View style={{paddingVertical: 16}} />
       <RoundedButton
         disabled={disabled}
         backgroundColor={'#11a4ff'}

@@ -95,8 +95,11 @@ export const stripeCreateCard = async (customer_id, token) => {
   return response;
 };
 
-export const stripeListCustomerCards = async customer_id => {
+export const stripeListCustomerCards = async (customer_id, role) => {
   const authHeader = await createFirebaseAuthHeader();
+  if (!role) {
+    role = 'user';
+  }
   let response;
   try {
     response = await Axios({
@@ -105,6 +108,7 @@ export const stripeListCustomerCards = async customer_id => {
       url: `${config.firebase_functions_url_base}stripeListCards`,
       data: {
         customer_id,
+        role,
       },
     });
   } catch (error) {

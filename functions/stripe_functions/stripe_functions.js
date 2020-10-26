@@ -65,10 +65,23 @@ exports.stripeUpdateAccountWithTOS = functions.https.onRequest(
       }
       const {account_id, updates} = request.body;
       if (account_id) {
+        let newUpdates = {...updates};
+        if (!updates.business_type) {
+          console.warn('BUSINESS TYPE NOT SELECTED');
+          newUpdates = {
+            ...updates,
+            business_type: 'individual',
+            business_profile: {
+              product_description:
+                'A platform that allows home and business owners to rent out their unused parking spaces.',
+            },
+          };
+        }
+        console.log('NEW UPDATES =>', newUpdates);
         stripe.accounts.update(
           account_id,
           {
-            ...updates,
+            ...newUpdates,
             tos_acceptance: {
               date: Math.floor(Date.now() / 1000),
               ip: request.connection.remoteAddress,
@@ -198,7 +211,9 @@ exports.stripeListCards = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const {customer_id, role} = request.body;
     if (role === 'demo') {
+      console.log('DEMO CARD', demoStripeCard);
       response.status(200).send(demoStripeCard);
+      return;
     }
 
     const options = {
@@ -214,6 +229,7 @@ exports.stripeListCards = functions.https.onRequest((request, response) => {
         response.status(200).send(cards);
       }
     });
+    return;
   });
 });
 

@@ -378,7 +378,11 @@ function AuthContextProvider({children}) {
   const getStripePaymentMethods = async stripe_customer_id => {
     let stripeCards = [];
 
-    const response = await stripeListCustomerCards(stripe_customer_id);
+    const response = await stripeListCustomerCards(
+      stripe_customer_id,
+      state.user_data.role,
+    );
+    console.log('CUSTOMER CARD LIST =>', response);
     if (response.error) {
       console.error('ERROR GETTING STRIPE PAYMENT METHODS => ', response.error);
     } else {

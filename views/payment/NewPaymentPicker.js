@@ -36,6 +36,7 @@ const NewPaymentPicker = ({title, setselected, setopenGen}) => {
         const payments = await context.functions
           .getAllPaymentMethods()
           .then(res => {
+            console.log('PAYMENT METHODS => ', res);
             return res;
           });
         if (payments.cards.length > 0) {
