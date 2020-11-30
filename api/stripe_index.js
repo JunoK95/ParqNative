@@ -95,6 +95,28 @@ export const stripeCreateCard = async (customer_id, token) => {
   return response;
 };
 
+export const stripeDeleteCard = async (user_id, customer_id, token) => {
+  const authHeader = await createFirebaseAuthHeader();
+  let response;
+  try {
+    response = await Axios({
+      headers: authHeader,
+      method: 'POST',
+      url: `${config.firebase_functions_url_base}stripeDeleteCard`,
+      data: {
+        uid: user_id,
+        customer_id: customer_id,
+        card_token: token,
+      },
+    });
+  } catch (error) {
+    console.error('Error Deleting Card', error);
+    response = {error};
+  }
+
+  return response;
+};
+
 export const stripeListCustomerCards = async (customer_id, role) => {
   const authHeader = await createFirebaseAuthHeader();
   if (!role) {
@@ -151,6 +173,26 @@ export const stripeUpdateAccountAndTOS = async (uid, account_id, updates) => {
         uid,
         account_id,
         updates,
+      },
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const stripeDeleteExternalAccount = async (uid, account_id, bank_id) => {
+  const authHeader = await createFirebaseAuthHeader();
+  let response;
+  try {
+    response = await Axios({
+      headers: authHeader,
+      method: 'POST',
+      url: `${config.firebase_functions_url_base}stripeDeleteExternalAccount`,
+      data: {
+        uid,
+        account_id,
+        bank_id,
       },
     });
     return response;

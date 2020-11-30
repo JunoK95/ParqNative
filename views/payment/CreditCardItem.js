@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import ExpandableListItem from '../../components/expandable-list-item/ExpandableListItem';
 import TouchableNativeReplacement from '../../components/layout/TouchableNativeReplacement';
 
 const brands = {
@@ -14,27 +15,58 @@ const brands = {
   Unknown: 'credit-card',
 };
 
-const CreditCardItem = props => {
-  const {card} = props;
+const CreditCardItem = ({card, handleCardDelete}) => {
+  const childRef = useRef();
   const [active, setactive] = useState(false);
 
+  let listItemComponent;
+  let expandComponent;
   if (card) {
     const ccicon = brands[card.brand];
-    return (
-      <TouchableNativeReplacement
-        color={'secondary'}
-        onPress={() => setactive(!active)}>
-        <View style={styles.item}>
-          <View style={styles.row}>
-            <Icon
-              style={styles.itemicon}
-              name={ccicon ? ccicon : 'credit-card'}
-              size={20}
-            />
-            <Text style={styles.itemtext}>{'... ' + card.last4}</Text>
-          </View>
+    listItemComponent = (
+      <View style={styles.item}>
+        <View style={styles.row}>
+          <Icon
+            style={styles.itemicon}
+            name={ccicon ? ccicon : 'credit-card'}
+            size={20}
+          />
+          <Text style={styles.itemtext}>{'... ' + card.last4}</Text>
         </View>
-      </TouchableNativeReplacement>
+      </View>
+    );
+
+    expandComponent = (
+      <View style={styles.row}>
+        <View style={styles.deletecolumn}>
+          <TouchableNativeReplacement
+            color={'gray'}
+            onPress={() => childRef.current.handleExpand(false)}>
+            <View style={styles.deleteitem}>
+              <View style={styles.centeredRow}>
+                <Text style={styles.cancelText}>Cancel</Text>
+              </View>
+            </View>
+          </TouchableNativeReplacement>
+        </View>
+        <View style={styles.deletecolumn}>
+          <TouchableNativeReplacement color={'red'} onPress={handleCardDelete}>
+            <View style={styles.deleteitem}>
+              <View style={styles.centeredRow}>
+                <Text style={styles.deleteText}>Delete</Text>
+              </View>
+            </View>
+          </TouchableNativeReplacement>
+        </View>
+      </View>
+    );
+
+    return (
+      <ExpandableListItem
+        ref={childRef}
+        listItemComponent={listItemComponent}
+        expandComponent={expandComponent}
+      />
     );
   } else {
     return (
@@ -77,6 +109,28 @@ const styles = StyleSheet.create({
   trashicon: {
     position: 'absolute',
     right: 0,
+  },
+  deleteitem: {
+    justifyContent: 'center',
+    paddingVertical: 16,
+    backgroundColor: '#fff',
+  },
+  deletecolumn: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  deleteText: {
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 15,
+    color: 'red',
+    textAlign: 'center',
+  },
+  cancelText: {
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 15,
+    color: '#888',
+    textAlign: 'center',
   },
 });
 

@@ -5,8 +5,14 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import TouchableNativeReplacement from '../../layout/TouchableNativeReplacement';
 import ExpandableListItem from '../ExpandableListItem';
 
-const PaymentBankItem = ({bank_name, last_4_digits}) => {
+const PaymentBankItem = ({
+  bank_id,
+  bank_name,
+  last_4_digits,
+  handleBankDelete,
+}) => {
   const childRef = useRef();
+
   const listItemComponent = (
     <View style={styles.item}>
       <View style={styles.row}>
@@ -35,9 +41,7 @@ const PaymentBankItem = ({bank_name, last_4_digits}) => {
         </TouchableNativeReplacement>
       </View>
       <View style={styles.deletecolumn}>
-        <TouchableNativeReplacement
-          color={'red'}
-          onPress={() => childRef.current.handleExpand(false)}>
+        <TouchableNativeReplacement color={'red'} onPress={handleBankDelete}>
           <View style={styles.deleteitem}>
             <View style={styles.centeredRow}>
               <Text style={styles.deleteText}>Delete</Text>

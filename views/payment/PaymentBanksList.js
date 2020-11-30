@@ -1,12 +1,38 @@
-import React from 'react';
+import React, {useCallback, useContext} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {withNavigation} from 'react-navigation';
+import {stripeDeleteExternalAccount} from '../../api/stripe_index';
 import PaymentBankItem from '../../components/expandable-list-item/payment-bank-item/PaymentBankItem';
 import TouchableNativeReplacement from '../../components/layout/TouchableNativeReplacement';
+import {AuthContext} from '../../context/AuthContext';
 
-const PaymentBanksList = ({account, navigation}) => {
+const PaymentBanksList = ({account, navigation, refresh}) => {
   console.log('PAYMENT BANKS LIST =>', account);
+  const authContext = useContext(AuthContext);
+
+  const deleteBank = useCallback(
+    async bank_id => {
+      try {
+        const {user_id, user_data} = authContext;
+        console.log(
+          'DELETING BANK => ',
+          user_id,
+          user_data.stripe_account_id,
+          bank_id,
+        );
+        await stripeDeleteExternalAccount(
+          user_id,
+          user_data.stripe_account_id,
+          bank_id,
+        );
+        refresh();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [authContext, refresh],
+  );
 
   let banksList = [];
   if (!account) {
@@ -31,9 +57,15 @@ const PaymentBanksList = ({account, navigation}) => {
   if (account.external_accounts) {
     console.log('EXTERNAL ACCOUNTS =>', account.external_accounts);
     banksList = account.external_accounts.data.map((item, i) => {
-      const {bank_name, last4} = item;
+      const {id, bank_name, last4} = item;
       return (
-        <PaymentBankItem key={i} bank_name={bank_name} last_4_digits={last4} />
+        <PaymentBankItem
+          key={i}
+          bank_id={id}
+          handleBankDelete={() => deleteBank(id)}
+          bank_name={bank_name}
+          last_4_digits={last4}
+        />
       );
     });
 

@@ -110,6 +110,7 @@ const PaymentSettingView = () => {
         {/* {wallet && <WalletDisplay user_id={context.user_id} wallet={wallet} />} */}
         <PaymentCardsList
           cards={cards}
+          refresh={fetchData}
           stripe_id={stripe_customer_id}
           billing_address={billing_address}
         />
@@ -121,7 +122,7 @@ const PaymentSettingView = () => {
         />
         <CardTokenGenerator open={OpenGen} setopen={setOpenGen} />
         <View style={styles.padding} />
-        <PaymentBanksList account={account} />
+        <PaymentBanksList account={account} refresh={fetchData} />
         {process.env.NODE_ENV === 'development' ? (
           <ReferralCodeGenerator />
         ) : null}
