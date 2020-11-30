@@ -3,7 +3,7 @@ const cors = require('cors')({origin: true});
 const stripe = require('stripe')(functions.config().stripe.keys.secret_key);
 const header_verification = require('../header_verification');
 const demoStripeAccount = require('../demo_data/stripe_demo_account.json');
-const demoStripeCard = require('../demo_data/stripe_demo_account.json');
+const demoStripeCard = require('../demo_data/stripe_demo_card.json');
 
 exports.stripeGetAccount = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
@@ -203,6 +203,36 @@ exports.stripeCreateExternalAccount = functions.https.onRequest(
           }
         },
       );
+    });
+  },
+);
+
+exports.stripeDeleteExternalAccount = functions.https.onRequest(
+  (request, response) => {
+    cors(request, response, async () => {
+      const {account_id, bankToken} = request.body;
+      console.log('bank token => ', bankToken);
+      try {
+        const deleted = await stripe.accounts.deleteExternalAccount(
+          account_id,
+          bankToken.tokenId,
+        );
+        if (deleted.deleted) {
+          response.status(200).send({
+            success: true,
+            id: deleted.id,
+            object: deleted.object,
+          });
+        } else {
+          response.status(500).send({
+            success: false,
+            id: null,
+            object: null,
+          });
+        }
+      } catch (error) {
+        response.send(error);
+      }
     });
   },
 );

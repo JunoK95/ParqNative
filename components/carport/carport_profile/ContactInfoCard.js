@@ -68,9 +68,13 @@ const ContactInfoCard = props => {
             {phone ? (
               <TouchableOpacity
                 onPress={() => {
-                  Linking.openURL(`tel:${phone}`);
+                  if (phone !== 'NONE') {
+                    Linking.openURL(`tel:${phone}`);
+                  }
                 }}>
-                <Text style={styles.rowitemtext}>{phone}</Text>
+                <Text style={styles.rowitemtext}>
+                  {phone !== 'NONE' ? phone : 'No Phone Added'}
+                </Text>
               </TouchableOpacity>
             ) : (
               <ActivityIndicator />

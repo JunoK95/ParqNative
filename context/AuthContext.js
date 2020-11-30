@@ -382,11 +382,10 @@ function AuthContextProvider({children}) {
       stripe_customer_id,
       state.user_data.role,
     );
-    console.log('CUSTOMER CARD LIST =>', response);
     if (response.error) {
       console.error('ERROR GETTING STRIPE PAYMENT METHODS => ', response.error);
     } else {
-      console.log('GETTING STRIPE CUSTOMER CARD LIST');
+      console.log('GETTING STRIPE CUSTOMER CARD LIST => ', response.data);
       stripeCards = response.data.data;
     }
 

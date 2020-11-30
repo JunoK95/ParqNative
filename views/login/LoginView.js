@@ -39,7 +39,7 @@ const LoginView = props => {
       setload(true);
       await context.functions.signInUser(email, password).then(res => {
         if (res.error) {
-          seterror(res.error.message);
+          seterror('Invalid Login');
           setload(false);
         } else {
           setload(false);

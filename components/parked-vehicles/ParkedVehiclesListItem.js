@@ -116,10 +116,17 @@ const ParkedVehiclesListItem = ({reservation}) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.contacticon}
+                disabled={phone === 'NONE'}
                 onPress={() => {
-                  Linking.openURL(`tel:${phone}`);
+                  if (phone !== 'NONE') {
+                    Linking.openURL(`tel:${phone}`);
+                  }
                 }}>
-                <FontAwesome5Icon name={'phone'} color={'black'} size={18} />
+                <FontAwesome5Icon
+                  name={'phone'}
+                  color={phone !== 'NONE' ? 'black' : 'lightgray'}
+                  size={18}
+                />
               </TouchableOpacity>
             </View>
           </View>

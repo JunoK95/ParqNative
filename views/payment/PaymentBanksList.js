@@ -2,10 +2,10 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {withNavigation} from 'react-navigation';
+import PaymentBankItem from '../../components/expandable-list-item/payment-bank-item/PaymentBankItem';
 import TouchableNativeReplacement from '../../components/layout/TouchableNativeReplacement';
 
-const PaymentBanksList = props => {
-  const {account} = props;
+const PaymentBanksList = ({account, navigation}) => {
   console.log('PAYMENT BANKS LIST =>', account);
 
   let banksList = [];
@@ -13,7 +13,7 @@ const PaymentBanksList = props => {
     return (
       <TouchableNativeReplacement
         color={'secondary'}
-        onPress={() => props.navigation.navigate('StripeAccountVerification')}>
+        onPress={() => navigation.navigate('StripeAccountVerification')}>
         <View style={styles.item}>
           <View style={styles.rowdisabled}>
             <View style={styles.col}>
@@ -33,22 +33,7 @@ const PaymentBanksList = props => {
     banksList = account.external_accounts.data.map((item, i) => {
       const {bank_name, last4} = item;
       return (
-        <TouchableNativeReplacement
-          key={i}
-          color={'secondary'}
-          onPress={() => {}}>
-          <View style={styles.item}>
-            <View style={styles.row}>
-              <View style={styles.col}>
-                <Icon style={styles.itemicon} name={'university'} size={20} />
-              </View>
-              <View style={styles.col}>
-                <Text style={styles.itemtext}>{bank_name}</Text>
-                <Text style={styles.itemsubtext}>{'... ' + last4}</Text>
-              </View>
-            </View>
-          </View>
-        </TouchableNativeReplacement>
+        <PaymentBankItem key={i} bank_name={bank_name} last_4_digits={last4} />
       );
     });
 
@@ -75,7 +60,7 @@ const PaymentBanksList = props => {
       {banksList}
       <TouchableNativeReplacement
         color={'primary'}
-        onPress={() => props.navigation.navigate('StripeAccountVerification')}>
+        onPress={() => navigation.navigate('StripeAccountVerification')}>
         <View style={styles.item}>
           <View style={styles.row}>
             <Icon style={styles.itemicon} name={'plus-circle'} size={20} />

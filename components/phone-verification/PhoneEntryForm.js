@@ -14,8 +14,9 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import LottieView from 'lottie-react-native';
 import {twilioCreateVerificationService} from '../../api/twilio_index';
 import OrbLoading from '../loading/OrbLoading';
+import {withNavigation} from 'react-navigation';
 
-const PhoneEntryForm = ({onSubmit}) => {
+const PhoneEntryForm = ({onSubmit, navigation}) => {
   const [phone, setphone] = useState('');
   const [error, seterror] = useState(null);
   const [loading, setloading] = useState(false);
@@ -70,6 +71,19 @@ const PhoneEntryForm = ({onSubmit}) => {
     }
   };
 
+  const handleSkip = async () => {
+    seterror(null);
+    setloading(true);
+    try {
+      context.functions.addContextPhone('NONE');
+      setloading(false);
+      navigation.navigate('Home');
+      return;
+    } catch (e) {
+      console.error('ERROR SKIPPING PHONE NUMBER');
+    }
+  };
+
   if (loading) {
     return <OrbLoading />;
   }
@@ -108,12 +122,17 @@ const PhoneEntryForm = ({onSubmit}) => {
             />
           </View>
         </TouchableOpacity>
+        <TouchableOpacity onPress={handleSkip}>
+          <View style={styles.contentcontainer}>
+            <Text style={styles.skiptext}>{'skip for now >'}</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
   );
 };
 
-export default PhoneEntryForm;
+export default withNavigation(PhoneEntryForm);
 
 const styles = StyleSheet.create({
   container: {
@@ -139,6 +158,13 @@ const styles = StyleSheet.create({
   titletext: {
     textAlign: 'center',
     fontSize: 24,
+    color: '#fff',
+    paddingHorizontal: 32,
+    fontFamily: 'Montserrat-Bold',
+  },
+  skiptext: {
+    textAlign: 'center',
+    fontSize: 20,
     color: '#fff',
     paddingHorizontal: 32,
     fontFamily: 'Montserrat-Bold',

@@ -32,6 +32,7 @@ const CardTokenGenerator = ({open, setopen}) => {
       postalCode: 'incomplete',
     },
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = form => {
     setFormData(form);
@@ -39,6 +40,7 @@ const CardTokenGenerator = ({open, setopen}) => {
 
   const handleSubmit = async () => {
     const {valid} = formData;
+    setLoading(true);
     if (valid) {
       const {number, expiry, cvc} = formData.values;
       const expMonth = parseInt(expiry.split('/')[0], 10);
@@ -54,6 +56,7 @@ const CardTokenGenerator = ({open, setopen}) => {
         cardToken = await stripe.createTokenWithCard(data);
       } catch (error) {
         console.error('Error Creating Card Token =>', error);
+        setLoading(false);
         return;
       }
       if (cardToken) {
@@ -66,11 +69,13 @@ const CardTokenGenerator = ({open, setopen}) => {
           console.log('new card created => ', newcard);
           setopen(false);
         } catch (error) {
+          setLoading(false);
           console.error('Error Creating Card =>', error);
           return;
         }
       }
     } else {
+      setLoading(false);
       console.warn('Form Not Valid');
       return;
     }

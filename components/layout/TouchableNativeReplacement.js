@@ -5,9 +5,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const TouchableNativeReplacement = props => {
-  const {color} = props;
-
+const TouchableNativeReplacement = ({color, onPress, children}) => {
   let underlayColor = color;
   switch (color) {
     case 'primary':
@@ -17,19 +15,18 @@ const TouchableNativeReplacement = props => {
       underlayColor = '#ffecb9';
       break;
     default:
+      underlayColor = color;
       break;
   }
 
   return Platform.OS === 'android' ? (
     <TouchableNativeFeedback
       background={TouchableNativeFeedback.Ripple(underlayColor)}
-      onPress={props.onPress}>
-      {props.children}
+      onPress={onPress}>
+      {children}
     </TouchableNativeFeedback>
   ) : (
-    <TouchableOpacity onPress={props.onPress}>
-      {props.children}
-    </TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>{children}</TouchableOpacity>
   );
 };
 

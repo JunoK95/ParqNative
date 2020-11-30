@@ -71,7 +71,12 @@ const PaymentSettingView = () => {
     // });
     // setwallet(newWallet);
     setfetch(false);
-  }, [context.functions, context.user_data.stripe_account_id, user_data]);
+  }, [
+    context.functions,
+    context.user_data.role,
+    context.user_data.stripe_account_id,
+    user_data,
+  ]);
 
   useEffect(() => {
     setfetch(true);

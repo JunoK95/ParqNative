@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, StyleSheet, Dimensions, Image, Text} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  Image,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import {GeolocationContext} from '../context/GeolocationContext';
 import DrawerHeaderPadding from '../components/layout/DrawerHeaderPadding';
@@ -10,6 +17,8 @@ import {AuthContext} from '../context/AuthContext';
 import LoadingView from './LoadingView';
 import GetPhoneView from './GetPhoneView';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+
+//CHANGE PHONE!
 
 export default class HomeView extends React.Component {
   render() {
@@ -28,7 +37,11 @@ export default class HomeView extends React.Component {
           return (
             <GeolocationContext.Consumer>
               {geolocationContext => {
-                const {latitude, longitude} = geolocationContext.location;
+                const {
+                  latitude,
+                  longitude,
+                  refreshLocation,
+                } = geolocationContext.location;
                 const {fetch} = geolocationContext;
                 if (fetch) {
                   return <LoadingView />;
@@ -43,9 +56,12 @@ export default class HomeView extends React.Component {
                             size={48}
                             color={'#888'}
                           />
-                          <Text style={styles.grayText}>
-                            Sorry, We Could Not Get Your Location.
-                          </Text>
+                          <TouchableOpacity onPress={refreshLocation}>
+                            <Text style={styles.grayText}>
+                              Sorry, We Could Not Get Your Location. {'\n'}
+                              Click To Refresh
+                            </Text>
+                          </TouchableOpacity>
                         </View>
                       ) : (
                         <MapView

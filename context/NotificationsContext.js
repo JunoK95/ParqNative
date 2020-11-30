@@ -1,6 +1,6 @@
 import React, {createContext, useState, useEffect, useCallback} from 'react';
 import messaging from '@react-native-firebase/messaging';
-import { Alert } from 'react-native';
+import {Alert} from 'react-native';
 
 export const NotificationsContext = createContext();
 
