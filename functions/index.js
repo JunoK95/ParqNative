@@ -42,8 +42,13 @@ exports.stripeCreateNewCustomer = stripe_functions.stripeCreateNewCustomer;
 
 exports.stripeCreateCard = stripe_functions.stripeCreateCard;
 
+exports.stripeDeleteCard = stripe_functions.stripeDeleteCard;
+
 exports.stripeCreateExternalAccount =
   stripe_functions.stripeCreateExternalAccount;
+
+exports.stripeDeleteExternalAccount =
+  stripe_functions.stripeDeleteExternalAccount;
 
 exports.stripeListCards = stripe_functions.stripeListCards;
 

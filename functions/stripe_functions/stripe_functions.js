@@ -181,6 +181,28 @@ exports.stripeCreateCard = functions.https.onRequest((request, response) => {
   });
 });
 
+exports.stripeDeleteCard = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const {customer_id, card_token} = request.body;
+    console.log('card token => ', card_token);
+    stripe.customers.deleteSource(
+      customer_id,
+      card_token,
+      (err, confirmation) => {
+        // asynchronously called
+        if (err) {
+          console.error(err);
+          response.status(402).send(err);
+        }
+        if (confirmation) {
+          console.log('DELETED SOURCE => ', confirmation);
+          response.status(200).send(confirmation);
+        }
+      },
+    );
+  });
+});
+
 exports.stripeCreateExternalAccount = functions.https.onRequest(
   (request, response) => {
     cors(request, response, () => {
@@ -210,13 +232,19 @@ exports.stripeCreateExternalAccount = functions.https.onRequest(
 exports.stripeDeleteExternalAccount = functions.https.onRequest(
   (request, response) => {
     cors(request, response, async () => {
-      const {account_id, bankToken} = request.body;
-      console.log('bank token => ', bankToken);
+      const verified = await header_verification.isAuthenticated(request);
+      if (!verified) {
+        response.status(403).send('Unauthorized! Missing auth token');
+        return;
+      }
+
+      const {account_id, bank_id} = request.body;
       try {
         const deleted = await stripe.accounts.deleteExternalAccount(
           account_id,
-          bankToken.tokenId,
+          bank_id,
         );
+        console.log('BANK DELETED =>', deleted);
         if (deleted.deleted) {
           response.status(200).send({
             success: true,
