@@ -20,7 +20,7 @@ const DeactivatedCard = props => {
   const [active, setactive] = useState(false);
 
   const handleClick = () => {
-    props.navigation.navigate('CarportEdit', {port, port_id});
+    props.navigation.navigate('CarportHost', {port, port_id});
   };
 
   if (!port) {

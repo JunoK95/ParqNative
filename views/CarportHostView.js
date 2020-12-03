@@ -6,7 +6,9 @@ import {
   Dimensions,
   Image,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
+import RoundedButton from '../components/button/RoundedButton';
 import HeaderPadding from '../components/header-padding/HeaderPadding';
 import AccomodationCard from '../components/carport/carport_profile/AccomodationCard';
 import RestrictionCard from '../components/carport/carport_profile/RestrictionCard';
@@ -16,6 +18,7 @@ import ParkedVehiclesCard from '../components/carport/carport_profile/ParkedVehi
 import {withNavigationFocus} from 'react-navigation';
 import PortInfoCard from '../components/carport/carport_profile/PortInfoCard';
 import {getCurrentReservations} from '../firebase_func';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 const typeMenu = {
   driveway: {
@@ -36,7 +39,7 @@ const typeMenu = {
   },
 };
 
-const CarportEditView = props => {
+const CarportHostView = props => {
   const {port, port_id} = props.navigation.state.params;
   const {isFocused} = props;
   const [reservations, setreservations] = useState();
@@ -68,9 +71,15 @@ const CarportEditView = props => {
     }
   }
 
+  const editButton = (
+    <TouchableOpacity onPress={() => {}}>
+      <FontAwesome5Icon name={'edit'} size={28} />
+    </TouchableOpacity>
+  );
+
   return (
     <ScrollView contentContainerStyle={styles.screen}>
-      <HeaderPadding to={'CarportList'} />
+      <HeaderPadding to={'CarportList'} right={editButton} />
       <View style={styles.titlecontainer}>
         <View style={styles.itemcolumn}>
           <View style={styles.avatarcontainer}>
@@ -154,4 +163,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withNavigationFocus(CarportEditView);
+export default withNavigationFocus(CarportHostView);

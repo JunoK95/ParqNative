@@ -19,7 +19,7 @@ const ActivatedCard = props => {
   const {port, port_id, refreshData} = props;
 
   const handleClick = () => {
-    props.navigation.navigate('CarportEdit', {port, port_id});
+    props.navigation.navigate('CarportHost', {port, port_id});
   };
 
   const handleDeactivate = async () => {

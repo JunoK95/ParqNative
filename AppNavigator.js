@@ -16,7 +16,7 @@ import CarportListView from './views/CarportListView';
 import ReservationListView from './views/ReservationListView';
 import VehicleRegistrationView from './views/vehicle/VehicleRegistrationView';
 import SavedLocationView from './views/SavedLocationView';
-import CarportEditView from './views/CarportEditView';
+import CarportHostView from './views/CarportHostView';
 import CarportInfoView from './views/carport/CarportInfoView';
 import PayParkingView from './views/PayParkingView';
 import CarportRegisterView from './views/carport/CarportRegisterView';
@@ -88,7 +88,7 @@ const AppNavigator = createDrawerNavigator(
     VehicleList: VehicleListView,
     VehicleReg: VehicleRegistrationView,
     CarportList: CarportListView,
-    CarportEdit: CarportEditView,
+    CarportHost: CarportHostView,
     CarportInfo: CarportInfoView,
     CarportInfoNoBook: CarportInfoNoBookView,
     CarportRegister: CarportRegisterView,

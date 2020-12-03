@@ -2,9 +2,7 @@ import React from 'react';
 import BackToButton from '../../navigation/BackToButton';
 import {View, Text, StyleSheet} from 'react-native';
 
-const HeaderPaddingDefault = props => {
-  const {to, alt, title, right} = props;
-
+const HeaderPaddingDefault = ({to, alt, title, right}) => {
   const HeaderStyle = StyleSheet.flatten([
     styles.primaryheader,
     {backgroundColor: alt ? '#ffc630' : '#11a4ff'},
