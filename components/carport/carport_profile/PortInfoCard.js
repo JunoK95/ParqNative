@@ -66,7 +66,7 @@ const PortInfoCard = props => {
       {port.description ? (
         <View style={{...styles.row, paddingVertical: 8}}>
           <View style={styles.itemcolumn}>
-            <Text style={styles.rowitemtitle2}>Additional Info</Text>
+            <Text style={styles.rowitemtitle2}>Description</Text>
             <Text style={styles.rowitemtext2}>{port.description}</Text>
           </View>
         </View>

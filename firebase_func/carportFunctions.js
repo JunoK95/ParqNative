@@ -85,6 +85,22 @@ export async function getOwnedCarports(owner_id) {
   return ownedCarports;
 }
 
+export async function getCarportById(carport_id) {
+  var carportData = await db
+    .collection('carports')
+    .doc(carport_id)
+    .get()
+    .then(doc => {
+      if (doc.exists) {
+        return doc.data();
+      } else {
+        console.warn('CARPORT DOES NOT EXIST');
+        return;
+      }
+    });
+  return carportData;
+}
+
 export async function activateCarport(port_id, updates) {
   var returnVal = await db
     .collection('carports')

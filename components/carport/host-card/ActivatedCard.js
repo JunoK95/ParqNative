@@ -15,11 +15,9 @@ import FeaturesList from '../FeaturesList';
 import moment from 'moment';
 import {deactivateCarport} from '../../../firebase_func';
 
-const ActivatedCard = props => {
-  const {port, port_id, refreshData} = props;
-
+const ActivatedCard = ({port, port_id, refreshData, navigation}) => {
   const handleClick = () => {
-    props.navigation.navigate('CarportHost', {port, port_id});
+    navigation.navigate('CarportHost', {port, port_id});
   };
 
   const handleDeactivate = async () => {

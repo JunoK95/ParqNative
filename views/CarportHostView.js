@@ -72,7 +72,10 @@ const CarportHostView = props => {
   }
 
   const editButton = (
-    <TouchableOpacity onPress={() => {}}>
+    <TouchableOpacity
+      onPress={() => {
+        props.navigation.navigate('CarportEdit', {port, port_id});
+      }}>
       <FontAwesome5Icon name={'edit'} size={28} />
     </TouchableOpacity>
   );

@@ -36,6 +36,7 @@ import StripeIdentityVerificationView from './views/stripe_verification/stripe-i
 import StripeAddBankView from './views/stripe_verification/StripeAddBankView';
 import StripeAccountMenuView from './views/stripe_verification/StripeAccountMenuView';
 import ParkedVehiclesView from './views/parked-vehicles/ParkedVehiclesView';
+import CarportEditView from './views/CarportEditView';
 
 const SearchNavigator = createStackNavigator(
   {
@@ -88,6 +89,7 @@ const AppNavigator = createDrawerNavigator(
     VehicleList: VehicleListView,
     VehicleReg: VehicleRegistrationView,
     CarportList: CarportListView,
+    CarportEdit: CarportEditView,
     CarportHost: CarportHostView,
     CarportInfo: CarportInfoView,
     CarportInfoNoBook: CarportInfoNoBookView,

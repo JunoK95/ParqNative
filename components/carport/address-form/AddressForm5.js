@@ -43,7 +43,7 @@ const AddressForm5 = props => {
       </View>
       <View style={styles.descontainer}>
         <Input
-          label={'Additional Info'}
+          label={'Description'}
           multiline
           placeholder={'- Add any other useful info'}
           value={descinput}

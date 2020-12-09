@@ -12,8 +12,27 @@ const CustomListItem = ({
   handlePress,
   rippleColor,
 }) => {
-  return (
-    <TouchableNativeReplacement onPress={handlePress} color={rippleColor}>
+  if (handlePress) {
+    return (
+      <TouchableNativeReplacement onPress={handlePress} color={rippleColor}>
+        <View style={styles.item}>
+          <View style={styles.itemleft}>
+            <FontAwesome5Icon
+              name={icon}
+              size={iconSize ? iconSize : 24}
+              color={iconColor}
+              style={iconColor === 'white' && styles.textshadow}
+            />
+          </View>
+          <View style={styles.itemright}>
+            <Text style={styles.itemtext}>{title}</Text>
+            {subtitle && <Text style={styles.itemsubtext}>{subtitle}</Text>}
+          </View>
+        </View>
+      </TouchableNativeReplacement>
+    );
+  } else {
+    return (
       <View style={styles.item}>
         <View style={styles.itemleft}>
           <FontAwesome5Icon
@@ -28,8 +47,8 @@ const CustomListItem = ({
           {subtitle && <Text style={styles.itemsubtext}>{subtitle}</Text>}
         </View>
       </View>
-    </TouchableNativeReplacement>
-  );
+    );
+  }
 };
 
 export default CustomListItem;

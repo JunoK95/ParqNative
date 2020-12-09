@@ -110,10 +110,10 @@ const AddressFormFinal = props => {
           chevron
           title={
             description === '' || description === null
-              ? '(no additional info)'
+              ? '(no description)'
               : description
           }
-          subtitle={'additional info'}
+          subtitle={'description'}
           onPress={() => setstage(5)}
         />
       </View>
