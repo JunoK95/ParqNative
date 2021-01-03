@@ -19,6 +19,61 @@ export const stripePayParkingCharge = async data => {
   return response;
 };
 
+export const stripePayParkingWithCard = async (
+  user_id,
+  user_data,
+  prices,
+  hours,
+  port,
+  customer_id,
+  vehicle,
+  card_token,
+) => {
+  let role = user_data.role ? user_data.role : 'user';
+  const resData = {
+    token: card_token,
+    amount: prices.total_price,
+    port: port,
+    description: `User ${user_id} parked with Vehicle ${vehicle.data.license_plate}`,
+    uid: user_id,
+    customer_id: user_data.stripe_customer_id,
+    metadata: {
+      vehicle_license_plate: vehicle.data.license_plate,
+      vehicle_owner_id: vehicle.data.owner_id,
+      vehicle_us_state: vehicle.data.us_state,
+      vehicle_year: vehicle.data.year,
+      user_id: user_id,
+      user_customer_id: user_data.stripe_customer_id,
+      user_email: user_data.email,
+      port_id: port.id,
+      port_owner_id: port.owner_id,
+      location_address: port.location.address,
+      location_place_id: port.location.place_id,
+      location_geohash: port.location.geohash,
+      hours: hours,
+      price_hr: port.price_hr,
+      price_base: prices.base_price,
+      price_stripe_fee: prices.stripe_fee,
+      price_tax: prices.tax_fee,
+    },
+    role,
+  };
+  const authHeader = await createFirebaseAuthHeader();
+  let response;
+  try {
+    response = await Axios({
+      headers: authHeader,
+      method: 'POST',
+      url: `${config.firebase_functions_url_base}stripePayParkingCharge`,
+      data: resData,
+    });
+  } catch (error) {
+    response = {error};
+  }
+
+  return response;
+};
+
 export const stripeAssignCustomerId = async data => {
   const authHeader = await createFirebaseAuthHeader();
   let response;

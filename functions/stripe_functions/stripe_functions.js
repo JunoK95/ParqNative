@@ -283,7 +283,6 @@ exports.stripeListCards = functions.https.onRequest((request, response) => {
         console.error(err);
         response.status(500).send(err);
       } else {
-        console.log(cards);
         response.status(200).send(cards);
       }
     });
@@ -314,3 +313,79 @@ exports.stripeElementCharge = functions.https.onRequest((request, response) => {
     );
   });
 });
+
+exports.stripePayParkingChargeV2 = functions.https.onRequest(
+  (request, response, store) => {
+    cors(request, response, async () => {
+      const verified = await header_verification.isAuthenticated(request);
+      if (!verified) {
+        response.status(403).send('Unauthorized! Missing auth token');
+        return;
+      }
+
+      const {
+        amount,
+        description,
+        token,
+        port,
+        customer_id,
+        metadata,
+        role,
+      } = request.body;
+
+      let destination_stripe_account;
+      let stripe_fee = 30 + parseInt((amount, 10) * 0.03, 10);
+      let destination_amount =
+        parseInt(parseInt(amount, 10) * 0.8, 10) - stripe_fee;
+      try {
+        const portOwner = await store
+          .collection('users')
+          .doc(port.owner_id)
+          .get()
+          .then(doc => {
+            if (!doc.exists) {
+              console.log('No such document!');
+            } else {
+              return doc.data();
+            }
+          })
+          .catch(err => {
+            console.error('Error getting document', err);
+          });
+        destination_stripe_account = portOwner.stripe_account_id;
+      } catch (err) {
+        console.error(err);
+        response.status(400);
+      }
+
+      if (role === 'demo') {
+        console.warn('USING DEMO ACCOUNT');
+        response.status(200).send({demo: true});
+      } else {
+        stripe.charges.create(
+          {
+            amount: amount,
+            currency: 'usd',
+            description: description,
+            metadata: metadata,
+            customer: customer_id,
+            source: token,
+            transfer_data: {
+              destination: destination_stripe_account,
+              amount: destination_amount,
+            },
+          },
+          (err, charge) => {
+            if (err) {
+              console.error(err);
+              response.status(500).send(err);
+            } else {
+              console.log(charge);
+              response.status(200).send(charge);
+            }
+          },
+        );
+      }
+    });
+  },
+);

@@ -9,6 +9,7 @@ const stripe_functions = require('./stripe_functions/stripe_functions');
 const stripe_webhooks = require('./stripe_functions/stripe_webhooks');
 const twilio_verify_functions = require('./twilio_functions/twilio_verify_functions');
 const referral_functions = require('./referral_functions/referral_functions');
+const carport_functions = require('./carport_functions/carport_functions');
 const logging = require('./logging');
 
 admin.initializeApp(functions.config().firebase);
@@ -165,6 +166,22 @@ exports.getUserContactInfo = functions.https.onRequest((request, response) => {
     }
   });
 });
+
+exports.getCarportDataWithFees = functions.https.onRequest(
+  (request, response) => {
+    cors(request, response, () => {
+      return carport_functions.getCarportDataWithFees(request, response, store);
+    });
+  },
+);
+
+exports.calculateParkingPrices = functions.https.onRequest(
+  (request, response) => {
+    cors(request, response, () => {
+      return carport_functions.calculateParkingPrices(request, response, store);
+    });
+  },
+);
 
 exports.referralCreated = functions.firestore
   .document('referrals/{ref_id}')

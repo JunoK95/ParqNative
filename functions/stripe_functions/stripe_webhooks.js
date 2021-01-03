@@ -23,7 +23,7 @@ exports.stripeAccountEvents = (request, response, store) => {
   //Handle Account Webhooks
   switch (event.type) {
     case 'account.updated':
-      console.log('ACCOUNT UPDATED => ', event);
+      console.log('ACCOUNT UPDATED');
       if (object.tos_acceptance) {
         store
           .collection('wallets')
@@ -33,11 +33,11 @@ exports.stripeAccountEvents = (request, response, store) => {
       response.status(200).send(object);
       break;
     case 'account.external_account.created':
-      console.log('BANK ACCOUNT ADDED => ', event);
+      console.log('BANK ACCOUNT ADDED');
       response.status(200).send(object);
       break;
     case 'account.external_account.deleted':
-      console.log('BANK ACCOUNT DELETED => ', event);
+      console.log('BANK ACCOUNT DELETED');
       response.status(200).send(object);
       break;
     default:
@@ -62,21 +62,20 @@ exports.stripeChargeEvents = (request, response, store) => {
 
   switch (event.type) {
     case 'charge.succeeded':
-      console.log('CHARGE SUCCEEDED => ', event);
+      console.log('CHARGE SUCCEEDED');
       break;
     case 'customer.sources.created':
-      console.log('CUSTOMER SOURCES CREATED => ', event);
+      console.log('CUSTOMER SOURCES CREATED');
       break;
     case 'payment_method.attached':
-      console.log('PAYMENT METHOD ATTACHED => ', event);
+      console.log('PAYMENT METHOD ATTACHED');
       break;
     case 'charge.refund.updated':
-      console.log('CHARGE REFUNDED => ', event);
+      console.log('CHARGE REFUNDED');
       break;
     default:
       break;
   }
 
-  console.log('Stripe Event => ', event.type);
   response.status(200).end();
 };

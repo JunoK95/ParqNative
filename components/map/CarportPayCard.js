@@ -3,33 +3,33 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   TouchableHighlight,
   Dimensions,
+  ScrollView,
 } from 'react-native';
-import {
-  convertToDollar,
-  splitStrByComma,
-  getPortMaxHours,
-  calculateParkingCosts,
-} from '../../helpers/helper';
+import {getPortMaxHours} from '../../helpers/helper';
 import {withNavigation} from 'react-navigation';
 import storeLogo from '../../resources/images/112.png';
 import {AuthContext} from '../../context/AuthContext';
 import {chargeWallet} from '../../firebase_func/walletFunctions';
 import moment from 'moment';
-import FeaturesList from '../carport/FeaturesList';
 import VehiclePicker from '../vehicle/vehicle-picker';
 import NewPaymentPicker from '../../views/payment/NewPaymentPicker';
-import {stripePayParkingCharge} from '../../api/stripe_index';
+import {stripePayParkingWithCard} from '../../api/stripe_index';
 import CardTokenGenerator from '../../views/payment/card-token-generator/CardTokenGenerator';
 import VehicleRegisterModal from '../vehicle/vehicle-register-modal/VehicleRegisterModal';
-import {checkCarportAvailablity} from '../../firebase_func';
+import {checkCarportAvailablity, createReservation} from '../../firebase_func';
 import CustomPricePicker from '../picker/price-picker/CustomPricePicker';
 import OrbLoading from '../loading/OrbLoading';
+import CarportPayBill from './CarportPayBill';
+import {useEffect} from 'react';
+import {calculateParkingPrices} from '../../api/parking_payment_functions';
+import {useCallback} from 'react';
+import CarportPayCardHeader from './CarportPayCardHeader';
 
-const CarportPayCard = ({port, setopen, navigation}) => {
+const CarportPayCard = ({port, port_id, setopen, navigation}) => {
   const context = useContext(AuthContext);
+  const {user_id, user_data} = context;
   const [selectcard, setselectcard] = useState(null);
   const [vehicle, setvehicle] = useState(null);
   const [hours, sethours] = useState(1);
@@ -41,45 +41,53 @@ const CarportPayCard = ({port, setopen, navigation}) => {
   const [openGen, setopenGen] = useState(false);
   const [vmodal, setvmodal] = useState(false);
 
+  const [prices, setPrices] = useState();
+
   let maxHours = getPortMaxHours(port, 12);
 
-  const finalizePay = (_port, _vehicle, _price, _hours) => {
-    _hours = parseInt(_hours, 10);
-    if (_hours <= 0) {
+  const fetchParkingPrices = useCallback(async () => {
+    setPrices('loading');
+    const parking_prices = await calculateParkingPrices(port_id, hours);
+    setPrices(parking_prices);
+  }, [hours, port_id]);
+
+  useEffect(() => {
+    fetchParkingPrices();
+  }, [fetchParkingPrices, hours]);
+
+  const finalizePay = async () => {
+    if (hours <= 0) {
       seterror('Invalid number of hours');
       return;
     }
     const startTime = moment().unix();
     const endTime = moment()
-      .add(_hours, 'hours')
+      .add(hours, 'hours')
       .unix();
-    context.functions
-      .reserveCarport(
-        _port.id,
-        _port,
-        startTime,
-        endTime,
-        _vehicle.id,
-        _vehicle.data,
-        _price,
-        _hours,
-      )
-      .then(res => {
-        console.log('transaction complete');
-        setloading(false);
-        navigation.navigate('ReservationList');
-      })
-      .catch(err => {
-        setloading(false);
-        console.error('transaction error', err);
-      });
-  };
 
-  const handleClick = () => {
-    if (setopen) {
-      setopen(false);
+    console.log('PORT ID =>', port_id);
+
+    const reservationSuccess = await createReservation(
+      user_id,
+      user_data,
+      port_id,
+      port,
+      startTime,
+      endTime,
+      vehicle.id,
+      vehicle.data,
+      prices.total_price,
+      hours,
+    );
+
+    if (reservationSuccess) {
+      console.log('transaction complete');
+      setloading(false);
+      navigation.navigate('ReservationList');
+    } else {
+      setloading(false);
+      console.error('transaction error');
     }
-    navigation.navigate('CarportInfo', {port});
   };
 
   const handlePay = async () => {
@@ -91,7 +99,7 @@ const CarportPayCard = ({port, setopen, navigation}) => {
     setloading(true);
 
     //check availablity
-    const isAvailable = await checkCarportAvailablity(port);
+    const isAvailable = await checkCarportAvailablity(port, port_id);
     if (!isAvailable) {
       seterror('This parking spot became unavailable');
       setloading(false);
@@ -101,67 +109,41 @@ const CarportPayCard = ({port, setopen, navigation}) => {
     //Perform checkout
     const {object} = selectcard;
 
-    const finalPrices = calculateParkingCosts(
-      parseFloat(port.price_hr),
-      parseInt(hours, 10),
-    );
-
-    const resData = {
-      token: selectcard.id,
-      amount: finalPrices.total_price,
-      port: port,
-      // eslint-disable-next-line prettier/prettier
-      description: `User ${context.user_id} parked with Vehicle ${vehicle.data.license_plate}`,
-      uid: context.user_id,
-      customer_id: context.user_data.stripe_customer_id,
-      metadata: {
-        vehicle_license_plate: vehicle.data.license_plate,
-        vehicle_owner_id: vehicle.data.owner_id,
-        vehicle_us_state: vehicle.data.us_state,
-        vehicle_year: vehicle.data.year,
-        user_id: context.user_id,
-        user_customer_id: context.user_data.stripe_customer_id,
-        user_email: context.user_data.email,
-        port_id: port.id,
-        port_owner_id: port.owner_id,
-        location_address: port.location.address,
-        location_place_id: port.location.place_id,
-        location_geohash: port.location.geohash,
-        hours: hours,
-        price_hr: port.price_hr,
-        price_base: finalPrices.base_price,
-        price_stripe_fee: finalPrices.stripe_fee,
-        price_tax: finalPrices.tax_fee,
-      },
-    };
-
     if (object === 'wallet') {
-      if (resData.amount > selectcard.credit) {
+      if (prices.total_price > selectcard.credit) {
         seterror('insufficient funds');
         setloading(false);
         return;
       } else {
         chargeWallet(
           context.user_id,
-          resData.amount,
+          prices.total_price,
           'purchase parking',
           'paid with wallet',
         ).then(res => {
           console.log('wallet charged =>  ', res);
           if (res) {
-            finalizePay(port, vehicle, resData.amount, hours);
+            finalizePay();
           }
         });
       }
     } else if (object === 'card') {
-      let role = context.user_data.role ? context.user_data.role : 'user';
-      const result = await stripePayParkingCharge({...resData, role});
+      const result = await stripePayParkingWithCard(
+        user_id,
+        user_data,
+        prices,
+        hours,
+        port,
+        user_data.stripe_customer_id,
+        vehicle,
+        selectcard.id,
+      );
       if (result.error) {
         setloading(false);
         seterror('Payment Failed');
         return;
       } else {
-        finalizePay(port, vehicle, resData.amount, hours);
+        finalizePay();
         return;
       }
     } else {
@@ -175,26 +157,6 @@ const CarportPayCard = ({port, setopen, navigation}) => {
     return null;
   }
 
-  let scheduleTxt;
-  if (port.timer_end) {
-    if (moment().add(1, 'd') > moment(port.timer_end, 'X')) {
-      scheduleTxt = 'until ' + moment(port.timer_end, 'X').format('hh:mm A');
-    } else {
-      scheduleTxt = 'until ' + moment(port.timer_end, 'X').format('MMM DD');
-    }
-  } else if (port.schedule) {
-    if (port.schedule.allday) {
-      scheduleTxt = '24hr';
-    } else {
-      scheduleTxt = `${moment(port.schedule.start, 'HH:mm').format(
-        'hh:mma',
-      )} - ${moment(port.schedule.end, 'HH:mm').format('hh:mma')}`;
-    }
-  } else {
-    scheduleTxt = '24hr';
-  }
-  const splitAddress = splitStrByComma(port.location.address);
-
   if (loading) {
     return (
       <View style={styles.loadingcontainer}>
@@ -204,35 +166,18 @@ const CarportPayCard = ({port, setopen, navigation}) => {
   }
   if (port) {
     return (
-      <View style={styles.container} onPress={handleClick}>
+      <ScrollView contentContainerStyle={styles.container}>
         {error && (
           <View style={styles.cardheader}>
             <Text style={styles.error}>{error}</Text>
           </View>
         )}
-        <View style={styles.cardheader}>
-          <View style={styles.left}>
-            <View style={styles.box}>
-              <Text style={styles.price}>
-                {'$' + convertToDollar(port.price_hr) + '/hr'}
-              </Text>
-              <Text numberOfLines={1} style={styles.address}>
-                {splitAddress[0]}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.right}>
-            <View style={styles.box}>
-              <Text style={styles.distance}>{scheduleTxt}</Text>
-            </View>
-          </View>
-        </View>
-        <View style={styles.cardheader}>
-          <View style={styles.left}>
-            <Image style={styles.avatar} source={storeLogo} />
-          </View>
-          <FeaturesList features={port.accomodations} />
-        </View>
+        <CarportPayCardHeader
+          price_hr={port.price_hr}
+          accomodations={port.accomodations}
+          image_src={storeLogo}
+          port={port}
+        />
         <View style={styles.selectsection}>
           <CustomPricePicker
             title={'Hours'}
@@ -255,6 +200,7 @@ const CarportPayCard = ({port, setopen, navigation}) => {
           />
           <CardTokenGenerator open={openGen} setopen={setopenGen} />
         </View>
+        <CarportPayBill prices={prices} />
         <TouchableHighlight
           disabled={!vehicle || !selectcard || !hours || loading}
           style={
@@ -266,7 +212,7 @@ const CarportPayCard = ({port, setopen, navigation}) => {
           onPress={handlePay}>
           <Text style={styles.buttonText}>Pay</Text>
         </TouchableHighlight>
-      </View>
+      </ScrollView>
     );
   }
   return null;
@@ -275,17 +221,14 @@ const CarportPayCard = ({port, setopen, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     width: Dimensions.get('window').width - 32,
-    marginTop: 24,
     paddingVertical: 8,
+    marginTop: 24,
+    borderColor: '#11a4ff',
+    borderWidth: 2,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     borderRadius: 24,
-    shadowColor: '#000',
-    shadowOffset: {width: 4, height: 4},
-    shadowOpacity: 1,
-    shadowRadius: 4,
-    elevation: 4,
   },
   loadingcontainer: {
     width: Dimensions.get('window').width - 32,
@@ -300,32 +243,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     paddingVertical: 8,
   },
-  box: {
-    flexDirection: 'column',
-  },
-  avatar: {
-    width: 48,
-    height: 48,
-    marginLeft: 12,
-  },
   error: {
     fontSize: 16,
     color: '#dd0000',
     textAlign: 'left',
-    fontWeight: 'bold',
-    fontFamily: 'Montserrat',
-  },
-  address: {
-    fontSize: 16,
-    color: '#888',
-    textAlign: 'left',
-    fontWeight: 'bold',
-    fontFamily: 'Montserrat',
-  },
-  distance: {
-    fontSize: 16,
-    color: '#888',
-    textAlign: 'right',
     fontWeight: 'bold',
     fontFamily: 'Montserrat',
   },
@@ -364,21 +285,6 @@ const styles = StyleSheet.create({
   },
   hourpicker: {
     width: 260,
-  },
-  left: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-  },
-  right: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  price: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    fontFamily: 'Montserrat',
   },
 });
 

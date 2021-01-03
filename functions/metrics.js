@@ -52,11 +52,14 @@ exports.reservationMetrics = (snap, context, store) => {
   const {hours, price, user_id, carport_id, carport_data} = data;
 
   //update total reservations metrics
-  store.doc('metrics/reservations').update({
-    total_hours: admin.firestore.FieldValue.increment(parseInt(hours, 10)),
-    total_reservations: admin.firestore.FieldValue.increment(1),
-    gross_income: admin.firestore.FieldValue.increment(parseFloat(price)),
-  });
+  store.doc('metrics/reservations').set(
+    {
+      total_hours: admin.firestore.FieldValue.increment(parseInt(hours, 10)),
+      total_reservations: admin.firestore.FieldValue.increment(1),
+      gross_income: admin.firestore.FieldValue.increment(parseFloat(price)),
+    },
+    {merge: true},
+  );
 
   //update user metrics
   store.doc(`user_metrics/${user_id}`).set(

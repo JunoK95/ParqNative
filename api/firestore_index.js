@@ -21,6 +21,26 @@ export const getUserContactInfo = async user_id => {
   return response;
 };
 
+export const getCarportDataWithFees = async carport_id => {
+  const authHeader = createFirebaseAuthHeader();
+  let returnValue;
+  try {
+    const response = await Axios({
+      headers: authHeader,
+      method: 'POST',
+      url: `${config.firebase_functions_url_base}getCarportDataWithFees`,
+      data: {
+        carport_id,
+      },
+    });
+    returnValue = response.data;
+  } catch (error) {
+    returnValue = {error};
+  }
+
+  return returnValue;
+};
+
 export const sendLog = async (type, message, description) => {
   const authHeader = createFirebaseAuthHeader();
   let response;

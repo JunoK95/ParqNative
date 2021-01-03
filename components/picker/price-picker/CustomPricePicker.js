@@ -61,7 +61,7 @@ const CustomPricePicker = ({
         <CustomPickerItem
           key={i}
           title={item.title}
-          subtitle={item.subtitle}
+          // subtitle={item.subtitle}
           icon={'stopwatch'}
           handlePress={() => {
             setselect(item);
@@ -84,9 +84,9 @@ const CustomPricePicker = ({
             <Text style={styles.itemtext}>
               {select ? select.title : 'Select Hours'}
             </Text>
-            <Text style={styles.itemsubtext}>
+            {/* <Text style={styles.itemsubtext}>
               {select ? select.subtitle : ''}
-            </Text>
+            </Text> */}
           </View>
         </View>
       </TouchableOpacity>

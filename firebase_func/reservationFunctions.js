@@ -21,10 +21,10 @@ export async function getCurrentReservations(carport_id) {
   return reservations;
 }
 
-export async function checkCarportAvailablity(carport) {
+export async function checkCarportAvailablity(carport, carport_id) {
   const query = db
     .collection('carports')
-    .doc(carport.id)
+    .doc(carport_id)
     .collection('reservations')
     .where('end', '>', moment().unix());
 

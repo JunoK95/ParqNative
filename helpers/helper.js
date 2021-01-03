@@ -205,3 +205,25 @@ export function calculateParkingCosts(hourly_price, hrs) {
     total_price_stripe,
   };
 }
+
+export function calculateParkingCostsV2(port, hours) {
+  const {tax_rate, stripe_fee_base, stripe_fee_rate, price_hr} = port;
+  console.log('CALC', port);
+
+  const base_price = parseInt(parseFloat(price_hr) * 100 * hours, 10);
+  const tax_fee = parseInt(parseFloat(tax_rate) * parseFloat(base_price), 10);
+  const stripe_fee = parseInt(
+    parseFloat(stripe_fee_base) + parseFloat(stripe_fee_rate) * base_price,
+    10,
+  );
+  const total_price = base_price + tax_fee;
+  const total_price_stripe = base_price + tax_fee + stripe_fee;
+
+  return {
+    base_price,
+    tax_fee,
+    stripe_fee,
+    total_price,
+    total_price_stripe,
+  };
+}
