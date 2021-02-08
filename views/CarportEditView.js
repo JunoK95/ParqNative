@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 import {withNavigationFocus} from 'react-navigation';
 import CarportEditMenu from '../components/carport/carport-edit-menu/CarportEditMenu';
 import HeaderPadding from '../components/header-padding/HeaderPadding';
@@ -11,7 +11,7 @@ import {
 import {splitStrByComma} from '../helpers/helper';
 
 const CarportEditView = props => {
-  const {port, port_id} = props.navigation.state.params;
+  const {port, port_id, initial_stage} = props.navigation.state.params;
   const {isFocused} = props;
   const [portData, setPortData] = useState();
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,6 @@ const CarportEditView = props => {
     setLoading(true);
     try {
       const data = await getCarportById(port_id);
-      console.log('CARPORT DATA => ', data);
       setPortData(data);
       setLoading(false);
       return data;
@@ -59,6 +58,7 @@ const CarportEditView = props => {
         <CarportEditMenu
           port={portData}
           port_id={port_id}
+          initial_stage={initial_stage}
           updateData={updateData}
         />
       </View>

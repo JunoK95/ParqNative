@@ -1,10 +1,9 @@
 import React from 'react';
+import {TouchableOpacity} from 'react-native';
 import {StyleSheet, Text, View, Dimensions} from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
-const RestrictionCard = props => {
-  const {accomodations} = props;
-
+const RestrictionCard = ({accomodations, onPress}) => {
   const restrictionMenu = {
     low_clearance: {
       label: 'Low Clearance',
@@ -29,115 +28,117 @@ const RestrictionCard = props => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.row}>
-        <View style={styles.rowtitle}>
-          <Text style={styles.cardtitle}>Restrictions</Text>
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.container}>
+        <View style={styles.row}>
+          <View style={styles.rowtitle}>
+            <Text style={styles.cardtitle}>Restrictions</Text>
+          </View>
+        </View>
+        <View style={styles.row}>
+          <View
+            style={
+              accomodations.low_clearance
+                ? styles.rowitem
+                : {...styles.rowitem, opacity: 0.3}
+            }>
+            <View style={styles.itemcolumn}>
+              <FontAwesome5Icon
+                name={'truck'}
+                size={26}
+                color={accomodations.low_clearance ? 'red' : '#777'}
+              />
+            </View>
+            <View style={styles.itemcolumn}>
+              <Text
+                numberOfLines={2}
+                style={
+                  accomodations.low_clearance
+                    ? styles.rowitemtitle2
+                    : styles.rowitemtitledisabled2
+                }>
+                Low Clear
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              accomodations.parallel
+                ? styles.rowitem
+                : {...styles.rowitem, opacity: 0.3}
+            }>
+            <View style={styles.itemcolumn}>
+              <FontAwesome5Icon
+                name={'equals'}
+                size={26}
+                color={accomodations.parallel ? 'red' : '#777'}
+              />
+            </View>
+            <View style={styles.itemcolumn}>
+              <Text
+                style={
+                  accomodations.parallel
+                    ? styles.rowitemtitle
+                    : styles.rowitemtitledisabled
+                }>
+                Parallel
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.row}>
+          <View
+            style={
+              accomodations.compact_only
+                ? styles.rowitem
+                : {...styles.rowitem, opacity: 0.3}
+            }>
+            <View style={styles.itemcolumn}>
+              <FontAwesome5Icon
+                name={'car-side'}
+                size={26}
+                color={accomodations.compact_only ? 'red' : '#777'}
+              />
+            </View>
+            <View style={styles.itemcolumn}>
+              <Text
+                style={
+                  accomodations.compact_only
+                    ? styles.rowitemtitle
+                    : styles.rowitemtitledisabled
+                }>
+                Compact
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              accomodations.no_reentry
+                ? styles.rowitem
+                : {...styles.rowitem, opacity: 0.3}
+            }>
+            <View style={styles.itemcolumn}>
+              <FontAwesome5Icon
+                name={'door-closed'}
+                size={24}
+                color={accomodations.no_reentry ? 'red' : '#777'}
+              />
+            </View>
+            <View style={styles.itemcolumn}>
+              <Text
+                numberOfLines={2}
+                style={
+                  accomodations.no_reentry
+                    ? styles.rowitemtitle2
+                    : styles.rowitemtitledisabled2
+                }>
+                No ReEntry
+              </Text>
+            </View>
+          </View>
         </View>
       </View>
-      <View style={styles.row}>
-        <View
-          style={
-            accomodations.low_clearance
-              ? styles.rowitem
-              : {...styles.rowitem, opacity: 0.3}
-          }>
-          <View style={styles.itemcolumn}>
-            <FontAwesome5Icon
-              name={'truck'}
-              size={26}
-              color={accomodations.low_clearance ? 'red' : '#777'}
-            />
-          </View>
-          <View style={styles.itemcolumn}>
-            <Text
-              numberOfLines={2}
-              style={
-                accomodations.low_clearance
-                  ? styles.rowitemtitle2
-                  : styles.rowitemtitledisabled2
-              }>
-              Low Clear
-            </Text>
-          </View>
-        </View>
-        <View
-          style={
-            accomodations.parallel
-              ? styles.rowitem
-              : {...styles.rowitem, opacity: 0.3}
-          }>
-          <View style={styles.itemcolumn}>
-            <FontAwesome5Icon
-              name={'equals'}
-              size={26}
-              color={accomodations.parallel ? 'red' : '#777'}
-            />
-          </View>
-          <View style={styles.itemcolumn}>
-            <Text
-              style={
-                accomodations.parallel
-                  ? styles.rowitemtitle
-                  : styles.rowitemtitledisabled
-              }>
-              Parallel
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View style={styles.row}>
-        <View
-          style={
-            accomodations.compact_only
-              ? styles.rowitem
-              : {...styles.rowitem, opacity: 0.3}
-          }>
-          <View style={styles.itemcolumn}>
-            <FontAwesome5Icon
-              name={'car-side'}
-              size={26}
-              color={accomodations.compact_only ? 'red' : '#777'}
-            />
-          </View>
-          <View style={styles.itemcolumn}>
-            <Text
-              style={
-                accomodations.compact_only
-                  ? styles.rowitemtitle
-                  : styles.rowitemtitledisabled
-              }>
-              Compact
-            </Text>
-          </View>
-        </View>
-        <View
-          style={
-            accomodations.no_reentry
-              ? styles.rowitem
-              : {...styles.rowitem, opacity: 0.3}
-          }>
-          <View style={styles.itemcolumn}>
-            <FontAwesome5Icon
-              name={'door-closed'}
-              size={24}
-              color={accomodations.no_reentry ? 'red' : '#777'}
-            />
-          </View>
-          <View style={styles.itemcolumn}>
-            <Text
-              numberOfLines={2}
-              style={
-                accomodations.no_reentry
-                  ? styles.rowitemtitle2
-                  : styles.rowitemtitledisabled2
-              }>
-              No ReEntry
-            </Text>
-          </View>
-        </View>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

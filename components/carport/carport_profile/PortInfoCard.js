@@ -1,4 +1,5 @@
 import React from 'react';
+import {TouchableOpacity} from 'react-native';
 import {StyleSheet, Text, View, Dimensions} from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import {convertToDollar} from '../../../helpers/helper';
@@ -23,7 +24,7 @@ const typeMenu = {
 };
 
 const PortInfoCard = props => {
-  const {port} = props;
+  const {port, onPress} = props;
 
   const dollarPrice = convertToDollar(port.price_hr);
   let ptype = port.type;
@@ -53,24 +54,28 @@ const PortInfoCard = props => {
           </View>
         </View>
       </View>
-      <View style={styles.row}>
-        <View style={styles.itemcolumn}>
-          <Text style={styles.rowitemtitle2}>Parking Instructions</Text>
-          <Text style={styles.rowitemtext2}>
-            {port.parking_instructions
-              ? port.parking_instructions
-              : 'no parking instructions provided'}
-          </Text>
-        </View>
-      </View>
-      {port.description ? (
-        <View style={{...styles.row, paddingVertical: 8}}>
+      <TouchableOpacity onPress={() => onPress('parking_instructions')}>
+        <View style={styles.row}>
           <View style={styles.itemcolumn}>
-            <Text style={styles.rowitemtitle2}>Description</Text>
-            <Text style={styles.rowitemtext2}>{port.description}</Text>
+            <Text style={styles.rowitemtitle2}>Parking Instructions</Text>
+            <Text style={styles.rowitemtext2}>
+              {port.parking_instructions
+                ? port.parking_instructions
+                : 'no parking instructions provided'}
+            </Text>
           </View>
         </View>
-      ): null}
+      </TouchableOpacity>
+      {port.description ? (
+        <TouchableOpacity onPress={() => onPress('description')}>
+          <View style={{...styles.row, paddingVertical: 8}}>
+            <View style={styles.itemcolumn}>
+              <Text style={styles.rowitemtitle2}>Description</Text>
+              <Text style={styles.rowitemtext2}>{port.description}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };

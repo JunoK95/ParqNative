@@ -17,6 +17,7 @@ import {withNavigation} from 'react-navigation';
 import storeLogo from '../../resources/images/112.png';
 import FeaturesList from '../carport/FeaturesList';
 import moment from 'moment';
+import { formatISOWeekday } from '../../helpers/format-isoweekday';
 
 const CarportCard = props => {
   const {port, currentlocation, setopen} = props;
@@ -51,22 +52,22 @@ const CarportCard = props => {
   }
 
   let scheduleTxt;
-  if (port.timer_end) {
-    if (moment().add(1, 'd') > moment(port.timer_end, 'X')) {
-      scheduleTxt = 'until ' + moment(port.timer_end, 'X').format('hh:mm A');
+  if (port.schedule) {
+    const day = formatISOWeekday();
+    if (port.schedule[day]) {
+      if (port.schedule[day].allday) {
+        scheduleTxt = '24hr';
+      } else {
+        scheduleTxt = `${moment(port.schedule[day].start, 'HH:mm').format(
+          'hh:mma',
+        )} - ${moment(port.schedule[day].end, 'HH:mm').format('hh:mma')}`;
+      }
     } else {
-      scheduleTxt = 'until ' + moment(port.timer_end, 'X').format('MMM DD');
-    }
-  } else if (port.schedule) {
-    if (port.schedule.allday) {
-      scheduleTxt = '24hr';
-    } else {
-      scheduleTxt = `${moment(port.schedule.start, 'HH:mm').format(
-        'hh:mma',
-      )} - ${moment(port.schedule.end, 'HH:mm').format('hh:mma')}`;
+      console.log('DAY NOT EXIST');
     }
   } else {
-    scheduleTxt = '24hr';
+    console.log('SCHEDULE NOT EXIST');
+    scheduleTxt = 'No Schedule';
   }
   const splitAddress = splitStrByComma(port.location.address);
 

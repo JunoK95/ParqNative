@@ -1,5 +1,6 @@
 import firebase from '../firebase';
 import moment from 'moment';
+import { checkCarportSchedule } from '../helpers/check-carport-schedule';
 
 const db = firebase.firestore();
 
@@ -47,6 +48,12 @@ export async function checkCarportAvailablity(carport, carport_id) {
 
   if (reskeys.length > parseInt(carport.available_spaces, 10)) {
     console.error('Carport Overbooked!');
+    return false;
+  }
+
+  console.log('CHECKING SCHEDULE =>', checkCarportSchedule(carport, moment()));
+  if (!checkCarportSchedule(carport, moment())) {
+    console.log('Time Not In Between Parking Spot Schedule');
     return false;
   }
 

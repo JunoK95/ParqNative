@@ -74,11 +74,19 @@ const CarportHostView = props => {
   const editButton = (
     <TouchableOpacity
       onPress={() => {
-        props.navigation.navigate('CarportEdit', {port, port_id});
+        props.navigation.navigate('CarportEdit', {
+          port,
+          port_id,
+          initial_stage: 'home',
+        });
       }}>
       <FontAwesome5Icon name={'edit'} size={28} />
     </TouchableOpacity>
   );
+
+  const navigateTo = initial_stage => {
+    props.navigation.navigate('CarportEdit', {port, port_id, initial_stage});
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.screen}>
@@ -103,9 +111,15 @@ const CarportHostView = props => {
         port_id={port_id}
         street_address={splitAddress[0]}
       />
-      <PortInfoCard port={port} />
-      <AccomodationCard accomodations={port.accomodations} />
-      <RestrictionCard accomodations={port.accomodations} />
+      <PortInfoCard port={port} onPress={navigateTo} />
+      <AccomodationCard
+        accomodations={port.accomodations}
+        onPress={() => navigateTo('accomodations')}
+      />
+      <RestrictionCard
+        accomodations={port.accomodations}
+        onPress={() => navigateTo('accomodations')}
+      />
     </ScrollView>
   );
 };

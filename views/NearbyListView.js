@@ -22,14 +22,7 @@ const NearbyListView = props => {
   const {params} = props.navigation.state;
   const {latitude, longitude} = params.location;
   const [listmode, setlistmode] = useState(false);
-  const [state, setstate] = useState({
-    lat: latitude,
-    lng: longitude,
-    selected: {
-      id: 'none',
-      data: 'none',
-    },
-  });
+
   const [nearbyPorts, setnearbyPorts] = useState(null);
   const [select, setselect] = useState(null);
   const [fetching, setfetching] = useState(true);
@@ -44,14 +37,7 @@ const NearbyListView = props => {
         center,
         distance,
         'geopointx',
-      )
-        .then(res => {
-          setstate({
-            ...state,
-          });
-          return res;
-        })
-        .catch(err => console.error(err));
+      );
 
       let promises = nearbyCarports.map(async (port, i) => {
         const isAvailable = await checkCarportAvailablity(port);

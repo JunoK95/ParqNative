@@ -26,8 +26,9 @@ import {useEffect} from 'react';
 import {calculateParkingPrices} from '../../api/parking_payment_functions';
 import {useCallback} from 'react';
 import CarportPayCardHeader from './CarportPayCardHeader';
+import { formatISOWeekday } from '../../helpers/format-isoweekday';
 
-const CarportPayCard = ({port, port_id, setopen, navigation}) => {
+const CarportPayCard = ({port, port_id, setopen, navigation, schedule}) => {
   const context = useContext(AuthContext);
   const {user_id, user_data} = context;
   const [selectcard, setselectcard] = useState(null);
@@ -43,7 +44,7 @@ const CarportPayCard = ({port, port_id, setopen, navigation}) => {
 
   const [prices, setPrices] = useState();
 
-  let maxHours = getPortMaxHours(port, 12);
+  let maxHours = getPortMaxHours(port, formatISOWeekday(new Date()), 12);
 
   const fetchParkingPrices = useCallback(async () => {
     setPrices('loading');
@@ -177,6 +178,7 @@ const CarportPayCard = ({port, port_id, setopen, navigation}) => {
           accomodations={port.accomodations}
           image_src={storeLogo}
           port={port}
+          schedule={schedule}
         />
         <View style={styles.selectsection}>
           <CustomPricePicker

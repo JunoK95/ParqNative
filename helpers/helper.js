@@ -163,20 +163,20 @@ export function validatePassword(pw1, pw2) {
   return true;
 }
 
-export function getPortMaxHours(port, defaultHours) {
+export function getPortMaxHours(port, day, defaultHours) {
   let maxHours = defaultHours;
-  if (port.schedule) {
-    if (port.schedule.enabled) {
-      if (port.schedule.end) {
-        maxHours = moment(port.schedule.end, 'HH:mm').diff(moment(), 'hours');
+  const {schedule} = port;
+  if (!schedule) {
+    return maxHours;
+  }
+  if (schedule[day]) {
+    if (schedule[day]) {
+      if (schedule[day].end) {
+        maxHours = moment(schedule[day].end, 'HH:mm').diff(moment(), 'hours');
         console.log('MAX SCHEDULE HOURS => ', maxHours);
         return maxHours;
       }
     }
-  }
-  if (port.timer_end) {
-    maxHours = moment(port.timer_end, 'X').diff(moment(), 'hours');
-    console.log('MAX HOURS => ', maxHours);
   }
   return maxHours;
 }

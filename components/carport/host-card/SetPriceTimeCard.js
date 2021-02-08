@@ -9,23 +9,19 @@ import {
 } from 'react-native';
 import {convertToDollar} from '../../../helpers/helper';
 import CustomTextInput from '../../picker/CustomTextInput';
-import moment from 'moment';
-import SetPriceTimeCardRowItem from './SetPriceTimeCardRowItem';
 import {activateCarport} from '../../../firebase_func';
+import ModalTextInput from '../../modal-text-input/ModalTextInput';
+import ModalCurrencyInput from '../../modal-text-input/ModalCurrencyInput';
 
 const SetPriceTimeCard = props => {
   const {port, port_id, setactive, refreshData} = props;
   const [price, setprice] = useState(port.price_hr);
-  const [endtime, setendtime] = useState(null);
-  const [schedule, setschedule] = useState(null);
   const [spaces, setspaces] = useState(port.available_spaces);
 
   console.log('PORT DATA => ', port.available_spaces);
   const handleSubmit = async () => {
     if (port_id) {
       const updates = {
-        timer_end: moment(endtime).unix(),
-        schedule: schedule,
         available_spaces: spaces,
         price_hr: price,
       };
@@ -49,7 +45,7 @@ const SetPriceTimeCard = props => {
             </View>
             <TouchableOpacity>
               <View style={styles.right}>
-                <CustomTextInput
+                <ModalCurrencyInput
                   title={'Change Price'}
                   initialitem={price}
                   setselected={setprice}
@@ -58,19 +54,13 @@ const SetPriceTimeCard = props => {
               </View>
             </TouchableOpacity>
           </View>
-          <SetPriceTimeCardRowItem
-            endtime={endtime}
-            setendtime={setendtime}
-            schedule={schedule}
-            setschedule={setschedule}
-          />
           <View style={styles.contentrow}>
             <View style={styles.left}>
               <Text style={styles.price}>{spaces}</Text>
             </View>
             <TouchableOpacity>
               <View style={styles.right}>
-                <CustomTextInput
+                <ModalTextInput
                   title={'Add Spaces'}
                   setselected={setspaces}
                   inputType={'number'}

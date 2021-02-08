@@ -27,25 +27,6 @@ const DeactivatedCard = props => {
     return null;
   }
 
-  let scheduleTxt;
-  if (port.timer_end) {
-    if (moment().add(1, 'd') > moment(port.timer_end, 'X')) {
-      scheduleTxt = 'until ' + moment(port.timer_end, 'X').format('hh:mm A');
-    } else {
-      scheduleTxt = 'until ' + moment(port.timer_end, 'X').format('MMM DD');
-    }
-  } else if (port.schedule) {
-    if (port.schedule.allday) {
-      scheduleTxt = '24hr';
-    } else {
-      scheduleTxt = `${moment(port.schedule.start, 'HH:mm').format(
-        'hh:mma',
-      )} - ${moment(port.schedule.end, 'HH:mm').format('hh:mma')}`;
-    }
-  } else {
-    scheduleTxt = '24hr';
-  }
-
   const splitAddress = splitStrByComma(port.location.address);
   if (!active) {
     return (
@@ -59,11 +40,6 @@ const DeactivatedCard = props => {
               <Text numberOfLines={1} style={styles.address}>
                 {splitAddress[0]}
               </Text>
-            </View>
-          </View>
-          <View style={styles.right}>
-            <View style={styles.box}>
-              <Text style={styles.distance}>{scheduleTxt}</Text>
             </View>
           </View>
         </View>

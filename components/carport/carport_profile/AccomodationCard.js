@@ -1,10 +1,9 @@
 import React from 'react';
+import {TouchableOpacity} from 'react-native';
 import {StyleSheet, Text, View, Dimensions} from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
-const AccomodationCard = props => {
-  const {accomodations} = props;
-
+const AccomodationCard = ({accomodations, onPress}) => {
   const menu = [
     {
       label: 'Covered',
@@ -45,14 +44,16 @@ const AccomodationCard = props => {
   });
 
   return (
-    <View style={styles.container}>
-      <View style={styles.row}>
-        <View style={styles.rowtitle}>
-          <Text style={styles.rowitemtitle}>Accomodations</Text>
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.container}>
+        <View style={styles.row}>
+          <View style={styles.rowtitle}>
+            <Text style={styles.rowitemtitle}>Accomodations</Text>
+          </View>
         </View>
+        <View style={styles.row}>{menuItems}</View>
       </View>
-      <View style={styles.row}>{menuItems}</View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

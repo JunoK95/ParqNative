@@ -60,7 +60,7 @@ function AuthContextProvider({children}) {
 
       if (userData.error) {
         //New User
-        console.log('Current User', userData.error);
+        console.log('NEW USER');
       } else {
         setstate({
           ...state,
@@ -133,7 +133,7 @@ function AuthContextProvider({children}) {
     try {
       await registerUserEmail(email, pass);
     } catch (error) {
-      console.error('ERROR LOGGING IN WITH EMAIL => ', error);
+      console.error('ERROR LOGGING IN WITH EMAIL');
       return {
         error: {
           code: error.code,
@@ -216,7 +216,7 @@ function AuthContextProvider({children}) {
     try {
       firebaseUserCredential = await appleFirebaseSignIn(identityToken, nonce);
     } catch (error) {
-      console.error('Apple Sign In Error =>', error);
+      console.error('Apple Sign In Error');
       return;
     }
 
@@ -356,10 +356,7 @@ function AuthContextProvider({children}) {
       };
       stripeAccount = await stripeAssignConnectAccountId(data);
       if (stripeAccount.error) {
-        console.error(
-          'ERROR CREATING STRIPE CONNECT ACCOUNT ID => ',
-          stripeAccount.error,
-        );
+        console.error('ERROR CREATING STRIPE CONNECT ACCOUNT ID');
       } else {
         setStripeAccountId(state.user_id, stripeAccount.data.id);
         setstate({
@@ -383,9 +380,9 @@ function AuthContextProvider({children}) {
       state.user_data.role,
     );
     if (response.error) {
-      console.error('ERROR GETTING STRIPE PAYMENT METHODS => ', response.error);
+      console.error('ERROR GETTING STRIPE PAYMENT METHODS');
     } else {
-      console.log('GETTING STRIPE CUSTOMER CARD LIST => ', response.data);
+      console.log('GETTING STRIPE CUSTOMER CARD LIST');
       stripeCards = response.data.data;
     }
 

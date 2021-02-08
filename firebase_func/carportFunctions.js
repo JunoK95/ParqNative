@@ -81,7 +81,6 @@ export async function getOwnedCarports(owner_id) {
       });
       return carportArray;
     });
-  console.log(`${owner_id} OWNED CARPORTS =>`, ownedCarports);
   return ownedCarports;
 }
 

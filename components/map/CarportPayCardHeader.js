@@ -2,6 +2,7 @@ import moment from 'moment';
 import React from 'react';
 import {Image} from 'react-native';
 import {StyleSheet, Text, View} from 'react-native';
+import {formatISOWeekday} from '../../helpers/format-isoweekday';
 import {convertToDollar, splitStrByComma} from '../../helpers/helper';
 import FeaturesList from '../carport/FeaturesList';
 
@@ -13,24 +14,22 @@ const CarportPayCardHeader = ({
   image_src,
   port,
 }) => {
+  const day = formatISOWeekday(new Date());
+  console.log('HEADER SCHEDULE =>', schedule);
+
   let scheduleTxt;
-  if (port.timer_end) {
-    if (moment().add(1, 'd') > moment(port.timer_end, 'X')) {
-      scheduleTxt = 'until ' + moment(port.timer_end, 'X').format('hh:mm A');
-    } else {
-      scheduleTxt = 'until ' + moment(port.timer_end, 'X').format('MMM DD');
-    }
-  } else if (port.schedule) {
-    if (port.schedule.allday) {
+  if (schedule) {
+    if (schedule[day].allday) {
       scheduleTxt = '24hr';
     } else {
-      scheduleTxt = `${moment(port.schedule.start, 'HH:mm').format(
+      scheduleTxt = `${moment(schedule[day].start, 'HH:mm').format(
         'hh:mma',
-      )} - ${moment(port.schedule.end, 'HH:mm').format('hh:mma')}`;
+      )} - ${moment(schedule[day].end, 'HH:mm').format('hh:mma')}`;
     }
   } else {
-    scheduleTxt = '24hr';
+    scheduleTxt = 'No Schedule';
   }
+
   const splitAddress = splitStrByComma(port.location.address);
 
   return (

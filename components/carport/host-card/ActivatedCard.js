@@ -67,11 +67,6 @@ const ActivatedCard = ({port, port_id, refreshData, navigation}) => {
             </Text>
           </View>
         </View>
-        <View style={styles.right}>
-          <View style={styles.box}>
-            <Text style={styles.distance}>{scheduleTxt}</Text>
-          </View>
-        </View>
       </View>
       <View style={styles.contentcontainer}>
         <View style={styles.leftcontent}>

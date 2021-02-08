@@ -1,4 +1,3 @@
-import Axios from 'axios';
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {withNavigationFocus} from 'react-navigation';
@@ -17,12 +16,12 @@ const PayParkingView = props => {
     setLoading(true);
     try {
       const data = await getCarportDataWithFees(port.id);
-      console.log('CARPORT DATA =>', data);
+      console.log(data);
       setCarport(data);
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.error('ERROR LOADING CARPORT DATA =>', error);
+      console.error('ERROR LOADING CARPORT DATA');
     }
   }, [port.id]);
 
@@ -40,11 +39,16 @@ const PayParkingView = props => {
       </View>
     );
   }
+
   return (
     <View style={styles.loadingContainer}>
       <HeaderPadding to={'Search'} title={'Pay Parking'} />
       <View style={styles.container}>
-        <CarportPayCard port={{...carport, id: port.id}} port_id={port.id} />
+        <CarportPayCard
+          port={{...carport, id: port.id}}
+          port_id={port.id}
+          schedule={carport.schedule}
+        />
       </View>
     </View>
   );
