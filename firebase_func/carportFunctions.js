@@ -42,11 +42,6 @@ export async function initializeCarportWithParams(
       covered_space: false,
       ...features,
     },
-    schedule: {
-      start: '00:00',
-      end: '23:00',
-      allday: true,
-    },
     location: {
       address: formatted_address,
       coordinates: geometry.location,

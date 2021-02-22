@@ -170,7 +170,10 @@ export function getPortMaxHours(port, day, defaultHours) {
     return maxHours;
   }
   if (schedule[day]) {
-    if (schedule[day]) {
+    if (schedule[day].allday) {
+      maxHours = moment('23:59', 'HH:mm').diff(moment(), 'hours');
+      return maxHours;
+    } else {
       if (schedule[day].end) {
         maxHours = moment(schedule[day].end, 'HH:mm').diff(moment(), 'hours');
         console.log('MAX SCHEDULE HOURS => ', maxHours);

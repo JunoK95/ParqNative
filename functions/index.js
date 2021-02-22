@@ -10,6 +10,9 @@ const stripe_webhooks = require('./stripe_functions/stripe_webhooks');
 const twilio_verify_functions = require('./twilio_functions/twilio_verify_functions');
 const referral_functions = require('./referral_functions/referral_functions');
 const carport_functions = require('./carport_functions/carport_functions');
+const send_welcome_email = require('./sendinblue_functions/send_template/send_welcome_email');
+const send_email_receipt = require('./sendinblue_functions/send_template/send_email_receipt');
+const sendinblue_index = require('./sendinblue_functions/index');
 const logging = require('./logging');
 
 admin.initializeApp(functions.config().firebase);
@@ -148,6 +151,8 @@ exports.twilioCreateVerificationService =
 exports.twilioCheckCodeVerification =
   twilio_verify_functions.twilioCheckCodeVerification;
 
+exports.sendWelcomeEmail = send_welcome_email.sendWelcomeEmail;
+
 exports.getUserContactInfo = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const {user_id} = request.body;
@@ -211,4 +216,10 @@ exports.carportMetrics = functions.firestore
   .document('carports/{carportId}')
   .onCreate((snap, context) => {
     return metrics.carportMetrics(snap, context, store);
+  });
+
+exports.sendEmailReceipt = functions.firestore
+  .document('reservations/{reservationId}')
+  .onCreate((snap, context) => {
+    return send_email_receipt.sendEmailReceipt(snap, context, store);
   });

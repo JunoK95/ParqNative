@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
   textField: {
     height: 48,
     width: '100%',
+    color: 'black',
     paddingHorizontal: 24,
     backgroundColor: '#fff',
     borderRadius: 12,
