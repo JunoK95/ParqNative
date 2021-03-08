@@ -35,7 +35,7 @@ const CarportRegisterView = props => {
         if (response.error) {
           console.error('ERROR RETRIEVING CONNECT ACCOUNT INFO');
         } else {
-          accountData = response.data;
+          accountData = response;
         }
       } else {
         console.log('No Account Data');

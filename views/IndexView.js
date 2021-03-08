@@ -23,6 +23,10 @@ const indexItems = [
     to: 'ParkedVehicles',
     params: 'id',
   },
+  {
+    title: 'Payout View',
+    to: 'Payout',
+  },
 ];
 
 const IndexView = ({navigation}) => {

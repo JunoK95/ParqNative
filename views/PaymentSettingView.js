@@ -13,18 +13,24 @@ import WalletDisplay from './payment/WalletDisplay';
 import {getWallet} from '../firebase_func/walletFunctions';
 import {Icon} from 'react-native-elements';
 import PaymentBanksList from './payment/PaymentBanksList';
-import {stripeGetAccountInfo} from '../api/stripe_index';
+import {
+  stripeGetAccountInfo,
+  stripeRetrieveUserBalance,
+} from '../api/stripe_index';
 import CustomListItem from '../components/layout/CustomListItem';
 import CardTokenGenerator from './payment/card-token-generator/CardTokenGenerator';
 import OrbLoading from '../components/loading/OrbLoading';
 import ReferralCodeGenerator from '../components/referral/referral-code-generator/ReferralCodeGenerator';
+import {withNavigation} from 'react-navigation';
+import PayoutCardSection from './payment/PayoutCardSection';
 
-const PaymentSettingView = () => {
+const PaymentSettingView = props => {
   const context = useContext(AuthContext);
   const {user_data, user_id} = context;
   const [fetch, setfetch] = useState(true);
   const [cards, setcards] = useState(null);
-  const [account, setaccount] = useState(null);
+  const [account, setAccount] = useState(null);
+  const [balance, setBalance] = useState();
   const [banks, setbanks] = useState(null);
   const [wallet, setwallet] = useState(null);
   const [OpenGen, setOpenGen] = useState(false);
@@ -52,8 +58,8 @@ const PaymentSettingView = () => {
     } catch {
       console.log('Could not retrieve stripe_account_id');
     }
-
     let accountData;
+    let balanceData;
     if (account_id) {
       const response = await stripeGetAccountInfo(
         account_id,
@@ -62,10 +68,20 @@ const PaymentSettingView = () => {
       if (response.error) {
         console.error('ERROR RETRIEVING CONNECT ACCOUNT INFO');
       } else {
-        accountData = response.data;
+        accountData = response;
+      }
+      const balanceResponse = await stripeRetrieveUserBalance(
+        context.user_id,
+        account_id,
+      );
+      if (balanceResponse.error) {
+        console.error('ERROR RETRIEVING BALANCE INFO');
+      } else {
+        balanceData = balanceResponse;
       }
     }
-    setaccount(accountData);
+    setAccount(accountData);
+    setBalance(balanceData);
     // const newWallet = await getWallet(user_id).then(res => {
     //   return res;
     // });
@@ -75,6 +91,7 @@ const PaymentSettingView = () => {
     context.functions,
     context.user_data.role,
     context.user_data.stripe_account_id,
+    context.user_id,
     user_data,
   ]);
 
@@ -105,28 +122,37 @@ const PaymentSettingView = () => {
   } else {
     const {billing_address, stripe_customer_id} = user_data;
     return (
-      <ScrollView>
+      <View>
         <HeaderPadding to={'Home'} alt title={'Wallet'} right={refreshbutton} />
         {/* {wallet && <WalletDisplay user_id={context.user_id} wallet={wallet} />} */}
-        <PaymentCardsList
-          cards={cards}
-          refresh={fetchData}
-          stripe_id={stripe_customer_id}
-          billing_address={billing_address}
-        />
-        <CustomListItem
-          title={'Add Payment Card'}
-          icon={'plus-circle'}
-          iconSize={20}
-          handlePress={() => setOpenGen(!OpenGen)}
-        />
-        <CardTokenGenerator open={OpenGen} setopen={setOpenGen} />
-        <View style={styles.padding} />
-        <PaymentBanksList account={account} refresh={fetchData} />
-        {process.env.NODE_ENV === 'development' ? (
-          <ReferralCodeGenerator />
-        ) : null}
-      </ScrollView>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.cardContainer}>
+            <PayoutCardSection
+              account={account}
+              balance={balance}
+              onBottomLinkPress={() => props.navigation.navigate('Payout')}
+            />
+          </View>
+          <PaymentCardsList
+            cards={cards}
+            refresh={fetchData}
+            stripe_id={stripe_customer_id}
+            billing_address={billing_address}
+          />
+          <CustomListItem
+            title={'Add Payment Card'}
+            icon={'plus-circle'}
+            iconSize={20}
+            handlePress={() => setOpenGen(!OpenGen)}
+          />
+          <CardTokenGenerator open={OpenGen} setopen={setOpenGen} />
+          <View style={styles.padding} />
+          <PaymentBanksList account={account} refresh={fetchData} />
+          {process.env.NODE_ENV === 'development' ? (
+            <ReferralCodeGenerator />
+          ) : null}
+        </ScrollView>
+      </View>
     );
   }
 };
@@ -135,6 +161,13 @@ const styles = StyleSheet.create({
   card: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  cardContainer: {
+    paddingVertical: 32,
+    paddingHorizontal: 48,
+  },
+  scrollContainer: {
+    paddingBottom: 128,
   },
   bankcard: {
     width: Dimensions.get('window').width - 48,
@@ -152,4 +185,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PaymentSettingView;
+export default withNavigation(PaymentSettingView);

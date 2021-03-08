@@ -10,6 +10,7 @@ const stripe_webhooks = require('./stripe_functions/stripe_webhooks');
 const twilio_verify_functions = require('./twilio_functions/twilio_verify_functions');
 const referral_functions = require('./referral_functions/referral_functions');
 const carport_functions = require('./carport_functions/carport_functions');
+const stripe_payout_functions = require('./stripe_functions/payout/stripe_payout_functions');
 const send_welcome_email = require('./sendinblue_functions/send_template/send_welcome_email');
 const send_email_receipt = require('./sendinblue_functions/send_template/send_email_receipt');
 const sendinblue_index = require('./sendinblue_functions/index');
@@ -152,6 +153,11 @@ exports.twilioCheckCodeVerification =
   twilio_verify_functions.twilioCheckCodeVerification;
 
 exports.sendWelcomeEmail = send_welcome_email.sendWelcomeEmail;
+
+exports.stripeListUserPayouts = stripe_payout_functions.stripeListUserPayouts;
+
+exports.stripeRetrieveUserBalance =
+  stripe_payout_functions.stripeRetrieveUserBalance;
 
 exports.getUserContactInfo = functions.https.onRequest((request, response) => {
   cors(request, response, () => {

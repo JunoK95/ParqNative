@@ -39,7 +39,7 @@ const StripeAccountMenuView = props => {
         console.error('ERROR RETRIEVING CONNECT ACCOUNT INFO');
         seterror(response.error);
       } else {
-        accountData = response.data;
+        accountData = response;
       }
     } else {
       accountData = await context.functions.assignStripeAccount();

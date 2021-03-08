@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import {throwError} from 'rxjs';
 import {config} from '../config';
 import {createFirebaseAuthHeader} from './header_functions';
 
@@ -34,7 +35,9 @@ export const stripePayParkingWithCard = async (
     token: card_token,
     amount: prices.total_price,
     port: port,
-    description: `User ${user_id} parked with Vehicle ${vehicle.data.license_plate}`,
+    description: `User ${user_id} parked with Vehicle ${
+      vehicle.data.license_plate
+    }`,
     uid: user_id,
     customer_id: user_data.stripe_customer_id,
     metadata: {
@@ -123,10 +126,10 @@ export const stripeGetAccountInfo = async (account_id, role) => {
       },
     });
   } catch (error) {
-    response = {error};
+    throwError(error);
   }
 
-  return response;
+  return response.data;
 };
 
 export const stripeCreateCard = async (customer_id, token) => {
@@ -251,6 +254,59 @@ export const stripeDeleteExternalAccount = async (uid, account_id, bank_id) => {
       },
     });
     return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const stripeGetPayout = async (uid, account_id, bank_id, after) => {
+  const authHeader = await createFirebaseAuthHeader();
+  let response;
+  try {
+    let data = after
+      ? {
+          uid,
+          account_id,
+          bank_id,
+          limit: 5,
+          starting_after: after,
+        }
+      : {
+          uid,
+          account_id,
+          bank_id,
+          limit: 5,
+        };
+    response = await Axios({
+      headers: authHeader,
+      method: 'POST',
+      url: `${config.firebase_functions_url_base}stripeListUserPayouts`,
+      data,
+    });
+    return {
+      has_more: response.data.has_more,
+      data: response.data.data,
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const stripeRetrieveUserBalance = async (uid, account_id) => {
+  const authHeader = await createFirebaseAuthHeader();
+  let response;
+  try {
+    response = await Axios({
+      headers: authHeader,
+      method: 'POST',
+      url: `${config.firebase_functions_url_base}stripeRetrieveUserBalance`,
+      data: {
+        account_id,
+        uid,
+      },
+    });
+    console.log('USER BALANCE =>', response.data);
+    return response.data;
   } catch (error) {
     throw error;
   }
