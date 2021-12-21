@@ -2,16 +2,16 @@ import React from 'react';
 import {StyleSheet, View, Text, GestureResponderEvent} from 'react-native';
 
 interface DataFormat {
-  title: string,
-  onPress?: (event: GestureResponderEvent) => void,
-  subtitle?: string, 
+  title: string;
+  onPress?: (event: GestureResponderEvent) => void;
+  subtitle?: string;
 }
 
 interface TitledListProps {
-  title: string,
-  data?: Array<DataFormat>,
-  children?: React.ReactNode,
-};
+  title: string;
+  data?: Array<DataFormat>;
+  children?: React.ReactNode;
+}
 
 const TitledList: React.FC<TitledListProps> = ({title, children}) => {
   return (
@@ -34,5 +34,5 @@ const styles = StyleSheet.create({
     fontSize: 26,
     paddingHorizontal: 16,
     color: '#555',
-  }
+  },
 });

@@ -94,3 +94,29 @@ exports.stripeRetrieveUserBalance = functions.https.onRequest(
     });
   },
 );
+
+exports.stripeUpdateDefaultBankAccount = functions.https.onRequest(
+  (request, response) => {
+    cors(request, response, async () => {
+      const verified = await header_verification.isAuthenticated(request);
+      if (!verified) {
+        response.status(403).send('Unauthorized! Missing auth token');
+        return;
+      }
+      const {account_id, bank_id} = request.body;
+      try {
+        const bank = await stripe.accounts.updateExternalAccount(
+          account_id,
+          bank_id,
+          {
+            default_for_currency: true,
+          },
+        );
+        response.status(200).send(bank);
+      } catch (error) {
+        console.error('ERROR UPDATING DEFAULT BANK ACCOUNT', error);
+        response.status(500).send(error);
+      }
+    });
+  },
+);

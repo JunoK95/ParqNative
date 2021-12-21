@@ -6,7 +6,7 @@ import HeaderPadding from '../components/header-padding/HeaderPadding';
 import OrbLoading from '../components/loading/OrbLoading';
 import CarportPayCard from '../components/map/CarportPayCard';
 
-const PayParkingView = props => {
+const PayParkingView = (props) => {
   const {isFocused} = props;
   const {port} = props.navigation.state.params;
   const [carport, setCarport] = useState();

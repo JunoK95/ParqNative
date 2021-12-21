@@ -1,50 +1,52 @@
 import moment from 'moment';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import {Dimensions, StyleSheet, View, Text} from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { Header } from 'react-native/Libraries/NewAppScreen';
-import { NavigationScreenProp, withNavigation, withNavigationFocus } from 'react-navigation';
-import { stripeGetAccountInfo, stripeGetPayout, stripeRetrieveUserBalance } from '../api/stripe_index';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
+import {Dimensions, StyleSheet, View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import {NavigationScreenProp, withNavigationFocus} from 'react-navigation';
+import {
+  stripeGetAccountInfo,
+  stripeGetPayout,
+  stripeRetrieveUserBalance,
+} from '../api/stripe_index';
 import RoundedButtonTSX from '../components/button/RoundedButtonTSX';
 import HeaderPadding from '../components/header-padding/HeaderPadding';
 import ListItemDuo from '../components/list-item-duo/ListItemDuo';
 import OrbLoading from '../components/loading/OrbLoading';
 import BalanceCard from '../components/payout-card/BalanceCard';
-import PayoutCard from '../components/payout-card/PayoutCard';
 import TitledList from '../components/titled-list/TitledList';
-import { AuthContext } from '../context/AuthContext';
-import { convertToDollar } from '../helpers/helper';
+import {AuthContext} from '../context/AuthContext';
+import {convertToDollar} from '../helpers/helper';
 
 interface PayoutViewProps {
-  navigation: NavigationScreenProp<any,any>,
-  isFocused: boolean,
+  navigation: NavigationScreenProp<any, any>;
+  isFocused: boolean;
 }
 
-interface DataFormat {
-  has_more: boolean,
-  data: Array<any>,
-  fetching: boolean,
+interface PayoutFormat {
+  has_more: boolean;
+  data: Array<any>;
+  fetching: boolean;
 }
 
 interface BalanceObject {
-  available: Array<any>,
-  instant_available: Array<any>,
-  livemode: boolean,
-  object: string,
-  pending: Array<any>,
+  available: Array<any>;
+  instant_available: Array<any>;
+  livemode: boolean;
+  object: string;
+  pending: Array<any>;
 }
 
 interface BalanceType {
-  data: BalanceObject,
-  fetching: boolean,
+  data: BalanceObject;
+  fetching: boolean;
 }
 
 interface AccountObject {
-  data: any,
-  fetching: boolean,
+  data: any;
+  fetching: boolean;
 }
 
-const PayoutView: React.FC<PayoutViewProps> = ({isFocused}) => {
+const PayoutView: React.FC<PayoutViewProps> = ({navigation, isFocused}) => {
   const authContext = useContext(AuthContext);
   const {user_data, user_id} = authContext;
   const [error, setError] = useState<string>();
@@ -55,7 +57,7 @@ const PayoutView: React.FC<PayoutViewProps> = ({isFocused}) => {
     fetching: true,
   });
   const [balance, setBalance] = useState<BalanceType>({
-    data: {    
+    data: {
       available: [],
       instant_available: [],
       livemode: false,
@@ -63,81 +65,75 @@ const PayoutView: React.FC<PayoutViewProps> = ({isFocused}) => {
       pending: [],
     },
     fetching: true,
-  })
+  });
 
-  const [payouts, setPayouts] = useState<DataFormat>({
+  const [payouts, setPayouts] = useState<PayoutFormat>({
     has_more: true,
     data: [],
     fetching: true,
   });
 
-  const fetchBalance = useCallback(
-    async () => {
-      setBalance({...balance, fetching: true});
-      try {
-        const balanceResponse = await stripeRetrieveUserBalance(
-          user_id,
-          user_data.stripe_account_id,
-        );
-        console.log('BALANCE INFO =>', balanceResponse)
-        setBalance({data: balanceResponse, fetching: false});
-      } catch (error) {
-        console.error('ERROR RETRIEVING BALANCE INFO');
-        setBalance({...balance, fetching: false})
-        setError('ERROR RETRIEVING BALANCE INFO');
-      }
+  const fetchBalance = useCallback(async () => {
+    setBalance({...balance, fetching: true});
+    try {
+      const balanceResponse = await stripeRetrieveUserBalance(
+        user_id,
+        user_data.stripe_account_id,
+      );
+      console.log('BALANCE INFO =>', balanceResponse);
+      setBalance({data: balanceResponse, fetching: false});
+    } catch (e) {
+      console.error('ERROR RETRIEVING BALANCE INFO');
+      setBalance({...balance, fetching: false});
+      setError('ERROR RETRIEVING BALANCE INFO');
+    }
+    return;
+  }, [balance]);
+
+  const fetchAccount = useCallback(async () => {
+    setAccount({...account, fetching: true});
+    try {
+      const accountResponse = await stripeGetAccountInfo(
+        user_data.stripe_account_id,
+        user_data.role,
+      );
+      console.log('ACCOUNT INFO =>', accountResponse);
+      setAccount({data: accountResponse, fetching: false});
       return;
-    },
-    [balance],
-  )
+    } catch (e) {
+      console.error('ERROR RETRIEVING ACCOUNT INFO');
+      setAccount({...account, fetching: false});
+      setError('ERROR RETRIEVING ACCOUNT INFO');
+      return;
+    }
+  }, [account]);
 
-  const fetchAccount = useCallback(
-    async () => {
-      setAccount({...account, fetching: true});
-      try {
-        const accountResponse = await stripeGetAccountInfo(
-          user_data.stripe_account_id, 
-          user_data.role
-        );
-        console.log('ACCOUNT INFO =>', accountResponse);
-        setAccount({data: accountResponse, fetching: false});
-        return;
-      } catch (error) {
-        console.error('ERROR RETRIEVING ACCOUNT INFO');
-        setAccount({...account, fetching: false});
-        setError('ERROR RETRIEVING ACCOUNT INFO');
-        return;
-      }
-    },
-    [account]
-  );
-
-  const fetchPayouts = useCallback(
-    async () => {
-      setPayouts({...payouts, fetching: true});
-      let after : string | null;
-      if (payouts.data.length > 0) {
-        after = payouts.data[payouts.data.length - 1].id;
-      }
-      try {
-        const PayoutResponse = 
-          await stripeGetPayout(
-            user_id, 
-            user_data.stripe_account_id,
-            '',
-            after,
-          );
-        console.log('GETTING PAYOUT =>', PayoutResponse.data);
-        setPayouts({has_more: PayoutResponse.has_more, data: [...payouts.data, ...PayoutResponse.data], fetching: false});
-        return;
-      } catch (error) {
-        console.error('ERROR RETRIEVING PAYOUT INFO', error);
-        setPayouts({...payouts, fetching: false});
-        setError('ERROR RETRIEVING PAYOUTS');
-      }
-    },
-    [payouts],
-  );
+  const fetchPayouts = useCallback(async () => {
+    setPayouts({...payouts, fetching: true});
+    let after: string | null = null;
+    if (payouts.data.length > 0) {
+      after = payouts.data[payouts.data.length - 1].id;
+    }
+    try {
+      const PayoutResponse = await stripeGetPayout(
+        user_id,
+        user_data.stripe_account_id,
+        '',
+        after,
+      );
+      console.log('GETTING PAYOUT =>', PayoutResponse.data);
+      setPayouts({
+        has_more: PayoutResponse.has_more,
+        data: [...payouts.data, ...PayoutResponse.data],
+        fetching: false,
+      });
+      return;
+    } catch (e) {
+      console.error('ERROR RETRIEVING PAYOUT INFO', e);
+      setPayouts({...payouts, fetching: false});
+      setError('ERROR RETRIEVING PAYOUTS');
+    }
+  }, [payouts]);
 
   useEffect(() => {
     fetchBalance();
@@ -150,12 +146,12 @@ const PayoutView: React.FC<PayoutViewProps> = ({isFocused}) => {
         has_more: true,
         data: [],
         fetching: false,
-      })
-    }
-  }, [isFocused])
+      });
+    };
+  }, [isFocused]);
 
   if (balance.fetching || account.fetching || payouts.fetching) {
-    console.log('IS LOADING')
+    console.log('IS LOADING');
     return (
       <ScrollView>
         <HeaderPadding title={'Payouts'} alt to={'Home'} />
@@ -163,36 +159,40 @@ const PayoutView: React.FC<PayoutViewProps> = ({isFocused}) => {
           <OrbLoading bgcolor={'transparent'} />
         </View>
       </ScrollView>
-    )
-  }
-  else {
-    let bankList = account.data.external_accounts.data.map((item, i) => {
-      return (      
-        <ListItemDuo 
-          key={i}
-          leftIcon={'university'}
-          leftIconColor={'black'}
-          title={item.bank_name}
-          subtitle={`.... ${item.last4}`}
-          rightIcon={item.default_for_currency ? 'check-circle': null}
-        />
-      )
-    })
+    );
+  } else {
+    let bankList = account.data.external_accounts.data.map(
+      (item: any, i: number) => {
+        return (
+          <ListItemDuo
+            key={i}
+            leftIcon={'university'}
+            leftIconColor={'black'}
+            title={item.bank_name}
+            subtitle={`.... ${item.last4}`}
+            rightIcon={item.default_for_currency ? 'check-circle' : null}
+            onPress={() => navigation.navigate('BankInfo', {bank: item})}
+          />
+        );
+      },
+    );
 
     let bankLast4;
     if (account.data.external_accounts.data.length > 0) {
-      const defaultBank = account.data.external_accounts.data.filter(item => {
-        return item.default_for_currency;
-      });
+      const defaultBank = account.data.external_accounts.data.filter(
+        (item: any) => {
+          return item.default_for_currency;
+        },
+      );
       bankLast4 = defaultBank[0].last4;
     }
 
     let payoutList = payouts.data.map((item, i) => {
       const dollar = convertToDollar(item.amount / 100);
-      return ( 
+      return (
         <ListItemDuo
-          key={i} 
-          leftIcon={'tag'} 
+          key={i}
+          leftIcon={'tag'}
           leftIconColor={'black'}
           title={`${moment(item.arrival_date, 'X').format('MMMM DD, YYYY')}`}
           subtitle={`status: ${item.status.toUpperCase()}`}
@@ -200,7 +200,7 @@ const PayoutView: React.FC<PayoutViewProps> = ({isFocused}) => {
           rightColor={'#5DBB63'}
         />
       );
-    })
+    });
 
     return (
       <View>
@@ -211,18 +211,20 @@ const PayoutView: React.FC<PayoutViewProps> = ({isFocused}) => {
               amount={balance.data.instant_available[0].amount}
               title={'Your Balance'}
               bank_last4={bankLast4}
-              bottomLinkText={'Go To Payout'}
-              backgroundColor={'white'} 
+              bottomLinkText={'Change Bank'}
+              backgroundColor={'#11A4FF'}
             />
           </View>
           <TitledList title={'BANKS'}>
             {bankList}
-            <ListItemDuo leftIcon={'plus-circle'} title={'Add Bank Account'} />
+            <ListItemDuo
+              leftIcon={'plus-circle'}
+              title={'Add Bank Account'}
+              onPress={() => navigation.navigate('StripeAddBankAccount')}
+            />
           </TitledList>
-          <TitledList title={'PAYOUTS'}>
-            {payoutList}
-          </TitledList>
-          <RoundedButtonTSX 
+          <TitledList title={'PAYOUTS'}>{payoutList}</TitledList>
+          <RoundedButtonTSX
             title={payouts.has_more ? 'Load More Items' : 'End of List'}
             disabled={!payouts.has_more}
             textColor={'#11A4FF'}
@@ -232,8 +234,8 @@ const PayoutView: React.FC<PayoutViewProps> = ({isFocused}) => {
         </ScrollView>
       </View>
     );
-  };
-}
+  }
+};
 
 export default withNavigationFocus(PayoutView);
 

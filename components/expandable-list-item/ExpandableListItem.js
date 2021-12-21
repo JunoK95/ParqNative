@@ -7,7 +7,11 @@ const ExpandableListItem = forwardRef(
 
     useImperativeHandle(ref, () => ({
       handleExpand(boolean) {
-        setExpand(boolean);
+        if (boolean) {
+          setExpand(boolean);
+        } else {
+          setExpand(!expand);
+        }
       },
     }));
 

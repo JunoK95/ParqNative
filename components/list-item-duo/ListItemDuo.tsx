@@ -3,32 +3,32 @@ import {StyleSheet, TouchableOpacity, View, Text} from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 interface ListItemDuoProps {
-  leftIcon?: string, 
-  leftIconColor?: string,
-  leftPress?: () => void,
-  title?: string,
-  subtitle?: string,
-  rightContent?: string,
-  rightText?: string,
-  rightIcon?: string,
-  rightColor?: string,
-  rightPress?: () => void,
-  onPress?: () => void,
-};
+  leftIcon?: string;
+  leftIconColor?: string;
+  leftPress?: () => void;
+  title?: string;
+  subtitle?: string;
+  rightContent?: string;
+  rightText?: string;
+  rightIcon?: string | null;
+  rightColor?: string;
+  rightPress?: () => void;
+  onPress?: () => void;
+}
 
 const ListItemDuo: React.FC<ListItemDuoProps> = ({
-    leftIcon,
-    leftIconColor,
-    leftPress,
-    title,
-    subtitle,
-    rightContent,
-    rightText,
-    rightIcon,
-    rightColor,
-    rightPress,
-    onPress,
-  }) => {
+  leftIcon,
+  leftIconColor,
+  leftPress,
+  title,
+  subtitle,
+  rightContent,
+  rightText,
+  rightIcon,
+  rightColor,
+  rightPress,
+  onPress,
+}) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.item}>
@@ -47,7 +47,9 @@ const ListItemDuo: React.FC<ListItemDuoProps> = ({
         <View style={styles.itemright}>
           {rightText ? (
             <View style={styles.inforow}>
-              <Text numberOfLines={1} style={{...styles.itemrighttext, color: rightColor}}>
+              <Text
+                numberOfLines={1}
+                style={{...styles.itemrighttext, color: rightColor}}>
                 {' ' + rightText}
               </Text>
             </View>

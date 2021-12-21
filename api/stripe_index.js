@@ -3,7 +3,7 @@ import {throwError} from 'rxjs';
 import {config} from '../config';
 import {createFirebaseAuthHeader} from './header_functions';
 
-export const stripePayParkingCharge = async data => {
+export const stripePayParkingCharge = async (data) => {
   const authHeader = await createFirebaseAuthHeader();
   let response;
   try {
@@ -35,9 +35,7 @@ export const stripePayParkingWithCard = async (
     token: card_token,
     amount: prices.total_price,
     port: port,
-    description: `User ${user_id} parked with Vehicle ${
-      vehicle.data.license_plate
-    }`,
+    description: `User ${user_id} parked with Vehicle ${vehicle.data.license_plate}`,
     uid: user_id,
     customer_id: user_data.stripe_customer_id,
     metadata: {
@@ -77,7 +75,7 @@ export const stripePayParkingWithCard = async (
   return response;
 };
 
-export const stripeAssignCustomerId = async data => {
+export const stripeAssignCustomerId = async (data) => {
   const authHeader = await createFirebaseAuthHeader();
   let response;
   try {
@@ -94,7 +92,7 @@ export const stripeAssignCustomerId = async data => {
   return response;
 };
 
-export const stripeAssignConnectAccountId = async data => {
+export const stripeAssignConnectAccountId = async (data) => {
   const authHeader = await createFirebaseAuthHeader();
   let response;
   try {
@@ -307,6 +305,29 @@ export const stripeRetrieveUserBalance = async (uid, account_id) => {
     });
     console.log('USER BALANCE =>', response.data);
     return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const stripeUpdateDefaultBankAccount = async (
+  uid,
+  account_id,
+  bank_id,
+) => {
+  const authHeader = await createFirebaseAuthHeader();
+  try {
+    await Axios({
+      headers: authHeader,
+      method: 'POST',
+      url: `${config.firebase_functions_url_base}stripeUpdateDefaultBankAccount`,
+      data: {
+        uid,
+        account_id,
+        bank_id,
+      },
+    });
+    return;
   } catch (error) {
     throw error;
   }

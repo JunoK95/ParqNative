@@ -342,14 +342,14 @@ exports.stripePayParkingChargeV2 = functions.https.onRequest(
           .collection('users')
           .doc(port.owner_id)
           .get()
-          .then(doc => {
+          .then((doc) => {
             if (!doc.exists) {
               console.log('No such document!');
             } else {
               return doc.data();
             }
           })
-          .catch(err => {
+          .catch((err) => {
             console.error('Error getting document', err);
           });
         destination_stripe_account = portOwner.stripe_account_id;

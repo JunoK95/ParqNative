@@ -156,6 +156,9 @@ exports.sendWelcomeEmail = send_welcome_email.sendWelcomeEmail;
 
 exports.stripeListUserPayouts = stripe_payout_functions.stripeListUserPayouts;
 
+exports.stripeUpdateDefaultBankAccount =
+  stripe_payout_functions.stripeUpdateDefaultBankAccount;
+
 exports.stripeRetrieveUserBalance =
   stripe_payout_functions.stripeRetrieveUserBalance;
 
